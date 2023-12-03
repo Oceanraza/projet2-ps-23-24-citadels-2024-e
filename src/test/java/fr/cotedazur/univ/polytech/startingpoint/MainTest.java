@@ -3,19 +3,22 @@ package fr.cotedazur.univ.polytech.startingpoint;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class MainTest {
-
-    String varToBeInitInSetup;
+    Player player;
 
     @BeforeEach
     void setUp() {
-        varToBeInitInSetup = "Hello World!";
+        player = new Player() {
+        };
     }
 
     @Test
-    void helloTest() {
-        assertEquals(varToBeInitInSetup, Main.hello());
+    void testIsFinished() {
+        for (int i = 0; i < 8; i++) {
+            player.getDistrictsBuilt().add(new Quartier("test", 0, QuartierColor.marchand));
+        }
+        assertEquals(true, Main.isFinished(player));
     }
 }

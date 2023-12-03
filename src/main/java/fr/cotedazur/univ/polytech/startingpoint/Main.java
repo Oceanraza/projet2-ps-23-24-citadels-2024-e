@@ -1,14 +1,15 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
 public class Main {
-
-
-    public static String hello() {
-        return "Hello World!";
+    //if a player has 8 districts built, he wins
+    public static boolean isFinished(Player player) {
+        return player.getDistrictsBuilt().size() == 8;
     }
 
     public static void main(String... args) {
-        System.out.println(hello());
+        isFinished(new Player() {
+        });
+
     }
 
 }
