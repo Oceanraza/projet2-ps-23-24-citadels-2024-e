@@ -34,11 +34,6 @@
             <scope>test</scope>
         </dependency>
         <!-- https://mvnrepository.com/artifact/com.mopano/hibernate-json-org-contributor -->
-        <dependency>
-            <groupId>org.json</groupId>
-            <artifactId>json</artifactId>
-            <version>20210307</version> <!-- Use the latest version available -->
-        </dependency>
 
 
     </dependencies>
