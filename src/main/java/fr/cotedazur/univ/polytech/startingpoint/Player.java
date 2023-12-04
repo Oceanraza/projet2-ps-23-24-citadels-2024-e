@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Player {
-    ArrayList<Quartier> districtsInHand;
-    ArrayList<Quartier> districtsBuilt;
+    ArrayList<District> districtsInHand;
+    ArrayList<District> districtsBuilt;
     int gold;
 
     Player(){
@@ -14,7 +14,7 @@ public abstract class Player {
         gold = 0;
     }
 
-    public List<Quartier> getDistrictsBuilt() {
+    public List<District> getDistrictsBuilt() {
         return districtsBuilt;
     }
 }

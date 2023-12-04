@@ -17,7 +17,7 @@ class MainTest {
     @Test
     void testIsFinished() {
         for (int i = 0; i < 8; i++) {
-            player.getDistrictsBuilt().add(new Quartier("test", 0, QuartierColor.marchand));
+            player.getDistrictsBuilt().add(new District("test", 0, DistrictColor.marchand));
         }
         assertEquals(true, Main.isFinished(player));
     }

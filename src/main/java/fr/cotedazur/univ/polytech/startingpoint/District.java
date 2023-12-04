@@ -1,10 +1,10 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
-public class Quartier {
-    private QuartierColor color;
+public class District {
+    private DistrictColor color;
     private int price;
     private String name;
-    public Quartier(String name, int price, QuartierColor color){
+    public District(String name, int price, DistrictColor color){
         this.color = color; this.price = price; this.name = name;
     }
     public String getName(){
@@ -13,7 +13,7 @@ public class Quartier {
     public int getPrice(){
         return price;
     }
-    public QuartierColor getColor() {
+    public DistrictColor getColor() {
         return color;
     }
 }
