@@ -16,4 +16,7 @@ public class District {
     public DistrictColor getColor() {
         return color;
     }
+    public String toString(){
+        return name + " coûte " + price + " et appartient a la famille des " + color;
+    }
 }
