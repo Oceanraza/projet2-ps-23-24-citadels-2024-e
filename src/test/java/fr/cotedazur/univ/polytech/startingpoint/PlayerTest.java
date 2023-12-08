@@ -10,7 +10,7 @@ class PlayerTest {
 
     @BeforeEach
     void setUp() {
-        player = new Player("Picsou");
+        player = new Bot("Picsou");
     }
 
     @Test
