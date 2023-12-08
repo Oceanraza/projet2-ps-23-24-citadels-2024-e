@@ -11,6 +11,7 @@ class PlayerTest {
     @BeforeEach
     void setUp() {
         player = new Player("Picsou");
+    }
 
     @Test
     void testBuild() {
