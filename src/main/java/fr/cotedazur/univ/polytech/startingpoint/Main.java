@@ -1,12 +1,13 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
-import java.util.ArrayList;
+import java.util.Random;
 
 public class Main {
-    //if a player has 8 districts built, he wins
+    public static final Random random = new Random();
 
+    // If a player has 8 districts built, he wins
     public static boolean isFinished(Player player) {
-        return player.getDistrictsBuilt().length == 8;
+        return player.getDistrictsBuilt().size() == 8;
     }
 
     public static void main(String... args) {
@@ -14,7 +15,6 @@ public class Main {
         System.out.println(newGame);
         isFinished(new Player() {
         });
-
     }
 
 }

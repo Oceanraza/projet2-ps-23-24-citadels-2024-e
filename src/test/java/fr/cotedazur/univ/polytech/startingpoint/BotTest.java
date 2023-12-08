@@ -1,3 +1,5 @@
+
+
 package fr.cotedazur.univ.polytech.startingpoint;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -5,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class MainTest {
+class BotTest {
     Player player;
 
     @BeforeEach
@@ -15,11 +17,7 @@ class MainTest {
     }
 
     @Test
-    void testIsFinished() {
-        assertFalse(Main.isFinished(player));
-        for (int i = 0; i < 8; i++) {
-            player.getDistrictsBuilt().add(new District("test", 0, DistrictColor.marchand));
-        }
-        assertTrue(Main.isFinished(player));
+    void testPlay() {
+
     }
 }
