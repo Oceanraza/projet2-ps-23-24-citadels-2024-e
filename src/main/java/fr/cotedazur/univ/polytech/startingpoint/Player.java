@@ -10,9 +10,6 @@ public abstract class Player {
     String name;
     int score;
 
-    Player(){
-    }
-
     Player(String name){
         this.name = name;
         districtsInHand = new ArrayList<>();
