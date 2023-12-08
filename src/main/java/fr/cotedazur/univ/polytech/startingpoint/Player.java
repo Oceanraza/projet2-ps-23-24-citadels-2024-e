@@ -11,12 +11,6 @@ public abstract class Player {
     int score;
     Characters characters;
 
-    Player(){
-        districtsInHand = new ArrayList<>();
-        districtsBuilt = new ArrayList<>();
-        gold = 2;
-    }
-
     Player(String name){
         this.name = name;
         districtsInHand = new ArrayList<>();
@@ -49,7 +43,7 @@ public abstract class Player {
             districtsBuilt.add(district);
             gold -= district.getPrice();
             districtsInHand.remove(district);
-            System.out.println("Le quartier " + district.getName() + " a été construit.");
+            System.out.println(getName() + " a construit le quartier " + district.getName());
             return true;
         }
         return false;
@@ -57,5 +51,9 @@ public abstract class Player {
 
     public void chooseCharacter(Characters characterChosen) {
         this.characters = characterChosen;
+    }
+
+    public String toString(){
+        return "\nC'est au tour de : " + name + "\n" + (districtsInHand.size() > 0 ? "Et sa main est composée de: " + districtsInHand : "Sa main est vide. ") +  "\n" + "Il a " + gold + " or\n" + (districtsBuilt.size() > 0 ? "Et il a déjà posé: " + districtsBuilt : "Il n'a pas posé de quartiers.");
     }
 }
