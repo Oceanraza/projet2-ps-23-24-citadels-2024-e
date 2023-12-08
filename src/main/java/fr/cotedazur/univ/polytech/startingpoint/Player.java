@@ -8,6 +8,7 @@ public abstract class Player {
     List<District> districtsBuilt;
     int gold;
     String name;
+    int score;
 
     Player(){
         districtsInHand = new ArrayList<>();
@@ -20,6 +21,7 @@ public abstract class Player {
         districtsInHand = new ArrayList<>();
         districtsBuilt = new ArrayList<>();
         gold = 2;
+        score = 0;
     }
 
     public List<District> getDistrictsBuilt() {
