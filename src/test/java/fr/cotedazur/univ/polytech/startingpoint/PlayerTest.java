@@ -10,7 +10,7 @@ class PlayerTest {
 
     @BeforeEach
     void setUp() {
-        player = new Player() {
+        player = new Player("Picsou") {
         };
     }
 
@@ -22,5 +22,12 @@ class PlayerTest {
         assertFalse(player.build(district));
         player.gold += 2;
         assertTrue(player.build(district));
+        assertFalse(player.build(district));
+        player.districtsInHand.add(district);
+        assertFalse(player.build(district));
+        player.gold += 4;
+        district = new District("Temple", 4, DistrictColor.religieux); //We create another district to avoid pointer problems
+        assertFalse(player.build(district));
+
     }
 }

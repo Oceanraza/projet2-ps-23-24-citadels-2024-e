@@ -38,8 +38,13 @@ public abstract class Player {
     }
 
     public boolean build(District district) {
+        for (District d : districtsBuilt){
+            if (d.getName().equals(district.getName())){ //Checks if the district has already been built or not
+                return false;
+            }
+        }
         // Checks if the player has enough gold to build the district. If so it is built.
-        if (gold >= district.getPrice()) {
+        if (gold >= district.getPrice()){
             districtsBuilt.add(district);
             gold -= district.getPrice();
             districtsInHand.remove(district);
