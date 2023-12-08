@@ -12,7 +12,7 @@ class BotTest {
 
     @BeforeEach
     void setUp() {
-        player = new Player() {
+        player = new Player("Bot") {
         };
     }
 

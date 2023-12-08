@@ -1,9 +1,6 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
 public class Bot extends Player{
-    Bot(){
-        super();
-    }
 
     Bot(String name){
         super(name);
