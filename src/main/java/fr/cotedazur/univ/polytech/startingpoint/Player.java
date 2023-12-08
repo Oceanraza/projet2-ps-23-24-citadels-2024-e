@@ -7,8 +7,16 @@ public abstract class Player {
     List<District> districtsInHand;
     List<District> districtsBuilt;
     int gold;
+    String name;
 
     Player(){
+        districtsInHand = new ArrayList<>();
+        districtsBuilt = new ArrayList<>();
+        gold = 2;
+    }
+
+    Player(String name){
+        this.name = name;
         districtsInHand = new ArrayList<>();
         districtsBuilt = new ArrayList<>();
         gold = 2;
@@ -22,6 +30,9 @@ public abstract class Player {
     }
     public int getGold() {
         return gold;
+    }
+    public String getName() {
+        return name;
     }
 
     public boolean build(District district) {

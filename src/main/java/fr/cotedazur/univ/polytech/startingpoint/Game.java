@@ -33,9 +33,9 @@ public class Game {
         addCardNumber( new District("Marche", 2, DistrictColor.marchand), 4);
         addCardNumber( new District("Comptoir", 3, DistrictColor.marchand), 3);
         addCardNumber( new District("Port", 4, DistrictColor.marchand), 3);
-        addCardNumber( new District("Hotel_de_ville", 5, DistrictColor.marchand), 2);
+        addCardNumber( new District("Hotel de ville", 5, DistrictColor.marchand), 2);
 
-        addCardNumber( new District("Tour_de_guet", 1, DistrictColor.militaire), 3);
+        addCardNumber( new District("Tour de guet", 1, DistrictColor.militaire), 3);
         addCardNumber( new District("Prison", 2, DistrictColor.militaire), 3);
         addCardNumber( new District("Caserne", 3, DistrictColor.militaire), 3);
         addCardNumber( new District("Forteresse", 5, DistrictColor.militaire), 2);
@@ -43,7 +43,7 @@ public class Game {
         addCardNumber( new District("Donjon", 3, DistrictColor.special), 1);
         addCardNumber( new District("Laboratoire", 5, DistrictColor.special), 1);
         addCardNumber( new District("Observatoire", 5, DistrictColor.special), 1);
-        addCardNumber( new District("Cour_des_miracles", 2, DistrictColor.special), 1);
+        addCardNumber( new District("Cour des miracles", 2, DistrictColor.special), 1);
         addCardNumber( new District("Cimetiere", 5, DistrictColor.special), 1);
 
 
