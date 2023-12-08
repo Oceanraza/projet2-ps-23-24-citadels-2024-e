@@ -2,6 +2,8 @@ package fr.cotedazur.univ.polytech.startingpoint;
 
 import java.util.ArrayList;
 
+import static fr.cotedazur.univ.polytech.startingpoint.Main.random;
+
 public class Game {
 
     public ArrayList<District> gameDeck = new ArrayList<>();
@@ -45,6 +47,10 @@ public class Game {
         addCardNumber( new District("Cimetiere", 5, DistrictColor.special), 1);
 
 
+    }
+
+    public District drawCard() {
+        return gameDeck.get(random.nextInt(gameDeck.size() - 1));
     }
 
     public String toString(){
