@@ -1,8 +1,11 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
-public class Main {
-    //if a player has 8 districts built, he wins
+import java.util.Random;
 
+public class Main {
+    public static Random random = new Random();
+
+    // If a player has 8 districts built, he wins
     public static boolean isFinished(Player player) {
         return player.getDistrictsBuilt().size() == 8;
     }
