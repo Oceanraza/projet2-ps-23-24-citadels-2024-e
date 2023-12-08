@@ -12,12 +12,12 @@ public class Bot extends Player{
     void play(Game game) {
         // The bot draws a card if it has no district in its hand.
         if(districtsInHand.isEmpty()) {
-            System.out.println("Le bot pioche.");
+            System.out.println(getName() + " pioche.");
             District districtPicked = game.drawCard();
             districtsInHand.add(districtPicked);
             game.gameDeck.remove(districtPicked);
         } else { // Otherwise it gets 2 gold coins
-            System.out.println("Le bot prend deux pièces d'or.");
+            System.out.println(getName() + " prend deux pièces d'or.");
             gold += 2;
         }
         // The bot builds one district if it has enough money

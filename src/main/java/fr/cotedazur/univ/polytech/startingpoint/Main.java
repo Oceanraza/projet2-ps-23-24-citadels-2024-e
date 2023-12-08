@@ -45,10 +45,10 @@ public class Main {
     }
     public static void main(String... args) {
         Game newGame = new Game();
-        System.out.println(newGame);
+        //System.out.println(newGame);
 
-        Bot firstBot = new Bot("Bot 1");
-        Bot secondBot = new Bot("Bot 2");
+        Bot firstBot = new Bot("Donald");
+        Bot secondBot = new Bot("Picsou");
         List<Player> players = new ArrayList<>();
         players.add(firstBot);
         players.add(secondBot);
@@ -65,13 +65,13 @@ public class Main {
         int turn = 1;
         Player firstBuilder = null;
         while(!(isFinished(firstBot) || isFinished(secondBot))) {
-            System.out.println("Tour numÃ©ro " + turn);
-            System.out.println("Bot 1:");
+            System.out.println("\nTour numero " + turn);
+            System.out.println(firstBot);
             firstBot.play(newGame);
             if(isFinished(firstBot)) {
                 firstBuilder = firstBot;
             }
-            System.out.println("Bot 2:");
+            System.out.println(secondBot);
             secondBot.play(newGame);
             if(isFinished(secondBot) && !isFinished(firstBot)) {
                 firstBuilder = secondBot;
