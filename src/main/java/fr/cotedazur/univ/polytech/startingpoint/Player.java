@@ -43,9 +43,13 @@ public abstract class Player {
             districtsBuilt.add(district);
             gold -= district.getPrice();
             districtsInHand.remove(district);
-            System.out.println("Le quartier " + district.getName() + " a été construit.");
+            System.out.println(getName() + " a construit le quartier " + district.getName());
             return true;
         }
         return false;
+    }
+    public String toString(){
+        return "\nC'est au tour de : " + name + "\n" + (districtsInHand.size() > 0 ? "Et sa main est composée de: " + districtsInHand : "Sa main est vide. ") +  "\n" + "Il a " + gold + " or\n" + (districtsBuilt.size() > 0 ? "Et il a déjà posé: " + districtsBuilt : "Il n'a pas posé de quartiers.");
+
     }
 }
