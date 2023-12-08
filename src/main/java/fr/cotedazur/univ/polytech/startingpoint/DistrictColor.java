@@ -1,3 +1,3 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
-public enum DistrictColor {military, religious, trade, special, noble}
+public enum DistrictColor {militaire, religieux, marchand, special, noble}
