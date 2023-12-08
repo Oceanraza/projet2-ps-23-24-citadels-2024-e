@@ -5,6 +5,10 @@ public class Bot extends Player{
         super();
     }
 
+    Bot(String name){
+        super(name);
+    }
+
     void play(Game game) {
         // The bot draws a card if it has no district in its hand.
         if(districtsInHand.isEmpty()) {
