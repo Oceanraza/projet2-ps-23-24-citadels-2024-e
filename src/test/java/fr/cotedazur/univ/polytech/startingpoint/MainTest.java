@@ -22,4 +22,9 @@ class MainTest {
         }
         assertTrue(Main.isFinished(player));
     }
+
+    @Test
+    void testIsWinner() {
+
+    }
 }
