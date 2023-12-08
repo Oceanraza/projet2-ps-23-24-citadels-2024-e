@@ -1,5 +1,6 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -13,9 +14,7 @@ public class Main {
         return player.getDistrictsBuilt().size() == 8;
     }
 
-    public static Player isWinner(List<Player> players, Player firstBuilder) {
-        int maxScore = 0;
-        Player winner = players.get(0);
+    public static List<Player> calculateScores(List<Player> players, Player firstBuilder) {
         for(Player player : players) {
             int score = player.gold;
             ArrayList<DistrictColor> districtColors = new ArrayList<>();
@@ -23,22 +22,27 @@ public class Main {
                 score += district.getPrice();
                 districtColors.add(district.getColor());
             }
-            if (districtColors.size() == DistrictColor.values().length) {
+            if (districtColors.size() == DistrictColor.values().length) { // If the player has built all the district colors
                 score += 3;
             }
-            if (player == firstBuilder) {
+            if (player == firstBuilder) { // If the player was the first to build his 8 districts
                 score += 4;
-            } else if (isFinished(player)) {
+            } else if (isFinished(player)) { // If the others players have finished building his 8 districts too
                 score += 2;
             }
-            if (score > maxScore) {
-                maxScore = score;
-                winner = player;
-            }
+            player.score = score; // Initialize the player's score
         }
-        return winner;
+        players.sort((player1, player2) -> player2.score - player1.score); // Sort the players by their score
+        return players;
     }
-
+    public static void announceWinner(List<Player> players, Player firstBuilder) {
+        List<Player> playersScores = calculateScores(players, firstBuilder);
+        for (Player player : playersScores) {
+            System.out.println(player.getName() + " : " + player.score + " points");
+        }
+        Player winner = playersScores.get(0);
+        System.out.println(winner.getName() + " gagne la partie avec "+ winner.score + " points !");
+    }
     public static void main(String... args) {
         Game newGame = new Game();
         System.out.println(newGame);
@@ -61,7 +65,7 @@ public class Main {
         int turn = 1;
         Player firstBuilder = null;
         while(!(isFinished(firstBot) || isFinished(secondBot))) {
-            System.out.println("Tour numéro " + turn);
+            System.out.println("Tour numÃ©ro " + turn);
             System.out.println("Bot 1:");
             firstBot.play(newGame);
             if(isFinished(firstBot)) {
@@ -74,6 +78,6 @@ public class Main {
             }
             turn++;
         }
-        System.out.println(isWinner(players, firstBuilder).getName() + " gagne la partie !");
+        announceWinner(players, firstBuilder);
     }
 }
