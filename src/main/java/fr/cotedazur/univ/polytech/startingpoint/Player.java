@@ -9,6 +9,7 @@ public abstract class Player {
     int gold;
     String name;
     int score;
+    Characters characters;
 
     Player(String name){
         this.name = name;
@@ -16,6 +17,7 @@ public abstract class Player {
         districtsBuilt = new ArrayList<>();
         gold = 2;
         score = 0;
+        characters = null;
     }
 
     public List<District> getDistrictsBuilt() {
@@ -34,9 +36,18 @@ public abstract class Player {
         return name;
     }
 
+    public String getCharacters() {
+        return characters.getName();
+    }
+
     public boolean build(District district) {
+        for (District d : districtsBuilt){
+            if (d.getName().equals(district.getName())){ //Checks if the district has already been built or not
+                return false;
+            }
+        }
         // Checks if the player has enough gold to build the district. If so it is built.
-        if (gold >= district.getPrice()) {
+        if (gold >= district.getPrice()){
             districtsBuilt.add(district);
             gold -= district.getPrice();
             districtsInHand.remove(district);
@@ -45,6 +56,11 @@ public abstract class Player {
         }
         return false;
     }
+
+    public void chooseCharacter(Characters characterChosen) {
+        this.characters = characterChosen;
+    }
+
     public String toString(){
         return "\nC'est au tour de : " + name + "\n" + (districtsInHand.size() > 0 ? "Et sa main est composée de: "
                 + districtsInHand : "Sa main est vide. ") +  "\n" + "Il a " + gold + " or\n" +

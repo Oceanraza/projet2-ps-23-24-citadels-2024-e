@@ -19,7 +19,7 @@ public class Bot extends Player{
         }
         // The bot builds one district if it has enough money
         for(District district: districtsInHand) {
-            if(build(district)) {
+            if(build(district)){
                 break;
             }
         }
