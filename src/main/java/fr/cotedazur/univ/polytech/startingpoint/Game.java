@@ -50,7 +50,9 @@ public class Game {
     }
 
     public District drawCard() {
-        return gameDeck.get(random.nextInt(gameDeck.size() - 1));
+        District cardDrawn = gameDeck.get(random.nextInt(gameDeck.size() - 1));
+        gameDeck.remove(cardDrawn);
+        return cardDrawn;
     }
 
     public String toString(){
@@ -60,5 +62,4 @@ public class Game {
         }
         return str;
     }
-
 }
