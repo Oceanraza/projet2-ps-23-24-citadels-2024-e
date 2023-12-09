@@ -29,6 +29,9 @@ public abstract class Player {
     public int getGold() {
         return gold;
     }
+    public void setGold(int gold) {
+        this.gold = gold;
+    }
     public String getName() {
         return name;
     }
@@ -59,6 +62,8 @@ public abstract class Player {
     }
 
     public String toString(){
-        return "\nC'est au tour de : " + name + "\n" + (districtsInHand.size() > 0 ? "Et sa main est composée de: " + districtsInHand : "Sa main est vide. ") +  "\n" + "Il a " + gold + " or\n" + (districtsBuilt.size() > 0 ? "Et il a déjà posé: " + districtsBuilt : "Il n'a pas posé de quartiers.");
+        return "\nC'est au tour de : " + name + "\n" + (districtsInHand.size() > 0 ? "Et sa main est composée de: "
+                + districtsInHand : "Sa main est vide. ") +  "\n" + "Il a " + gold + " or\n" +
+                (districtsBuilt.size() > 0 ? "Et il a déjà posé: " + districtsBuilt : "Il n'a pas posé de quartiers.");
     }
 }
