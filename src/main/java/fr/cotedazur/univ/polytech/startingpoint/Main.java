@@ -11,7 +11,7 @@ public class Main {
 
     // If a player has 8 districts built, he wins
     public static boolean isFinished(Player player) {
-        return player.getDistrictsBuilt().size() == 8;
+        return player.getDistrictsBuilt().size() >= 8;
     }
 
     public static List<Player> calculateScores(List<Player> players, Player firstBuilder) {

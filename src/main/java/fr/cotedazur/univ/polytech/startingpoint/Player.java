@@ -41,13 +41,8 @@ public abstract class Player {
     }
 
     public boolean build(District district) {
-        for (District d : districtsBuilt){
-            if (d.getName().equals(district.getName())){ //Checks if the district has already been built or not
-                return false;
-            }
-        }
         // Checks if the player has enough gold to build the district. If so it is built.
-        if (gold >= district.getPrice()){
+        if (gold >= district.getPrice() && isNotBuilt(district)){
             districtsBuilt.add(district);
             gold -= district.getPrice();
             districtsInHand.remove(district);
@@ -57,13 +52,34 @@ public abstract class Player {
         return false;
     }
 
+    public boolean isNotBuilt(District district) {
+        if (districtsBuilt.isEmpty()) {
+            return true;
+        }
+        for (District d : districtsBuilt){
+            if (d.getName().equals(district.getName())){ //Checks if the district has already been built or not
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean districtsAlreadyBuilt() {
+        for (District d : districtsInHand){
+            if(isNotBuilt(d)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     public void chooseCharacter(Characters characterChosen) {
         this.characters = characterChosen;
     }
 
     public String toString(){
-        return "\nC'est au tour de : " + name + "\n" + (districtsInHand.size() > 0 ? "Et sa main est composée de: "
+        return "\nC'est au tour de : " + name + "\n" + (!districtsInHand.isEmpty() ? "Et sa main est composée de: "
                 + districtsInHand : "Sa main est vide. ") +  "\n" + "Il a " + gold + " or\n" +
-                (districtsBuilt.size() > 0 ? "Et il a déjà posé: " + districtsBuilt : "Il n'a pas posé de quartiers.");
+                (!districtsBuilt.isEmpty() ? "Et il a déjà posé: " + districtsBuilt : "Il n'a pas posé de quartiers.");
     }
 }
