@@ -7,6 +7,7 @@ import static fr.cotedazur.univ.polytech.startingpoint.Main.random;
 public class Game {
 
     public ArrayList<District> gameDeck = new ArrayList<>();
+    private Crown crown;
 
     public void addCardNumber(District d,int n){
         for (int i = 0; i<n; i++){
@@ -46,7 +47,12 @@ public class Game {
         addCardNumber( new District("Cour des miracles", 2, DistrictColor.special), 1);
         addCardNumber( new District("Cimetiere", 5, DistrictColor.special), 1);
 
+        // Create a crown
+        crown = new Crown();
+    }
 
+    public Crown getCrown() {
+        return crown;
     }
 
     public District drawCard() {
