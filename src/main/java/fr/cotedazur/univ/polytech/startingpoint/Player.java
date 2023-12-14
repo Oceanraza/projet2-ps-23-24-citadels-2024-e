@@ -17,7 +17,6 @@ public abstract class Player {
         districtsBuilt = new ArrayList<>();
         gold = 2;
         score = 0;
-        characters = null;
     }
 
     public List<District> getDistrictsBuilt() {
@@ -26,6 +25,9 @@ public abstract class Player {
     public List<District> getDistrictsInHand() {
         return districtsInHand;
     }
+    public void setGold(int nb) {
+        gold = nb;
+    }
     public int getGold() {
         return gold;
     }
@@ -33,10 +35,15 @@ public abstract class Player {
         return name;
     }
 
-    public String getCharacters() {
+    public Characters getCharacter() {
+        return characters;
+    }
+
+    public String getCharactersName() {
         return characters.getName();
     }
 
+    // Function to build a district
     public boolean build(District district) {
         // Checks if the player has enough gold to build the district. If so it is built.
         if (gold >= district.getPrice()) {
