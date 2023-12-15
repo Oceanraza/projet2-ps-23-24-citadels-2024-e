@@ -49,11 +49,10 @@ public class Main {
         Game newGame = new Game();
         // System.out.println(newGame);
 
+        // Players join the game
         Bot firstBot = new Bot("Donald");
         Bot secondBot = new Bot("Picsou");
-        List<Player> players = new ArrayList<>();
-        players.add(firstBot);
-        players.add(secondBot);
+        newGame.setPlayers(firstBot, secondBot);
 
         for (int i = 0; i < START_CARDS_NUMBER; i++) {
             District firstBotDistrict = newGame.drawCard();
@@ -64,6 +63,7 @@ public class Main {
             secondBot.districtsInHand.add(secondBotDistrict);
             newGame.gameDeck.remove(secondBotDistrict);
         }
+
         int turn = 1;
         Player firstBuilder = null;
         while (!(isFinished(firstBot) || isFinished(secondBot))) {
@@ -88,6 +88,6 @@ public class Main {
             }
             turn++;
         }
-        announceWinner(players, firstBuilder);
+        announceWinner(newGame.getPlayers(), firstBuilder);
     }
 }
