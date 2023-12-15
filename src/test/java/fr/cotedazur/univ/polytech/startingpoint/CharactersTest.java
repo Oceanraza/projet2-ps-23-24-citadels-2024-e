@@ -25,7 +25,7 @@ class CharactersTest {
 
     @Test
     void character1Test() {
-        assertEquals("Personnage 1", character1.getName());
+        assertEquals("Character1", character1.getName());
         assertEquals(1, character1.getRunningOrder());
     }
 }

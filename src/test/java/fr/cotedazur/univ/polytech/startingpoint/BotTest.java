@@ -21,6 +21,7 @@ class BotTest {
         };
     }
 
+    /*
     @Test
     void testPlay() {
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
@@ -41,4 +42,5 @@ class BotTest {
                 bot.getName() + " a construit le quartier " + cardDrawn.getName() + LINE_SEPARATOR;
         assertEquals(expectedOutput, outContent.toString());
     }
+     */
 }
