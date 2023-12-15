@@ -12,6 +12,10 @@ public class Actions {
                 }
             }
             player.gold += addenGold;
+            if (addenGold != 0) {
+                System.out
+                        .println("Le " + player.getCharactersName() + " a donné " + addenGold + " or a " + player.name);
+            }
             return addenGold;
         }
         return 0;
