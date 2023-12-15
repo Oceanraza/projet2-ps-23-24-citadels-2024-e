@@ -11,7 +11,7 @@ public abstract class Player {
     int score;
     Characters characters;
 
-    Player(String name){
+    Player(String name) {
         this.name = name;
         districtsInHand = new ArrayList<>();
         districtsBuilt = new ArrayList<>();
@@ -22,18 +22,19 @@ public abstract class Player {
     public List<District> getDistrictsBuilt() {
         return districtsBuilt;
     }
+
     public List<District> getDistrictsInHand() {
         return districtsInHand;
     }
-    public void setGold(int nb) {
-        gold = nb;
-    }
+
     public int getGold() {
         return gold;
     }
+
     public void setGold(int gold) {
         this.gold = gold;
     }
+
     public String getName() {
         return name;
     }
@@ -48,8 +49,9 @@ public abstract class Player {
 
     // Function to build a district
     public boolean build(District district) {
-        // Checks if the player has enough gold to build the district. If so it is built.
-        if (gold >= district.getPrice() && isNotBuilt(district)){
+        // Checks if the player has enough gold to build the district. If so it is
+        // built.
+        if (gold >= district.getPrice() && isNotBuilt(district)) {
             districtsBuilt.add(district);
             gold -= district.getPrice();
             districtsInHand.remove(district);
@@ -63,8 +65,8 @@ public abstract class Player {
         if (districtsBuilt.isEmpty()) {
             return true;
         }
-        for (District d : districtsBuilt){
-            if (d.getName().equals(district.getName())){ //Checks if the district has already been built or not
+        for (District d : districtsBuilt) {
+            if (d.getName().equals(district.getName())) { // Checks if the district has already been built or not
                 return false;
             }
         }
@@ -72,8 +74,8 @@ public abstract class Player {
     }
 
     public boolean districtsAlreadyBuilt() {
-        for (District d : districtsInHand){
-            if(isNotBuilt(d)) {
+        for (District d : districtsInHand) {
+            if (isNotBuilt(d)) {
                 return false;
             }
         }
@@ -84,9 +86,9 @@ public abstract class Player {
         this.characters = characterChosen;
     }
 
-    public String toString(){
+    public String toString() {
         return "\nC'est au tour de : " + name + "\n" + (!districtsInHand.isEmpty() ? "Et sa main est composée de: "
-                + districtsInHand : "Sa main est vide. ") +  "\n" + "Il a " + gold + " or\n" +
+                + districtsInHand : "Sa main est vide. ") + "\n" + "Il a " + gold + " or\n" +
                 (!districtsBuilt.isEmpty() ? "Et il a déjà posé: " + districtsBuilt : "Il n'a pas posé de quartiers.");
     }
 }
