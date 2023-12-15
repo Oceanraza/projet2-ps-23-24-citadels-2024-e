@@ -70,10 +70,12 @@ public class Main {
             newGame.shuffleChars(2);
             System.out.println("\nTour numero " + turn + "\nLa couronne appartient à "
                     + (newGame.getCrown().getOwner() != null ? newGame.getCrown().getOwner().name : "personne"));
+            System.out.println("Choix des personnages.");
             System.out.println(firstBot);
             firstBot.chooseCharacterAlgorithm(newGame);
             System.out.println(secondBot);
             secondBot.chooseCharacterAlgorithm(newGame);
+            System.out.println("Jouez !");
             System.out.println(firstBot);
             firstBot.play(newGame);
             if (isFinished(firstBot)) {
