@@ -26,7 +26,6 @@ public abstract class Player {
     public List<District> getDistrictsInHand() {
         return districtsInHand;
     }
-
     public int getGold() {
         return gold;
     }
@@ -45,6 +44,14 @@ public abstract class Player {
 
     public String getCharactersName() {
         return characters.getName();
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
     }
 
     // Function to build a district
