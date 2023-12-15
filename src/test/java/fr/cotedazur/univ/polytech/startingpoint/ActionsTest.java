@@ -1,27 +1,27 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
-import fr.cotedazur.univ.polytech.startingpoint.characters.Character1;
-import fr.cotedazur.univ.polytech.startingpoint.characters.King;
+import static org.junit.jupiter.api.Assertions.*;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import fr.cotedazur.univ.polytech.startingpoint.characters.Character1;
+import fr.cotedazur.univ.polytech.startingpoint.characters.King;
 
 public class ActionsTest {
     King king;
     Character1 character1;
-    Player player;
+    Bot player;
     Game game;
 
     @BeforeEach
     void setUp() {
         king = new King();
         character1 = new Character1();
-        player = new Player("Bot") {};
+        player = new Bot("Bot") {
+        };
         game = new Game();
+        game.init();
     }
 
     @Test
@@ -55,4 +55,28 @@ public class ActionsTest {
         Actions.applySpecialEffect(player, game);
         assertEquals(4, player.getGold());
     }
+
+    @Test
+    void chooseCharTestChar1() {
+        game.shuffleChars(2);
+        player.chooseCharacterAlgorithm(game);
+        assertEquals(player.getCharacter().name, "Character1");
+    }
+
+    @Test
+    void chooseCharTestKing() {
+        game.shuffleChars(2);
+        player.setGold(8);
+        player.districtsInHand.add(game.drawCard());
+        player.districtsBuilt.add(game.drawCard());
+        player.districtsBuilt.add(game.drawCard());
+        player.districtsBuilt.add(game.drawCard());
+        player.districtsBuilt.add(game.drawCard());
+        player.districtsBuilt.add(game.drawCard());
+        player.districtsBuilt.add(game.drawCard());
+        player.districtsBuilt.add(game.drawCard());
+        player.chooseCharacterAlgorithm(game);
+        assertEquals(player.getCharacter().name, "Roi");
+    }
+
 }
