@@ -32,7 +32,11 @@ public class Main {
             }
             player.score = score; // Initialize the player's score
         }
-        players.sort((player1, player2) -> player2.score - player1.score); // Sort the players by their score
+        if (players.get(0).getScore() == players.get(1).getScore()) {
+            players.sort((player1, player2) -> player2.getCharacter().runningOrder - player1.getCharacter().runningOrder); // Sort the players by their character running order
+        } else {
+            players.sort((player1, player2) -> player2.score - player1.score); // Sort the players by their score
+        }
         return players;
     }
     public static void announceWinner(List<Player> players, Player firstBuilder) {
