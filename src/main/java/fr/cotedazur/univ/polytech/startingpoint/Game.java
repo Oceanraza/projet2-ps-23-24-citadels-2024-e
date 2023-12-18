@@ -16,7 +16,7 @@ public class Game {
 
     public ArrayList<District> gameDeck;
     private Crown crown;
-    public List<Player> players;
+    public List<Player> bots;
     public Map<String, Characters> allCharacters = new HashMap<>();
     public ArrayList<Characters> availableChars = new ArrayList<>();
 
@@ -64,7 +64,7 @@ public class Game {
         crown = new Crown();
 
         // Create the list of players
-        players = new ArrayList<>();
+        bots = new ArrayList<Player>();
 
         // Creates the characters
         allCharacters.put("King", new King());
@@ -76,13 +76,13 @@ public class Game {
     }
 
     // Add players to the list of players
-    public void setPlayers(Bot firstBot, Bot secondBot) {
-        players.add(firstBot);
-        players.add(secondBot);
+    public void setPlayers(Player firstBot, Player secondBot) {
+        bots.add(firstBot);
+        bots.add(secondBot);
     }
 
     public List<Player> getPlayers() {
-        return players;
+        return bots;
     }
 
     // Set running order depending on the running order of the characters

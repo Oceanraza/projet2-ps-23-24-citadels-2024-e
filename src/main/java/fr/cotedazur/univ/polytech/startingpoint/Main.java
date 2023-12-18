@@ -54,6 +54,8 @@ public class Main {
         Bot secondBot = new Bot("Picsou");
         newGame.setPlayers(firstBot, secondBot);
 
+        List<Player> players = newGame.getPlayers();
+
         for (int i = 0; i < START_CARDS_NUMBER; i++) {
             District firstBotDistrict = newGame.drawCard();
             firstBot.districtsInHand.add(firstBotDistrict);
@@ -70,24 +72,28 @@ public class Main {
             newGame.shuffleChars(2);
             System.out.println("\nTour numero " + turn + "\nLa couronne appartient à "
                     + (newGame.getCrown().getOwner() != null ? newGame.getCrown().getOwner().name : "personne"));
+
+            // Character selection phase
             System.out.println("Choix des personnages.");
             System.out.println(firstBot);
             firstBot.chooseCharacterAlgorithm(newGame);
             System.out.println(secondBot);
             secondBot.chooseCharacterAlgorithm(newGame);
+
+            // Character reveal phase
             System.out.println("Jouez !");
-            System.out.println(firstBot);
-            firstBot.play(newGame);
-            if (isFinished(firstBot)) {
-                firstBuilder = firstBot;
+            List<Player> runningOrder = newGame.setRunningOrder(players);
+
+            for (Player player: runningOrder) {
+                System.out.println(player);
+                player.play(newGame);
+                if (isFinished(player)) {
+                    firstBuilder = player;
+                }
             }
-            System.out.println(secondBot);
-            secondBot.play(newGame);
-            if (isFinished(secondBot) && !isFinished(firstBot)) {
-                firstBuilder = secondBot;
-            }
+
             turn++;
         }
-        announceWinner(newGame.getPlayers(), firstBuilder);
+        announceWinner(players, firstBuilder);
     }
 }
