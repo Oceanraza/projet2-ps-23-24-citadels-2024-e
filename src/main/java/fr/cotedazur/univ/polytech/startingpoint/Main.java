@@ -74,7 +74,7 @@ public class Main {
                     + (newGame.getCrown().getOwner() != null ? newGame.getCrown().getOwner().name : "personne"));
 
             // Character selection phase
-            System.out.println("Choix des personnages.");
+            System.out.println("Choix des personnages");
             System.out.println(firstBot);
             firstBot.chooseCharacterAlgorithm(newGame);
             System.out.println(secondBot);
@@ -82,7 +82,7 @@ public class Main {
 
             // Character reveal phase
             System.out.println("Jouez !");
-            List<Player> runningOrder = newGame.setRunningOrder(players);
+            List<Player> runningOrder = newGame.setRunningOrder();
 
             for (Player player: runningOrder) {
                 System.out.println(player);

@@ -67,8 +67,8 @@ public class Game {
         bots = new ArrayList<Player>();
 
         // Creates the characters
-        allCharacters.put("King", new King());
-        allCharacters.put("Character1", new Character1());
+        allCharacters.put("Roi", new King());
+        allCharacters.put("Personnage 1", new Character1());
     }
 
     public Crown getCrown() {
@@ -86,8 +86,8 @@ public class Game {
     }
 
     // Set running order depending on the running order of the characters
-    public List<Player> setRunningOrder(List<Player> players) {
-        return players.stream()
+    public List<Player> setRunningOrder() {
+        return this.getPlayers().stream()
                 .sorted(Comparator.comparingInt(player -> player.getCharacter().getRunningOrder()))
                 .collect(Collectors.toList());
     }
@@ -103,8 +103,8 @@ public class Game {
         while (!availableChars.isEmpty()) {
             availableChars.remove(0);
         }
-        availableChars.add(allCharacters.get("King"));
-        availableChars.add(allCharacters.get("Character1"));
+        availableChars.add(allCharacters.get("Roi"));
+        availableChars.add(allCharacters.get("Personnage 1"));
     }
 
     public ArrayList<Characters> availableCharacters() {

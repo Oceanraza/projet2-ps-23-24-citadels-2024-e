@@ -1,5 +1,7 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
+import fr.cotedazur.univ.polytech.startingpoint.characters.Character1;
+import fr.cotedazur.univ.polytech.startingpoint.characters.King;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -17,8 +19,7 @@ class MainTest {
 
     @BeforeEach
     void setUp() {
-        player = new Bot("Test") {
-        };
+        player = new Bot("Test");
     }
 
     @Test
@@ -28,6 +29,81 @@ class MainTest {
             player.getDistrictsBuilt().add(new District("test", 0, DistrictColor.marchand));
         }
         assertTrue(Main.isFinished(player));
+    }
+
+    @Test
+    void testRunningOrder() {
+        Player firstPlayer = new Bot("Player 1");
+        Player secondPlayer = new Bot("Player 2");
+        Character1 character1 = new Character1();
+        King king = new King();
+        Game newGame = new Game();
+
+        // Create list of players
+        newGame.setPlayers(firstPlayer, secondPlayer);
+
+        // Players choose a character
+        firstPlayer.chooseCharacter(king);
+        secondPlayer.chooseCharacter(character1);
+
+        // Set running order
+        List<Player> runningOrder = newGame.setRunningOrder();
+        assertEquals(secondPlayer.getName(), runningOrder.get(0).getName());
+        assertEquals(firstPlayer.getName(), runningOrder.get(1).getName());
+    }
+
+    @Test
+    void testRunningOrder2() {
+        Player firstPlayer = new Bot("Player 1");
+        Player secondPlayer = new Bot("Player 2");
+        Character1 character1 = new Character1();
+        King king = new King();
+        Game newGame = new Game();
+
+        // Create list of players
+        newGame.setPlayers(firstPlayer, secondPlayer);
+
+        // Players choose a character
+        firstPlayer.chooseCharacter(character1);
+        secondPlayer.chooseCharacter(king);
+
+        // Set running order
+        List<Player> runningOrder = newGame.setRunningOrder();
+        assertEquals(firstPlayer.getName(), runningOrder.get(0).getName());
+        assertEquals(secondPlayer.getName(), runningOrder.get(1).getName());
+    }
+
+    @Test
+    void testRunningOrderInTwoRounds() {
+        Player firstPlayer = new Bot("Player 1");
+        Player secondPlayer = new Bot("Player 2");
+        Character1 character1 = new Character1();
+        King king = new King();
+        Game newGame = new Game();
+        List<Player> runningOrder;
+
+        // Create list of players
+        newGame.setPlayers(firstPlayer, secondPlayer);
+
+        // Round 1
+        // Players choose a character
+        firstPlayer.chooseCharacter(king);
+        secondPlayer.chooseCharacter(character1);
+
+        // Set running order
+        runningOrder = newGame.setRunningOrder();
+        assertEquals(secondPlayer.getName(), runningOrder.get(0).getName());
+        assertEquals(firstPlayer.getName(), runningOrder.get(1).getName());
+
+        // Round 2
+        // Players choose a character
+        firstPlayer.chooseCharacter(character1);
+        secondPlayer.chooseCharacter(king);
+
+        // Set running order
+        runningOrder = newGame.setRunningOrder();
+        assertEquals(firstPlayer.getName(), runningOrder.get(0).getName());
+        assertEquals(secondPlayer.getName(), runningOrder.get(1).getName());
     }
 
     @Test

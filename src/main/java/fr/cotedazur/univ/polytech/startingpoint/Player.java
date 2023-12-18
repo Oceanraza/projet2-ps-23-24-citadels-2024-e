@@ -84,12 +84,19 @@ public abstract class Player {
         return true;
     }
 
-    public void chooseCharacter(Characters characterChosen) {
-        this.characters = characterChosen;
+    public void chooseCharacter(Characters chosenCharacter) {
+        this.characters = chosenCharacter;
     }
 
     public String toString() {
-        return "\nC'est au tour de : " + name + "\n" + (!districtsInHand.isEmpty() ? "Et sa main est composée de: "
+        if (characters == null) {
+            return "\nC'est au tour de : " + name + "\n" + (!districtsInHand.isEmpty() ? "Et sa main est composée de: "
+                    + districtsInHand : "Sa main est vide. ") + "\n" + "Il a " + gold + " or\n" +
+                    (!districtsBuilt.isEmpty() ? "Et il a déjà posé: " + districtsBuilt : "Il n'a pas posé de quartiers.");
+        }
+
+        // If a character is chosen, we specify the character
+        return "\nC'est au tour du " + characters.getName() + " : " + name + "\n" + (!districtsInHand.isEmpty() ? "Et sa main est composée de: "
                 + districtsInHand : "Sa main est vide. ") + "\n" + "Il a " + gold + " or\n" +
                 (!districtsBuilt.isEmpty() ? "Et il a déjà posé: " + districtsBuilt : "Il n'a pas posé de quartiers.");
     }
