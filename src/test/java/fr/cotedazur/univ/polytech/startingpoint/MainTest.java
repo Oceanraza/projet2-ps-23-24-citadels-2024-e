@@ -17,7 +17,7 @@ class MainTest {
 
     @BeforeEach
     void setUp() {
-        player = new Player("Test") {
+        player = new Bot("Test") {
         };
     }
 

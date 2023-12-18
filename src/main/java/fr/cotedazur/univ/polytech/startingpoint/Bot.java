@@ -58,7 +58,8 @@ public class Bot extends Player {
         }
     }
 
-    void play(Game game) {
+    @Override
+    public void play(Game game) {
         // Apply special effect
         Actions.applySpecialEffect(this, game);
         // Collect gold

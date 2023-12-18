@@ -19,6 +19,8 @@ public abstract class Player {
         score = 0;
     }
 
+    public abstract void play(Game game);
+
     public List<District> getDistrictsBuilt() {
         return districtsBuilt;
     }

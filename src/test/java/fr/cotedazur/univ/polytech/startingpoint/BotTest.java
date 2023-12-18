@@ -15,10 +15,8 @@ class BotTest {
 
     @BeforeEach
     void setUp() {
-        game = new Game() {
-        };
-        bot = new Bot("Bot") {
-        };
+        game = new Game();
+        bot = new Bot("Bot");
     }
 
     @Test
