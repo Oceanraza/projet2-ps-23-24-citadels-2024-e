@@ -6,7 +6,7 @@ import fr.cotedazur.univ.polytech.startingpoint.Player;
 
 public class Character1 extends Characters {
     public Character1() {
-        super("Character1", 1);
+        super("Personnage 1", 1);
     }
 
     @Override

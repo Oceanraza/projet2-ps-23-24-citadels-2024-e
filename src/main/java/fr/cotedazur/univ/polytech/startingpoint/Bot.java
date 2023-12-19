@@ -12,7 +12,6 @@ public class Bot extends Player {
 
     public boolean canBuildDistrictThisTurn() { // Checks If a district in Hand can be built with +2 gold
         for (District dist : districtsInHand) {
-            System.out.println(dist.getPrice() + "," + this.getGold() + 2);
             if (dist.getPrice() <= this.getGold() + 2) {
                 return true;
             }
@@ -48,19 +47,20 @@ public class Bot extends Player {
             chooseCharacter(chosenCharacter);
             game.removeChar(chosenCharacter);
             System.out.println(this.name + " a choisi le " + chosenCharacter.getName());
-            return;
         } else {
-            Characters chosenCharacter = getCharInList(availableChars, "Character1");
+            Characters chosenCharacter = getCharInList(availableChars, "Personnage 1");
             chooseCharacter(chosenCharacter);
             game.removeChar(chosenCharacter);
             System.out.println(this.name + " a choisi le " + chosenCharacter.getName());
-            return;
         }
     }
 
-    void play(Game game) {
+    @Override
+    public void play(Game game) {
         // Apply special effect
-        Actions.applySpecialEffect(this, game);
+        if (characters != null) {
+            Actions.applySpecialEffect(this, game);
+        }
         // Collect gold
         gold += Actions.updateGold(this);
         // The bot draws a card if it has no district in its hand.

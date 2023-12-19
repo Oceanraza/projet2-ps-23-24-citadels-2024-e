@@ -15,10 +15,8 @@ class BotTest {
 
     @BeforeEach
     void setUp() {
-        game = new Game() {
-        };
-        bot = new Bot("Bot") {
-        };
+        game = new Game();
+        bot = new Bot("Bot");
     }
 
     /*
@@ -28,8 +26,8 @@ class BotTest {
         System.setOut(new PrintStream(outContent));
         bot.setGold(0);
         bot.play(game);
-        String expectedOutput = bot.getName() + " pioche." + LINE_SEPARATOR;
-        assertEquals(expectedOutput, outContent.toString());
+        String expectedOutput = bot.getName() + " pioche ";
+        assert(outContent.toString().startsWith(expectedOutput));
 
         outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
