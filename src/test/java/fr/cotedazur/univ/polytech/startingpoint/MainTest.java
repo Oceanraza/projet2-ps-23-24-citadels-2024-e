@@ -1,5 +1,7 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
+import fr.cotedazur.univ.polytech.startingpoint.characters.Character1;
+import fr.cotedazur.univ.polytech.startingpoint.characters.King;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -8,6 +10,7 @@ import java.io.PrintStream;
 import java.util.Arrays;
 import java.util.List;
 
+import static fr.cotedazur.univ.polytech.startingpoint.Main.calculateScores;
 import static org.junit.jupiter.api.Assertions.*;
 
 class MainTest {
@@ -46,10 +49,19 @@ class MainTest {
         secondPlayer.getDistrictsBuilt().add(new District("noble", 1, DistrictColor.noble));
         secondPlayer.getDistrictsBuilt().add(new District("special", 1, DistrictColor.special));
 
-        List<Player> scoredPlayers = Main.calculateScores(players, firstBuilder);
+        List<Player> scoredPlayers = calculateScores(players, firstBuilder);
 
         assertEquals(34, scoredPlayers.get(0).score);
         assertEquals(10, scoredPlayers.get(1).score);
+
+        // If the scores are equal
+        Characters king = new King();
+        Characters character1 = new Character1();
+        firstBuilder.chooseCharacter(king);
+        secondPlayer.chooseCharacter(character1);
+        firstBuilder.setScore(0);
+        secondPlayer.setScore(0);
+        assertEquals(calculateScores(players, firstBuilder).get(0), firstBuilder);
     }
     @Test
     void testAnnounceWinner() {
