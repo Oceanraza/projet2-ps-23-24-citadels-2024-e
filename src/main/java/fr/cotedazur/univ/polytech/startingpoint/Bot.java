@@ -60,9 +60,9 @@ public class Bot extends Player {
 
     void play(Game game) {
         // Apply special effect
-        Actions.applySpecialEffect(this, game);
+        ActionManager.applySpecialEffect(this, game);
         // Collect gold
-        gold += Actions.updateGold(this);
+        gold += ActionManager.updateGold(this);
         // The bot draws a card if it has no district in its hand.
         if (districtsInHand.isEmpty() || districtsAlreadyBuilt()) {
             District drawnDistrict = game.drawCard();

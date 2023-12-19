@@ -1,6 +1,6 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
-public class Actions {
+public class ActionManager {
     public static int updateGold(Player player) {
         // King
         if (player.getCharactersName().equals("Roi")) {
