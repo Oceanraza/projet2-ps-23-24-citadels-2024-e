@@ -70,18 +70,21 @@ public class Main {
         Player firstBuilder = null;
         while (!(isFinished(firstBot) || isFinished(secondBot))) {
             newGame.shuffleChars(2);
-            System.out.println("\nTour numero " + turn + "\nLa couronne appartient à "
+            // "\033[0;94m" : Shinning blue
+            // "\033[0;34m" : Blue
+            // "\033[0m" : Reset
+            System.out.println("\033[0;94m" + "\n\n----- Tour numero " + turn + " -----" + "\033[0m" + "\nLa couronne appartient à "
                     + (newGame.getCrown().getOwner() != null ? newGame.getCrown().getOwner().name : "personne"));
 
             // Character selection phase
-            System.out.println("Choix des personnages");
+            System.out.println("\033[0;34m" + "\n[ Phase 1 ] Choix des personnages" + "\033[0m");
             System.out.println(firstBot);
             firstBot.chooseCharacterAlgorithm(newGame);
             System.out.println(secondBot);
             secondBot.chooseCharacterAlgorithm(newGame);
 
             // Character reveal phase
-            System.out.println("Jouez !");
+            System.out.println("\033[0;34m" + "\n[ Phase 2 ] Tour des joueurs" + "\033[0m");
             List<Player> runningOrder = newGame.setRunningOrder();
 
             for (Player player: runningOrder) {
