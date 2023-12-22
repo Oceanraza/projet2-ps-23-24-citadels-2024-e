@@ -5,8 +5,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import fr.cotedazur.univ.polytech.startingpoint.characters.Character1;
-import fr.cotedazur.univ.polytech.startingpoint.characters.King;
+import fr.cotedazur.univ.polytech.startingpoint.gameCharacter.Character1;
+import fr.cotedazur.univ.polytech.startingpoint.gameCharacter.King;
 
 public class ActionManagerTest {
     King king;

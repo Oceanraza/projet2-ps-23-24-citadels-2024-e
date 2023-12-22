@@ -2,7 +2,7 @@ package fr.cotedazur.univ.polytech.startingpoint;
 
 import java.util.ArrayList;
 
-import fr.cotedazur.univ.polytech.startingpoint.characters.King;
+import fr.cotedazur.univ.polytech.startingpoint.gameCharacter.King;
 
 public class Bot extends Player {
 
@@ -20,8 +20,8 @@ public class Bot extends Player {
         return false;
     }
 
-    public boolean isCharInList(ArrayList<Characters> cha, String askedChar) {
-        for (Characters temp : cha) {
+    public boolean isCharInList(ArrayList<GameCharacter> cha, String askedChar) {
+        for (GameCharacter temp : cha) {
             if (temp.getName().equals(askedChar)) {
                 return true;
             }
@@ -29,8 +29,8 @@ public class Bot extends Player {
         return false;
     }
 
-    public Characters getCharInList(ArrayList<Characters> cha, String askedChar) {
-        for (Characters temp : cha) {
+    public GameCharacter getCharInList(ArrayList<GameCharacter> cha, String askedChar) {
+        for (GameCharacter temp : cha) {
             if (temp.getName().equals(askedChar)) {
                 return temp;
             }
@@ -41,16 +41,16 @@ public class Bot extends Player {
     }
 
     public void chooseCharacterAlgorithm(Game game) {
-        ArrayList<Characters> availableChars = game.availableCharacters();
+        ArrayList<GameCharacter> availableChars = game.availableCharacters();
         if ((this.districtsInHand.size() > 0) && (this.districtsBuilt.size() >= 7) && (canBuildDistrictThisTurn())
                 && (isCharInList(availableChars, "Roi"))) {
-            Characters chosenCharacter = getCharInList(availableChars, "Roi");
+            GameCharacter chosenCharacter = getCharInList(availableChars, "Roi");
             chooseCharacter(chosenCharacter);
             game.removeChar(chosenCharacter);
             System.out.println(this.name + " a choisi le " + chosenCharacter.getName());
             return;
         } else {
-            Characters chosenCharacter = getCharInList(availableChars, "Character1");
+            GameCharacter chosenCharacter = getCharInList(availableChars, "Character1");
             chooseCharacter(chosenCharacter);
             game.removeChar(chosenCharacter);
             System.out.println(this.name + " a choisi le " + chosenCharacter.getName());

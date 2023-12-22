@@ -9,7 +9,7 @@ public abstract class Player {
     int gold;
     String name;
     int score;
-    Characters characters;
+    GameCharacter gameCharacter;
 
     Player(String name) {
         this.name = name;
@@ -38,12 +38,12 @@ public abstract class Player {
         return name;
     }
 
-    public Characters getCharacter() {
-        return characters;
+    public GameCharacter getCharacter() {
+        return gameCharacter;
     }
 
     public String getCharactersName() {
-        return characters.getName();
+        return gameCharacter.getName();
     }
 
     public int getScore() {
@@ -89,8 +89,8 @@ public abstract class Player {
         return true;
     }
 
-    public void chooseCharacter(Characters characterChosen) {
-        this.characters = characterChosen;
+    public void chooseCharacter(GameCharacter characterChosen) {
+        this.gameCharacter = characterChosen;
     }
 
     public String toString() {

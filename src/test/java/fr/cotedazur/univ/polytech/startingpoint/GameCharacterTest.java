@@ -1,13 +1,13 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
-import fr.cotedazur.univ.polytech.startingpoint.characters.Character1;
-import fr.cotedazur.univ.polytech.startingpoint.characters.King;
+import fr.cotedazur.univ.polytech.startingpoint.gameCharacter.Character1;
+import fr.cotedazur.univ.polytech.startingpoint.gameCharacter.King;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class CharactersTest {
+class GameCharacterTest {
     King king;
     Character1 character1;
 
