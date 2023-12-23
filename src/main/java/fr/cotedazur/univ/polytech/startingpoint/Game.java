@@ -12,6 +12,7 @@ import java.util.Map;
 import fr.cotedazur.univ.polytech.startingpoint.characters.Character1;
 import fr.cotedazur.univ.polytech.startingpoint.characters.King;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
+import fr.cotedazur.univ.polytech.startingpoint.players.Player;
 
 public class Game {
 
