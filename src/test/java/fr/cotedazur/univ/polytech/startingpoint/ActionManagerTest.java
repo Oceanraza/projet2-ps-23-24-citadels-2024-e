@@ -61,10 +61,10 @@ import fr.cotedazur.univ.polytech.startingpoint.characters.King;
     void chooseCharTestChar1() {
         game.shuffleChars(2);
         player.chooseCharacterAlgorithm(game);
-        assertEquals(player.getCharacter().name, "Character1");
+        assertEquals("Personnage 1", player.getCharacter().name);
     }
 
-   /* @Test
+    @Test
     void chooseCharTestKing() {
         game.shuffleChars(2);
         player.setGold(8);
@@ -79,5 +79,5 @@ import fr.cotedazur.univ.polytech.startingpoint.characters.King;
         player.chooseCharacterAlgorithm(game);
         assertEquals(player.getCharacter().name, "Roi");
     }
-*/
+
 }
