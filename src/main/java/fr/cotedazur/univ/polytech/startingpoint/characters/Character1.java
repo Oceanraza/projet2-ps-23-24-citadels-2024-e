@@ -2,7 +2,7 @@ package fr.cotedazur.univ.polytech.startingpoint.characters;
 
 import fr.cotedazur.univ.polytech.startingpoint.Characters;
 import fr.cotedazur.univ.polytech.startingpoint.Game;
-import fr.cotedazur.univ.polytech.startingpoint.Player;
+import fr.cotedazur.univ.polytech.startingpoint.players.Player;
 
 public class Character1 extends Characters {
     public Character1() {

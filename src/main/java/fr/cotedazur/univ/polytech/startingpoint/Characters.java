@@ -1,5 +1,7 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
+import fr.cotedazur.univ.polytech.startingpoint.players.Player;
+
 // This class is called CharacterS because we can't name it Character
 public abstract class Characters {
     protected String name;

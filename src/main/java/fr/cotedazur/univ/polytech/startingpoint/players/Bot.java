@@ -1,17 +1,23 @@
-package fr.cotedazur.univ.polytech.startingpoint;
+package fr.cotedazur.univ.polytech.startingpoint.players;
 
 import java.util.ArrayList;
 
+import fr.cotedazur.univ.polytech.startingpoint.ActionManager;
+import fr.cotedazur.univ.polytech.startingpoint.Characters;
+import fr.cotedazur.univ.polytech.startingpoint.District;
+import fr.cotedazur.univ.polytech.startingpoint.Game;
 import fr.cotedazur.univ.polytech.startingpoint.characters.King;
+import fr.cotedazur.univ.polytech.startingpoint.players.Player;
 
 public class Bot extends Player {
 
-    Bot(String name) {
+    public Bot(String name) {
         super(name);
     }
 
     public boolean canBuildDistrictThisTurn() { // Checks If a district in Hand can be built with +2 gold
         for (District dist : districtsInHand) {
+            System.out.println(dist.getPrice() + "," + this.getGold() + 2);
             if (dist.getPrice() <= this.getGold() + 2) {
                 return true;
             }
@@ -47,22 +53,21 @@ public class Bot extends Player {
             chooseCharacter(chosenCharacter);
             game.removeChar(chosenCharacter);
             System.out.println(this.name + " a choisi le " + chosenCharacter.getName());
+            return;
         } else {
-            Characters chosenCharacter = getCharInList(availableChars, "Personnage 1");
+            Characters chosenCharacter = getCharInList(availableChars, "Character1");
             chooseCharacter(chosenCharacter);
             game.removeChar(chosenCharacter);
             System.out.println(this.name + " a choisi le " + chosenCharacter.getName());
+            return;
         }
     }
 
-    @Override
     public void play(Game game) {
         // Apply special effect
-        if (characters != null) {
-            Actions.applySpecialEffect(this, game);
-        }
+        ActionManager.applySpecialEffect(this, game);
         // Collect gold
-        gold += Actions.updateGold(this);
+        gold += ActionManager.updateGold(this);
         // The bot draws a card if it has no district in its hand.
         if (districtsInHand.isEmpty() || districtsAlreadyBuilt()) {
             District drawnDistrict = game.drawCard();

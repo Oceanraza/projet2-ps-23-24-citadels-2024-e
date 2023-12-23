@@ -2,6 +2,8 @@ package fr.cotedazur.univ.polytech.startingpoint;
 
 import fr.cotedazur.univ.polytech.startingpoint.characters.Character1;
 import fr.cotedazur.univ.polytech.startingpoint.characters.King;
+import fr.cotedazur.univ.polytech.startingpoint.players.Bot;
+import fr.cotedazur.univ.polytech.startingpoint.players.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -125,8 +127,8 @@ class MainTest {
 
         List<Player> scoredPlayers = calculateScores(players, firstBuilder);
 
-        assertEquals(34, scoredPlayers.get(0).score);
-        assertEquals(10, scoredPlayers.get(1).score);
+        assertEquals(34, scoredPlayers.get(0).getScore());
+        assertEquals(10, scoredPlayers.get(1).getScore());
 
         // If the scores are equal
         Characters king = new King();
