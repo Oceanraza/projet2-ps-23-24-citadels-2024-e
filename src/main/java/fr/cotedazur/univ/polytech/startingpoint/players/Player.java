@@ -1,7 +1,7 @@
 package fr.cotedazur.univ.polytech.startingpoint.players;
 
 import fr.cotedazur.univ.polytech.startingpoint.Characters;
-import fr.cotedazur.univ.polytech.startingpoint.District;
+import fr.cotedazur.univ.polytech.startingpoint.city.District;
 
 import java.util.ArrayList;
 import java.util.List;

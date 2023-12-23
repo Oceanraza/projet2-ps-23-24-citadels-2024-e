@@ -4,10 +4,9 @@ import java.util.ArrayList;
 
 import fr.cotedazur.univ.polytech.startingpoint.ActionManager;
 import fr.cotedazur.univ.polytech.startingpoint.Characters;
-import fr.cotedazur.univ.polytech.startingpoint.District;
+import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.Game;
 import fr.cotedazur.univ.polytech.startingpoint.characters.King;
-import fr.cotedazur.univ.polytech.startingpoint.players.Player;
 
 public class Bot extends Player {
 

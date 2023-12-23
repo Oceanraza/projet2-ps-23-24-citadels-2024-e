@@ -1,4 +1,6 @@
-package fr.cotedazur.univ.polytech.startingpoint;
+package fr.cotedazur.univ.polytech.startingpoint.city;
+
+import fr.cotedazur.univ.polytech.startingpoint.DistrictColor;
 
 public class District {
     private DistrictColor color;

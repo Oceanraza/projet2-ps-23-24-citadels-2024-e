@@ -1,5 +1,6 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
+import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
