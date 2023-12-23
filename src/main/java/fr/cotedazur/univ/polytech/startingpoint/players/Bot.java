@@ -46,7 +46,7 @@ public class Bot extends Player {
 
     public void chooseCharacterAlgorithm(Game game) {
         ArrayList<Characters> availableChars = game.availableCharacters();
-        if ((this.districtsInHand.size() > 0) && (this.districtsBuilt.size() >= 7) && (canBuildDistrictThisTurn())
+        if ((!this.getDistrictsInHand().isEmpty()) && (this.getDistrictsBuilt().size() >= 7) && (canBuildDistrictThisTurn())
                 && (isCharInList(availableChars, "Roi"))) {
             Characters chosenCharacter = getCharInList(availableChars, "Roi");
             chooseCharacter(chosenCharacter);
@@ -54,7 +54,7 @@ public class Bot extends Player {
             System.out.println(this.name + " a choisi le " + chosenCharacter.getName());
             return;
         } else {
-            Characters chosenCharacter = getCharInList(availableChars, "Character1");
+            Characters chosenCharacter = getCharInList(availableChars, "Personnage 1");
             chooseCharacter(chosenCharacter);
             game.removeChar(chosenCharacter);
             System.out.println(this.name + " a choisi le " + chosenCharacter.getName());

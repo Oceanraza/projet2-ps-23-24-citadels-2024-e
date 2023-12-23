@@ -57,12 +57,12 @@ import fr.cotedazur.univ.polytech.startingpoint.characters.King;
         assertEquals(4, player.getGold());
     }
 
-    /*@Test
+    @Test
     void chooseCharTestChar1() {
         game.shuffleChars(2);
         player.chooseCharacterAlgorithm(game);
         assertEquals("Personnage 1", player.getCharacter().name);
-    }*/
+    }
 
     @Test
     void chooseCharTestKing() {
