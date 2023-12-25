@@ -3,6 +3,9 @@ package fr.cotedazur.univ.polytech.startingpoint;
 import static fr.cotedazur.univ.polytech.startingpoint.Main.*;
 
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,8 +14,9 @@ import fr.cotedazur.univ.polytech.startingpoint.gameCharacter.King;
 
 public class Game {
 
-    public ArrayList<District> gameDeck = new ArrayList<>();
+    public ArrayList<District> gameDeck;
     private Crown crown;
+    public List<Player> bots;
     public Map<String, GameCharacter> allCharacters = new HashMap<>();
     public ArrayList<GameCharacter> availableChars = new ArrayList<>();
 
@@ -26,7 +30,9 @@ public class Game {
         init();
     }
 
-    public void init() {
+    public void init(){
+        gameDeck = new ArrayList<>();
+
         // Adding religieux districts
         addCardNumber(new District("Temple", 1, DistrictColor.religieux), 3);
         addCardNumber(new District("Eglise", 2, DistrictColor.religieux), 4);
@@ -58,13 +64,33 @@ public class Game {
         // Create a crown
         crown = new Crown();
 
+        // Create the list of players
+        bots = new ArrayList<Player>();
+
         // Creates the characters
-        allCharacters.put("King", new King());
-        allCharacters.put("Character1", new Character1());
+        allCharacters.put("Roi", new King());
+        allCharacters.put("Personnage 1", new Character1());
     }
 
     public Crown getCrown() {
         return crown;
+    }
+
+    // Add players to the list of players
+    public void setPlayers(Player firstBot, Player secondBot) {
+        bots.add(firstBot);
+        bots.add(secondBot);
+    }
+
+    public List<Player> getPlayers() {
+        return bots;
+    }
+
+    // Set running order depending on the running order of the characters
+    public List<Player> setRunningOrder() {
+        return this.getPlayers().stream()
+                .sorted(Comparator.comparingInt(player -> player.getCharacter().getRunningOrder()))
+                .collect(Collectors.toList());
     }
 
     public District drawCard() {
@@ -78,8 +104,8 @@ public class Game {
         while (!availableChars.isEmpty()) {
             availableChars.remove(0);
         }
-        availableChars.add(allCharacters.get("King"));
-        availableChars.add(allCharacters.get("Character1"));
+        availableChars.add(allCharacters.get("Roi"));
+        availableChars.add(allCharacters.get("Personnage 1"));
     }
 
     public ArrayList<GameCharacter> availableCharacters() {

@@ -60,7 +60,7 @@ public class ActionManagerTest {
     void chooseCharTestChar1() {
         game.shuffleChars(2);
         player.chooseCharacterAlgorithm(game);
-        assertEquals(player.getCharacter().name, "Character1");
+        assertEquals(player.getCharacter().name, "Personnage 1");
     }
 
     @Test
