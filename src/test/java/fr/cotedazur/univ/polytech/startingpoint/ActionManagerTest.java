@@ -5,10 +5,10 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import fr.cotedazur.univ.polytech.startingpoint.characters.Character1;
-import fr.cotedazur.univ.polytech.startingpoint.characters.King;
+import fr.cotedazur.univ.polytech.startingpoint.gameCharacter.Character1;
+import fr.cotedazur.univ.polytech.startingpoint.gameCharacter.King;
 
-public class ActionsTest {
+public class ActionManagerTest {
     King king;
     Character1 character1;
     Bot player;
@@ -27,7 +27,7 @@ public class ActionsTest {
     @Test
     void updateGoldTestWithoutDistrict() {
         player.chooseCharacter(king);
-        assertEquals(0, Actions.updateGold(player));
+        assertEquals(0, ActionManager.updateGold(player));
     }
 
     @Test
@@ -39,20 +39,20 @@ public class ActionsTest {
         player.build(district1);
         player.build(district2);
         player.build(district3);
-        assertEquals(2, Actions.updateGold(player));
+        assertEquals(2, ActionManager.updateGold(player));
     }
 
     @Test
     void getCrownTest() {
         player.chooseCharacter(king);
-        Actions.applySpecialEffect(player, game);
+        ActionManager.applySpecialEffect(player, game);
         assertEquals("Bot", game.getCrown().getOwner().getName());
     }
 
     @Test
     void getGoldTest() {
         player.chooseCharacter(character1);
-        Actions.applySpecialEffect(player, game);
+        ActionManager.applySpecialEffect(player, game);
         assertEquals(4, player.getGold());
     }
 

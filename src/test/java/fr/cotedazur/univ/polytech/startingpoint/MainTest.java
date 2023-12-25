@@ -1,7 +1,7 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
-import fr.cotedazur.univ.polytech.startingpoint.characters.Character1;
-import fr.cotedazur.univ.polytech.startingpoint.characters.King;
+import fr.cotedazur.univ.polytech.startingpoint.gameCharacter.Character1;
+import fr.cotedazur.univ.polytech.startingpoint.gameCharacter.King;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -129,8 +129,8 @@ class MainTest {
         assertEquals(10, scoredPlayers.get(1).score);
 
         // If the scores are equal
-        Characters king = new King();
-        Characters character1 = new Character1();
+        GameCharacter king = new King();
+        GameCharacter character1 = new Character1();
         firstBuilder.chooseCharacter(king);
         secondPlayer.chooseCharacter(character1);
         firstBuilder.setScore(0);

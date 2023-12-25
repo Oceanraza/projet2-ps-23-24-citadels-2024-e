@@ -9,16 +9,16 @@ import java.util.stream.Collectors;
 import java.util.HashMap;
 import java.util.Map;
 
-import fr.cotedazur.univ.polytech.startingpoint.characters.Character1;
-import fr.cotedazur.univ.polytech.startingpoint.characters.King;
+import fr.cotedazur.univ.polytech.startingpoint.gameCharacter.Character1;
+import fr.cotedazur.univ.polytech.startingpoint.gameCharacter.King;
 
 public class Game {
 
     public ArrayList<District> gameDeck;
     private Crown crown;
     public List<Player> bots;
-    public Map<String, Characters> allCharacters = new HashMap<>();
-    public ArrayList<Characters> availableChars = new ArrayList<>();
+    public Map<String, GameCharacter> allCharacters = new HashMap<>();
+    public ArrayList<GameCharacter> availableChars = new ArrayList<>();
 
     public void addCardNumber(District d, int n) {
         for (int i = 0; i < n; i++) {
@@ -29,6 +29,7 @@ public class Game {
     public Game() {
         init();
     }
+
     public void init(){
         gameDeck = new ArrayList<>();
 
@@ -107,16 +108,16 @@ public class Game {
         availableChars.add(allCharacters.get("Personnage 1"));
     }
 
-    public ArrayList<Characters> availableCharacters() {
+    public ArrayList<GameCharacter> availableCharacters() {
         System.out.println("Les personnages disponibles sont : ");
-        for (Characters temp : availableChars) {
+        for (GameCharacter temp : availableChars) {
             System.out.print(temp.getName() + " ");
         }
         System.out.println("");
         return availableChars;
     }
 
-    public void removeChar(Characters cha) {
+    public void removeChar(GameCharacter cha) {
         availableChars.remove(cha);
     }
 

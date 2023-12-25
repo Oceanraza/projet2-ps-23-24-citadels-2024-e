@@ -9,7 +9,7 @@ public abstract class Player {
     int gold;
     String name;
     int score;
-    Characters characters;
+    GameCharacter gameCharacter;
 
     Player(String name) {
         this.name = name;
@@ -40,12 +40,12 @@ public abstract class Player {
         return name;
     }
 
-    public Characters getCharacter() {
-        return characters;
+    public GameCharacter getCharacter() {
+        return gameCharacter;
     }
 
     public String getCharactersName() {
-        return characters.getName();
+        return gameCharacter.getName();
     }
 
     public int getScore() {
@@ -91,19 +91,19 @@ public abstract class Player {
         return true;
     }
 
-    public void chooseCharacter(Characters chosenCharacter) {
-        this.characters = chosenCharacter;
+    public void chooseCharacter(GameCharacter chosenCharacter) {
+        this.gameCharacter = chosenCharacter;
     }
 
     public String toString() {
-        if (characters == null) {
+        if (gameCharacter == null) {
             return "\nC'est au tour de : " + name + "\n" + (!districtsInHand.isEmpty() ? "Et sa main est composée de: "
                     + districtsInHand : "Sa main est vide. ") + "\n" + "Il a " + gold + " or\n" +
                     (!districtsBuilt.isEmpty() ? "Et il a déjà posé: " + districtsBuilt : "Il n'a pas posé de quartiers.");
         }
 
         // If a character is chosen, we specify the character
-        return "\nC'est au tour du " + characters.getName() + " : " + name + "\n" + (!districtsInHand.isEmpty() ? "Et sa main est composée de: "
+        return "\nC'est au tour du " + gameCharacter.getName() + " : " + name + "\n" + (!districtsInHand.isEmpty() ? "Et sa main est composée de: "
                 + districtsInHand : "Sa main est vide. ") + "\n" + "Il a " + gold + " or\n" +
                 (!districtsBuilt.isEmpty() ? "Et il a déjà posé: " + districtsBuilt : "Il n'a pas posé de quartiers.");
     }
