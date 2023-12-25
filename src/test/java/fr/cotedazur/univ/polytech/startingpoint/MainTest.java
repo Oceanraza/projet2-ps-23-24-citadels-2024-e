@@ -44,8 +44,8 @@ class MainTest {
         newGame.setPlayers(firstPlayer, secondPlayer);
 
         // Players choose a character
-        firstPlayer.chooseCharacter(king);
-        secondPlayer.chooseCharacter(character1);
+        firstPlayer.setGameCharacter(king);
+        secondPlayer.setGameCharacter(character1);
 
         // Set running order
         List<Player> runningOrder = newGame.setRunningOrder();
@@ -65,8 +65,8 @@ class MainTest {
         newGame.setPlayers(firstPlayer, secondPlayer);
 
         // Players choose a character
-        firstPlayer.chooseCharacter(character1);
-        secondPlayer.chooseCharacter(king);
+        firstPlayer.setGameCharacter(character1);
+        secondPlayer.setGameCharacter(king);
 
         // Set running order
         List<Player> runningOrder = newGame.setRunningOrder();
@@ -88,8 +88,8 @@ class MainTest {
 
         // Round 1
         // Players choose a character
-        firstPlayer.chooseCharacter(king);
-        secondPlayer.chooseCharacter(character1);
+        firstPlayer.setGameCharacter(king);
+        secondPlayer.setGameCharacter(character1);
 
         // Set running order
         runningOrder = newGame.setRunningOrder();
@@ -98,8 +98,8 @@ class MainTest {
 
         // Round 2
         // Players choose a character
-        firstPlayer.chooseCharacter(character1);
-        secondPlayer.chooseCharacter(king);
+        firstPlayer.setGameCharacter(character1);
+        secondPlayer.setGameCharacter(king);
 
         // Set running order
         runningOrder = newGame.setRunningOrder();
@@ -125,14 +125,14 @@ class MainTest {
 
         List<Player> scoredPlayers = calculateScores(players, firstBuilder);
 
-        assertEquals(34, scoredPlayers.get(0).score);
-        assertEquals(10, scoredPlayers.get(1).score);
+        assertEquals(34, scoredPlayers.get(0).getScore());
+        assertEquals(10, scoredPlayers.get(1).getScore());
 
         // If the scores are equal
         GameCharacter king = new King();
         GameCharacter character1 = new Character1();
-        firstBuilder.chooseCharacter(king);
-        secondPlayer.chooseCharacter(character1);
+        firstBuilder.setGameCharacter(king);
+        secondPlayer.setGameCharacter(character1);
         firstBuilder.setScore(0);
         secondPlayer.setScore(0);
         assertEquals(calculateScores(players, firstBuilder).get(0), firstBuilder);

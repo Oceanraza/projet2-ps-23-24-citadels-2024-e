@@ -12,7 +12,7 @@ public class Character1 extends GameCharacter {
     @Override
     public void specialEffect(Player player, Game game) {
         // Add 2 gold to the player
-        player.setGold(player.getGold() + 2);
+        player.addGold(2);
         System.out.println("Le Character1 a donné 2 or à " + player.getName());
     }
 }
