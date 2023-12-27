@@ -1,17 +1,12 @@
-package fr.cotedazur.univ.polytech.startingpoint.players;
+package fr.cotedazur.univ.polytech.startingpoint;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import fr.cotedazur.univ.polytech.startingpoint.ActionManager;
-import fr.cotedazur.univ.polytech.startingpoint.GameCharacter;
-import fr.cotedazur.univ.polytech.startingpoint.city.District;
-import fr.cotedazur.univ.polytech.startingpoint.Game;
 import fr.cotedazur.univ.polytech.startingpoint.gameCharacter.King;
 
 public class Bot extends Player {
 
-    public Bot(String name) {
+    Bot(String name) {
         super(name);
     }
 
@@ -24,7 +19,7 @@ public class Bot extends Player {
         return false;
     }
 
-    public boolean isCharInList(List<GameCharacter> cha, String askedChar) {
+    public boolean isCharInList(ArrayList<GameCharacter> cha, String askedChar) {
         for (GameCharacter temp : cha) {
             if (temp.getName().equals(askedChar)) {
                 return true;
@@ -33,7 +28,7 @@ public class Bot extends Player {
         return false;
     }
 
-    public GameCharacter getCharInList(List<GameCharacter> cha, String askedChar) {
+    public GameCharacter getCharInList(ArrayList<GameCharacter> cha, String askedChar) {
         for (GameCharacter temp : cha) {
             if (temp.getName().equals(askedChar)) {
                 return temp;

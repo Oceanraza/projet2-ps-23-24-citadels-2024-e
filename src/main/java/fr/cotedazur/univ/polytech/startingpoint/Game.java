@@ -1,11 +1,10 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
+import static fr.cotedazur.univ.polytech.startingpoint.Main.*;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
-import fr.cotedazur.univ.polytech.startingpoint.city.District;
-import fr.cotedazur.univ.polytech.startingpoint.players.Player;
 import fr.cotedazur.univ.polytech.startingpoint.gameCharacter.Character1;
 import fr.cotedazur.univ.polytech.startingpoint.gameCharacter.King;
 

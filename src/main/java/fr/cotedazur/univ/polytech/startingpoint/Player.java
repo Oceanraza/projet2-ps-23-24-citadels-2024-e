@@ -1,8 +1,4 @@
-package fr.cotedazur.univ.polytech.startingpoint.players;
-
-import fr.cotedazur.univ.polytech.startingpoint.Game;
-import fr.cotedazur.univ.polytech.startingpoint.GameCharacter;
-import fr.cotedazur.univ.polytech.startingpoint.city.District;
+package fr.cotedazur.univ.polytech.startingpoint;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +11,7 @@ public abstract class Player {
     private int score;
     private GameCharacter gameCharacter;
 
-    protected Player(String name) {
+    Player(String name) {
         this.name = name;
         districtsInHand = new ArrayList<>();
         districtsBuilt = new ArrayList<>();
