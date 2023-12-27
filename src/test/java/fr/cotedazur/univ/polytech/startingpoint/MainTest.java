@@ -1,7 +1,7 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
-import fr.cotedazur.univ.polytech.startingpoint.characters.Character1;
-import fr.cotedazur.univ.polytech.startingpoint.characters.King;
+import fr.cotedazur.univ.polytech.startingpoint.gameCharacter.Character1;
+import fr.cotedazur.univ.polytech.startingpoint.gameCharacter.King;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.players.Bot;
 import fr.cotedazur.univ.polytech.startingpoint.players.Player;
@@ -47,8 +47,8 @@ class MainTest {
         newGame.setPlayers(firstPlayer, secondPlayer);
 
         // Players choose a character
-        firstPlayer.chooseCharacter(king);
-        secondPlayer.chooseCharacter(character1);
+        firstPlayer.setGameCharacter(king);
+        secondPlayer.setGameCharacter(character1);
 
         // Set running order
         List<Player> runningOrder = newGame.setRunningOrder();
@@ -68,8 +68,8 @@ class MainTest {
         newGame.setPlayers(firstPlayer, secondPlayer);
 
         // Players choose a character
-        firstPlayer.chooseCharacter(character1);
-        secondPlayer.chooseCharacter(king);
+        firstPlayer.setGameCharacter(character1);
+        secondPlayer.setGameCharacter(king);
 
         // Set running order
         List<Player> runningOrder = newGame.setRunningOrder();
@@ -91,8 +91,8 @@ class MainTest {
 
         // Round 1
         // Players choose a character
-        firstPlayer.chooseCharacter(king);
-        secondPlayer.chooseCharacter(character1);
+        firstPlayer.setGameCharacter(king);
+        secondPlayer.setGameCharacter(character1);
 
         // Set running order
         runningOrder = newGame.setRunningOrder();
@@ -101,8 +101,8 @@ class MainTest {
 
         // Round 2
         // Players choose a character
-        firstPlayer.chooseCharacter(character1);
-        secondPlayer.chooseCharacter(king);
+        firstPlayer.setGameCharacter(character1);
+        secondPlayer.setGameCharacter(king);
 
         // Set running order
         runningOrder = newGame.setRunningOrder();
@@ -132,10 +132,10 @@ class MainTest {
         assertEquals(10, scoredPlayers.get(1).getScore());
 
         // If the scores are equal
-        Characters king = new King();
-        Characters character1 = new Character1();
-        firstBuilder.chooseCharacter(king);
-        secondPlayer.chooseCharacter(character1);
+        GameCharacter king = new King();
+        GameCharacter character1 = new Character1();
+        firstBuilder.setGameCharacter(king);
+        secondPlayer.setGameCharacter(character1);
         firstBuilder.setScore(0);
         secondPlayer.setScore(0);
         assertEquals(calculateScores(players, firstBuilder).get(0), firstBuilder);

@@ -3,23 +3,23 @@ package fr.cotedazur.univ.polytech.startingpoint;
 import static org.junit.jupiter.api.Assertions.*;
 
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
+import fr.cotedazur.univ.polytech.startingpoint.gameCharacter.Character1;
+import fr.cotedazur.univ.polytech.startingpoint.gameCharacter.King;
 import fr.cotedazur.univ.polytech.startingpoint.players.Bot;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import fr.cotedazur.univ.polytech.startingpoint.characters.Character1;
-import fr.cotedazur.univ.polytech.startingpoint.characters.King;
+;
  class ActionManagerTest {
     King king;
     Character1 character1;
-    Bot player;
+    Bot bot;
     Game game;
 
     @BeforeEach
     void setUp() {
         king = new King();
         character1 = new Character1();
-        player = new Bot("Bot") {
+        bot = new Bot("Bot") {
         };
         game = new Game();
         game.init();
@@ -27,57 +27,57 @@ import fr.cotedazur.univ.polytech.startingpoint.characters.King;
 
     @Test
     void updateGoldTestWithoutDistrict() {
-        player.chooseCharacter(king);
-        assertEquals(0, ActionManager.updateGold(player));
+        bot.setGameCharacter(king);
+        assertEquals(0, ActionManager.collectGold(bot));
     }
 
     @Test
     void updateGoldTestWithDistrict() {
-        player.chooseCharacter(king);
+        bot.setGameCharacter(king);
         District district1 = new District("Quartier 1", 0, DistrictColor.noble);
         District district2 = new District("Quartier 2", 0, DistrictColor.noble);
         District district3 = new District("Quartier 3", 0, DistrictColor.religieux);
-        player.build(district1);
-        player.build(district2);
-        player.build(district3);
-        assertEquals(2, ActionManager.updateGold(player));
+        bot.build(district1);
+        bot.build(district2);
+        bot.build(district3);
+        assertEquals(2, ActionManager.collectGold(bot));
     }
 
     @Test
     void getCrownTest() {
-        player.chooseCharacter(king);
-        ActionManager.applySpecialEffect(player, game);
+        bot.setGameCharacter(king);
+        ActionManager.applySpecialEffect(bot, game);
         assertEquals("Bot", game.getCrown().getOwner().getName());
     }
 
     @Test
     void getGoldTest() {
-        player.chooseCharacter(character1);
-        ActionManager.applySpecialEffect(player, game);
-        assertEquals(4, player.getGold());
+        bot.setGameCharacter(character1);
+        ActionManager.applySpecialEffect(bot, game);
+        assertEquals(4, bot.getGold());
     }
 
     @Test
     void chooseCharTestChar1() {
         game.shuffleChars(2);
-        player.chooseCharacterAlgorithm(game);
-        assertEquals("Personnage 1", player.getCharacter().name);
+        bot.chooseCharacterAlgorithm(game);
+        assertEquals("Personnage 1", bot.getGameCharacter().name);
     }
 
     @Test
     void chooseCharTestKing() {
         game.shuffleChars(2);
-        player.setGold(8);
-        player.getDistrictsInHand().add(game.drawCard());
-        player.getDistrictsBuilt().add(game.drawCard());
-        player.getDistrictsBuilt().add(game.drawCard());
-        player.getDistrictsBuilt().add(game.drawCard());
-        player.getDistrictsBuilt().add(game.drawCard());
-        player.getDistrictsBuilt().add(game.drawCard());
-        player.getDistrictsBuilt().add(game.drawCard());
-        player.getDistrictsBuilt().add(game.drawCard());
-        player.chooseCharacterAlgorithm(game);
-        assertEquals(player.getCharacter().name, "Roi");
+        bot.setGold(8);
+        bot.addDistrictInHand(game.drawCard());
+        bot.addDistrictBuilt(game.drawCard());
+        bot.addDistrictBuilt(game.drawCard());
+        bot.addDistrictBuilt(game.drawCard());
+        bot.addDistrictBuilt(game.drawCard());
+        bot.addDistrictBuilt(game.drawCard());
+        bot.addDistrictBuilt(game.drawCard());
+        bot.addDistrictBuilt(game.drawCard());
+        bot.chooseCharacterAlgorithm(game);
+        assertEquals("Roi", bot.getGameCharacter().name);
     }
 
 }
