@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Player {
-    List<District> districtsInHand;
-    List<District> districtsBuilt;
-    int gold;
-    String name;
-    int score;
-    Characters characters;
+    private final List<District> districtsInHand;
+    private final List<District> districtsBuilt;
+    private int gold;
+    private final String name;
+    private int score;
+    private GameCharacter gameCharacter;
 
     Player(String name) {
         this.name = name;
@@ -19,41 +19,52 @@ public abstract class Player {
         score = 0;
     }
 
-    public List<District> getDistrictsBuilt() {
-        return districtsBuilt;
-    }
-
+    // Getter
     public List<District> getDistrictsInHand() {
         return districtsInHand;
+    }
+    public List<District> getDistrictsBuilt() {
+        return districtsBuilt;
     }
     public int getGold() {
         return gold;
     }
-
-    public void setGold(int gold) {
-        this.gold = gold;
-    }
-
     public String getName() {
         return name;
     }
-
-    public Characters getCharacter() {
-        return characters;
-    }
-
-    public String getCharactersName() {
-        return characters.getName();
-    }
-
     public int getScore() {
         return score;
     }
+    public GameCharacter getGameCharacter() {
+        return gameCharacter;
+    }
+    public String getCharacterName() {
+        return gameCharacter.getName();
+    }
 
+    // Setter
+    public void setGold(int gold) {
+        this.gold = gold;
+    }
     public void setScore(int score) {
         this.score = score;
     }
+    public void setGameCharacter(GameCharacter gameCharacter) {
+        this.gameCharacter = gameCharacter;
+    }
 
+    // Functions to add
+    public void addDistrictInHand(District district) {
+        this.districtsInHand.add(district);
+    }
+    public void addDistrictBuilt(District district) {
+        this.districtsBuilt.add(district);
+    }
+    public void addGold(int gold) {
+        this.gold += gold;
+    }
+
+    public abstract void play(Game game);
     // Function to build a district
     public boolean build(District district) {
         // Checks if the player has enough gold to build the district. If so it is
@@ -89,12 +100,15 @@ public abstract class Player {
         return true;
     }
 
-    public void chooseCharacter(Characters characterChosen) {
-        this.characters = characterChosen;
-    }
-
     public String toString() {
-        return "\nC'est au tour de : " + name + "\n" + (!districtsInHand.isEmpty() ? "Et sa main est composée de: "
+        if (gameCharacter == null) {
+            return "\nC'est au tour de : " + name + "\n" + (!districtsInHand.isEmpty() ? "Et sa main est composée de: "
+                    + districtsInHand : "Sa main est vide. ") + "\n" + "Il a " + gold + " or\n" +
+                    (!districtsBuilt.isEmpty() ? "Et il a déjà posé: " + districtsBuilt : "Il n'a pas posé de quartiers.");
+        }
+
+        // If a character is chosen, we specify the character
+        return "\nC'est au tour du " + gameCharacter.getName() + " : " + name + "\n" + (!districtsInHand.isEmpty() ? "Et sa main est composée de: "
                 + districtsInHand : "Sa main est vide. ") + "\n" + "Il a " + gold + " or\n" +
                 (!districtsBuilt.isEmpty() ? "Et il a déjà posé: " + districtsBuilt : "Il n'a pas posé de quartiers.");
     }

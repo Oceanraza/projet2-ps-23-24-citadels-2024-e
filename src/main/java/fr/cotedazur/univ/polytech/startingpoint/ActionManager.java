@@ -1,9 +1,9 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
 public class ActionManager {
-    public static int updateGold(Player player) {
+    public static int collectGold(Player player) {
         // King
-        if (player.getCharactersName().equals("Roi")) {
+        if (player.getGameCharacter() != null && player.getCharacterName().equals("Roi")) {
             int addenGold = 0;
             // You receive one gold for each noble (yellow) district in your city.
             for (District district : player.getDistrictsBuilt()) {
@@ -11,10 +11,10 @@ public class ActionManager {
                     addenGold++;
                 }
             }
-            player.gold += addenGold;
+            player.addGold(addenGold);
             if (addenGold != 0) {
                 System.out
-                        .println("Le " + player.getCharactersName() + " a donné " + addenGold + " or a " + player.name);
+                        .println("Le " + player.getCharacterName() + " a donné " + addenGold + " or a " + player.getName());
             }
             return addenGold;
         }
@@ -22,6 +22,6 @@ public class ActionManager {
     }
 
     public static void applySpecialEffect(Player player, Game game) {
-        player.getCharacter().specialEffect(player, game);
+        player.getGameCharacter().specialEffect(player, game);
     }
 }

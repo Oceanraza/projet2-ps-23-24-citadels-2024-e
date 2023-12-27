@@ -1,7 +1,7 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
-import fr.cotedazur.univ.polytech.startingpoint.characters.Character1;
-import fr.cotedazur.univ.polytech.startingpoint.characters.King;
+import fr.cotedazur.univ.polytech.startingpoint.gameCharacter.Character1;
+import fr.cotedazur.univ.polytech.startingpoint.gameCharacter.King;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -20,8 +20,7 @@ class MainTest {
 
     @BeforeEach
     void setUp() {
-        player = new Player("Test") {
-        };
+        player = new Bot("Test");
     }
 
     @Test
@@ -31,6 +30,81 @@ class MainTest {
             player.getDistrictsBuilt().add(new District("test", 0, DistrictColor.marchand));
         }
         assertTrue(Main.isFinished(player));
+    }
+
+    @Test
+    void testRunningOrder() {
+        Player firstPlayer = new Bot("Player 1");
+        Player secondPlayer = new Bot("Player 2");
+        Character1 character1 = new Character1();
+        King king = new King();
+        Game newGame = new Game();
+
+        // Create list of players
+        newGame.setPlayers(firstPlayer, secondPlayer);
+
+        // Players choose a character
+        firstPlayer.setGameCharacter(king);
+        secondPlayer.setGameCharacter(character1);
+
+        // Set running order
+        List<Player> runningOrder = newGame.setRunningOrder();
+        assertEquals(secondPlayer.getName(), runningOrder.get(0).getName());
+        assertEquals(firstPlayer.getName(), runningOrder.get(1).getName());
+    }
+
+    @Test
+    void testRunningOrder2() {
+        Player firstPlayer = new Bot("Player 1");
+        Player secondPlayer = new Bot("Player 2");
+        Character1 character1 = new Character1();
+        King king = new King();
+        Game newGame = new Game();
+
+        // Create list of players
+        newGame.setPlayers(firstPlayer, secondPlayer);
+
+        // Players choose a character
+        firstPlayer.setGameCharacter(character1);
+        secondPlayer.setGameCharacter(king);
+
+        // Set running order
+        List<Player> runningOrder = newGame.setRunningOrder();
+        assertEquals(firstPlayer.getName(), runningOrder.get(0).getName());
+        assertEquals(secondPlayer.getName(), runningOrder.get(1).getName());
+    }
+
+    @Test
+    void testRunningOrderInTwoRounds() {
+        Player firstPlayer = new Bot("Player 1");
+        Player secondPlayer = new Bot("Player 2");
+        Character1 character1 = new Character1();
+        King king = new King();
+        Game newGame = new Game();
+        List<Player> runningOrder;
+
+        // Create list of players
+        newGame.setPlayers(firstPlayer, secondPlayer);
+
+        // Round 1
+        // Players choose a character
+        firstPlayer.setGameCharacter(king);
+        secondPlayer.setGameCharacter(character1);
+
+        // Set running order
+        runningOrder = newGame.setRunningOrder();
+        assertEquals(secondPlayer.getName(), runningOrder.get(0).getName());
+        assertEquals(firstPlayer.getName(), runningOrder.get(1).getName());
+
+        // Round 2
+        // Players choose a character
+        firstPlayer.setGameCharacter(character1);
+        secondPlayer.setGameCharacter(king);
+
+        // Set running order
+        runningOrder = newGame.setRunningOrder();
+        assertEquals(firstPlayer.getName(), runningOrder.get(0).getName());
+        assertEquals(secondPlayer.getName(), runningOrder.get(1).getName());
     }
 
     @Test
@@ -51,14 +125,14 @@ class MainTest {
 
         List<Player> scoredPlayers = calculateScores(players, firstBuilder);
 
-        assertEquals(34, scoredPlayers.get(0).score);
-        assertEquals(10, scoredPlayers.get(1).score);
+        assertEquals(34, scoredPlayers.get(0).getScore());
+        assertEquals(10, scoredPlayers.get(1).getScore());
 
         // If the scores are equal
-        Characters king = new King();
-        Characters character1 = new Character1();
-        firstBuilder.chooseCharacter(king);
-        secondPlayer.chooseCharacter(character1);
+        GameCharacter king = new King();
+        GameCharacter character1 = new Character1();
+        firstBuilder.setGameCharacter(king);
+        secondPlayer.setGameCharacter(character1);
         firstBuilder.setScore(0);
         secondPlayer.setScore(0);
         assertEquals(calculateScores(players, firstBuilder).get(0), firstBuilder);
