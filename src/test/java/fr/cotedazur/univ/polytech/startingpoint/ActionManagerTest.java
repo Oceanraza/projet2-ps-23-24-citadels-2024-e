@@ -2,13 +2,14 @@ package fr.cotedazur.univ.polytech.startingpoint;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
+import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.gameCharacter.Character1;
 import fr.cotedazur.univ.polytech.startingpoint.gameCharacter.King;
-
-public class ActionManagerTest {
+import fr.cotedazur.univ.polytech.startingpoint.players.Bot;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+;
+ class ActionManagerTest {
     King king;
     Character1 character1;
     Bot bot;
@@ -60,7 +61,7 @@ public class ActionManagerTest {
     void chooseCharTestChar1() {
         game.shuffleChars(2);
         bot.chooseCharacterAlgorithm(game);
-        assertEquals(bot.getGameCharacter().name, "Personnage 1");
+        assertEquals("Personnage 1", bot.getGameCharacter().name);
     }
 
     @Test
@@ -76,7 +77,7 @@ public class ActionManagerTest {
         bot.addDistrictBuilt(game.drawCard());
         bot.addDistrictBuilt(game.drawCard());
         bot.chooseCharacterAlgorithm(game);
-        assertEquals(bot.getGameCharacter().name, "Roi");
+        assertEquals("Roi", bot.getGameCharacter().name);
     }
 
 }
