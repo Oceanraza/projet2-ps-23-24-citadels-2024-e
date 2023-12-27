@@ -1,5 +1,7 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
+import fr.cotedazur.univ.polytech.startingpoint.players.Player;
+
 public class Crown {
     private Player owner;
     public Crown() {}

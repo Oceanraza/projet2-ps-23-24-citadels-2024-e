@@ -1,9 +1,18 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
+
 import java.util.*;
 import java.util.stream.Collectors;
 
 import fr.cotedazur.univ.polytech.startingpoint.gameCharacter.*;
+
+
+import java.util.*;
+import java.util.stream.Collectors;
+
+import fr.cotedazur.univ.polytech.startingpoint.city.District;
+import fr.cotedazur.univ.polytech.startingpoint.players.*;
+
 
 public class Game {
     private ArrayList<District> gameDeck;

@@ -1,8 +1,11 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
+import fr.cotedazur.univ.polytech.startingpoint.city.District;
+import fr.cotedazur.univ.polytech.startingpoint.players.Bot;
+import fr.cotedazur.univ.polytech.startingpoint.players.Player;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class Main {
     // If a player has 8 districts built, he wins
