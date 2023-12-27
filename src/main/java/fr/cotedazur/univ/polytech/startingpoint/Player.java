@@ -17,6 +17,7 @@ public abstract class Player {
         districtsBuilt = new ArrayList<>();
         gold = 2;
         score = 0;
+        gameCharacter = null;
     }
 
     // Getter
@@ -38,6 +39,7 @@ public abstract class Player {
     public GameCharacter getGameCharacter() {
         return gameCharacter;
     }
+    public void resetGameCharacter(){gameCharacter = null;}
     public String getCharacterName() {
         return gameCharacter.getName();
     }

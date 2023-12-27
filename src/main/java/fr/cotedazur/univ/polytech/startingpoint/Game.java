@@ -1,12 +1,9 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
-import static fr.cotedazur.univ.polytech.startingpoint.Main.*;
-
 import java.util.*;
 import java.util.stream.Collectors;
 
-import fr.cotedazur.univ.polytech.startingpoint.gameCharacter.Character1;
-import fr.cotedazur.univ.polytech.startingpoint.gameCharacter.King;
+import fr.cotedazur.univ.polytech.startingpoint.gameCharacter.*;
 
 public class Game {
     private ArrayList<District> gameDeck;
@@ -31,9 +28,8 @@ public class Game {
     }
 
     // Setter
-    public void setPlayers(Player firstBot, Player secondBot) { // Add players to the list of players
-        players.add(firstBot);
-        players.add(secondBot);
+    public void setPlayers(Player... bots) { // Add players to the list of players
+        players.addAll(Arrays.asList(bots));
     }
 
     public List<Player> setRunningOrder() { // Set running order depending on the running order of the characters
@@ -47,10 +43,6 @@ public class Game {
         for (int i = 0; i < n; i++) {
             gameDeck.add(district);
         }
-    }
-
-    public void removeDistrictInGameDeck(District district) {
-        gameDeck.remove(district);
     }
 
     public void removeAvailableChar(GameCharacter cha) {
@@ -103,6 +95,8 @@ public class Game {
         // Creates the characters
         allCharacters.put("Roi", new King());
         allCharacters.put("Personnage 1", new Character1());
+        allCharacters.put("Personnage 2", new Character2());
+        allCharacters.put("Personnage 3", new Character3());
     }
 
     public District drawCard() {
@@ -117,8 +111,11 @@ public class Game {
         while (!availableChars.isEmpty()) {
             availableChars.remove(0);
         }
+
         availableChars.add(allCharacters.get("Roi"));
         availableChars.add(allCharacters.get("Personnage 1"));
+        availableChars.add(allCharacters.get("Personnage 2"));
+        availableChars.add(allCharacters.get("Personnage 3"));
     }
 
     public void availableCharacters() {
@@ -128,6 +125,16 @@ public class Game {
         }
         System.out.println(" ");
     }
+    public void charSelectionFiller(){
+        for (Player p: players){
+            if (p.getGameCharacter() == null){
+                Bot p2 = (Bot) p;
+                System.out.println(p2);
+                //We create a new variable p2 to cast p to Bot each time
+                //Good to note that you can't just cast the whole List
+                p2.chooseCharacterAlgorithm(this);}
+        }
+    }
 
     public String toString() {
         StringBuilder str = new StringBuilder("Les cartes dans le deck sont : \n");
@@ -135,5 +142,11 @@ public class Game {
             str.append(district.toString()).append('\n');
         }
         return str.toString();
+    }
+
+    public void setAllCharsToNull() {
+        for (Player  p: players){
+            p.setGameCharacter(null);
+        }
     }
 }
