@@ -69,11 +69,11 @@ public abstract class Player {
     public boolean build(District district) {
         // Checks if the player has enough gold to build the district. If so it is
         // built.
-        if (gold >= district.price() && isNotBuilt(district)) {
+        if (gold >= district.getPrice() && isNotBuilt(district)) {
             districtsBuilt.add(district);
-            gold -= district.price();
+            gold -= district.getPrice();
             districtsInHand.remove(district);
-            System.out.println(getName() + " a construit le quartier " + district.name());
+            System.out.println(getName() + " a construit le quartier " + district.getName());
             return true;
         }
         return false;
@@ -84,7 +84,7 @@ public abstract class Player {
             return true;
         }
         for (District d : districtsBuilt) {
-            if (d.name().equals(district.name())) { // Checks if the district has already been built or not
+            if (d.getName().equals(district.getName())) { // Checks if the district has already been built or not
                 return false;
             }
         }

@@ -15,8 +15,8 @@ public class Main {
             int score = player.getGold();
             ArrayList<DistrictColor> districtColors = new ArrayList<>();
             for (District district : player.getDistrictsBuilt()) {
-                score += district.price();
-                districtColors.add(district.color());
+                score += district.getPrice();
+                districtColors.add(district.getColor());
             }
             if (districtColors.size() == DistrictColor.values().length) { // If the player has built all the district
                                                                           // colors

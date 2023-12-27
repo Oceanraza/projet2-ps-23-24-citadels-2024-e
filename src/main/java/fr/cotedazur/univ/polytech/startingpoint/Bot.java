@@ -12,7 +12,7 @@ public class Bot extends Player {
 
     public boolean canBuildDistrictThisTurn() { // Checks If a district in Hand can be built with +2 gold
         for (District dist : getDistrictsInHand()) {
-            if (dist.price() <= this.getGold() + 2) {
+            if (dist.getPrice() <= this.getGold() + 2) {
                 return true;
             }
         }

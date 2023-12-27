@@ -7,7 +7,7 @@ public class ActionManager {
             int addenGold = 0;
             // You receive one gold for each noble (yellow) district in your city.
             for (District district : player.getDistrictsBuilt()) {
-                if (district.color() == DistrictColor.noble) {
+                if (district.getColor() == DistrictColor.noble) {
                     addenGold++;
                 }
             }
