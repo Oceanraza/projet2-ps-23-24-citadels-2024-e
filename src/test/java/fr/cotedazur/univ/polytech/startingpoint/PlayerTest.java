@@ -17,14 +17,14 @@ class PlayerTest {
     void testBuild() {
         District district = new District("Temple", 4, DistrictColor.religieux);
         assertFalse(player.build(district));
-        player.districtsInHand.add(district);
+        player.addDistrictInHand(district);
         assertFalse(player.build(district));
-        player.gold += 2;
+        player.addGold(2);
         assertTrue(player.build(district));
         assertFalse(player.build(district));
-        player.districtsInHand.add(district);
+        player.addDistrictInHand(district);
         assertFalse(player.build(district));
-        player.gold += 4;
+        player.addGold(4);
         district = new District("Temple", 4, DistrictColor.religieux); //We create another district to avoid pointer problems
         assertFalse(player.build(district));
     }
@@ -33,7 +33,7 @@ class PlayerTest {
     void isNotBuiltTest() {
         District district = new District("Temple", 4, DistrictColor.religieux);
         assertTrue(player.isNotBuilt(district));
-        player.districtsBuilt.add(district);
+        player.addDistrictBuilt(district);
         assertFalse(player.isNotBuilt(district));
         assertTrue(player.isNotBuilt(new District("Prison", 2, DistrictColor.militaire)));
     }
@@ -42,9 +42,9 @@ class PlayerTest {
     void districtsAlreadyBuiltTest() {
         District district = new District("Temple", 4, DistrictColor.religieux);
         assertTrue(player.districtsAlreadyBuilt());
-        player.districtsInHand.add(district);
+        player.addDistrictInHand(district);
         assertFalse(player.districtsAlreadyBuilt());
-        player.districtsBuilt.add(district);
+        player.addDistrictBuilt(district);
         assertTrue(player.districtsAlreadyBuilt());
     }
 }
