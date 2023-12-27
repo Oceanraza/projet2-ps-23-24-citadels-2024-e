@@ -1,10 +1,10 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
 // This class is called CharacterS because we can't name it Character
-public abstract class GameCharacter {
+public abstract class Characters {
     protected String name;
     protected int runningOrder;
-    public GameCharacter(String name, int runningOrder) {
+    public Characters(String name, int runningOrder) {
         this.name = name;
         this.runningOrder = runningOrder;
     }

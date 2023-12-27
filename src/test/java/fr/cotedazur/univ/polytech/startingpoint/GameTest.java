@@ -13,21 +13,22 @@ class GameTest {
 
     @BeforeEach
     void setUp() {
-        game = new Game();
+        game = new Game() {
+        };
     }
 
     @Test
     void testAddCardNumber() {
-        assertFalse(game.getGameDeck().isEmpty());
-        int normalCardCount = game.getGameDeck().size();
+        assertFalse(game.gameDeck.isEmpty());
+        int normalCardCount = game.gameDeck.size();
         District district = new District("Test", 1, DistrictColor.special);
-        game.addDistrictsInGameDeck(district, 4);
-        assertEquals(normalCardCount + 4, game.getGameDeck().size());
+        game.addCardNumber(district, 4);
+        assertEquals(normalCardCount + 4, game.gameDeck.size());
     }
 
     @Test
     void testDrawCard() {
-        List<District> normalGameDeck = copyOf(game.getGameDeck());
+        List<District> normalGameDeck = copyOf(game.gameDeck);
         District cardDrawn = game.drawCard();
         int cardCountBeforeDraw = 0;
         for(District district: normalGameDeck) {
@@ -36,7 +37,7 @@ class GameTest {
             }
         }
         int cardCountAfterDraw = 0;
-        for(District district: game.getGameDeck()) {
+        for(District district: game.gameDeck) {
             if (district.equals(cardDrawn)) {
                 cardCountAfterDraw++;
             }

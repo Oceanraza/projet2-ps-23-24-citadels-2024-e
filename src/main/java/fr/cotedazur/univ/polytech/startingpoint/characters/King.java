@@ -1,10 +1,10 @@
-package fr.cotedazur.univ.polytech.startingpoint.gameCharacter;
+package fr.cotedazur.univ.polytech.startingpoint.characters;
 
-import fr.cotedazur.univ.polytech.startingpoint.GameCharacter;
+import fr.cotedazur.univ.polytech.startingpoint.Characters;
 import fr.cotedazur.univ.polytech.startingpoint.Game;
 import fr.cotedazur.univ.polytech.startingpoint.Player;
 
-public class King extends GameCharacter {
+public class King extends Characters {
     public King () {
         super("Roi", 4);
     }

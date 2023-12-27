@@ -2,7 +2,7 @@ package fr.cotedazur.univ.polytech.startingpoint;
 
 import java.util.ArrayList;
 
-import fr.cotedazur.univ.polytech.startingpoint.gameCharacter.King;
+import fr.cotedazur.univ.polytech.startingpoint.characters.King;
 
 public class Bot extends Player {
 
@@ -11,7 +11,8 @@ public class Bot extends Player {
     }
 
     public boolean canBuildDistrictThisTurn() { // Checks If a district in Hand can be built with +2 gold
-        for (District dist : getDistrictsInHand()) {
+        for (District dist : districtsInHand) {
+            System.out.println(dist.getPrice() + "," + this.getGold() + 2);
             if (dist.getPrice() <= this.getGold() + 2) {
                 return true;
             }
@@ -19,8 +20,8 @@ public class Bot extends Player {
         return false;
     }
 
-    public boolean isCharInList(ArrayList<GameCharacter> cha, String askedChar) {
-        for (GameCharacter temp : cha) {
+    public boolean isCharInList(ArrayList<Characters> cha, String askedChar) {
+        for (Characters temp : cha) {
             if (temp.getName().equals(askedChar)) {
                 return true;
             }
@@ -28,8 +29,8 @@ public class Bot extends Player {
         return false;
     }
 
-    public GameCharacter getCharInList(ArrayList<GameCharacter> cha, String askedChar) {
-        for (GameCharacter temp : cha) {
+    public Characters getCharInList(ArrayList<Characters> cha, String askedChar) {
+        for (Characters temp : cha) {
             if (temp.getName().equals(askedChar)) {
                 return temp;
             }
@@ -40,41 +41,39 @@ public class Bot extends Player {
     }
 
     public void chooseCharacterAlgorithm(Game game) {
-        ArrayList<GameCharacter> availableChars = game.getAvailableChars();
-        // If the bot can build its 8th quarter, it will choose the king (if possible)
-        if (!(this.getDistrictsInHand().isEmpty()) && (this.getDistrictsBuilt().size() >= 7) && (canBuildDistrictThisTurn())
+        ArrayList<Characters> availableChars = game.availableCharacters();
+        if ((this.districtsInHand.size() > 0) && (this.districtsBuilt.size() >= 7) && (canBuildDistrictThisTurn())
                 && (isCharInList(availableChars, "Roi"))) {
-            GameCharacter chosenCharacter = getCharInList(availableChars, "Roi");
-            setGameCharacter(chosenCharacter);
-            game.removeAvailableChar(chosenCharacter);
-            System.out.println(this.getName() + " a choisi le " + chosenCharacter.getName());
+            Characters chosenCharacter = getCharInList(availableChars, "Roi");
+            chooseCharacter(chosenCharacter);
+            game.removeChar(chosenCharacter);
+            System.out.println(this.name + " a choisi le " + chosenCharacter.getName());
+            return;
         } else {
-            GameCharacter chosenCharacter = getCharInList(availableChars, "Personnage 1");
-            setGameCharacter(chosenCharacter);
-            game.removeAvailableChar(chosenCharacter);
-            System.out.println(this.getName() + " a choisi le " + chosenCharacter.getName());
+            Characters chosenCharacter = getCharInList(availableChars, "Character1");
+            chooseCharacter(chosenCharacter);
+            game.removeChar(chosenCharacter);
+            System.out.println(this.name + " a choisi le " + chosenCharacter.getName());
+            return;
         }
     }
 
-    @Override
-    public void play(Game game) {
+    void play(Game game) {
         // Apply special effect
-        if (getGameCharacter() != null) {
-            ActionManager.applySpecialEffect(this, game);
-        }
+        ActionManager.applySpecialEffect(this, game);
         // Collect gold
-        addGold(ActionManager.collectGold(this));
+        gold += ActionManager.updateGold(this);
         // The bot draws a card if it has no district in its hand.
-        if (getDistrictsInHand().isEmpty() || districtsAlreadyBuilt()) {
+        if (districtsInHand.isEmpty() || districtsAlreadyBuilt()) {
             District drawnDistrict = game.drawCard();
             System.out.println(getName() + " pioche le " + drawnDistrict);
-            getDistrictsInHand().add(drawnDistrict);
+            districtsInHand.add(drawnDistrict);
         } else { // Otherwise it gets 2 gold coins
             System.out.println(getName() + " prend deux pièces d'or.");
-            addGold(2);
+            gold += 2;
         }
         // The bot builds one district if it has enough money
-        for (District district : getDistrictsInHand()) {
+        for (District district : districtsInHand) {
             if (build(district)) {
                 break;
             }
