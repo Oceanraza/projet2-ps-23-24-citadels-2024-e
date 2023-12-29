@@ -103,9 +103,9 @@ public class Game {
 
         // Creates the characters
         allCharacters.put("Roi", new King());
-        allCharacters.put("Personnage 1", new Character1());
-        allCharacters.put("Personnage 2", new Character2());
-        allCharacters.put("Personnage 3", new Eveque());
+        allCharacters.put("Marchand", new Marchand());
+        allCharacters.put("Eveque", new Eveque());
+        allCharacters.put("Condottiere", new Condottiere());
     }
 
     public District drawCard() {
@@ -122,9 +122,9 @@ public class Game {
         }
 
         availableChars.add(allCharacters.get("Roi"));
-        availableChars.add(allCharacters.get("Personnage 1"));
-        availableChars.add(allCharacters.get("Personnage 2"));
-        availableChars.add(allCharacters.get("Personnage 3"));
+        availableChars.add(allCharacters.get("Marchand"));
+        availableChars.add(allCharacters.get("Eveque"));
+        availableChars.add(allCharacters.get("Condottiere"));
     }
 
     public void availableCharacters() {
