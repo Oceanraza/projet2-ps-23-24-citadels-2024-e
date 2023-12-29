@@ -46,8 +46,8 @@ class MainTest {
         newGame.setPlayers(firstPlayer, secondPlayer);
 
         // Players choose a character
-        firstPlayer.setGameCharacter(king);
-        secondPlayer.setGameCharacter(eveque);
+        firstPlayer.setGameCharacter(eveque);
+        secondPlayer.setGameCharacter(king);
 
         // Set running order
         List<Player> runningOrder = newGame.setRunningOrder();
@@ -67,8 +67,8 @@ class MainTest {
         newGame.setPlayers(firstPlayer, secondPlayer);
 
         // Players choose a character
-        firstPlayer.setGameCharacter(eveque);
-        secondPlayer.setGameCharacter(king);
+        firstPlayer.setGameCharacter(king);
+        secondPlayer.setGameCharacter(eveque);
 
         // Set running order
         List<Player> runningOrder = newGame.setRunningOrder();
@@ -90,8 +90,8 @@ class MainTest {
 
         // Round 1
         // Players choose a character
-        firstPlayer.setGameCharacter(king);
-        secondPlayer.setGameCharacter(eveque);
+        firstPlayer.setGameCharacter(eveque);
+        secondPlayer.setGameCharacter(king);
 
         // Set running order
         runningOrder = newGame.setRunningOrder();
@@ -100,8 +100,8 @@ class MainTest {
 
         // Round 2
         // Players choose a character
-        firstPlayer.setGameCharacter(eveque);
-        secondPlayer.setGameCharacter(king);
+        firstPlayer.setGameCharacter(king);
+        secondPlayer.setGameCharacter(eveque);
 
         // Set running order
         runningOrder = newGame.setRunningOrder();
@@ -133,8 +133,8 @@ class MainTest {
         // If the scores are equal
         GameCharacter king = new King();
         GameCharacter eveque = new Eveque();
-        firstBuilder.setGameCharacter(king);
-        secondPlayer.setGameCharacter(eveque);
+        firstBuilder.setGameCharacter(eveque);
+        secondPlayer.setGameCharacter(king);
         firstBuilder.setScore(0);
         secondPlayer.setScore(0);
         assertEquals(calculateScores(players, firstBuilder).get(0), firstBuilder);
