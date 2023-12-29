@@ -1,7 +1,6 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
-import fr.cotedazur.univ.polytech.startingpoint.gameCharacter.Character1;
-import fr.cotedazur.univ.polytech.startingpoint.gameCharacter.King;
+import fr.cotedazur.univ.polytech.startingpoint.gameCharacter.*;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.players.Bot;
 import fr.cotedazur.univ.polytech.startingpoint.players.Player;
@@ -39,7 +38,7 @@ class MainTest {
     void testRunningOrder() {
         Player firstPlayer = new Bot("Player 1");
         Player secondPlayer = new Bot("Player 2");
-        Character1 character1 = new Character1();
+        Eveque eveque = new Eveque();
         King king = new King();
         Game newGame = new Game();
 
@@ -48,7 +47,7 @@ class MainTest {
 
         // Players choose a character
         firstPlayer.setGameCharacter(king);
-        secondPlayer.setGameCharacter(character1);
+        secondPlayer.setGameCharacter(eveque);
 
         // Set running order
         List<Player> runningOrder = newGame.setRunningOrder();
@@ -60,7 +59,7 @@ class MainTest {
     void testRunningOrder2() {
         Player firstPlayer = new Bot("Player 1");
         Player secondPlayer = new Bot("Player 2");
-        Character1 character1 = new Character1();
+        Eveque eveque = new Eveque();
         King king = new King();
         Game newGame = new Game();
 
@@ -68,7 +67,7 @@ class MainTest {
         newGame.setPlayers(firstPlayer, secondPlayer);
 
         // Players choose a character
-        firstPlayer.setGameCharacter(character1);
+        firstPlayer.setGameCharacter(eveque);
         secondPlayer.setGameCharacter(king);
 
         // Set running order
@@ -81,7 +80,7 @@ class MainTest {
     void testRunningOrderInTwoRounds() {
         Player firstPlayer = new Bot("Player 1");
         Player secondPlayer = new Bot("Player 2");
-        Character1 character1 = new Character1();
+        Eveque eveque = new Eveque();
         King king = new King();
         Game newGame = new Game();
         List<Player> runningOrder;
@@ -92,7 +91,7 @@ class MainTest {
         // Round 1
         // Players choose a character
         firstPlayer.setGameCharacter(king);
-        secondPlayer.setGameCharacter(character1);
+        secondPlayer.setGameCharacter(eveque);
 
         // Set running order
         runningOrder = newGame.setRunningOrder();
@@ -101,7 +100,7 @@ class MainTest {
 
         // Round 2
         // Players choose a character
-        firstPlayer.setGameCharacter(character1);
+        firstPlayer.setGameCharacter(eveque);
         secondPlayer.setGameCharacter(king);
 
         // Set running order
@@ -133,9 +132,9 @@ class MainTest {
 
         // If the scores are equal
         GameCharacter king = new King();
-        GameCharacter character1 = new Character1();
+        GameCharacter eveque = new Eveque();
         firstBuilder.setGameCharacter(king);
-        secondPlayer.setGameCharacter(character1);
+        secondPlayer.setGameCharacter(eveque);
         firstBuilder.setScore(0);
         secondPlayer.setScore(0);
         assertEquals(calculateScores(players, firstBuilder).get(0), firstBuilder);

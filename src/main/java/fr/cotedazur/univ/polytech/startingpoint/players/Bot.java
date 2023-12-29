@@ -1,13 +1,16 @@
 package fr.cotedazur.univ.polytech.startingpoint.players;
 
-import java.util.ArrayList;
+import java.util.*;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import fr.cotedazur.univ.polytech.startingpoint.ActionManager;
 import fr.cotedazur.univ.polytech.startingpoint.GameCharacter;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.Game;
+import fr.cotedazur.univ.polytech.startingpoint.DistrictColor;
 import fr.cotedazur.univ.polytech.startingpoint.gameCharacter.King;
+
 
 public class Bot extends Player {
 
@@ -43,24 +46,28 @@ public class Bot extends Player {
                            // après isCharInList **A CHANGER ABSOLUMENT AVANT RENDU FINAL, VERSION
                            // TEMPORAIRE POUR RESPECT DES DATES DE RENDU**
     }
-
+    public void chooseChar(Game game,String askedChar){
+        GameCharacter chosenCharacter = getCharInList(game.getAvailableChars(), askedChar);
+        setGameCharacter(chosenCharacter);
+        game.removeAvailableChar(chosenCharacter);
+        System.out.println(this.getName() + " a choisi le " + chosenCharacter.getName());
+    }
     public void chooseCharacterAlgorithm(Game game) {
         ArrayList<GameCharacter> availableChars = game.getAvailableChars();
-        // If the bot can build its 8th quarter, it will choose the king (if possible)
+        // If the bot can build its 8th quarter next turn, it will choose the king (if possible)
         if (!(this.getDistrictsInHand().isEmpty()) && (this.getDistrictsBuilt().size() >= 7) && (canBuildDistrictThisTurn())
                 && (isCharInList(availableChars, "Roi"))) {
-            GameCharacter chosenCharacter = getCharInList(availableChars, "Roi");
-            setGameCharacter(chosenCharacter);
-            game.removeAvailableChar(chosenCharacter);
-            System.out.println(this.getName() + " a choisi le " + chosenCharacter.getName());
+            chooseChar(game,"Roi");
         }
+        // If the bot doesn't have an immediate way to win, it will just pick the character who gives out the most gold for him
         else {
-            int tempindex = 0;
-            if ((availableChars.get(tempindex).getName().equals("Roi"))&&(availableChars.size()>1)){tempindex++;}
-            GameCharacter chosenCharacter = availableChars.remove(tempindex);
-            setGameCharacter(chosenCharacter);
-            game.removeAvailableChar(chosenCharacter);
-            System.out.println(this.getName() + " a choisi le " + chosenCharacter.getName());
+            GameCharacter chosenChar = availableChars.get(0);
+            for (GameCharacter cha : availableChars){
+                if (getNumberOfDistrictsByColor().get(cha.getColor()) > getNumberOfDistrictsByColor().get(chosenChar.getColor())){
+                    chosenChar = cha;
+                }
+            }
+            chooseChar(game,chosenChar.getName());
         }
     }
 
