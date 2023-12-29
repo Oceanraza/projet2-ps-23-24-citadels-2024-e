@@ -80,4 +80,5 @@ import org.junit.jupiter.api.Test;
         assertEquals("Roi", bot.getGameCharacter().name);
     }
 
+
 }
