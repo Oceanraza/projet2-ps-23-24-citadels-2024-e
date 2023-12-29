@@ -4,15 +4,13 @@ import fr.cotedazur.univ.polytech.startingpoint.Game;
 import fr.cotedazur.univ.polytech.startingpoint.GameCharacter;
 import fr.cotedazur.univ.polytech.startingpoint.players.*;
 
-public class Character3 extends GameCharacter {
-    public Character3() {
-        super("Personnage 3", 3);
+public class Eveque extends GameCharacter {
+    public Eveque() {
+        super("Eveque", 5);
     }
 
     @Override
     public void specialEffect(Player player, Game game) {
-        // Add 2 gold to the player
-        player.addGold(2);
-        System.out.println("Le Character3 a donné 2 or à " + player.getName());
+        System.out.println("L'Eveque n'a pas de compétences programmée");
     }
 }

@@ -1,5 +1,6 @@
 package fr.cotedazur.univ.polytech.startingpoint.players;
 
+import fr.cotedazur.univ.polytech.startingpoint.DistrictColor;
 import fr.cotedazur.univ.polytech.startingpoint.Game;
 import fr.cotedazur.univ.polytech.startingpoint.GameCharacter;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
@@ -105,7 +106,15 @@ public abstract class Player {
         }
         return true;
     }
-
+    public int getNumberOfDistrictsByColor(DistrictColor askedColor){
+        int compt = 0;
+        for (District d: getDistrictsBuilt()){
+            if (d.getColor() == askedColor){
+                compt++;
+            }
+        }
+        return compt;
+    }
     public String toString() {
         if (gameCharacter == null) {
             return "\nC'est au tour de : " + name + "\n" + (!districtsInHand.isEmpty() ? "Et sa main est composée de: "

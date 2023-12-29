@@ -67,9 +67,8 @@ public class Bot extends Player {
     @Override
     public void play(Game game) {
         // Apply special effect
-        if (getGameCharacter() != null) {
-            ActionManager.applySpecialEffect(this, game);
-        }
+        ActionManager.applySpecialEffect(this, game);
+
         // Collect gold
         addGold(ActionManager.collectGold(this));
         // The bot draws a card if it has no district in its hand.

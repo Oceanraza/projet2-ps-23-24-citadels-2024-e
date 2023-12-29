@@ -105,7 +105,7 @@ public class Game {
         allCharacters.put("Roi", new King());
         allCharacters.put("Personnage 1", new Character1());
         allCharacters.put("Personnage 2", new Character2());
-        allCharacters.put("Personnage 3", new Character3());
+        allCharacters.put("Personnage 3", new Eveque());
     }
 
     public District drawCard() {
