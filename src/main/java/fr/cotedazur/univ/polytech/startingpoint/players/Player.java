@@ -1,11 +1,14 @@
 package fr.cotedazur.univ.polytech.startingpoint.players;
 
+import fr.cotedazur.univ.polytech.startingpoint.DistrictColor;
 import fr.cotedazur.univ.polytech.startingpoint.Game;
 import fr.cotedazur.univ.polytech.startingpoint.GameCharacter;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public abstract class Player {
     private final List<District> districtsInHand;
@@ -14,6 +17,7 @@ public abstract class Player {
     private final String name;
     private int score;
     private GameCharacter gameCharacter;
+    private Map<DistrictColor, Integer> numberOfDistrictsByColor;
 
     protected Player(String name) {
         this.name = name;
@@ -21,6 +25,13 @@ public abstract class Player {
         districtsBuilt = new ArrayList<>();
         gold = 2;
         score = 0;
+        gameCharacter = null;
+        numberOfDistrictsByColor = new HashMap<>();
+        numberOfDistrictsByColor.put(DistrictColor.militaire,0);
+        numberOfDistrictsByColor.put(DistrictColor.noble,0);
+        numberOfDistrictsByColor.put(DistrictColor.special,0);
+        numberOfDistrictsByColor.put(DistrictColor.religieux,0);
+        numberOfDistrictsByColor.put(DistrictColor.marchand,0);
     }
 
     // Getter
@@ -42,6 +53,7 @@ public abstract class Player {
     public GameCharacter getGameCharacter() {
         return gameCharacter;
     }
+    public void resetGameCharacter(){gameCharacter = null;}
     public String getCharacterName() {
         return gameCharacter.getName();
     }
@@ -62,8 +74,14 @@ public abstract class Player {
         this.districtsInHand.add(district);
     }
     public void addDistrictBuilt(District district) {
+        numberOfDistrictsByColor.replace(
+                district.getColor(),
+                numberOfDistrictsByColor.get(district.getColor()) + 1);
         this.districtsBuilt.add(district);
     }
+
+    public Map<DistrictColor, Integer> getNumberOfDistrictsByColor() {return numberOfDistrictsByColor;}
+
     public void addGold(int gold) {
         this.gold += gold;
     }
@@ -74,7 +92,7 @@ public abstract class Player {
         // Checks if the player has enough gold to build the district. If so it is
         // built.
         if (gold >= district.getPrice() && isNotBuilt(district)) {
-            districtsBuilt.add(district);
+            addDistrictBuilt(district);
             gold -= district.getPrice();
             districtsInHand.remove(district);
             System.out.println(getName() + " a construit le quartier " + district.getName());
@@ -103,7 +121,6 @@ public abstract class Player {
         }
         return true;
     }
-
     public String toString() {
         if (gameCharacter == null) {
             return "\nC'est au tour de : " + name + "\n" + (!districtsInHand.isEmpty() ? "Et sa main est composée de: "

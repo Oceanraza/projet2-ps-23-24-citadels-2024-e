@@ -1,7 +1,6 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
-import fr.cotedazur.univ.polytech.startingpoint.gameCharacter.Character1;
-import fr.cotedazur.univ.polytech.startingpoint.gameCharacter.King;
+import fr.cotedazur.univ.polytech.startingpoint.gameCharacter.*;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.players.Bot;
 import fr.cotedazur.univ.polytech.startingpoint.players.Player;
@@ -39,79 +38,74 @@ class MainTest {
     void testRunningOrder() {
         Player firstPlayer = new Bot("Player 1");
         Player secondPlayer = new Bot("Player 2");
-        Character1 character1 = new Character1();
+        Player thirdPlayer = new Bot("Player 3");
+        Player fourthPlayer = new Bot("Player 4");
+        Eveque eveque = new Eveque();
         King king = new King();
+        Condottiere condottiere = new Condottiere();
+        Marchand marchand = new Marchand();
         Game newGame = new Game();
 
         // Create list of players
-        newGame.setPlayers(firstPlayer, secondPlayer);
+        newGame.setPlayers(firstPlayer, secondPlayer, thirdPlayer, fourthPlayer);
 
         // Players choose a character
-        firstPlayer.setGameCharacter(king);
-        secondPlayer.setGameCharacter(character1);
-
-        // Set running order
-        List<Player> runningOrder = newGame.setRunningOrder();
-        assertEquals(secondPlayer.getName(), runningOrder.get(0).getName());
-        assertEquals(firstPlayer.getName(), runningOrder.get(1).getName());
-    }
-
-    @Test
-    void testRunningOrder2() {
-        Player firstPlayer = new Bot("Player 1");
-        Player secondPlayer = new Bot("Player 2");
-        Character1 character1 = new Character1();
-        King king = new King();
-        Game newGame = new Game();
-
-        // Create list of players
-        newGame.setPlayers(firstPlayer, secondPlayer);
-
-        // Players choose a character
-        firstPlayer.setGameCharacter(character1);
+        firstPlayer.setGameCharacter(eveque);
         secondPlayer.setGameCharacter(king);
+        thirdPlayer.setGameCharacter(marchand);
+        fourthPlayer.setGameCharacter(condottiere);
 
         // Set running order
         List<Player> runningOrder = newGame.setRunningOrder();
-        assertEquals(firstPlayer.getName(), runningOrder.get(0).getName());
-        assertEquals(secondPlayer.getName(), runningOrder.get(1).getName());
+        assertEquals(firstPlayer.getName(), runningOrder.get(1).getName());
+        assertEquals(secondPlayer.getName(), runningOrder.get(0).getName());
+        assertEquals(thirdPlayer.getName(), runningOrder.get(2).getName());
+        assertEquals(fourthPlayer.getName(), runningOrder.get(3).getName());
     }
-
     @Test
     void testRunningOrderInTwoRounds() {
         Player firstPlayer = new Bot("Player 1");
         Player secondPlayer = new Bot("Player 2");
-        Character1 character1 = new Character1();
+        Player thirdPlayer = new Bot("Player 3");
+        Player fourthPlayer = new Bot("Player 4");
+        Eveque eveque = new Eveque();
         King king = new King();
+        Condottiere condottiere = new Condottiere();
+        Marchand marchand = new Marchand();
         Game newGame = new Game();
-        List<Player> runningOrder;
 
         // Create list of players
-        newGame.setPlayers(firstPlayer, secondPlayer);
+        newGame.setPlayers(firstPlayer, secondPlayer, thirdPlayer, fourthPlayer);
 
-        // Round 1
         // Players choose a character
-        firstPlayer.setGameCharacter(king);
-        secondPlayer.setGameCharacter(character1);
+        firstPlayer.setGameCharacter(eveque);
+        secondPlayer.setGameCharacter(king);
+        thirdPlayer.setGameCharacter(marchand);
+        fourthPlayer.setGameCharacter(condottiere);
 
         // Set running order
-        runningOrder = newGame.setRunningOrder();
-        assertEquals(secondPlayer.getName(), runningOrder.get(0).getName());
+        List<Player> runningOrder = newGame.setRunningOrder();
+        assertEquals(secondPlayer.getName(), runningOrder.get(0).getName()); //has crown
         assertEquals(firstPlayer.getName(), runningOrder.get(1).getName());
+        assertEquals(thirdPlayer.getName(), runningOrder.get(2).getName());
+        assertEquals(fourthPlayer.getName(), runningOrder.get(3).getName());
 
         // Round 2
         // Players choose a character
-        firstPlayer.setGameCharacter(character1);
-        secondPlayer.setGameCharacter(king);
-
+        secondPlayer.setGameCharacter(eveque);
+        firstPlayer.setGameCharacter(king); //has crown
+        thirdPlayer.setGameCharacter(marchand);
+        fourthPlayer.setGameCharacter(condottiere);
         // Set running order
         runningOrder = newGame.setRunningOrder();
-        assertEquals(firstPlayer.getName(), runningOrder.get(0).getName());
+        assertEquals(firstPlayer.getName(), runningOrder.get(0).getName()); // has crown
         assertEquals(secondPlayer.getName(), runningOrder.get(1).getName());
+        assertEquals(thirdPlayer.getName(), runningOrder.get(2).getName());
+        assertEquals(fourthPlayer.getName(), runningOrder.get(3).getName());
     }
 
     @Test
-    void testCalculateScores() {
+    void testCalculateScores() { //We can test with two players since adding more players doesn't change the scores
         Player firstBuilder = new Bot("Player 1");
         Player secondPlayer = new Bot("Player 2");
         List<Player> players = Arrays.asList(firstBuilder, secondPlayer);
@@ -133,15 +127,15 @@ class MainTest {
 
         // If the scores are equal
         GameCharacter king = new King();
-        GameCharacter character1 = new Character1();
-        firstBuilder.setGameCharacter(king);
-        secondPlayer.setGameCharacter(character1);
+        GameCharacter eveque = new Eveque();
+        firstBuilder.setGameCharacter(eveque);
+        secondPlayer.setGameCharacter(king);
         firstBuilder.setScore(0);
         secondPlayer.setScore(0);
         assertEquals(calculateScores(players, firstBuilder).get(0), firstBuilder);
     }
     @Test
-    void testAnnounceWinner() {
+    void testAnnounceWinner() { //We can test with two players since adding more players doesn't change the ending message
         Player firstBuilder = new Bot("Player 1");
         Player secondPlayer = new Bot("Player 2");
         List<Player> players = Arrays.asList(firstBuilder, secondPlayer);

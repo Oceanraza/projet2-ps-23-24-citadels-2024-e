@@ -6,14 +6,22 @@ import fr.cotedazur.univ.polytech.startingpoint.players.Player;
 public abstract class GameCharacter {
     protected String name;
     protected int runningOrder;
+    protected DistrictColor color;
     protected GameCharacter(String name, int runningOrder) {
         this.name = name;
         this.runningOrder = runningOrder;
+        this.color = null;
     }
-
+    protected GameCharacter(String name, int runningOrder,DistrictColor color) {
+        this.name = name;
+        this.runningOrder = runningOrder;
+        this.color = color;
+    }
     public String getName() { return name; }
 
     public int getRunningOrder() { return runningOrder; }
 
     public abstract void specialEffect(Player player, Game game);
+
+    public DistrictColor getColor() {return color;}
 }
