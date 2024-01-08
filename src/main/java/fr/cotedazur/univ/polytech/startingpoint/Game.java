@@ -6,10 +6,42 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import fr.cotedazur.univ.polytech.startingpoint.characters.Character1;
-import fr.cotedazur.univ.polytech.startingpoint.characters.King;
+import fr.cotedazur.univ.polytech.startingpoint.gameCharacter.*;
+
+
+import java.util.*;
+import java.util.stream.Collectors;
+
+import fr.cotedazur.univ.polytech.startingpoint.city.District;
+import fr.cotedazur.univ.polytech.startingpoint.players.*;
+
 
 public class Game {
+    private ArrayList<District> gameDeck;
+    private Crown crown;
+    private List<Player> players;
+    private Map<String, GameCharacter> allCharacters;
+    private ArrayList<GameCharacter> availableChars;
+
+    // Getter
+    public ArrayList<District> getGameDeck() {
+        return gameDeck;
+    }
+    public Crown getCrown() {
+        return crown;
+    }
+    public List<Player> getPlayers() {
+        return players;
+    }
+    public ArrayList<GameCharacter> getAvailableChars() {
+        availableCharacters();
+        return availableChars;
+    }
+
+    // Setter
+    public void setPlayers(Player... bots) { // Add players to the list of players
+        players.addAll(Arrays.asList(bots));
+    }
 
     public ArrayList<District> gameDeck = new ArrayList<>();
     private Crown crown;
@@ -20,6 +52,10 @@ public class Game {
         for (int i = 0; i < n; i++) {
             gameDeck.add(d);
         }
+    }
+
+    public void removeAvailableChar(GameCharacter cha) {
+        availableChars.remove(cha);
     }
 
     public Game() {
@@ -59,12 +95,10 @@ public class Game {
         crown = new Crown();
 
         // Creates the characters
-        allCharacters.put("King", new King());
-        allCharacters.put("Character1", new Character1());
-    }
-
-    public Crown getCrown() {
-        return crown;
+        allCharacters.put("Roi", new King());
+        allCharacters.put("Marchand", new Marchand());
+        allCharacters.put("Eveque", new Eveque());
+        allCharacters.put("Condottiere", new Condottiere());
     }
 
     public District drawCard() {
@@ -78,8 +112,11 @@ public class Game {
         while (!availableChars.isEmpty()) {
             availableChars.remove(0);
         }
-        availableChars.add(allCharacters.get("King"));
-        availableChars.add(allCharacters.get("Character1"));
+
+        availableChars.add(allCharacters.get("Roi"));
+        availableChars.add(allCharacters.get("Marchand"));
+        availableChars.add(allCharacters.get("Eveque"));
+        availableChars.add(allCharacters.get("Condottiere"));
     }
 
     public ArrayList<Characters> availableCharacters() {
@@ -94,6 +131,16 @@ public class Game {
     public void removeChar(Characters cha) {
         availableChars.remove(cha);
     }
+    public void charSelectionFiller(){
+        for (Player p: players){
+            if (p.getGameCharacter() == null){
+                Bot p2 = (Bot) p;
+                System.out.println(p2);
+                //We create a new variable p2 to cast p to Bot each time
+                //Good to note that you can't just cast the whole List
+                p2.chooseCharacterAlgorithm(this);}
+        }
+    }
 
     public String toString() {
         String str = "Les cartes dans le deck sont : \n";
@@ -101,5 +148,11 @@ public class Game {
             str = str + gameDeck.get(i).toString() + '\n';
         }
         return str;
+    }
+
+    public void setAllCharsToNull() {
+        for (Player  p: players){
+            p.setGameCharacter(null);
+        }
     }
 }
