@@ -2,12 +2,9 @@ package fr.cotedazur.univ.polytech.startingpoint;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-<<<<<<< HEAD
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.gameCharacter.*;
 import fr.cotedazur.univ.polytech.startingpoint.players.Bot;
-=======
->>>>>>> e2d073b1f1402278b8dda95bd247d95f2ca4354c
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -16,25 +13,15 @@ import fr.cotedazur.univ.polytech.startingpoint.characters.King;
 
 public class ActionManagerTest {
     King king;
-<<<<<<< HEAD
     Eveque eveque;
     Bot bot;
-=======
-    Character1 character1;
-    Bot player;
->>>>>>> e2d073b1f1402278b8dda95bd247d95f2ca4354c
     Game game;
 
     @BeforeEach
     void setUp() {
         king = new King();
-<<<<<<< HEAD
         eveque = new Eveque();
         bot = new Bot("Bot") {
-=======
-        character1 = new Character1();
-        player = new Bot("Bot") {
->>>>>>> e2d073b1f1402278b8dda95bd247d95f2ca4354c
         };
         game = new Game();
         game.init();
@@ -67,7 +54,6 @@ public class ActionManagerTest {
 
     @Test
     void getGoldTest() {
-<<<<<<< HEAD
         bot.setGameCharacter(eveque);
         ActionManager.applySpecialEffect(bot, game);
         assertEquals(2, bot.getGold());
@@ -148,34 +134,4 @@ public class ActionManagerTest {
 
 
 
-=======
-        player.chooseCharacter(character1);
-        ActionManager.applySpecialEffect(player, game);
-        assertEquals(4, player.getGold());
-    }
-
-    @Test
-    void chooseCharTestChar1() {
-        game.shuffleChars(2);
-        player.chooseCharacterAlgorithm(game);
-        assertEquals(player.getCharacter().name, "Character1");
-    }
-
-    @Test
-    void chooseCharTestKing() {
-        game.shuffleChars(2);
-        player.setGold(8);
-        player.districtsInHand.add(game.drawCard());
-        player.districtsBuilt.add(game.drawCard());
-        player.districtsBuilt.add(game.drawCard());
-        player.districtsBuilt.add(game.drawCard());
-        player.districtsBuilt.add(game.drawCard());
-        player.districtsBuilt.add(game.drawCard());
-        player.districtsBuilt.add(game.drawCard());
-        player.districtsBuilt.add(game.drawCard());
-        player.chooseCharacterAlgorithm(game);
-        assertEquals(player.getCharacter().name, "Roi");
-    }
-
->>>>>>> e2d073b1f1402278b8dda95bd247d95f2ca4354c
 }

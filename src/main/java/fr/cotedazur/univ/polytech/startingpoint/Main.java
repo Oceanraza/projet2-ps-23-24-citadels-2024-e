@@ -9,9 +9,13 @@ public class Main {
     public static final int START_CARDS_NUMBER = 4;
 
     // If a player has 8 districts built, he wins
-    public static boolean isFinished(Player player) {
-        return player.getDistrictsBuilt().size() >= 8;
+    public static boolean isGameFinished(List<Player> players) {
+        for (Player p: players){
+            if (isFinished(p)){return true;}
+        }
+        return false;
     }
+    public static boolean isFinished(Player player) {return (player.getDistrictsBuilt().size() >= 8);}
 
     public static List<Player> calculateScores(List<Player> players, Player firstBuilder) {
         for (Player player : players) {
@@ -53,7 +57,6 @@ public class Main {
         Game newGame = new Game();
         // System.out.println(newGame);
 
-<<<<<<< HEAD
         // Adding players to the game
         newGame.setPlayers(new Bot("Donald"), new Bot("Picsou"), new Bot("Riri"), new Bot("Fifi"));
 
@@ -96,44 +99,6 @@ public class Main {
                 if (isFinished(player)) {
                     firstBuilder = player;
                 }
-=======
-        Bot firstBot = new Bot("Donald");
-        Bot secondBot = new Bot("Picsou");
-        List<Player> players = new ArrayList<>();
-        players.add(firstBot);
-        players.add(secondBot);
-
-        for (int i = 0; i < START_CARDS_NUMBER; i++) {
-            District firstBotDistrict = newGame.drawCard();
-            firstBot.districtsInHand.add(firstBotDistrict);
-            newGame.gameDeck.remove(firstBotDistrict);
-
-            District secondBotDistrict = newGame.drawCard();
-            secondBot.districtsInHand.add(secondBotDistrict);
-            newGame.gameDeck.remove(secondBotDistrict);
-        }
-        int turn = 1;
-        Player firstBuilder = null;
-        while (!(isFinished(firstBot) || isFinished(secondBot))) {
-            newGame.shuffleChars(2);
-            System.out.println("\nTour numero " + turn + "\nLa couronne appartient à "
-                    + (newGame.getCrown().getOwner() != null ? newGame.getCrown().getOwner().name : "personne"));
-            System.out.println("Choix des personnages.");
-            System.out.println(firstBot);
-            firstBot.chooseCharacterAlgorithm(newGame);
-            System.out.println(secondBot);
-            secondBot.chooseCharacterAlgorithm(newGame);
-            System.out.println("Jouez !");
-            System.out.println(firstBot);
-            firstBot.play(newGame);
-            if (isFinished(firstBot)) {
-                firstBuilder = firstBot;
-            }
-            System.out.println(secondBot);
-            secondBot.play(newGame);
-            if (isFinished(secondBot) && !isFinished(firstBot)) {
-                firstBuilder = secondBot;
->>>>>>> e2d073b1f1402278b8dda95bd247d95f2ca4354c
             }
             turn++;
         }
