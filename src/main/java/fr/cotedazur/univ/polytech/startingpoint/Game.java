@@ -20,7 +20,6 @@ public class Game {
     private List<Player> players;
     private Map<String, GameCharacter> allCharacters;
     private ArrayList<GameCharacter> availableChars;
-
     // Getter
     public ArrayList<District> getGameDeck() {
         return gameDeck;
