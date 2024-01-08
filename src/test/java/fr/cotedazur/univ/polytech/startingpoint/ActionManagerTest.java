@@ -58,7 +58,7 @@ import org.junit.jupiter.api.Test;
 
 
     @Test
-    void chooseCharTestKing() {
+    void chooseCharTestKingPower() {
         game.shuffleChars(4);
         bot.setGold(8);
         bot.addDistrictInHand(game.drawCard());
@@ -73,7 +73,7 @@ import org.junit.jupiter.api.Test;
         assertEquals("Roi", bot.getCharacterName());
     }
     @Test
-     void chooseCharTest(){
+     void chooseCharTestEvequeGold(){
         game.shuffleChars(4);
         District district1 = new District("Quartier 1", 0, DistrictColor.noble);
         District district2 = new District("Quartier 2", 0, DistrictColor.religieux);
@@ -85,6 +85,50 @@ import org.junit.jupiter.api.Test;
         assertEquals("Eveque", bot.getCharacterName());
         assertEquals(2,ActionManager.collectGold(bot));
     }
+
+     @Test
+     void chooseCharTestMarchandGold(){
+         game.shuffleChars(4);
+         District district1 = new District("Quartier 1", 0, DistrictColor.noble);
+         District district2 = new District("Quartier 2", 0, DistrictColor.marchand);
+         District district3 = new District("Quartier 3", 0, DistrictColor.marchand);
+         bot.build(district1);
+         bot.build(district2);
+         bot.build(district3);
+         bot.chooseCharacterAlgorithm(game);
+         assertEquals("Marchand", bot.getCharacterName());
+         assertEquals(2,ActionManager.collectGold(bot));
+     }
+
+     @Test
+     void chooseCharTestCondottiereGold(){
+         game.shuffleChars(4);
+         District district1 = new District("Quartier 1", 0, DistrictColor.noble);
+         District district2 = new District("Quartier 2", 0, DistrictColor.militaire);
+         District district3 = new District("Quartier 3", 0, DistrictColor.militaire);
+         bot.build(district1);
+         bot.build(district2);
+         bot.build(district3);
+         bot.chooseCharacterAlgorithm(game);
+         assertEquals("Condottiere", bot.getCharacterName());
+         assertEquals(2,ActionManager.collectGold(bot));
+     }
+
+     @Test
+     void chooseCharTestKingGold(){
+         game.shuffleChars(4);
+         District district1 = new District("Quartier 1", 0, DistrictColor.noble);
+         District district2 = new District("Quartier 2", 0, DistrictColor.noble);
+         District district3 = new District("Quartier 3", 0, DistrictColor.religieux);
+         bot.build(district1);
+         bot.build(district2);
+         bot.build(district3);
+         bot.chooseCharacterAlgorithm(game);
+         assertEquals("Roi", bot.getCharacterName());
+         assertEquals(2,ActionManager.collectGold(bot));
+     }
+
+
 
 
 }
