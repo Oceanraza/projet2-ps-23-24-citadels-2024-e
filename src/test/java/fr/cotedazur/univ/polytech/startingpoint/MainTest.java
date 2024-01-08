@@ -1,9 +1,14 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
+<<<<<<< HEAD
 import fr.cotedazur.univ.polytech.startingpoint.gameCharacter.*;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.players.Bot;
 import fr.cotedazur.univ.polytech.startingpoint.players.Player;
+=======
+import fr.cotedazur.univ.polytech.startingpoint.characters.Character1;
+import fr.cotedazur.univ.polytech.startingpoint.characters.King;
+>>>>>>> e2d073b1f1402278b8dda95bd247d95f2ca4354c
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -36,6 +41,7 @@ class MainTest {
     }
 
     @Test
+<<<<<<< HEAD
     void testRunningOrder() {
         Player firstPlayer = new Bot("Player 1");
         Player secondPlayer = new Bot("Player 2");
@@ -107,6 +113,9 @@ class MainTest {
 
     @Test
     void testCalculateScores() { //We can test with two players since adding more players doesn't change the scores
+=======
+    void testCalculateScores() {
+>>>>>>> e2d073b1f1402278b8dda95bd247d95f2ca4354c
         Player firstBuilder = new Bot("Player 1");
         Player secondPlayer = new Bot("Player 2");
         List<Player> players = Arrays.asList(firstBuilder, secondPlayer);
@@ -127,16 +136,23 @@ class MainTest {
         assertEquals(10, scoredPlayers.get(1).score);
 
         // If the scores are equal
+<<<<<<< HEAD
         GameCharacter king = new King();
         GameCharacter eveque = new Eveque();
         firstBuilder.setGameCharacter(eveque);
         secondPlayer.setGameCharacter(king);
+=======
+        Characters king = new King();
+        Characters character1 = new Character1();
+        firstBuilder.chooseCharacter(king);
+        secondPlayer.chooseCharacter(character1);
+>>>>>>> e2d073b1f1402278b8dda95bd247d95f2ca4354c
         firstBuilder.setScore(0);
         secondPlayer.setScore(0);
         assertEquals(calculateScores(players, firstBuilder).get(0), firstBuilder);
     }
     @Test
-    void testAnnounceWinner() { //We can test with two players since adding more players doesn't change the ending message
+    void testAnnounceWinner() {
         Player firstBuilder = new Bot("Player 1");
         Player secondPlayer = new Bot("Player 2");
         List<Player> players = Arrays.asList(firstBuilder, secondPlayer);
