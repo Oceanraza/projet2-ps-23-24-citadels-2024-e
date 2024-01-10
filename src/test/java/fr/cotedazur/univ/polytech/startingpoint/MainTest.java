@@ -13,6 +13,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static fr.cotedazur.univ.polytech.startingpoint.Main.calculateScores;
+import static fr.cotedazur.univ.polytech.startingpoint.Main.sortPlayers;
 import static org.junit.jupiter.api.Assertions.*;
 
 class MainTest {
@@ -153,4 +154,38 @@ class MainTest {
         String expectedOutput = "Player 1 : 34 points"+ LINE_SEPARATOR+ "Player 2 : 32 points"+ LINE_SEPARATOR+ "Player 1 gagne la partie avec 34 points !"+ LINE_SEPARATOR;
         assertEquals(expectedOutput, outContent.toString());
     }
+    @Test
+    void testSortEvenPlayers(){
+        Player firstBuilder = new Bot("Player 1");
+        Player secondPlayer = new Bot("Player 2");
+        Player thirdPlayer = new Bot("Player 3");
+        Player fourthPlayer = new Bot("Player 4");
+        List<Player> players = Arrays.asList(firstBuilder,thirdPlayer,fourthPlayer,secondPlayer);
+
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outContent));
+        for (int i = 0; i < 8; i++) {
+            firstBuilder.getDistrictsBuilt().add(new District("test", i, DistrictColor.marchand)); // 34 points
+            secondPlayer.getDistrictsBuilt().add(new District("test", i, DistrictColor.marchand)); // 32 points
+            thirdPlayer.getDistrictsBuilt().add(new District("test", i, DistrictColor.marchand)); // 32 points
+            fourthPlayer.getDistrictsBuilt().add(new District("test", i, DistrictColor.marchand)); // 32 points
+        }
+        firstBuilder.setGameCharacter(new Condottiere());
+        secondPlayer.setGameCharacter(new King());
+        thirdPlayer.setGameCharacter(new Eveque());
+        fourthPlayer.setGameCharacter(new Marchand());
+
+        firstBuilder.setScore(firstBuilder.getScore()-2); //il passe a 32 points, égalité avec les autres
+        calculateScores(players,firstBuilder);
+        for (Player p : players) {
+            System.out.println(p.getName() + ", score : " + p.getScore());
+        }
+        String expectedOutput = "Player 1, score : 34" + LINE_SEPARATOR
+                + "Player 4, score : 32" + LINE_SEPARATOR
+                + "Player 3, score : 32" + LINE_SEPARATOR
+                + "Player 2, score : 32" + LINE_SEPARATOR;
+
+        assertEquals(expectedOutput, outContent.toString());
+    }
+
 }
