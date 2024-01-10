@@ -88,11 +88,16 @@ public class Game {
         addDistrictsInGameDeck(new District("Caserne", 3, DistrictColor.militaire), 3);
         addDistrictsInGameDeck(new District("Forteresse", 5, DistrictColor.militaire), 2);
 
-        addDistrictsInGameDeck(new District("Donjon", 3, DistrictColor.special), 1);
-        addDistrictsInGameDeck(new District("Laboratoire", 5, DistrictColor.special), 1);
-        addDistrictsInGameDeck(new District("Observatoire", 5, DistrictColor.special), 1);
         addDistrictsInGameDeck(new District("Cour des miracles", 2, DistrictColor.special), 1);
+        addDistrictsInGameDeck(new District("Donjon", 3, DistrictColor.special), 2);
+        addDistrictsInGameDeck(new District("Laboratoire", 5, DistrictColor.special), 1);
+        addDistrictsInGameDeck(new District("Manufacture", 5, DistrictColor.special), 1);
+        addDistrictsInGameDeck(new District("Observatoire", 5, DistrictColor.special), 1);
         addDistrictsInGameDeck(new District("Cimetiere", 5, DistrictColor.special), 1);
+        addDistrictsInGameDeck(new District("Bibliotheque", 6, DistrictColor.special), 1);
+        addDistrictsInGameDeck(new District("Ecole de magie", 6, DistrictColor.special), 1);
+        addDistrictsInGameDeck(new District("Universite", 6, DistrictColor.special), 1);
+        addDistrictsInGameDeck(new District("Dracoport", 6, DistrictColor.special), 1);
 
         // Create a crown
         crown = new Crown();
