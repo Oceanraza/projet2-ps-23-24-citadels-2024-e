@@ -6,7 +6,7 @@ import fr.cotedazur.univ.polytech.startingpoint.players.Player;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Comparator;
 public class Main {
     // If a player has 8 districts built, he wins
     public static boolean isGameFinished(List<Player> players) {
@@ -16,31 +16,26 @@ public class Main {
         return false;
     }
     public static boolean isFinished(Player player) {return (player.getDistrictsBuilt().size() >= 8);}
+    public static void sortPlayers(List<Player> players) {
+        // Use a custom Comparator to compare Players based on their score and running order
+        Comparator<Player> playerComparator = Comparator
+                .comparingInt(Player::getScore)
+                .thenComparingInt(player -> player.getGameCharacter().getRunningOrder())
+                .reversed();
 
+        // Sort the players list using the custom comparator
+        players.sort(playerComparator);
+    }
     public static List<Player> calculateScores(List<Player> players, Player firstBuilder) {
         for (Player player : players) {
-            int score = player.getGold();
-            ArrayList<DistrictColor> districtColors = new ArrayList<>();
-            for (District district : player.getDistrictsBuilt()) {
-                score += district.getPrice();
-                districtColors.add(district.getColor());
-            }
-            if (districtColors.size() == DistrictColor.values().length) { // If the player has built all the district
-                // colors
-                score += 3;
-            }
+            player.calculateScore();
             if (player == firstBuilder) { // If the player was the first to build his 8 districts
-                score += 4;
+                player.setScore(player.getScore()+4);
             } else if (isFinished(player)) { // If the others players have finished building his 8 districts too
-                score += 2;
+                player.setScore(player.getScore()+2);
             }
-            player.setScore(score); // Initialize the player's score
         }
-        if (players.get(0).getScore() == players.get(1).getScore()) {
-            players.sort((player1, player2) -> player2.getGameCharacter().runningOrder - player1.getGameCharacter().runningOrder); // Sort the players by their character running order
-        } else {
-            players.sort((player1, player2) -> player2.getScore() - player1.getScore()); // Sort the players by their score
-        }
+        sortPlayers(players);
         return players;
     }
 

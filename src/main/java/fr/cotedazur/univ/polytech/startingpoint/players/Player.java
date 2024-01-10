@@ -133,4 +133,18 @@ public abstract class Player {
                 + districtsInHand : "Sa main est vide. ") + "\n" + "Il a " + gold + " or\n" +
                 (!districtsBuilt.isEmpty() ? "Et il a déjà posé: " + districtsBuilt : "Il n'a pas posé de quartiers.");
     }
+    public int calculateScore(){
+        int tempScore = getGold();
+        ArrayList<DistrictColor> districtColors = new ArrayList<>();
+        for (District district : getDistrictsBuilt()) {
+            tempScore += district.getPrice();
+            districtColors.add(district.getColor());
+        }
+        if (districtColors.size() == DistrictColor.values().length) { // If the player has built all the district
+            // colors
+            tempScore += 3;
+        }
+        setScore(tempScore); // Initialize the player's score
+        return tempScore;
+    }
 }
