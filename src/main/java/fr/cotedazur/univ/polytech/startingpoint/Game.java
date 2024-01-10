@@ -20,7 +20,6 @@ public class Game {
     private List<Player> players;
     private Map<String, GameCharacter> allCharacters;
     private ArrayList<GameCharacter> availableChars;
-
     // Getter
     public ArrayList<District> getGameDeck() {
         return gameDeck;
@@ -116,7 +115,7 @@ public class Game {
     }
 
     public void shuffleChars(int numberOfPlayers) { // numberOfPlayers needs to be used for automatic code but due to
-                                                    // time reasons, it's postponed to a later day.
+        // time reasons, it's postponed to a later day.
         while (!availableChars.isEmpty()) {
             availableChars.remove(0);
         }

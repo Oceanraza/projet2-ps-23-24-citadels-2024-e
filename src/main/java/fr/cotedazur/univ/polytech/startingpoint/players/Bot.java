@@ -40,8 +40,8 @@ public class Bot extends Player {
             }
         }
         return new King(); // Cette ligne ne peut pas être atteinte puisque getCharInList doit être appelée
-                           // après isCharInList **A CHANGER ABSOLUMENT AVANT RENDU FINAL, VERSION
-                           // TEMPORAIRE POUR RESPECT DES DATES DE RENDU**
+        // après isCharInList **A CHANGER ABSOLUMENT AVANT RENDU FINAL, VERSION
+        // TEMPORAIRE POUR RESPECT DES DATES DE RENDU**
     }
     public void chooseChar(Game game,String askedChar){
         GameCharacter chosenCharacter = getCharInList(game.getAvailableChars(), askedChar);

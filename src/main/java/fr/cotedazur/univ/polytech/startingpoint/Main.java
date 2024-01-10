@@ -26,7 +26,7 @@ public class Main {
                 districtColors.add(district.getColor());
             }
             if (districtColors.size() == DistrictColor.values().length) { // If the player has built all the district
-                                                                          // colors
+                // colors
                 score += 3;
             }
             if (player == firstBuilder) { // If the player was the first to build his 8 districts
@@ -65,9 +65,9 @@ public class Main {
 
         //Gives the startingCards to all the players.
         for (Player p : players){
-                for (int i = 0; i < START_CARDS_NUMBER; i++) {
-                    p.addDistrictInHand(newGame.drawCard());
-                }
+            for (int i = 0; i < START_CARDS_NUMBER; i++) {
+                p.addDistrictInHand(newGame.drawCard());
+            }
         }
 
         int turn = 1;
