@@ -24,4 +24,8 @@ public class District {
     public String toString() {
         return name + "-" + price + "-" + color;
     }
+
+    public boolean equals(District obj) {
+        return (getName().equals(obj.getName()));
+    }
 }
