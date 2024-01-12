@@ -33,6 +33,17 @@ public abstract class Player {
         numberOfDistrictsByColor.put(DistrictColor.religieux,0);
         numberOfDistrictsByColor.put(DistrictColor.marchand,0);
     }
+    public void destroyDistrict(District districtToDestroy){
+        for (District d : districtsBuilt){
+            if (d.equals(districtToDestroy)){
+                districtsBuilt.remove(d);
+                return;
+            }
+        }
+    }
+    public void removeGold(int g){
+        gold -= g;
+    }
 
     // Getter
     public List<District> getDistrictsInHand() {
@@ -146,5 +157,9 @@ public abstract class Player {
         }
         setScore(tempScore); // Initialize the player's score
         return tempScore;
+    }
+
+    public boolean equals(Player p) {
+        return (p.getName().equals(getName()));
     }
 }
