@@ -1,10 +1,8 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
-import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.players.Bot;
 import fr.cotedazur.univ.polytech.startingpoint.players.Player;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Comparator;
 public class Main {
@@ -15,7 +13,10 @@ public class Main {
         }
         return false;
     }
-    public static boolean isFinished(Player player) {return (player.getDistrictsBuilt().size() >= 8);}
+
+    public static boolean isFinished(Player player) {
+        return (player.getCity().getDistrictsBuilt().size() >= 8);
+    }
     public static void sortPlayers(List<Player> players) {
         // Use a custom Comparator to compare Players based on their score and running order
         Comparator<Player> playerComparator = Comparator

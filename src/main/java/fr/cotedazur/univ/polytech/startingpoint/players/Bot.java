@@ -52,7 +52,7 @@ public class Bot extends Player {
     public void chooseCharacterAlgorithm(Game game) {
         ArrayList<GameCharacter> availableChars = game.getAvailableChars();
         // If the bot can build its 8th quarter next turn, it will choose the king (if possible)
-        if (!(this.getDistrictsInHand().isEmpty()) && (this.getDistrictsBuilt().size() >= 7) && (canBuildDistrictThisTurn())
+        if (!(this.getDistrictsInHand().isEmpty()) && (this.getCity().getDistrictsBuilt().size() >= 7) && (canBuildDistrictThisTurn())
                 && (isCharInList(availableChars, "Roi"))) {
             chooseChar(game,"Roi");
         }
@@ -76,7 +76,7 @@ public class Bot extends Player {
         // Collect gold
         addGold(ActionManager.collectGold(this));
         // The bot draws a card if it has no district in its hand.
-        if (getDistrictsInHand().isEmpty() || districtsAlreadyBuilt()) {
+        if (getDistrictsInHand().isEmpty() || this.districtsInHandAreBuilt()) {
             District drawnDistrict = game.drawCard();
             System.out.println(getName() + " pioche le " + drawnDistrict);
             getDistrictsInHand().add(drawnDistrict);
@@ -86,7 +86,7 @@ public class Bot extends Player {
         }
         // The bot builds one district if it has enough money
         for (District district : getDistrictsInHand()) {
-            if (build(district)) {
+            if (buildDistrict(district)) {
                 break;
             }
         }
