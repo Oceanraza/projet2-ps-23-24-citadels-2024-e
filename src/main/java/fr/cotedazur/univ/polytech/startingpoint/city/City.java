@@ -33,4 +33,13 @@ public class City {
             districtsBuilt.add(district);
         } else throw new DistrictAlreadyBuiltException("This district is already built");
     }
+
+    @Override
+    public String toString() {
+        StringBuilder city = new StringBuilder();
+        for (District d : districtsBuilt) {
+            city.append(d.getName()).append(" ");
+        }
+        return city.toString();
+    }
 }
