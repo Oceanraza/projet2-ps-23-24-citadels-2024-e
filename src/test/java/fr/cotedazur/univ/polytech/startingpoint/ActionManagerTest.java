@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.gameCharacter.*;
-import fr.cotedazur.univ.polytech.startingpoint.players.Bot;
+import fr.cotedazur.univ.polytech.startingpoint.player.Bot;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 ;

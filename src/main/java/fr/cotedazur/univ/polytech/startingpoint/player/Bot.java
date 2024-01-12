@@ -1,4 +1,4 @@
-package fr.cotedazur.univ.polytech.startingpoint.players;
+package fr.cotedazur.univ.polytech.startingpoint.player;
 
 import java.util.*;
 

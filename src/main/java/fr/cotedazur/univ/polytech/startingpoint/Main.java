@@ -1,10 +1,8 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
-import fr.cotedazur.univ.polytech.startingpoint.city.District;
-import fr.cotedazur.univ.polytech.startingpoint.players.Bot;
-import fr.cotedazur.univ.polytech.startingpoint.players.Player;
+import fr.cotedazur.univ.polytech.startingpoint.player.Bot;
+import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Comparator;
 public class Main {
