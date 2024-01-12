@@ -6,10 +6,7 @@ import fr.cotedazur.univ.polytech.startingpoint.GameCharacter;
 import fr.cotedazur.univ.polytech.startingpoint.city.City;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public abstract class Player {
     private final List<District> districtsInHand;
@@ -27,7 +24,7 @@ public abstract class Player {
         gold = 2;
         score = 0;
         gameCharacter = null;
-        numberOfDistrictsByColor = new HashMap<>();
+        numberOfDistrictsByColor = new EnumMap<>(DistrictColor.class);
         numberOfDistrictsByColor.put(DistrictColor.militaire,0);
         numberOfDistrictsByColor.put(DistrictColor.noble,0);
         numberOfDistrictsByColor.put(DistrictColor.special,0);

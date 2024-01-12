@@ -6,6 +6,8 @@ import fr.cotedazur.univ.polytech.startingpoint.players.Player;
 import java.util.List;
 import java.util.Comparator;
 public class Main {
+    private static final int START_CARDS_NUMBER = 4;
+
     // If a player has 8 districts built, he wins
     public static boolean isGameFinished(List<Player> players) {
         for (Player p: players){
@@ -52,7 +54,6 @@ public class Main {
     public static void main(String... args) {
         Game newGame = new Game();
         // System.out.println(newGame);
-        int START_CARDS_NUMBER = 4;
 
         // Adding players to the game
         newGame.setPlayers(new Bot("Donald"), new Bot("Picsou"), new Bot("Riri"), new Bot("Fifi"));
