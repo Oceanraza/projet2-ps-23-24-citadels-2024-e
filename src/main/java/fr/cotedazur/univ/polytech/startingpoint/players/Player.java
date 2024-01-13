@@ -122,8 +122,9 @@ public abstract class Player {
     }
     public int calculateScore(){
         int tempScore = getGold();
+        City playerCity = this.getCity();
         ArrayList<DistrictColor> districtColors = new ArrayList<>();
-        for (District district : this.getCity().getDistrictsBuilt()) {
+        for (District district : playerCity.getDistrictsBuilt()) {
             tempScore += district.getPrice();
             districtColors.add(district.getColor());
         }
