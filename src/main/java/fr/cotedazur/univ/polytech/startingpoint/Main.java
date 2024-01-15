@@ -1,13 +1,13 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
-import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.players.Bot;
 import fr.cotedazur.univ.polytech.startingpoint.players.Player;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Comparator;
 public class Main {
+    private static final int START_CARDS_NUMBER = 4;
+
     // If a player has 8 districts built, he wins
     public static boolean isGameFinished(List<Player> players) {
         for (Player p: players){
@@ -15,7 +15,10 @@ public class Main {
         }
         return false;
     }
-    public static boolean isFinished(Player player) {return (player.getDistrictsBuilt().size() >= 8);}
+
+    public static boolean isFinished(Player player) {
+        return (player.getCity().getDistrictsBuilt().size() >= 8);
+    }
     public static void sortPlayers(List<Player> players) {
         // Use a custom Comparator to compare Players based on their score and running order
         Comparator<Player> playerComparator = Comparator
@@ -51,7 +54,6 @@ public class Main {
     public static void main(String... args) {
         Game newGame = new Game();
         // System.out.println(newGame);
-        int START_CARDS_NUMBER = 4;
 
         // Adding players to the game
         newGame.setPlayers(new Bot("Donald"), new Bot("Picsou"), new Bot("Riri"), new Bot("Fifi"));
