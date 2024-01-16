@@ -56,12 +56,10 @@ public class Bot extends Player {
         game.removeAvailableChar(chosenCharacter);
         System.out.println(this.getName() + " a choisi le " + chosenCharacter.getName());
     }
-
     @Override
     public void play(Game game) {
         // Apply special effect, no need for now
        // ActionManager.applySpecialEffect(this, game);
-
         // Collect gold
         addGold(ActionManager.collectGold(this));
         // The bot draws a card if it has no district in its hand.

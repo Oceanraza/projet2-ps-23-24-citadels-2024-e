@@ -21,7 +21,7 @@ public class EinsteinAlgo extends baseAlgo {
     }
 
     public void startOfTurn(Game game) { //Always draws if needed
-        if (player.getDistrictsInHand().isEmpty() || player.districtsAlreadyBuilt()) {
+        if (player.getDistrictsInHand().isEmpty() || player.districtsInHandAreBuilt()) {
             District drawnDistrict = game.drawCard();
             System.out.println(player.getName() + " pioche le " + drawnDistrict);
             player.getDistrictsInHand().add(drawnDistrict);
@@ -39,7 +39,7 @@ public class EinsteinAlgo extends baseAlgo {
     public void chooseCharacterAlgorithm(Game game) { //always chooses the char that gives him the most gold, or king if can build 8th quarter next turn
         ArrayList<GameCharacter> availableChars = game.getAvailableChars();
         // If the bot can build its 8th quarter next turn, it will choose the king (if possible)
-        if (!(player.getDistrictsInHand().isEmpty()) && (player.getDistrictsBuilt().size() >= 7) && (player.canBuildDistrictThisTurn())
+        if (!(player.getDistrictsInHand().isEmpty()) && (player.getCity().getDistrictsBuilt().size() >= 7) && (player.canBuildDistrictThisTurn())
                 && (player.isCharInList(availableChars, "Roi"))) {
             player.chooseChar(game, "Roi");
         }
@@ -77,7 +77,7 @@ public class EinsteinAlgo extends baseAlgo {
     }
     public void buildOrNot(Game game){ //builds if he can
         for (District district : player.getDistrictsInHand()) {
-            if (player.build(district)) {
+            if (player.buildDistrict(district)) {
                 break;
             }
         }

@@ -50,7 +50,7 @@ public class randomAlgo extends baseAlgo {
             Collections.shuffle(playerList);
             for (Player targetedPlayer : playerList) {
                 if (targetedPlayer.getLowestDistrict().get().getPrice() - 1 < player.getGold()) { // if the randomPlayer doesn't have a district the bot can destroy, there's no need to loop through it
-                    List<District> allDistricts = targetedPlayer.getDistrictsBuilt();
+                    List<District> allDistricts = targetedPlayer.getCity().getDistrictsBuilt();
                     Collections.shuffle(allDistricts);
                     for (District d : allDistricts) {
                         if (Utils.canDestroyDistrict(d, player)) {
@@ -65,7 +65,7 @@ public class randomAlgo extends baseAlgo {
     }
     public void buildOrNot(Game game){ //builds if he can
         for (District district : player.getDistrictsInHand()) {
-            if (player.build(district)) {
+            if (player.buildDistrict(district)) {
                 break;
             }
         }

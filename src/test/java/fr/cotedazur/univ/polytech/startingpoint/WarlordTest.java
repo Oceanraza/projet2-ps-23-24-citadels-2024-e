@@ -34,9 +34,9 @@ class WarlordTest {
         District district1 = new District("Quartier 1", 3, DistrictColor.noble);
         District district2 = new District("Quartier 2", 1, DistrictColor.noble);
         District district3 = new District("Quartier 3", 4, DistrictColor.religieux);
-        bot.build(district1);
-        bot.build(district2);
-        bot.build(district3);
+        bot.buildDistrict(district1);
+        bot.buildDistrict(district2);
+        bot.buildDistrict(district3);
         assertEquals(district2, bot.getLowestDistrict().get());
     }
     @Test
@@ -54,10 +54,10 @@ class WarlordTest {
         game.setPlayers(firstBuilder, secondPlayer, thirdPlayer, fourthPlayer);
 
         for (int i = 0; i < 8; i++) {
-            firstBuilder.getDistrictsBuilt().add(new District("test", 4, DistrictColor.marchand));
-            secondPlayer.getDistrictsBuilt().add(new District("test", 5, DistrictColor.marchand));
-            thirdPlayer.getDistrictsBuilt().add(new District("test", 2, DistrictColor.marchand));
-            fourthPlayer.getDistrictsBuilt().add(new District("test", 1, DistrictColor.marchand));
+            firstBuilder.getCity().getDistrictsBuilt().add(new District("test", 4, DistrictColor.marchand));
+            secondPlayer.getCity().getDistrictsBuilt().add(new District("test", 5, DistrictColor.marchand));
+            thirdPlayer.getCity().getDistrictsBuilt().add(new District("test", 2, DistrictColor.marchand));
+            fourthPlayer.getCity().getDistrictsBuilt().add(new District("test", 1, DistrictColor.marchand));
         }
         ArrayList<Player> expectedOutput = new ArrayList<>();
         expectedOutput.add(secondPlayer);
@@ -77,12 +77,12 @@ class WarlordTest {
         firstBuilder.setGameCharacter(condottiere);
 
         District distToDestroy = new District("test", 5, DistrictColor.marchand);
-        secondPlayer.getDistrictsBuilt().add(distToDestroy);
+        secondPlayer.getCity().getDistrictsBuilt().add(distToDestroy);
 
-        assertEquals(1,secondPlayer.getDistrictsBuilt().size());
+        assertEquals(1,secondPlayer.getCity().getDistrictsBuilt().size());
         firstBuilder.getGameCharacter().specialEffect(firstBuilder,game,secondPlayer,distToDestroy);
         assertEquals(1,firstBuilder.getGold());
-        assertEquals(0,secondPlayer.getDistrictsBuilt().size());
+        assertEquals(0,secondPlayer.getCity().getDistrictsBuilt().size());
     }
 
 
