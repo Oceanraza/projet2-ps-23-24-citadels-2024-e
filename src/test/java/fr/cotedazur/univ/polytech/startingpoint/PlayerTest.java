@@ -1,8 +1,8 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
-import fr.cotedazur.univ.polytech.startingpoint.players.Bot;
-import fr.cotedazur.univ.polytech.startingpoint.players.Player;
+import fr.cotedazur.univ.polytech.startingpoint.player.Bot;
+import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -17,37 +17,28 @@ class PlayerTest {
     }
 
     @Test
-    void testBuild() {
+    void testBuildDistrict() {
         District district = new District("Temple", 4, DistrictColor.religieux);
-        assertFalse(player.build(district));
+        assertFalse(player.buildDistrict(district));
         player.addDistrictInHand(district);
-        assertFalse(player.build(district));
+        assertFalse(player.buildDistrict(district));
         player.addGold(2);
-        assertTrue(player.build(district));
-        assertFalse(player.build(district));
+        assertTrue(player.buildDistrict(district));
+        assertFalse(player.buildDistrict(district));
         player.addDistrictInHand(district);
-        assertFalse(player.build(district));
+        assertFalse(player.buildDistrict(district));
         player.addGold(4);
         district = new District("Temple", 4, DistrictColor.religieux); //We create another district to avoid pointer problems
-        assertFalse(player.build(district));
+        assertFalse(player.buildDistrict(district));
     }
 
     @Test
-    void isNotBuiltTest() {
+    void testDistrictsInHandAreBuilt() {
         District district = new District("Temple", 4, DistrictColor.religieux);
-        assertTrue(player.isNotBuilt(district));
-        player.addDistrictBuilt(district);
-        assertFalse(player.isNotBuilt(district));
-        assertTrue(player.isNotBuilt(new District("Prison", 2, DistrictColor.militaire)));
-    }
-
-    @Test
-    void districtsAlreadyBuiltTest() {
-        District district = new District("Temple", 4, DistrictColor.religieux);
-        assertTrue(player.districtsAlreadyBuilt());
+        assertTrue(player.districtsInHandAreBuilt());
         player.addDistrictInHand(district);
-        assertFalse(player.districtsAlreadyBuilt());
+        assertFalse(player.districtsInHandAreBuilt());
         player.addDistrictBuilt(district);
-        assertTrue(player.districtsAlreadyBuilt());
+        assertTrue(player.districtsInHandAreBuilt());
     }
 }
