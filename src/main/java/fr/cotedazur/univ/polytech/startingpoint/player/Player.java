@@ -15,7 +15,7 @@ public abstract class Player {
     private final String name;
     private int score;
     private GameCharacter gameCharacter;
-    private Map<DistrictColor, Integer> numberOfDistrictsByColor;
+    private final Map<DistrictColor, Integer> numberOfDistrictsByColor;
 
     protected Player(String name) {
         this.name = name;
@@ -139,12 +139,23 @@ public abstract class Player {
         return tempScore;
     }
 
-    public boolean equals(Player p) {
-        return (p.getName().equals(getName()));
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Player p = (Player) o;
+        return getName().equals(p.getName());
     }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
+    }
+
+
     public Optional<District> getLowestDistrict(){
         List<District> sortedDistrictByScore = getCity().getDistrictsBuilt();
-        if (sortedDistrictByScore.size() == 0){return Optional.empty();}
+        if (sortedDistrictByScore.isEmpty()){return Optional.empty();}
         District minPriceDistrict = sortedDistrictByScore.stream()
                 .min(Comparator.comparingDouble(District::getPrice))
                 .orElse(null);

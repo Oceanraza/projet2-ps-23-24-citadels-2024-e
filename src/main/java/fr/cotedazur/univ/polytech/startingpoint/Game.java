@@ -1,12 +1,8 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
-
 import java.util.*;
 import java.util.stream.Collectors;
-
-import fr.cotedazur.univ.polytech.startingpoint.gameCharacter.*;
-
-
+import fr.cotedazur.univ.polytech.startingpoint.character.*;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.player.*;
 
@@ -18,7 +14,7 @@ public class Game {
     private Map<String, GameCharacter> allCharacters;
     private ArrayList<GameCharacter> availableChars;
     // Getter
-    public ArrayList<District> getGameDeck() {
+    public List<District> getGameDeck() {
         return gameDeck;
     }
     public Crown getCrown() {
@@ -27,8 +23,7 @@ public class Game {
     public List<Player> getPlayers() {
         return players;
     }
-    public ArrayList<GameCharacter> getAvailableChars() {
-        availableCharacters();
+    public List<GameCharacter> getAvailableChars() {
         return availableChars;
     }
 
@@ -104,14 +99,14 @@ public class Game {
 
         // Creates the characters
         allCharacters.put("Roi", new King());
-        allCharacters.put("Marchand", new Marchand());
-        allCharacters.put("Eveque", new Eveque());
-        allCharacters.put("Condottiere", new Condottiere());
+        allCharacters.put("Marchand", new Merchant());
+        allCharacters.put("Eveque", new Bishop());
+        allCharacters.put("Condottiere", new Warlord());
     }
 
     public District drawCard() {
-        Random random = new Random();
-        District cardDrawn = gameDeck.get(random.nextInt(gameDeck.size() - 1));
+        Utils utils = new Utils();
+        District cardDrawn = gameDeck.get(utils.generateRandomNumber(gameDeck.size() - 1));
         gameDeck.remove(cardDrawn);
         return cardDrawn;
     }
@@ -128,7 +123,7 @@ public class Game {
         availableChars.add(allCharacters.get("Condottiere"));
     }
 
-    public void availableCharacters() {
+    public void printAvailableCharacters() {
         System.out.println("Les personnages disponibles sont : ");
         for (GameCharacter temp : availableChars) {
             System.out.print(temp.getName() + " ");
@@ -159,8 +154,8 @@ public class Game {
             p.setGameCharacter(null);
         }
     }
-    public ArrayList<Player> getSortedPlayersByScoreForWarlord(){
-        ArrayList<Player> sortedPlayersByScore = new ArrayList<>();
+    public List<Player> getSortedPlayersByScoreForWarlord(){
+        List<Player> sortedPlayersByScore = new ArrayList<>();
         for (Player p : getPlayers()){
             if (!p.getGameCharacter().getName().equals("Eveque")){
                 p.calculateScore();

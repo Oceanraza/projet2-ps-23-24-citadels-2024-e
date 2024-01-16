@@ -1,4 +1,4 @@
-package fr.cotedazur.univ.polytech.startingpoint.player.BotAlgorithms;
+package fr.cotedazur.univ.polytech.startingpoint.player.algorithms;
 
 import fr.cotedazur.univ.polytech.startingpoint.Game;
 import fr.cotedazur.univ.polytech.startingpoint.GameCharacter;
@@ -7,64 +7,64 @@ import fr.cotedazur.univ.polytech.startingpoint.player.Bot;
 import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 import fr.cotedazur.univ.polytech.startingpoint.Utils;
 import java.util.ArrayList;
+import java.util.List;
 
-public class EinsteinAlgo extends baseAlgo {
+public class EinsteinAlgo extends BaseAlgo {
     boolean lowestDistrictFound = false;
-    public Bot player;
+    private Bot bot;
     public EinsteinAlgo(){
         super();
     }
     @Override
     public void setPlayer(Bot player){
-        this.player = player;
+        this.bot = player;
         System.out.println("Le joueur " + player.getName() + " est si intelligent qu'il est comparable à Einstein !");
     }
 
     public void startOfTurn(Game game) { //Always draws if needed
-        if (player.getDistrictsInHand().isEmpty() || player.districtsInHandAreBuilt()) {
+        if (bot.getDistrictsInHand().isEmpty() || bot.districtsInHandAreBuilt()) {
             District drawnDistrict = game.drawCard();
-            System.out.println(player.getName() + " pioche le " + drawnDistrict);
-            player.getDistrictsInHand().add(drawnDistrict);
+            System.out.println(bot.getName() + " pioche le " + drawnDistrict);
+            bot.getDistrictsInHand().add(drawnDistrict);
         } else { // Otherwise it gets 2 gold coins
-            System.out.println(player.getName() + " prend deux pièces d'or.");
-            player.addGold(2);
+            System.out.println(bot.getName() + " prend deux pièces d'or.");
+            bot.addGold(2);
         }
     }
     public void charAlgorithmsManager(Game game){
-        switch (player.getCharacterName()){
+        switch (bot.getCharacterName()){
             case("Condottiere"):
                 warlordAlgorithm(game);
         }
     }
     public void chooseCharacterAlgorithm(Game game) { //always chooses the char that gives him the most gold, or king if can build 8th quarter next turn
-        ArrayList<GameCharacter> availableChars = game.getAvailableChars();
+        List<GameCharacter> availableChars = game.getAvailableChars();
         // If the bot can build its 8th quarter next turn, it will choose the king (if possible)
-        if (!(player.getDistrictsInHand().isEmpty()) && (player.getCity().getDistrictsBuilt().size() >= 7) && (player.canBuildDistrictThisTurn())
-                && (player.isCharInList(availableChars, "Roi"))) {
-            player.chooseChar(game, "Roi");
+        if (!(bot.getDistrictsInHand().isEmpty()) && (bot.getCity().getDistrictsBuilt().size() >= 7) && (bot.canBuildDistrictThisTurn())
+                && (bot.isCharInList(availableChars, "Roi"))) {
+            bot.chooseChar(game, "Roi");
         }
         // If the bot doesn't have an immediate way to win, it will just pick the character who gives out the most gold for him
         else {
             GameCharacter chosenChar = availableChars.get(0);
             for (GameCharacter cha : availableChars) {
-                if (player.getNumberOfDistrictsByColor().get(cha.getColor()) > player.getNumberOfDistrictsByColor().get(chosenChar.getColor())) {
+                if (bot.getNumberOfDistrictsByColor().get(cha.getColor()) > bot.getNumberOfDistrictsByColor().get(chosenChar.getColor())) {
                     chosenChar = cha;
                 }
             }
-            player.chooseChar(game, chosenChar.getName());
+            bot.chooseChar(game, chosenChar.getName());
         }
     }
 
     public void warlordAlgorithm(Game game) {
-        ArrayList<Player> playerList = game.getSortedPlayersByScoreForWarlord();
-        playerList.remove(player);
+        List<Player> playerList = game.getSortedPlayersByScoreForWarlord();
+        playerList.remove(bot);
         for (Player targetedPlayer : playerList) {
             if (!targetedPlayer.getGameCharacter().getName().equals("Eveque")) { //doesn't target the bishop because he's immune to the warlord
                 targetedPlayer.getLowestDistrict().ifPresent(value -> {
-                    District dist = value;
-                    if (Utils.canDestroyDistrict(dist, player)) {
-                        player.getGameCharacter().specialEffect(player, game, targetedPlayer, dist);
-                        LowestDistrictHasBeenFound();
+                    if (Utils.canDestroyDistrict(value, bot)) {
+                        bot.getGameCharacter().specialEffect(bot, game, targetedPlayer, value);
+                        lowestDistrictHasBeenFound();
                     }
                 });
             if (lowestDistrictFound) {
@@ -74,12 +74,12 @@ public class EinsteinAlgo extends baseAlgo {
         }
     }
 
-    public void LowestDistrictHasBeenFound() {
+    public void lowestDistrictHasBeenFound() {
         lowestDistrictFound = true;
     }
     public void buildOrNot(Game game){ //builds if he can
-        for (District district : player.getDistrictsInHand()) {
-            if (player.buildDistrict(district)) {
+        for (District district : bot.getDistrictsInHand()) {
+            if (bot.buildDistrict(district)) {
                 break;
             }
         }

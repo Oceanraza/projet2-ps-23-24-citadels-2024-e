@@ -1,4 +1,4 @@
-package fr.cotedazur.univ.polytech.startingpoint.player.BotAlgorithms;
+package fr.cotedazur.univ.polytech.startingpoint.player.algorithms;
 
 import fr.cotedazur.univ.polytech.startingpoint.Game;
 import fr.cotedazur.univ.polytech.startingpoint.GameCharacter;
@@ -8,11 +8,11 @@ import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 import fr.cotedazur.univ.polytech.startingpoint.Utils;
 import java.util.*;
 
-public class randomAlgo extends baseAlgo {
+public class RandomAlgo extends BaseAlgo {
     public Bot player;
 
-    Random random = new Random();
-    public randomAlgo(){
+    Utils utils = new Utils();
+    public RandomAlgo(){
         super();
     }
     public void charAlgorithmsManager(Game game){
@@ -27,7 +27,7 @@ public class randomAlgo extends baseAlgo {
         System.out.println("Le joueur " + player.getName() + " ne sait pas vraiment ce qu'il fait, on dirait qu'il joue aléatoirement. ");
     }
     public void startOfTurn(Game game) { //Always draws if needed
-        if (random.nextInt(10) > 5) {
+        if (utils.generateRandomNumber(10) > 5) {
             District drawnDistrict = game.drawCard();
             System.out.println(player.getName() + " pioche le " + drawnDistrict);
             player.getDistrictsInHand().add(drawnDistrict);
@@ -38,27 +38,24 @@ public class randomAlgo extends baseAlgo {
     }
 
     public void chooseCharacterAlgorithm(Game game) {
-        ArrayList<GameCharacter> availableChars = game.getAvailableChars();
-        GameCharacter chosenChar = game.getAvailableChars().get(random.nextInt(availableChars.size()));
+        List<GameCharacter> availableChars = game.getAvailableChars();
+        GameCharacter chosenChar = game.getAvailableChars().get(utils.generateRandomNumber(availableChars.size()));
             player.chooseChar(game, chosenChar.getName());
         }
 
     public void warlordAlgorithm(Game game) {
-        if ((random.nextInt(10) > 5)) { // have 50% chance to decide to destroy a building of a random player or not
-            ArrayList<Player> playerList = game.getSortedPlayersByScoreForWarlord();
+        if (utils.generateRandomNumber(10) > 5) { // have 50% chance to decide to destroy a building of a random player or not
+            List<Player> playerList = game.getSortedPlayersByScoreForWarlord();
             playerList.remove(player);
             Collections.shuffle(playerList);
             for (Player targetedPlayer : playerList) {
-                if (targetedPlayer.getLowestDistrict().get().getPrice() - 1 < player.getGold()) { // if the randomPlayer doesn't have a district the bot can destroy, there's no need to loop through it
-                    List<District> allDistricts = targetedPlayer.getCity().getDistrictsBuilt();
-                    Collections.shuffle(allDistricts);
-                    for (District d : allDistricts) {
-                        if (Utils.canDestroyDistrict(d, player)) {
-                            player.getGameCharacter().specialEffect(player, game, targetedPlayer, d);
-                            return;
-                        }
+                List<District> allDistricts = targetedPlayer.getCity().getDistrictsBuilt();
+                Collections.shuffle(allDistricts);
+                for (District d : allDistricts) {
+                    if (Utils.canDestroyDistrict(d, player)) {
+                        player.getGameCharacter().specialEffect(player, game, targetedPlayer, d);
+                        return;
                     }
-
                 }
             }
         }

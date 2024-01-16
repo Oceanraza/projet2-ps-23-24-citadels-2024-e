@@ -1,31 +1,29 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
-import fr.cotedazur.univ.polytech.startingpoint.gameCharacter.Condottiere;
-import fr.cotedazur.univ.polytech.startingpoint.gameCharacter.Eveque;
-import fr.cotedazur.univ.polytech.startingpoint.gameCharacter.King;
+import fr.cotedazur.univ.polytech.startingpoint.character.Warlord;
+import fr.cotedazur.univ.polytech.startingpoint.character.Bishop;
+import fr.cotedazur.univ.polytech.startingpoint.character.King;
 import fr.cotedazur.univ.polytech.startingpoint.player.Bot;
-import fr.cotedazur.univ.polytech.startingpoint.player.BotAlgorithms.EinsteinAlgo;
+import fr.cotedazur.univ.polytech.startingpoint.player.algorithms.EinsteinAlgo;
 import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class SpecialCardsTests {
+class SpecialCardsTests {
     King king;
-    Eveque eveque;
-    Condottiere condottiere;
+    Bishop bishop;
+    Warlord warlord;
     Bot bot;
     Game game;
 
     @BeforeEach
     void setUp() {
         king = new King();
-        eveque = new Eveque();
-        condottiere = new Condottiere();
+        bishop = new Bishop();
+        warlord = new Warlord();
         Bot bot = new Bot("Bot");
         game = new Game();
         game.init();

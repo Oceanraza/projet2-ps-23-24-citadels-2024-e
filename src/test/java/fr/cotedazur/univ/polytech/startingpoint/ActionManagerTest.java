@@ -1,25 +1,24 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
 import static org.junit.jupiter.api.Assertions.*;
-
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.city.DistrictAlreadyBuiltException;
-import fr.cotedazur.univ.polytech.startingpoint.gameCharacter.*;
+import fr.cotedazur.univ.polytech.startingpoint.character.*;
 import fr.cotedazur.univ.polytech.startingpoint.player.Bot;
-import fr.cotedazur.univ.polytech.startingpoint.player.BotAlgorithms.EinsteinAlgo;
+import fr.cotedazur.univ.polytech.startingpoint.player.algorithms.EinsteinAlgo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-;
+
 class ActionManagerTest {
     King king;
-    Eveque eveque;
+    Bishop bishop;
     Bot bot;
     Game game;
 
     @BeforeEach
     void setUp() {
         king = new King();
-        eveque = new Eveque();
+        bishop = new Bishop();
         bot = new Bot("Bot") {
         };
         game = new Game();
@@ -53,7 +52,7 @@ class ActionManagerTest {
 
     @Test
     void getGoldTest() {
-        bot.setGameCharacter(eveque);
+        bot.setGameCharacter(bishop);
         ActionManager.applySpecialEffect(bot, game);
         assertEquals(2, bot.getGold());
     }

@@ -3,27 +3,26 @@ package fr.cotedazur.univ.polytech.startingpoint;
 import static org.junit.jupiter.api.Assertions.*;
 
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
-import fr.cotedazur.univ.polytech.startingpoint.gameCharacter.*;
+import fr.cotedazur.univ.polytech.startingpoint.character.*;
 import fr.cotedazur.univ.polytech.startingpoint.player.Bot;
 import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-;
 import java.util.ArrayList;
 import java.util.Optional;
 
 class WarlordTest {
     King king;
-    Eveque eveque;
-    Condottiere condottiere;
+    Bishop bishop;
+    Warlord warlord;
     Bot bot;
     Game game;
 
     @BeforeEach
     void setUp() {
         king = new King();
-        eveque = new Eveque();
-        condottiere = new Condottiere();
+        bishop = new Bishop();
+        warlord = new Warlord();
         bot = new Bot("Bot") {
         };
         game = new Game();
@@ -52,7 +51,7 @@ class WarlordTest {
         Player fourthPlayer = new Bot("Player 4");
         Game game = new Game();
         game.setPlayers(firstBuilder, secondPlayer, thirdPlayer, fourthPlayer);
-        thirdPlayer.setGameCharacter(eveque);
+        thirdPlayer.setGameCharacter(bishop);
         firstBuilder.setGameCharacter(king);
         secondPlayer.setGameCharacter(king);
         fourthPlayer.setGameCharacter(king);
@@ -77,7 +76,7 @@ class WarlordTest {
         Game game = new Game();
         game.setPlayers(firstBuilder, secondPlayer);
         firstBuilder.setGold(5);
-        firstBuilder.setGameCharacter(condottiere);
+        firstBuilder.setGameCharacter(warlord);
         secondPlayer.setGameCharacter(king);
 
         District distToDestroy = new District("test", 5, DistrictColor.marchand);
@@ -88,6 +87,4 @@ class WarlordTest {
         assertEquals(1,firstBuilder.getGold());
         assertEquals(0,secondPlayer.getCity().getDistrictsBuilt().size());
     }
-
-
 }
