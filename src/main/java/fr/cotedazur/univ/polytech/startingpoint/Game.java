@@ -1,12 +1,8 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
-
 import java.util.*;
 import java.util.stream.Collectors;
-
-import fr.cotedazur.univ.polytech.startingpoint.gameCharacter.*;
-
-
+import fr.cotedazur.univ.polytech.startingpoint.character.*;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.player.*;
 
@@ -18,7 +14,7 @@ public class Game {
     private Map<String, GameCharacter> allCharacters;
     private ArrayList<GameCharacter> availableChars;
     // Getter
-    public ArrayList<District> getGameDeck() {
+    public List<District> getGameDeck() {
         return gameDeck;
     }
     public Crown getCrown() {
@@ -27,7 +23,7 @@ public class Game {
     public List<Player> getPlayers() {
         return players;
     }
-    public ArrayList<GameCharacter> getAvailableChars() {
+    public List<GameCharacter> getAvailableChars() {
         availableCharacters();
         return availableChars;
     }
@@ -64,37 +60,37 @@ public class Game {
         availableChars = new ArrayList<>();
 
         // Adding religieux districts
-        addDistrictsInGameDeck(new District("Temple", 1, DistrictColor.religieux), 3);
-        addDistrictsInGameDeck(new District("Eglise", 2, DistrictColor.religieux), 4);
-        addDistrictsInGameDeck(new District("Monastere", 3, DistrictColor.religieux), 3);
-        addDistrictsInGameDeck(new District("Cathedrale", 5, DistrictColor.religieux), 2);
+        addDistrictsInGameDeck(new District("Temple", 1, DistrictColor.RELIGIEUX), 3);
+        addDistrictsInGameDeck(new District("Eglise", 2, DistrictColor.RELIGIEUX), 4);
+        addDistrictsInGameDeck(new District("Monastere", 3, DistrictColor.RELIGIEUX), 3);
+        addDistrictsInGameDeck(new District("Cathedrale", 5, DistrictColor.RELIGIEUX), 2);
 
-        addDistrictsInGameDeck(new District("Manoir", 3, DistrictColor.noble), 5);
-        addDistrictsInGameDeck(new District("Chateau", 4, DistrictColor.noble), 4);
-        addDistrictsInGameDeck(new District("Palais", 5, DistrictColor.noble), 2);
+        addDistrictsInGameDeck(new District("Manoir", 3, DistrictColor.NOBLE), 5);
+        addDistrictsInGameDeck(new District("Chateau", 4, DistrictColor.NOBLE), 4);
+        addDistrictsInGameDeck(new District("Palais", 5, DistrictColor.NOBLE), 2);
 
-        addDistrictsInGameDeck(new District("Taverne", 1, DistrictColor.marchand), 5);
-        addDistrictsInGameDeck(new District("Echoppe", 2, DistrictColor.marchand), 3);
-        addDistrictsInGameDeck(new District("Marche", 2, DistrictColor.marchand), 4);
-        addDistrictsInGameDeck(new District("Comptoir", 3, DistrictColor.marchand), 3);
-        addDistrictsInGameDeck(new District("Port", 4, DistrictColor.marchand), 3);
-        addDistrictsInGameDeck(new District("Hotel de ville", 5, DistrictColor.marchand), 2);
+        addDistrictsInGameDeck(new District("Taverne", 1, DistrictColor.MARCHAND), 5);
+        addDistrictsInGameDeck(new District("Echoppe", 2, DistrictColor.MARCHAND), 3);
+        addDistrictsInGameDeck(new District("Marche", 2, DistrictColor.MARCHAND), 4);
+        addDistrictsInGameDeck(new District("Comptoir", 3, DistrictColor.MARCHAND), 3);
+        addDistrictsInGameDeck(new District("Port", 4, DistrictColor.MARCHAND), 3);
+        addDistrictsInGameDeck(new District("Hotel de ville", 5, DistrictColor.MARCHAND), 2);
 
-        addDistrictsInGameDeck(new District("Tour de guet", 1, DistrictColor.militaire), 3);
-        addDistrictsInGameDeck(new District("Prison", 2, DistrictColor.militaire), 3);
-        addDistrictsInGameDeck(new District("Caserne", 3, DistrictColor.militaire), 3);
-        addDistrictsInGameDeck(new District("Forteresse", 5, DistrictColor.militaire), 2);
+        addDistrictsInGameDeck(new District("Tour de guet", 1, DistrictColor.MILITAIRE), 3);
+        addDistrictsInGameDeck(new District("Prison", 2, DistrictColor.MILITAIRE), 3);
+        addDistrictsInGameDeck(new District("Caserne", 3, DistrictColor.MILITAIRE), 3);
+        addDistrictsInGameDeck(new District("Forteresse", 5, DistrictColor.MILITAIRE), 2);
 
-        addDistrictsInGameDeck(new District("Cour des miracles", 2, DistrictColor.special), 1);
-        addDistrictsInGameDeck(new District("Donjon", 3, DistrictColor.special), 2);
-        addDistrictsInGameDeck(new District("Laboratoire", 5, DistrictColor.special), 1);
-        addDistrictsInGameDeck(new District("Manufacture", 5, DistrictColor.special), 1);
-        addDistrictsInGameDeck(new District("Observatoire", 5, DistrictColor.special), 1);
-        addDistrictsInGameDeck(new District("Cimetiere", 5, DistrictColor.special), 1);
-        addDistrictsInGameDeck(new District("Bibliotheque", 6, DistrictColor.special), 1);
-        addDistrictsInGameDeck(new District("Ecole de magie", 6, DistrictColor.special), 1);
-        addDistrictsInGameDeck(new District("Universite", 6, DistrictColor.special), 1);
-        addDistrictsInGameDeck(new District("Dracoport", 6, DistrictColor.special), 1);
+        addDistrictsInGameDeck(new District("Cour des miracles", 2, DistrictColor.SPECIAL), 1);
+        addDistrictsInGameDeck(new District("Donjon", 3, DistrictColor.SPECIAL), 2);
+        addDistrictsInGameDeck(new District("Laboratoire", 5, DistrictColor.SPECIAL), 1);
+        addDistrictsInGameDeck(new District("Manufacture", 5, DistrictColor.SPECIAL), 1);
+        addDistrictsInGameDeck(new District("Observatoire", 5, DistrictColor.SPECIAL), 1);
+        addDistrictsInGameDeck(new District("Cimetiere", 5, DistrictColor.SPECIAL), 1);
+        addDistrictsInGameDeck(new District("Bibliotheque", 6, DistrictColor.SPECIAL), 1);
+        addDistrictsInGameDeck(new District("Ecole de magie", 6, DistrictColor.SPECIAL), 1);
+        addDistrictsInGameDeck(new District("Universite", 6, DistrictColor.SPECIAL), 1);
+        addDistrictsInGameDeck(new District("Dracoport", 6, DistrictColor.SPECIAL), 1);
 
         // Create a crown
         crown = new Crown();
@@ -104,14 +100,14 @@ public class Game {
 
         // Creates the characters
         allCharacters.put("Roi", new King());
-        allCharacters.put("Marchand", new Marchand());
-        allCharacters.put("Eveque", new Eveque());
-        allCharacters.put("Condottiere", new Condottiere());
+        allCharacters.put("Marchand", new Merchant());
+        allCharacters.put("Eveque", new Bishop());
+        allCharacters.put("Condottiere", new Warlord());
     }
 
     public District drawCard() {
-        Random random = new Random();
-        District cardDrawn = gameDeck.get(random.nextInt(gameDeck.size() - 1));
+        Utils utils = new Utils();
+        District cardDrawn = gameDeck.get(utils.generateRandomNumber(gameDeck.size() - 1));
         gameDeck.remove(cardDrawn);
         return cardDrawn;
     }
@@ -159,8 +155,8 @@ public class Game {
             p.setGameCharacter(null);
         }
     }
-    public ArrayList<Player> getSortedPlayersByScoreForWarlord(){
-        ArrayList<Player> sortedPlayersByScore = new ArrayList<>();
+    public List<Player> getSortedPlayersByScoreForWarlord(){
+        List<Player> sortedPlayersByScore = new ArrayList<>();
         for (Player p : getPlayers()){
             if (!p.getGameCharacter().getName().equals("Eveque")){
                 p.calculateScore();

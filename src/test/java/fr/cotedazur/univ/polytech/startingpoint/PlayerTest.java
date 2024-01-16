@@ -18,7 +18,7 @@ class PlayerTest {
 
     @Test
     void testBuildDistrict() {
-        District district = new District("Temple", 4, DistrictColor.religieux);
+        District district = new District("Temple", 4, DistrictColor.RELIGIEUX);
         assertFalse(player.buildDistrict(district));
         player.addDistrictInHand(district);
         assertFalse(player.buildDistrict(district));
@@ -28,13 +28,13 @@ class PlayerTest {
         player.addDistrictInHand(district);
         assertFalse(player.buildDistrict(district));
         player.addGold(4);
-        district = new District("Temple", 4, DistrictColor.religieux); //We create another district to avoid pointer problems
+        district = new District("Temple", 4, DistrictColor.RELIGIEUX); //We create another district to avoid pointer problems
         assertFalse(player.buildDistrict(district));
     }
 
     @Test
     void testDistrictsInHandAreBuilt() {
-        District district = new District("Temple", 4, DistrictColor.religieux);
+        District district = new District("Temple", 4, DistrictColor.RELIGIEUX);
         assertTrue(player.districtsInHandAreBuilt());
         player.addDistrictInHand(district);
         assertFalse(player.districtsInHandAreBuilt());

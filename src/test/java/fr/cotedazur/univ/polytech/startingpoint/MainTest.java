@@ -1,6 +1,6 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
-import fr.cotedazur.univ.polytech.startingpoint.gameCharacter.*;
+import fr.cotedazur.univ.polytech.startingpoint.character.*;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.player.Bot;
 import fr.cotedazur.univ.polytech.startingpoint.player.Player;
@@ -30,7 +30,7 @@ class MainTest {
         assertFalse(Main.isFinished(player));
         for (int i = 0; i < 8; i++) {
             String name = "District" + i;
-            player.getCity().addDistrict(new District(name, 0, DistrictColor.marchand));
+            player.getCity().addDistrict(new District(name, 0, DistrictColor.MARCHAND));
         }
         assertTrue(Main.isFinished(player));
     }
@@ -41,20 +41,20 @@ class MainTest {
         Player secondPlayer = new Bot("Player 2");
         Player thirdPlayer = new Bot("Player 3");
         Player fourthPlayer = new Bot("Player 4");
-        Eveque eveque = new Eveque();
+        Bishop bishop = new Bishop();
         King king = new King();
-        Condottiere condottiere = new Condottiere();
-        Marchand marchand = new Marchand();
+        Warlord warlord = new Warlord();
+        Merchant merchant = new Merchant();
         Game newGame = new Game();
 
         // Create list of players
         newGame.setPlayers(firstPlayer, secondPlayer, thirdPlayer, fourthPlayer);
 
         // Players choose a character
-        firstPlayer.setGameCharacter(eveque);
+        firstPlayer.setGameCharacter(bishop);
         secondPlayer.setGameCharacter(king);
-        thirdPlayer.setGameCharacter(marchand);
-        fourthPlayer.setGameCharacter(condottiere);
+        thirdPlayer.setGameCharacter(merchant);
+        fourthPlayer.setGameCharacter(warlord);
 
         // Set running order
         List<Player> runningOrder = newGame.setRunningOrder();
@@ -69,20 +69,20 @@ class MainTest {
         Player secondPlayer = new Bot("Player 2");
         Player thirdPlayer = new Bot("Player 3");
         Player fourthPlayer = new Bot("Player 4");
-        Eveque eveque = new Eveque();
+        Bishop bishop = new Bishop();
         King king = new King();
-        Condottiere condottiere = new Condottiere();
-        Marchand marchand = new Marchand();
+        Warlord warlord = new Warlord();
+        Merchant merchant = new Merchant();
         Game newGame = new Game();
 
         // Create list of players
         newGame.setPlayers(firstPlayer, secondPlayer, thirdPlayer, fourthPlayer);
 
         // Players choose a character
-        firstPlayer.setGameCharacter(eveque);
+        firstPlayer.setGameCharacter(bishop);
         secondPlayer.setGameCharacter(king);
-        thirdPlayer.setGameCharacter(marchand);
-        fourthPlayer.setGameCharacter(condottiere);
+        thirdPlayer.setGameCharacter(merchant);
+        fourthPlayer.setGameCharacter(warlord);
 
         // Set running order
         List<Player> runningOrder = newGame.setRunningOrder();
@@ -93,10 +93,10 @@ class MainTest {
 
         // Round 2
         // Players choose a character
-        secondPlayer.setGameCharacter(eveque);
+        secondPlayer.setGameCharacter(bishop);
         firstPlayer.setGameCharacter(king); //has crown
-        thirdPlayer.setGameCharacter(marchand);
-        fourthPlayer.setGameCharacter(condottiere);
+        thirdPlayer.setGameCharacter(merchant);
+        fourthPlayer.setGameCharacter(warlord);
         // Set running order
         runningOrder = newGame.setRunningOrder();
         assertEquals(firstPlayer.getName(), runningOrder.get(0).getName()); // has crown
@@ -113,14 +113,14 @@ class MainTest {
 
         for (int i = 0; i < 8; i++) {
             String name = "District" + i;
-            firstBuilder.getCity().addDistrict(new District(name, i, DistrictColor.marchand));
+            firstBuilder.getCity().addDistrict(new District(name, i, DistrictColor.MARCHAND));
         }
 
-        secondPlayer.getCity().addDistrict(new District("marchand", 1, DistrictColor.marchand));
-        secondPlayer.getCity().addDistrict(new District("militaire", 1, DistrictColor.militaire));
-        secondPlayer.getCity().addDistrict(new District("religieux", 1, DistrictColor.religieux));
-        secondPlayer.getCity().addDistrict(new District("noble", 1, DistrictColor.noble));
-        secondPlayer.getCity().addDistrict(new District("special", 1, DistrictColor.special));
+        secondPlayer.getCity().addDistrict(new District("marchand", 1, DistrictColor.MARCHAND));
+        secondPlayer.getCity().addDistrict(new District("militaire", 1, DistrictColor.MILITAIRE));
+        secondPlayer.getCity().addDistrict(new District("religieux", 1, DistrictColor.RELIGIEUX));
+        secondPlayer.getCity().addDistrict(new District("noble", 1, DistrictColor.NOBLE));
+        secondPlayer.getCity().addDistrict(new District("special", 1, DistrictColor.SPECIAL));
 
         List<Player> scoredPlayers = calculateScores(players, firstBuilder);
 
@@ -129,7 +129,7 @@ class MainTest {
 
         // If the scores are equal
         GameCharacter king = new King();
-        GameCharacter eveque = new Eveque();
+        GameCharacter eveque = new Bishop();
         firstBuilder.setGameCharacter(eveque);
         secondPlayer.setGameCharacter(king);
         firstBuilder.setScore(0);
@@ -144,8 +144,8 @@ class MainTest {
 
         for (int i = 0; i < 8; i++) {
             String name = "District" + i;
-            firstBuilder.getCity().addDistrict(new District(name, i, DistrictColor.marchand)); // 34 points
-            secondPlayer.getCity().addDistrict(new District(name, i, DistrictColor.marchand)); // 32 points
+            firstBuilder.getCity().addDistrict(new District(name, i, DistrictColor.MARCHAND)); // 34 points
+            secondPlayer.getCity().addDistrict(new District(name, i, DistrictColor.MARCHAND)); // 32 points
         }
 
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
@@ -168,15 +168,15 @@ class MainTest {
         System.setOut(new PrintStream(outContent));
         for (int i = 0; i < 8; i++) {
             String name = "District" + i;
-            firstBuilder.getCity().addDistrict(new District(name, i, DistrictColor.marchand)); // 34 points
-            secondPlayer.getCity().addDistrict(new District(name, i, DistrictColor.marchand)); // 32 points
-            thirdPlayer.getCity().addDistrict(new District(name, i, DistrictColor.marchand)); // 32 points
-            fourthPlayer.getCity().addDistrict(new District(name, i, DistrictColor.marchand)); // 32 points
+            firstBuilder.getCity().addDistrict(new District(name, i, DistrictColor.MARCHAND)); // 34 points
+            secondPlayer.getCity().addDistrict(new District(name, i, DistrictColor.MARCHAND)); // 32 points
+            thirdPlayer.getCity().addDistrict(new District(name, i, DistrictColor.MARCHAND)); // 32 points
+            fourthPlayer.getCity().addDistrict(new District(name, i, DistrictColor.MARCHAND)); // 32 points
         }
-        firstBuilder.setGameCharacter(new Condottiere());
+        firstBuilder.setGameCharacter(new Warlord());
         secondPlayer.setGameCharacter(new King());
-        thirdPlayer.setGameCharacter(new Eveque());
-        fourthPlayer.setGameCharacter(new Marchand());
+        thirdPlayer.setGameCharacter(new Bishop());
+        fourthPlayer.setGameCharacter(new Merchant());
 
         firstBuilder.setScore(firstBuilder.getScore()-2); //il passe a 32 points, égalité avec les autres
         calculateScores(players,firstBuilder);

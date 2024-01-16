@@ -6,14 +6,14 @@ import fr.cotedazur.univ.polytech.startingpoint.ActionManager;
 import fr.cotedazur.univ.polytech.startingpoint.GameCharacter;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.Game;
-import fr.cotedazur.univ.polytech.startingpoint.gameCharacter.King;
-import fr.cotedazur.univ.polytech.startingpoint.player.BotAlgorithms.baseAlgo;
+import fr.cotedazur.univ.polytech.startingpoint.character.King;
+import fr.cotedazur.univ.polytech.startingpoint.player.algorithms.BaseAlgo;
 
 
 public class Bot extends Player {
-    public baseAlgo botAlgo;
+    public BaseAlgo botAlgo;
 
-    public Bot(String name, baseAlgo algo) {
+    public Bot(String name, BaseAlgo algo) {
         super(name);
         algo.setPlayer(this);
         this.botAlgo = algo;
@@ -58,9 +58,10 @@ public class Bot extends Player {
     }
     @Override
     public void play(Game game) {
-        // Apply special effect, no need for now
-       // ActionManager.applySpecialEffect(this, game);
-        // Collect gold
+        /* Apply special effect, no need for now
+        ActionManager.applySpecialEffect(this, game);
+        Collect gold
+         */
         addGold(ActionManager.collectGold(this));
         // The bot draws a card if it has no district in its hand.
         botAlgo.startOfTurn(game);

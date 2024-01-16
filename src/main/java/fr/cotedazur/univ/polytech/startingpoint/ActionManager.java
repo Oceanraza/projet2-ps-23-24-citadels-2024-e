@@ -11,19 +11,19 @@ public class ActionManager {
     }
     public static int collectGold(Player player) {
         int addenGold = 0;
-        switch (player.getCharacterName()){
-            case("Roi"):
-                addenGold = player.getNumberOfDistrictsByColor().get(DistrictColor.noble);
-                return printGold(player,addenGold);
-            case("Eveque"):
-                addenGold = player.getNumberOfDistrictsByColor().get(DistrictColor.religieux);
-                return printGold(player,addenGold);
-            case("Condottiere"):
-                addenGold = player.getNumberOfDistrictsByColor().get(DistrictColor.militaire);
-                return printGold(player,addenGold);
-            case("Marchand"):
-                addenGold = player.getNumberOfDistrictsByColor().get(DistrictColor.marchand);
-                return printGold(player,addenGold);
+        switch (player.getCharacterName()) {
+            case ("Roi"):
+                addenGold = player.getNumberOfDistrictsByColor().get(DistrictColor.NOBLE);
+                return printGold(player, addenGold);
+            case ("Eveque"):
+                addenGold = player.getNumberOfDistrictsByColor().get(DistrictColor.RELIGIEUX);
+                return printGold(player, addenGold);
+            case ("Condottiere"):
+                addenGold = player.getNumberOfDistrictsByColor().get(DistrictColor.MILITAIRE);
+                return printGold(player, addenGold);
+            case ("Marchand"):
+                addenGold = player.getNumberOfDistrictsByColor().get(DistrictColor.MARCHAND);
+                return printGold(player, addenGold);
             default:
                 return 0;
         }

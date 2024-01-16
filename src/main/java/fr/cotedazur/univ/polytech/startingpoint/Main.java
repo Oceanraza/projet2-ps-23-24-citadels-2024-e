@@ -1,7 +1,7 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
-import fr.cotedazur.univ.polytech.startingpoint.player.BotAlgorithms.EinsteinAlgo;
-import fr.cotedazur.univ.polytech.startingpoint.player.BotAlgorithms.randomAlgo;
+import fr.cotedazur.univ.polytech.startingpoint.player.algorithms.EinsteinAlgo;
+import fr.cotedazur.univ.polytech.startingpoint.player.algorithms.RandomAlgo;
 
 import fr.cotedazur.univ.polytech.startingpoint.player.Bot;
 import fr.cotedazur.univ.polytech.startingpoint.player.Player;
@@ -60,7 +60,7 @@ public class Main {
         // System.out.println(newGame);
 
         // Adding players to the game
-        newGame.setPlayers(new Bot("Donald",new EinsteinAlgo()), new Bot("Picsou",new randomAlgo()), new Bot("Riri",new randomAlgo()), new Bot("Fifi",new randomAlgo()));
+        newGame.setPlayers(new Bot("Donald",new EinsteinAlgo()), new Bot("Picsou",new RandomAlgo()), new Bot("Riri",new RandomAlgo()), new Bot("Fifi",new RandomAlgo()));
 
 
         List<Player> players = newGame.getPlayers();

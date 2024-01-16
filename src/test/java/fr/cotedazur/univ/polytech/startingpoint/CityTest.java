@@ -15,7 +15,7 @@ class CityTest {
     @BeforeEach
     void setUp() {
         city = new City();
-        district = new District("Castle", 5, DistrictColor.noble);
+        district = new District("Castle", 5, DistrictColor.NOBLE);
     }
 
     @Test

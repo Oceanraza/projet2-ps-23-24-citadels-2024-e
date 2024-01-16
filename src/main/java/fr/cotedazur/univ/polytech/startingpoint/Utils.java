@@ -3,11 +3,19 @@ package fr.cotedazur.univ.polytech.startingpoint;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 
+import java.security.SecureRandom;
+
 //this class is used for basic methods that only have niche purposes and
 // are generally just math.
 public class Utils {
+    private static final SecureRandom random = new SecureRandom();
+
+    public int generateRandomNumber(int bound) {
+        return random.nextInt(bound);
+    }
+
     public static boolean canDestroyDistrict(District d, Player p){
-        return ((d.getPrice() -1 < p.getGold())&&(!d.equals("Donjon")));
+        return ((d.getPrice() -1 < p.getGold())&&(!d.getName().equals("Donjon")));
     }
 
 }
