@@ -75,6 +75,7 @@ class WarlordTest {
         game.setPlayers(firstBuilder, secondPlayer);
         firstBuilder.setGold(5);
         firstBuilder.setGameCharacter(condottiere);
+        secondPlayer.setGameCharacter(king);
 
         District distToDestroy = new District("test", 5, DistrictColor.marchand);
         secondPlayer.getCity().getDistrictsBuilt().add(distToDestroy);
