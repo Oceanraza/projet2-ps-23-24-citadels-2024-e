@@ -1,6 +1,6 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
-import fr.cotedazur.univ.polytech.startingpoint.gameCharacter.*;
+import fr.cotedazur.univ.polytech.startingpoint.character.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -8,12 +8,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class GameCharacterTest {
     King king;
-    Eveque eveque;
+    Bishop bishop;
 
     @BeforeEach
     void setUp() {
         king = new King();
-        eveque = new Eveque();
+        bishop = new Bishop();
     }
 
     @Test
@@ -24,7 +24,7 @@ class GameCharacterTest {
 
     @Test
     void evequeTest() {
-        assertEquals("Eveque", eveque.getName());
-        assertEquals(5, eveque.getRunningOrder());
+        assertEquals("Eveque", bishop.getName());
+        assertEquals(5, bishop.getRunningOrder());
     }
 }

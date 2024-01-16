@@ -1,8 +1,7 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
 
-import fr.cotedazur.univ.polytech.startingpoint.city.District;
-import fr.cotedazur.univ.polytech.startingpoint.players.Player;
+import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 
 public class ActionManager {
     public static int printGold(Player player, int addenGold){
@@ -12,19 +11,19 @@ public class ActionManager {
     }
     public static int collectGold(Player player) {
         int addenGold = 0;
-        switch (player.getCharacterName()){
-            case("Roi"):
+        switch (player.getCharacterName()) {
+            case ("Roi"):
                 addenGold = player.getNumberOfDistrictsByColor().get(DistrictColor.noble);
-                return printGold(player,addenGold);
-            case("Eveque"):
+                return printGold(player, addenGold);
+            case ("Eveque"):
                 addenGold = player.getNumberOfDistrictsByColor().get(DistrictColor.religieux);
-                return printGold(player,addenGold);
-            case("Condottiere"):
+                return printGold(player, addenGold);
+            case ("Condottiere"):
                 addenGold = player.getNumberOfDistrictsByColor().get(DistrictColor.militaire);
-                return printGold(player,addenGold);
-            case("Marchand"):
+                return printGold(player, addenGold);
+            case ("Marchand"):
                 addenGold = player.getNumberOfDistrictsByColor().get(DistrictColor.marchand);
-                return printGold(player,addenGold);
+                return printGold(player, addenGold);
             default:
                 return 0;
         }
