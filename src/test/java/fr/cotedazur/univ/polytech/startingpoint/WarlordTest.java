@@ -52,6 +52,10 @@ class WarlordTest {
         Player fourthPlayer = new Bot("Player 4");
         Game game = new Game();
         game.setPlayers(firstBuilder, secondPlayer, thirdPlayer, fourthPlayer);
+        thirdPlayer.setGameCharacter(eveque);
+        firstBuilder.setGameCharacter(king);
+        secondPlayer.setGameCharacter(king);
+        fourthPlayer.setGameCharacter(king);
 
         for (int i = 0; i < 8; i++) {
             firstBuilder.getCity().getDistrictsBuilt().add(new District("test", 4, DistrictColor.marchand));
@@ -62,10 +66,9 @@ class WarlordTest {
         ArrayList<Player> expectedOutput = new ArrayList<>();
         expectedOutput.add(secondPlayer);
         expectedOutput.add(firstBuilder);
-        expectedOutput.add(thirdPlayer);
         expectedOutput.add(fourthPlayer);
-
-        assertEquals(expectedOutput, game.getSortedPlayersByScore());
+        //third player is missing because he is the bishop, therefore he can't be an option
+        assertEquals(expectedOutput, game.getSortedPlayersByScoreForWarlord());
     }
     @Test
     void WarlordGameCanDestroyFirstTest(){
@@ -75,6 +78,7 @@ class WarlordTest {
         game.setPlayers(firstBuilder, secondPlayer);
         firstBuilder.setGold(5);
         firstBuilder.setGameCharacter(condottiere);
+        secondPlayer.setGameCharacter(king);
 
         District distToDestroy = new District("test", 5, DistrictColor.marchand);
         secondPlayer.getCity().getDistrictsBuilt().add(distToDestroy);

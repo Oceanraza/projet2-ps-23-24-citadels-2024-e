@@ -45,7 +45,7 @@ public class randomAlgo extends baseAlgo {
 
     public void warlordAlgorithm(Game game) {
         if ((random.nextInt(10) > 5)) { // have 50% chance to decide to destroy a building of a random player or not
-            ArrayList<Player> playerList = game.getSortedPlayersByScore();
+            ArrayList<Player> playerList = game.getSortedPlayersByScoreForWarlord();
             playerList.remove(player);
             Collections.shuffle(playerList);
             for (Player targetedPlayer : playerList) {

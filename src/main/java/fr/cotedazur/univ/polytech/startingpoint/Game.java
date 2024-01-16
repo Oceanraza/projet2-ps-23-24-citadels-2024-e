@@ -159,11 +159,13 @@ public class Game {
             p.setGameCharacter(null);
         }
     }
-    public ArrayList<Player> getSortedPlayersByScore(){
+    public ArrayList<Player> getSortedPlayersByScoreForWarlord(){
         ArrayList<Player> sortedPlayersByScore = new ArrayList<>();
         for (Player p : getPlayers()){
-            p.calculateScore();
-            sortedPlayersByScore.add(p);
+            if (!p.getGameCharacter().getName().equals("Eveque")){
+                p.calculateScore();
+                sortedPlayersByScore.add(p);
+            }
         }
         Comparator<Player> playerComparator = Comparator
                 .comparingInt(Player::getScore)

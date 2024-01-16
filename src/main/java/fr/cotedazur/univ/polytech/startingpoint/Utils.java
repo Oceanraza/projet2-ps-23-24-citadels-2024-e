@@ -7,7 +7,7 @@ import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 // are generally just math.
 public class Utils {
     public static boolean canDestroyDistrict(District d, Player p){
-        return (d.getPrice() -1 < p.getGold());
+        return ((d.getPrice() -1 < p.getGold())&&(!d.equals("Donjon")));
     }
 
 }
