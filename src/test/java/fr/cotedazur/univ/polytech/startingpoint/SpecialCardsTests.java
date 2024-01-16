@@ -46,7 +46,7 @@ class SpecialCardsTests {
         secondPlayer.setGameCharacter(king);
         fourthPlayer.setGameCharacter(king);
 
-        firstBuilder.buildDistrict(new District("Donjon", 3, DistrictColor.SPECIAL));
+        firstBuilder.buildDistrict(new District("Donjon", 3, DistrictColor.special));
 
         assertEquals(firstBuilder.getCity().getDistrictsBuilt().size(),1);
         secondPlayer.botAlgo.warlordAlgorithm(game); //La seule carte construite est le dongeon, qui ne peut être détruit, cet algo ne détruit alors rien

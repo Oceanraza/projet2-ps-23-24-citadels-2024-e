@@ -34,9 +34,9 @@ class ActionManagerTest {
     @Test
     void updateGoldTestWithDistrict() {
         bot.setGameCharacter(king);
-        District district1 = new District("Quartier 1", 0, DistrictColor.NOBLE);
-        District district2 = new District("Quartier 2", 0, DistrictColor.NOBLE);
-        District district3 = new District("Quartier 3", 0, DistrictColor.RELIGIEUX);
+        District district1 = new District("Quartier 1", 0, DistrictColor.noble);
+        District district2 = new District("Quartier 2", 0, DistrictColor.noble);
+        District district3 = new District("Quartier 3", 0, DistrictColor.religieux);
         bot.buildDistrict(district1);
         bot.buildDistrict(district2);
         bot.buildDistrict(district3);
@@ -81,9 +81,9 @@ class ActionManagerTest {
         game.shuffleChars(4);
         bot.botAlgo = new EinsteinAlgo();
         bot.botAlgo.setPlayer(bot);
-        District district1 = new District("Quartier 1", 0, DistrictColor.NOBLE);
-        District district2 = new District("Quartier 2", 0, DistrictColor.RELIGIEUX);
-        District district3 = new District("Quartier 3", 0, DistrictColor.RELIGIEUX);
+        District district1 = new District("Quartier 1", 0, DistrictColor.noble);
+        District district2 = new District("Quartier 2", 0, DistrictColor.religieux);
+        District district3 = new District("Quartier 3", 0, DistrictColor.religieux);
         bot.buildDistrict(district1);
         bot.buildDistrict(district2);
         bot.buildDistrict(district3);
@@ -97,9 +97,9 @@ class ActionManagerTest {
         game.shuffleChars(4);
         bot.botAlgo = new EinsteinAlgo();
         bot.botAlgo.setPlayer(bot);
-        District district1 = new District("Quartier 1", 0, DistrictColor.NOBLE);
-        District district2 = new District("Quartier 2", 0, DistrictColor.MARCHAND);
-        District district3 = new District("Quartier 3", 0, DistrictColor.MARCHAND);
+        District district1 = new District("Quartier 1", 0, DistrictColor.noble);
+        District district2 = new District("Quartier 2", 0, DistrictColor.marchand);
+        District district3 = new District("Quartier 3", 0, DistrictColor.marchand);
         bot.buildDistrict(district1);
         bot.buildDistrict(district2);
         bot.buildDistrict(district3);
@@ -113,9 +113,9 @@ class ActionManagerTest {
         game.shuffleChars(4);
         bot.botAlgo = new EinsteinAlgo();
         bot.botAlgo.setPlayer(bot);
-        District district1 = new District("Quartier 1", 0, DistrictColor.NOBLE);
-        District district2 = new District("Quartier 2", 0, DistrictColor.MILITAIRE);
-        District district3 = new District("Quartier 3", 0, DistrictColor.MILITAIRE);
+        District district1 = new District("Quartier 1", 0, DistrictColor.noble);
+        District district2 = new District("Quartier 2", 0, DistrictColor.militaire);
+        District district3 = new District("Quartier 3", 0, DistrictColor.militaire);
         bot.buildDistrict(district1);
         bot.buildDistrict(district2);
         bot.buildDistrict(district3);
@@ -129,9 +129,9 @@ class ActionManagerTest {
         game.shuffleChars(4);
         bot.botAlgo = new EinsteinAlgo();
         bot.botAlgo.setPlayer(bot);
-        District district1 = new District("Quartier 1", 0, DistrictColor.NOBLE);
-        District district2 = new District("Quartier 2", 0, DistrictColor.NOBLE);
-        District district3 = new District("Quartier 3", 0, DistrictColor.RELIGIEUX);
+        District district1 = new District("Quartier 1", 0, DistrictColor.noble);
+        District district2 = new District("Quartier 2", 0, DistrictColor.noble);
+        District district3 = new District("Quartier 3", 0, DistrictColor.religieux);
         bot.buildDistrict(district1);
         bot.buildDistrict(district2);
         bot.buildDistrict(district3);

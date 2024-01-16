@@ -25,11 +25,11 @@ public abstract class Player {
         score = 0;
         gameCharacter = null;
         numberOfDistrictsByColor = new EnumMap<>(DistrictColor.class);
-        numberOfDistrictsByColor.put(DistrictColor.MILITAIRE,0);
-        numberOfDistrictsByColor.put(DistrictColor.NOBLE,0);
-        numberOfDistrictsByColor.put(DistrictColor.SPECIAL,0);
-        numberOfDistrictsByColor.put(DistrictColor.RELIGIEUX,0);
-        numberOfDistrictsByColor.put(DistrictColor.MARCHAND,0);
+        numberOfDistrictsByColor.put(DistrictColor.militaire,0);
+        numberOfDistrictsByColor.put(DistrictColor.noble,0);
+        numberOfDistrictsByColor.put(DistrictColor.special,0);
+        numberOfDistrictsByColor.put(DistrictColor.religieux,0);
+        numberOfDistrictsByColor.put(DistrictColor.marchand,0);
     }
     public void removeGold(int g){
         gold -= g;

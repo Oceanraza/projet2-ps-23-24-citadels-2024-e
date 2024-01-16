@@ -52,6 +52,7 @@ public class Bot extends Player {
     }
     public void chooseChar(Game game,String askedChar){
         GameCharacter chosenCharacter = getCharInList(game.getAvailableChars(), askedChar);
+        game.printAvailableCharacters();
         setGameCharacter(chosenCharacter);
         game.removeAvailableChar(chosenCharacter);
         System.out.println(this.getName() + " a choisi le " + chosenCharacter.getName());

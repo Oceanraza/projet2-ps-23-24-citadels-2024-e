@@ -7,7 +7,7 @@ import fr.cotedazur.univ.polytech.startingpoint.player.*;
 
 public class Merchant extends GameCharacter {
     public Merchant() {
-        super("Marchand", 6, DistrictColor.MARCHAND);
+        super("Marchand", 6, DistrictColor.marchand);
     }
 
     @Override

@@ -21,7 +21,7 @@ class GameTest {
     void testAddCardNumber() {
         assertFalse(game.getGameDeck().isEmpty());
         int normalCardCount = game.getGameDeck().size();
-        District district = new District("Test", 1, DistrictColor.SPECIAL);
+        District district = new District("Test", 1, DistrictColor.special);
         game.addDistrictsInGameDeck(district, 4);
         assertEquals(normalCardCount + 4, game.getGameDeck().size());
     }

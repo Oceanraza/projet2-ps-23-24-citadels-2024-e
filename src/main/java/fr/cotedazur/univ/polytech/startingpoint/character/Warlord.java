@@ -8,7 +8,7 @@ import fr.cotedazur.univ.polytech.startingpoint.player.*;
 
 public class Warlord extends GameCharacter {
     public Warlord() {
-        super("Condottiere", 8, DistrictColor.MILITAIRE);
+        super("Condottiere", 8, DistrictColor.militaire);
     }
     @Override
     public void specialEffect(Player player,Game game, Object... optionalArgs) {

@@ -13,16 +13,16 @@ public class ActionManager {
         int addenGold = 0;
         switch (player.getCharacterName()) {
             case ("Roi"):
-                addenGold = player.getNumberOfDistrictsByColor().get(DistrictColor.NOBLE);
+                addenGold = player.getNumberOfDistrictsByColor().get(DistrictColor.noble);
                 return printGold(player, addenGold);
             case ("Eveque"):
-                addenGold = player.getNumberOfDistrictsByColor().get(DistrictColor.RELIGIEUX);
+                addenGold = player.getNumberOfDistrictsByColor().get(DistrictColor.religieux);
                 return printGold(player, addenGold);
             case ("Condottiere"):
-                addenGold = player.getNumberOfDistrictsByColor().get(DistrictColor.MILITAIRE);
+                addenGold = player.getNumberOfDistrictsByColor().get(DistrictColor.militaire);
                 return printGold(player, addenGold);
             case ("Marchand"):
-                addenGold = player.getNumberOfDistrictsByColor().get(DistrictColor.MARCHAND);
+                addenGold = player.getNumberOfDistrictsByColor().get(DistrictColor.marchand);
                 return printGold(player, addenGold);
             default:
                 return 0;

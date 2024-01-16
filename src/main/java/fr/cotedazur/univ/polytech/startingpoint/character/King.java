@@ -7,7 +7,7 @@ import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 
 public class King extends GameCharacter {
     public King () {
-        super("Roi", 4, DistrictColor.NOBLE);
+        super("Roi", 4, DistrictColor.noble);
     }
 
     @Override
