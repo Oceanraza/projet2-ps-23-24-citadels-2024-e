@@ -59,7 +59,6 @@ public class EinsteinAlgo extends baseAlgo {
         ArrayList<Player> playerList = game.getSortedPlayersByScore();
         playerList.remove(player);
         for (Player targetedPlayer : playerList) {
-            if (! targetedPlayer.getCharacterName().equals("Eveque")){
             targetedPlayer.getLowestDistrict().ifPresent(value -> {
                 District dist = value;
                 if (Utils.canDestroyDistrict(dist, player)) {
@@ -69,7 +68,6 @@ public class EinsteinAlgo extends baseAlgo {
             });
             if (lowestDistrictFound) {
                 break;
-            }
             }
         }
     }

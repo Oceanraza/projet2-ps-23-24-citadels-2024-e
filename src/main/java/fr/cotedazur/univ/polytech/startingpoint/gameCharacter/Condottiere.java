@@ -18,10 +18,6 @@ public class Condottiere extends GameCharacter {
     @Override
     public void specialEffect(Player player,Game game, Object... OptionalArgs) {
         Player targetedPlayer = (Player) OptionalArgs[0];
-        if (targetedPlayer.getCharacterName().equals("Eveque")){
-            System.out.println("L'Eveque est protégé par la puissance de son dieu !");
-            return;
-        }
         District destroyedDistrict = (District) OptionalArgs[1];
 
         targetedPlayer.getCity().destroyDistrict(destroyedDistrict);
