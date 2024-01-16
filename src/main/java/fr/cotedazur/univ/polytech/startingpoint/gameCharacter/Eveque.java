@@ -3,7 +3,7 @@ package fr.cotedazur.univ.polytech.startingpoint.gameCharacter;
 import fr.cotedazur.univ.polytech.startingpoint.DistrictColor;
 import fr.cotedazur.univ.polytech.startingpoint.Game;
 import fr.cotedazur.univ.polytech.startingpoint.GameCharacter;
-import fr.cotedazur.univ.polytech.startingpoint.players.*;
+import fr.cotedazur.univ.polytech.startingpoint.player.*;
 
 public class Eveque extends GameCharacter {
     public Eveque() {
@@ -11,7 +11,7 @@ public class Eveque extends GameCharacter {
     }
 
     @Override
-    public void specialEffect(Player player, Game game) {
+    public void specialEffect(Player player, Game game,Object... OptionalArgs) {
         //System.out.println("L'Eveque n'a pas de compétences programmée");
     }
 }

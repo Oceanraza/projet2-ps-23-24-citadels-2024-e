@@ -1,18 +1,16 @@
-package fr.cotedazur.univ.polytech.startingpoint.players;
+package fr.cotedazur.univ.polytech.startingpoint.player;
 
 import fr.cotedazur.univ.polytech.startingpoint.DistrictColor;
 import fr.cotedazur.univ.polytech.startingpoint.Game;
 import fr.cotedazur.univ.polytech.startingpoint.GameCharacter;
+import fr.cotedazur.univ.polytech.startingpoint.city.City;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public abstract class Player {
     private final List<District> districtsInHand;
-    private final List<District> districtsBuilt;
+    private final City city;
     private int gold;
     private final String name;
     private int score;
@@ -22,24 +20,28 @@ public abstract class Player {
     protected Player(String name) {
         this.name = name;
         districtsInHand = new ArrayList<>();
-        districtsBuilt = new ArrayList<>();
+        city = new City();
         gold = 2;
         score = 0;
         gameCharacter = null;
-        numberOfDistrictsByColor = new HashMap<>();
+        numberOfDistrictsByColor = new EnumMap<>(DistrictColor.class);
         numberOfDistrictsByColor.put(DistrictColor.militaire,0);
         numberOfDistrictsByColor.put(DistrictColor.noble,0);
         numberOfDistrictsByColor.put(DistrictColor.special,0);
         numberOfDistrictsByColor.put(DistrictColor.religieux,0);
         numberOfDistrictsByColor.put(DistrictColor.marchand,0);
     }
+    public void removeGold(int g){
+        gold -= g;
+    }
 
     // Getter
     public List<District> getDistrictsInHand() {
         return districtsInHand;
     }
-    public List<District> getDistrictsBuilt() {
-        return districtsBuilt;
+
+    public City getCity() {
+        return city;
     }
     public int getGold() {
         return gold;
@@ -77,7 +79,7 @@ public abstract class Player {
         numberOfDistrictsByColor.replace(
                 district.getColor(),
                 numberOfDistrictsByColor.get(district.getColor()) + 1);
-        this.districtsBuilt.add(district);
+        this.city.addDistrict(district);
     }
 
     public Map<DistrictColor, Integer> getNumberOfDistrictsByColor() {return numberOfDistrictsByColor;}
@@ -88,10 +90,10 @@ public abstract class Player {
 
     public abstract void play(Game game);
     // Function to build a district
-    public boolean build(District district) {
+    public boolean buildDistrict(District district) {
         // Checks if the player has enough gold to build the district. If so it is
         // built.
-        if (gold >= district.getPrice() && isNotBuilt(district)) {
+        if (gold >= district.getPrice() && this.city.isNotBuilt(district)) {
             addDistrictBuilt(district);
             gold -= district.getPrice();
             districtsInHand.remove(district);
@@ -101,21 +103,9 @@ public abstract class Player {
         return false;
     }
 
-    public boolean isNotBuilt(District district) {
-        if (districtsBuilt.isEmpty()) {
-            return true;
-        }
-        for (District d : districtsBuilt) {
-            if (d.getName().equals(district.getName())) { // Checks if the district has already been built or not
-                return false;
-            }
-        }
-        return true;
-    }
-
-    public boolean districtsAlreadyBuilt() {
-        for (District d : districtsInHand) {
-            if (isNotBuilt(d)) {
+    public boolean districtsInHandAreBuilt() {
+        for (District district : districtsInHand) {
+            if (city.isNotBuilt(district)) {
                 return false;
             }
         }
@@ -124,19 +114,20 @@ public abstract class Player {
     public String toString() {
         if (gameCharacter == null) {
             return "\nC'est au tour de : " + name + "\n" + (!districtsInHand.isEmpty() ? "Et sa main est composée de: "
-                    + districtsInHand : "Sa main est vide. ") + "\n" + "Il a " + gold + " or\n" +
-                    (!districtsBuilt.isEmpty() ? "Et il a déjà posé: " + districtsBuilt : "Il n'a pas posé de quartiers.");
+                    + districtsInHand : "Sa main est vide. ") + "\n" + "Il a " + gold + " d'or(s)\n" +
+                    (!districtsInHand.isEmpty() ? "Et il a déjà posé: " + city : "Il n'a pas posé de quartiers.");
         }
 
         // If a character is chosen, we specify the character
         return "\nC'est au tour du " + gameCharacter.getName() + " : " + name + "\n" + (!districtsInHand.isEmpty() ? "Et sa main est composée de: "
-                + districtsInHand : "Sa main est vide. ") + "\n" + "Il a " + gold + " or\n" +
-                (!districtsBuilt.isEmpty() ? "Et il a déjà posé: " + districtsBuilt : "Il n'a pas posé de quartiers.");
+                + districtsInHand : "Sa main est vide. ") + "\n" + "Il a " + gold + " d'or(s)\n" +
+                (!districtsInHand.isEmpty() ? "Et il a déjà posé: " + city : "Il n'a pas posé de quartiers.");
     }
     public int calculateScore(){
         int tempScore = getGold();
+        City playerCity = this.getCity();
         ArrayList<DistrictColor> districtColors = new ArrayList<>();
-        for (District district : getDistrictsBuilt()) {
+        for (District district : playerCity.getDistrictsBuilt()) {
             tempScore += district.getPrice();
             districtColors.add(district.getColor());
         }
@@ -146,5 +137,17 @@ public abstract class Player {
         }
         setScore(tempScore); // Initialize the player's score
         return tempScore;
+    }
+
+    public boolean equals(Player p) {
+        return (p.getName().equals(getName()));
+    }
+    public Optional<District> getLowestDistrict(){
+        List<District> sortedDistrictByScore = getCity().getDistrictsBuilt();
+        if (sortedDistrictByScore.size() == 0){return Optional.empty();}
+        District minPriceDistrict = sortedDistrictByScore.stream()
+                .min(Comparator.comparingDouble(District::getPrice))
+                .orElse(null);
+        return Optional.of(minPriceDistrict);
     }
 }

@@ -1,4 +1,4 @@
-package fr.cotedazur.univ.polytech.startingpoint.players;
+package fr.cotedazur.univ.polytech.startingpoint.player;
 
 import java.util.*;
 
@@ -7,11 +7,18 @@ import fr.cotedazur.univ.polytech.startingpoint.GameCharacter;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.Game;
 import fr.cotedazur.univ.polytech.startingpoint.gameCharacter.King;
+import fr.cotedazur.univ.polytech.startingpoint.player.BotAlgorithms.baseAlgo;
 
 
 public class Bot extends Player {
+    public baseAlgo botAlgo;
 
-    public Bot(String name) {
+    public Bot(String name, baseAlgo algo) {
+        super(name);
+        algo.setPlayer(this);
+        this.botAlgo = algo;
+    }
+    public Bot(String name){ //for tests
         super(name);
     }
 
@@ -49,46 +56,18 @@ public class Bot extends Player {
         game.removeAvailableChar(chosenCharacter);
         System.out.println(this.getName() + " a choisi le " + chosenCharacter.getName());
     }
-    public void chooseCharacterAlgorithm(Game game) {
-        ArrayList<GameCharacter> availableChars = game.getAvailableChars();
-        // If the bot can build its 8th quarter next turn, it will choose the king (if possible)
-        if (!(this.getDistrictsInHand().isEmpty()) && (this.getDistrictsBuilt().size() >= 7) && (canBuildDistrictThisTurn())
-                && (isCharInList(availableChars, "Roi"))) {
-            chooseChar(game,"Roi");
-        }
-        // If the bot doesn't have an immediate way to win, it will just pick the character who gives out the most gold for him
-        else {
-            GameCharacter chosenChar = availableChars.get(0);
-            for (GameCharacter cha : availableChars){
-                if (getNumberOfDistrictsByColor().get(cha.getColor()) > getNumberOfDistrictsByColor().get(chosenChar.getColor())){
-                    chosenChar = cha;
-                }
-            }
-            chooseChar(game,chosenChar.getName());
-        }
-    }
-
     @Override
     public void play(Game game) {
-        // Apply special effect
-        ActionManager.applySpecialEffect(this, game);
-
+        // Apply special effect, no need for now
+       // ActionManager.applySpecialEffect(this, game);
         // Collect gold
         addGold(ActionManager.collectGold(this));
         // The bot draws a card if it has no district in its hand.
-        if (getDistrictsInHand().isEmpty() || districtsAlreadyBuilt()) {
-            District drawnDistrict = game.drawCard();
-            System.out.println(getName() + " pioche le " + drawnDistrict);
-            getDistrictsInHand().add(drawnDistrict);
-        } else { // Otherwise it gets 2 gold coins
-            System.out.println(getName() + " prend deux pièces d'or.");
-            addGold(2);
-        }
+        botAlgo.startOfTurn(game);
+        botAlgo.charAlgorithmsManager(game);
         // The bot builds one district if it has enough money
-        for (District district : getDistrictsInHand()) {
-            if (build(district)) {
-                break;
-            }
-        }
+        botAlgo.buildOrNot(game);
     }
+
+
 }
