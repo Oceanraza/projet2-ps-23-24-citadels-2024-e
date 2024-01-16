@@ -19,7 +19,6 @@ public class Condottiere extends GameCharacter {
     public void specialEffect(Player player,Game game, Object... OptionalArgs) {
         Player targetedPlayer = (Player) OptionalArgs[0];
         District destroyedDistrict = (District) OptionalArgs[1];
-
         targetedPlayer.getCity().destroyDistrict(destroyedDistrict);
         player.removeGold(destroyedDistrict.getPrice() - 1);
         System.out.println("Le Condottiere à détruit le quartier " + destroyedDistrict.getName() + " qui appartient au joueur " + targetedPlayer.getName() + " au prix de " + (destroyedDistrict.getPrice() - 1) + " or");
