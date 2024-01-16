@@ -7,11 +7,8 @@ import java.util.stream.Collectors;
 import fr.cotedazur.univ.polytech.startingpoint.gameCharacter.*;
 
 
-import java.util.*;
-import java.util.stream.Collectors;
-
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
-import fr.cotedazur.univ.polytech.startingpoint.players.*;
+import fr.cotedazur.univ.polytech.startingpoint.player.*;
 
 
 public class Game {

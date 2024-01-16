@@ -3,8 +3,9 @@ package fr.cotedazur.univ.polytech.startingpoint.gameCharacter;
 import fr.cotedazur.univ.polytech.startingpoint.DistrictColor;
 import fr.cotedazur.univ.polytech.startingpoint.Game;
 import fr.cotedazur.univ.polytech.startingpoint.GameCharacter;
-import fr.cotedazur.univ.polytech.startingpoint.city.District;
-import fr.cotedazur.univ.polytech.startingpoint.players.*;
+
+
+import fr.cotedazur.univ.polytech.startingpoint.player.*;
 
 public class Marchand extends GameCharacter {
     public Marchand() {

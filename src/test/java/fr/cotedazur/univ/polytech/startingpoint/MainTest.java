@@ -2,8 +2,8 @@ package fr.cotedazur.univ.polytech.startingpoint;
 
 import fr.cotedazur.univ.polytech.startingpoint.gameCharacter.*;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
-import fr.cotedazur.univ.polytech.startingpoint.players.Bot;
-import fr.cotedazur.univ.polytech.startingpoint.players.Player;
+import fr.cotedazur.univ.polytech.startingpoint.player.Bot;
+import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -13,7 +13,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import static fr.cotedazur.univ.polytech.startingpoint.Main.calculateScores;
-import static fr.cotedazur.univ.polytech.startingpoint.Main.sortPlayers;
 import static org.junit.jupiter.api.Assertions.*;
 
 class MainTest {

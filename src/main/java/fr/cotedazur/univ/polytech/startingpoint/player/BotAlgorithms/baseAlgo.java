@@ -1,4 +1,4 @@
-package fr.cotedazur.univ.polytech.startingpoint.players.BotAlgorithms;
+package fr.cotedazur.univ.polytech.startingpoint.player.BotAlgorithms;
 
 import fr.cotedazur.univ.polytech.startingpoint.Game;
 import fr.cotedazur.univ.polytech.startingpoint.GameCharacter;

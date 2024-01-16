@@ -1,12 +1,11 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
-import fr.cotedazur.univ.polytech.startingpoint.city.District;
-import fr.cotedazur.univ.polytech.startingpoint.players.Bot;
-import fr.cotedazur.univ.polytech.startingpoint.players.BotAlgorithms.EinsteinAlgo;
-import fr.cotedazur.univ.polytech.startingpoint.players.BotAlgorithms.randomAlgo;
-import fr.cotedazur.univ.polytech.startingpoint.players.Player;
+import fr.cotedazur.univ.polytech.startingpoint.player.BotAlgorithms.EinsteinAlgo;
+import fr.cotedazur.univ.polytech.startingpoint.player.BotAlgorithms.randomAlgo;
 
-import java.util.ArrayList;
+import fr.cotedazur.univ.polytech.startingpoint.player.Bot;
+import fr.cotedazur.univ.polytech.startingpoint.player.Player;
+
 import java.util.List;
 import java.util.Comparator;
 public class Main {

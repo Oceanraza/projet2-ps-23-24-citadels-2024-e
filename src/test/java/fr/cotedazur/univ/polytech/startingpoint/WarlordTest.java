@@ -1,21 +1,15 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
-import static fr.cotedazur.univ.polytech.startingpoint.Main.calculateScores;
-import static java.lang.Character.LINE_SEPARATOR;
 import static org.junit.jupiter.api.Assertions.*;
 
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.gameCharacter.*;
-import fr.cotedazur.univ.polytech.startingpoint.players.Bot;
-import fr.cotedazur.univ.polytech.startingpoint.players.BotAlgorithms.EinsteinAlgo;
-import fr.cotedazur.univ.polytech.startingpoint.players.Player;
+import fr.cotedazur.univ.polytech.startingpoint.player.Bot;
+import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-;import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
+;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Optional;
 
 class WarlordTest {
