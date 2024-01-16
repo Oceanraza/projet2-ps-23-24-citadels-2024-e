@@ -59,15 +59,17 @@ public class EinsteinAlgo extends baseAlgo {
         ArrayList<Player> playerList = game.getSortedPlayersByScore();
         playerList.remove(player);
         for (Player targetedPlayer : playerList) {
-            targetedPlayer.getLowestDistrict().ifPresent(value -> {
-                District dist = value;
-                if (Utils.canDestroyDistrict(dist, player)) {
-                    player.getGameCharacter().specialEffect(player,game,targetedPlayer,dist);
-                    LowestDistrictHasBeenFound();
-                }
-            });
+            if (!targetedPlayer.getGameCharacter().getName().equals("Eveque")) { //doesn't target the bishop because he's immune to the warlord
+                targetedPlayer.getLowestDistrict().ifPresent(value -> {
+                    District dist = value;
+                    if (Utils.canDestroyDistrict(dist, player)) {
+                        player.getGameCharacter().specialEffect(player, game, targetedPlayer, dist);
+                        LowestDistrictHasBeenFound();
+                    }
+                });
             if (lowestDistrictFound) {
                 break;
+            }
             }
         }
     }
