@@ -42,4 +42,12 @@ public class City {
         }
         return city.toString();
     }
+    public void destroyDistrict(District districtToDestroy){
+        for (District d : districtsBuilt){
+            if (d.equals(districtToDestroy)){
+                districtsBuilt.remove(d);
+                return;
+            }
+        }
+    }
 }

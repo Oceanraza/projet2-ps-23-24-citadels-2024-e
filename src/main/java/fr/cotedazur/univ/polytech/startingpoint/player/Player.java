@@ -1,4 +1,4 @@
-package fr.cotedazur.univ.polytech.startingpoint.players;
+package fr.cotedazur.univ.polytech.startingpoint.player;
 
 import fr.cotedazur.univ.polytech.startingpoint.DistrictColor;
 import fr.cotedazur.univ.polytech.startingpoint.Game;
@@ -30,6 +30,9 @@ public abstract class Player {
         numberOfDistrictsByColor.put(DistrictColor.special,0);
         numberOfDistrictsByColor.put(DistrictColor.religieux,0);
         numberOfDistrictsByColor.put(DistrictColor.marchand,0);
+    }
+    public void removeGold(int g){
+        gold -= g;
     }
 
     // Getter
@@ -134,5 +137,17 @@ public abstract class Player {
         }
         setScore(tempScore); // Initialize the player's score
         return tempScore;
+    }
+
+    public boolean equals(Player p) {
+        return (p.getName().equals(getName()));
+    }
+    public Optional<District> getLowestDistrict(){
+        List<District> sortedDistrictByScore = getCity().getDistrictsBuilt();
+        if (sortedDistrictByScore.size() == 0){return Optional.empty();}
+        District minPriceDistrict = sortedDistrictByScore.stream()
+                .min(Comparator.comparingDouble(District::getPrice))
+                .orElse(null);
+        return Optional.of(minPriceDistrict);
     }
 }

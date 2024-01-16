@@ -7,11 +7,8 @@ import java.util.stream.Collectors;
 import fr.cotedazur.univ.polytech.startingpoint.gameCharacter.*;
 
 
-import java.util.*;
-import java.util.stream.Collectors;
-
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
-import fr.cotedazur.univ.polytech.startingpoint.players.*;
+import fr.cotedazur.univ.polytech.startingpoint.player.*;
 
 
 public class Game {
@@ -145,7 +142,7 @@ public class Game {
                 System.out.println(p2);
                 //We create a new variable p2 to cast p to Bot each time
                 //Good to note that you can't just cast the whole List
-                p2.chooseCharacterAlgorithm(this);}
+                p2.botAlgo.chooseCharacterAlgorithm(this);}
         }
     }
 
@@ -161,5 +158,17 @@ public class Game {
         for (Player  p: players){
             p.setGameCharacter(null);
         }
+    }
+    public ArrayList<Player> getSortedPlayersByScore(){
+        ArrayList<Player> sortedPlayersByScore = new ArrayList<>();
+        for (Player p : getPlayers()){
+            p.calculateScore();
+            sortedPlayersByScore.add(p);
+        }
+        Comparator<Player> playerComparator = Comparator
+                .comparingInt(Player::getScore)
+                .reversed();
+        sortedPlayersByScore.sort(playerComparator);
+        return sortedPlayersByScore;
     }
 }
