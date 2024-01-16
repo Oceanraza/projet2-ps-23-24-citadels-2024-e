@@ -56,7 +56,7 @@ public class EinsteinAlgo extends baseAlgo {
     }
 
     public void warlordAlgorithm(Game game) {
-        ArrayList<Player> playerList = game.getSortedPlayersByScore();
+        ArrayList<Player> playerList = game.getSortedPlayersByScoreForWarlord();
         playerList.remove(player);
         for (Player targetedPlayer : playerList) {
             if (!targetedPlayer.getGameCharacter().getName().equals("Eveque")) { //doesn't target the bishop because he's immune to the warlord
