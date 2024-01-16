@@ -2,6 +2,8 @@ package fr.cotedazur.univ.polytech.startingpoint;
 
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.players.Bot;
+import fr.cotedazur.univ.polytech.startingpoint.players.BotAlgorithms.EinsteinAlgo;
+import fr.cotedazur.univ.polytech.startingpoint.players.BotAlgorithms.randomAlgo;
 import fr.cotedazur.univ.polytech.startingpoint.players.Player;
 
 import java.util.ArrayList;
@@ -54,7 +56,8 @@ public class Main {
         int START_CARDS_NUMBER = 4;
 
         // Adding players to the game
-        newGame.setPlayers(new Bot("Donald"), new Bot("Picsou"), new Bot("Riri"), new Bot("Fifi"));
+        newGame.setPlayers(new Bot("Donald",new EinsteinAlgo()), new Bot("Picsou",new randomAlgo()), new Bot("Riri",new randomAlgo()), new Bot("Fifi",new randomAlgo()));
+
 
         List<Player> players = newGame.getPlayers();
 
@@ -82,7 +85,7 @@ public class Main {
 
             if (crownOwner != null){
                 System.out.println(crownOwner);
-                crownOwner.chooseCharacterAlgorithm(newGame);
+                crownOwner.botAlgo.chooseCharacterAlgorithm(newGame);
             }
             newGame.charSelectionFiller();
 

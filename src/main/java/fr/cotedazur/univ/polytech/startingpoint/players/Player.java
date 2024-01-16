@@ -5,10 +5,7 @@ import fr.cotedazur.univ.polytech.startingpoint.Game;
 import fr.cotedazur.univ.polytech.startingpoint.GameCharacter;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public abstract class Player {
     private final List<District> districtsInHand;
@@ -161,5 +158,13 @@ public abstract class Player {
 
     public boolean equals(Player p) {
         return (p.getName().equals(getName()));
+    }
+    public Optional<District> getLowestDistrict(){
+        List<District> sortedDistrictByScore = getDistrictsBuilt();
+        if (sortedDistrictByScore.size() == 0){return Optional.empty();}
+        District minPriceDistrict = sortedDistrictByScore.stream()
+                .min(Comparator.comparingDouble(District::getPrice))
+                .orElse(null);
+        return Optional.of(minPriceDistrict);
     }
 }

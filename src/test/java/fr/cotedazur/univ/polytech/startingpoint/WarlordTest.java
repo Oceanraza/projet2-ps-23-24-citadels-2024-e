@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.gameCharacter.*;
 import fr.cotedazur.univ.polytech.startingpoint.players.Bot;
+import fr.cotedazur.univ.polytech.startingpoint.players.BotAlgorithms.EinsteinAlgo;
 import fr.cotedazur.univ.polytech.startingpoint.players.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -42,11 +43,11 @@ class WarlordTest {
         bot.build(district1);
         bot.build(district2);
         bot.build(district3);
-        assertEquals(district2,Condottiere.getLowestDistrict(bot).get());
+        assertEquals(district2, bot.getLowestDistrict().get());
     }
     @Test
     void getWrongDistrictTest(){
-        assertEquals(Optional.empty(),Condottiere.getLowestDistrict(bot));
+        assertEquals(Optional.empty(),bot.getLowestDistrict());
     }
     @Test
     void getSortedPlayersByScoreTest(){
@@ -66,35 +67,29 @@ class WarlordTest {
         }
         ArrayList<Player> expectedOutput = new ArrayList<>();
         expectedOutput.add(secondPlayer);
+        expectedOutput.add(firstBuilder);
         expectedOutput.add(thirdPlayer);
         expectedOutput.add(fourthPlayer);
 
-        assertEquals(expectedOutput, Condottiere.getSortedPlayersByScore(game,firstBuilder));
+        assertEquals(expectedOutput, game.getSortedPlayersByScore());
     }
     @Test
     void WarlordGameCanDestroyFirstTest(){
         Player firstBuilder = new Bot("Player 1");
         Player secondPlayer = new Bot("Player 2");
-        Player thirdPlayer = new Bot("Player 3");
-        Player fourthPlayer = new Bot("Player 4");
         Game game = new Game();
-        game.setPlayers(firstBuilder, secondPlayer, thirdPlayer, fourthPlayer);
+        game.setPlayers(firstBuilder, secondPlayer);
         firstBuilder.setGold(5);
         firstBuilder.setGameCharacter(condottiere);
-        for (int i = 0; i < 8; i++) { //builds 8
-            firstBuilder.getDistrictsBuilt().add(new District("test", 4, DistrictColor.marchand));
-            secondPlayer.getDistrictsBuilt().add(new District("test", 5, DistrictColor.marchand));
-            thirdPlayer.getDistrictsBuilt().add(new District("test", 2, DistrictColor.marchand));
-            fourthPlayer.getDistrictsBuilt().add(new District("test", 1, DistrictColor.marchand));
-        }
 
-        assertEquals(8,secondPlayer.getDistrictsBuilt().size());
-        firstBuilder.getGameCharacter().specialEffect(firstBuilder,game);
+        District distToDestroy = new District("test", 5, DistrictColor.marchand);
+        secondPlayer.getDistrictsBuilt().add(distToDestroy);
+
+        assertEquals(1,secondPlayer.getDistrictsBuilt().size());
+        firstBuilder.getGameCharacter().specialEffect(firstBuilder,game,secondPlayer,distToDestroy);
         assertEquals(1,firstBuilder.getGold());
-        assertEquals(7,secondPlayer.getDistrictsBuilt().size());
+        assertEquals(0,secondPlayer.getDistrictsBuilt().size());
     }
-
-
 
 
 }

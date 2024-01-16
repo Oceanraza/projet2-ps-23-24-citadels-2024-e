@@ -11,7 +11,7 @@ public class Eveque extends GameCharacter {
     }
 
     @Override
-    public void specialEffect(Player player, Game game) {
+    public void specialEffect(Player player, Game game,Object... OptionalArgs) {
         //System.out.println("L'Eveque n'a pas de compétences programmée");
     }
 }
