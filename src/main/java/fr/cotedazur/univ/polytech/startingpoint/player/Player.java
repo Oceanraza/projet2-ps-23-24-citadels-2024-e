@@ -129,14 +129,18 @@ public abstract class Player {
         ArrayList<DistrictColor> districtColors = new ArrayList<>();
         for (District district : playerCity.getDistrictsBuilt()) {
             tempScore += district.getPrice();
+            tempScore += district.getBonusPoints();
             districtColors.add(district.getColor());
         }
         if (districtColors.size() == DistrictColor.values().length) { // If the player has built all the district
             // colors
             tempScore += 3;
         }
-        setScore(tempScore); // Initialize the player's score
         return tempScore;
+    }
+
+    public void calculateAndSetScore() {
+        this.setScore(this.calculateScore());
     }
 
     @Override

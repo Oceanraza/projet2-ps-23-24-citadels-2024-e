@@ -35,7 +35,7 @@ public class Main {
     }
     public static List<Player> calculateScores(List<Player> players, Player firstBuilder) {
         for (Player player : players) {
-            player.calculateScore();
+            player.calculateAndSetScore();
             if (player == firstBuilder) { // If the player was the first to build his 8 districts
                 player.setScore(player.getScore()+4);
             } else if (isFinished(player)) { // If the others players have finished building his 8 districts too
