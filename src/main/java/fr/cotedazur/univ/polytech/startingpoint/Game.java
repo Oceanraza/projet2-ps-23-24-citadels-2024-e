@@ -4,6 +4,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 import fr.cotedazur.univ.polytech.startingpoint.character.*;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
+import fr.cotedazur.univ.polytech.startingpoint.city.DistrictColor;
 import fr.cotedazur.univ.polytech.startingpoint.player.*;
 
 

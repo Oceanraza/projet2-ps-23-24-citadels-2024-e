@@ -1,8 +1,8 @@
 package fr.cotedazur.univ.polytech.startingpoint.player;
 
-import fr.cotedazur.univ.polytech.startingpoint.DistrictColor;
+import fr.cotedazur.univ.polytech.startingpoint.city.DistrictColor;
 import fr.cotedazur.univ.polytech.startingpoint.Game;
-import fr.cotedazur.univ.polytech.startingpoint.GameCharacter;
+import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacter;
 import fr.cotedazur.univ.polytech.startingpoint.city.City;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
 

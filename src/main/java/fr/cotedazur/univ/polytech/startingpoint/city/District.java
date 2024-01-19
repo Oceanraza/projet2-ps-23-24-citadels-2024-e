@@ -1,7 +1,5 @@
 package fr.cotedazur.univ.polytech.startingpoint.city;
 
-import fr.cotedazur.univ.polytech.startingpoint.DistrictColor;
-
 import java.util.Objects;
 
 public class District {

@@ -3,7 +3,7 @@ package fr.cotedazur.univ.polytech.startingpoint.player;
 import java.util.*;
 
 import fr.cotedazur.univ.polytech.startingpoint.ActionManager;
-import fr.cotedazur.univ.polytech.startingpoint.GameCharacter;
+import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacter;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.Game;
 import fr.cotedazur.univ.polytech.startingpoint.character.King;
