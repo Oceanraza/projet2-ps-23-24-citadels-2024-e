@@ -7,6 +7,7 @@ import fr.cotedazur.univ.polytech.startingpoint.player.Bot;
 import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Comparator;
 public class Main {
@@ -55,7 +56,7 @@ public class Main {
         System.out.println(winner.getName() + " gagne la partie avec " + winner.getScore() + " points !");
     }
 
-    public static void main(String... args) {
+    public static void main(String... args){
         Game newGame = new Game();
         // System.out.println(newGame);
 

@@ -9,6 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.PrintStream;
 import java.util.Arrays;
 import java.util.List;
@@ -37,7 +38,7 @@ class MainTest {
     }
 
     @Test
-    void testRunningOrder() {
+    void testRunningOrder(){
         Player firstPlayer = new Bot("Player 1");
         Player secondPlayer = new Bot("Player 2");
         Player thirdPlayer = new Bot("Player 3");
@@ -65,7 +66,7 @@ class MainTest {
         assertEquals(fourthPlayer.getName(), runningOrder.get(3).getName());
     }
     @Test
-    void testRunningOrderInTwoRounds() {
+    void testRunningOrderInTwoRounds(){
         Player firstPlayer = new Bot("Player 1");
         Player secondPlayer = new Bot("Player 2");
         Player thirdPlayer = new Bot("Player 3");

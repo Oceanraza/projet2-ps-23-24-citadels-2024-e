@@ -1,0 +1,168 @@
+{
+  "Game": {
+    "Districts": [
+      {
+        "name": "Temple",
+        "price": 1,
+        "color": "religieux",
+        "number": 3
+      },
+      {
+        "name": "Eglise",
+        "price": 2,
+        "color": "religieux",
+        "number": 4
+      },
+      {
+        "name": "Monastere",
+        "price": 3,
+        "color": "religieux",
+        "number": 3
+      },
+      {
+        "name": "Cathedrale",
+        "price": 5,
+        "color": "religieux",
+        "number": 2
+      },
+      {
+        "name": "Manoir",
+        "price": 3,
+        "color": "noble",
+        "number": 5
+      },
+      {
+        "name": "Chateau",
+        "price": 4,
+        "color": "noble",
+        "number": 4
+      },
+      {
+        "name": "Palais",
+        "price": 5,
+        "color": "noble",
+        "number": 2
+      },
+      {
+        "name": "Taverne",
+        "price": 1,
+        "color": "marchand",
+        "number": 5
+      },
+      {
+        "name": "Echoppe",
+        "price": 2,
+        "color": "marchand",
+        "number": 3
+      },
+      {
+        "name": "Marche",
+        "price": 2,
+        "color": "marchand",
+        "number": 4
+      },
+      {
+        "name": "Comptoir",
+        "price": 3,
+        "color": "marchand",
+        "number": 3
+      },
+      {
+        "name": "Port",
+        "price": 4,
+        "color": "marchand",
+        "number": 3
+      },
+      {
+        "name": "Hotel de ville",
+        "price": 5,
+        "color": "marchand",
+        "number": 2
+      },
+      {
+        "name": "Tour de guet",
+        "price": 1,
+        "color": "militaire",
+        "number": 3
+      },
+      {
+        "name": "Prison",
+        "price": 2,
+        "color": "militaire",
+        "number": 3
+      },
+      {
+        "name": "Caserne",
+        "price": 3,
+        "color": "militaire",
+        "number": 3
+      },
+      {
+        "name": "Forteresse",
+        "price": 5,
+        "color": "militaire",
+        "number": 2
+      },
+      {
+        "name": "Cour des miracles",
+        "price": 2,
+        "color": "special",
+        "number": 1
+      },
+      {
+        "name": "Donjon",
+        "price": 3,
+        "color": "special",
+        "number": 2
+      },
+      {
+        "name": "Laboratoire",
+        "price": 5,
+        "color": "special",
+        "number": 1
+      },
+      {
+        "name": "Manufacture",
+        "price": 5,
+        "color": "special",
+        "number": 1
+      },
+      {
+        "name": "Observatoire",
+        "price": 5,
+        "color": "special",
+        "number": 1
+      },
+      {
+        "name": "Cimetiere",
+        "price": 5,
+        "color": "special",
+        "number": 1
+      },
+      {
+        "name": "Bibliotheque",
+        "price": 6,
+        "color": "special",
+        "number": 1
+      },
+      {
+        "name": "Ecole de magie",
+        "price": 6,
+        "color": "special",
+        "number": 1
+      },
+      {
+        "name": "Universite",
+        "price": 6,
+        "color": "special",
+        "number": 1
+      },
+      {
+        "name": "Dracoport",
+        "price": 6,
+        "color": "special",
+        "number": 1
+      }
+    ]
+  }
+}

@@ -2,10 +2,14 @@ package fr.cotedazur.univ.polytech.startingpoint;
 
 import java.util.*;
 import java.util.stream.Collectors;
+
 import fr.cotedazur.univ.polytech.startingpoint.character.*;
+
+
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
-import fr.cotedazur.univ.polytech.startingpoint.city.DistrictColor;
 import fr.cotedazur.univ.polytech.startingpoint.player.*;
+import com.fasterxml.jackson.databind.JsonNode;
+import java.io.IOException;
 
 public class Game {
     private ArrayList<District> gameDeck;
@@ -49,7 +53,7 @@ public class Game {
         availableChars.remove(cha);
     }
 
-    public Game() {
+    public Game(){
         init();
     }
 
@@ -58,39 +62,14 @@ public class Game {
         allCharacters = new HashMap<>();
         availableChars = new ArrayList<>();
 
-        // Adding religieux districts
-        addDistrictsInGameDeck(new District("Temple", 1, DistrictColor.religieux), 3);
-        addDistrictsInGameDeck(new District("Eglise", 2, DistrictColor.religieux), 4);
-        addDistrictsInGameDeck(new District("Monastere", 3, DistrictColor.religieux), 3);
-        addDistrictsInGameDeck(new District("Cathedrale", 5, DistrictColor.religieux), 2);
-
-        addDistrictsInGameDeck(new District("Manoir", 3, DistrictColor.noble), 5);
-        addDistrictsInGameDeck(new District("Chateau", 4, DistrictColor.noble), 4);
-        addDistrictsInGameDeck(new District("Palais", 5, DistrictColor.noble), 2);
-
-        addDistrictsInGameDeck(new District("Taverne", 1, DistrictColor.marchand), 5);
-        addDistrictsInGameDeck(new District("Echoppe", 2, DistrictColor.marchand), 3);
-        addDistrictsInGameDeck(new District("Marche", 2, DistrictColor.marchand), 4);
-        addDistrictsInGameDeck(new District("Comptoir", 3, DistrictColor.marchand), 3);
-        addDistrictsInGameDeck(new District("Port", 4, DistrictColor.marchand), 3);
-        addDistrictsInGameDeck(new District("Hotel de ville", 5, DistrictColor.marchand), 2);
-
-        addDistrictsInGameDeck(new District("Tour de guet", 1, DistrictColor.militaire), 3);
-        addDistrictsInGameDeck(new District("Prison", 2, DistrictColor.militaire), 3);
-        addDistrictsInGameDeck(new District("Caserne", 3, DistrictColor.militaire), 3);
-        addDistrictsInGameDeck(new District("Forteresse", 5, DistrictColor.militaire), 2);
-
-        addDistrictsInGameDeck(new District("Cour des miracles", 2, DistrictColor.special), 1);
-        addDistrictsInGameDeck(new District("Donjon", 3, DistrictColor.special), 2);
-        addDistrictsInGameDeck(new District("Laboratoire", 5, DistrictColor.special), 1);
-        addDistrictsInGameDeck(new District("Manufacture", 5, DistrictColor.special), 1);
-        addDistrictsInGameDeck(new District("Observatoire", 5, DistrictColor.special), 1);
-        addDistrictsInGameDeck(new District("Cimetiere", 5, DistrictColor.special), 1);
-        addDistrictsInGameDeck(new District("Bibliotheque", 6, DistrictColor.special), 1);
-        addDistrictsInGameDeck(new District("Ecole de magie", 6, DistrictColor.special), 1);
-        addDistrictsInGameDeck(new District("Universite", 6, DistrictColor.special, 2), 1);
-        addDistrictsInGameDeck(new District("Dracoport", 6, DistrictColor.special, 2), 1);
-
+            // Specify the path to your JSON file
+        try {
+            JsonNode tempNode = Utils.parseJsonFromFile
+                    ("src/main/resources/init_database.json");
+            gameDeck = Utils.convertJsonNodeToDistrictList(tempNode.path("Game").path("Districts"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         // Create a crown
         crown = new Crown();
 

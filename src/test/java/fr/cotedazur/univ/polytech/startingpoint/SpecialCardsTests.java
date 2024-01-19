@@ -11,6 +11,10 @@ import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+
+import java.io.IOException;
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class SpecialCardsTests {
@@ -21,7 +25,7 @@ class SpecialCardsTests {
     Game game;
 
     @BeforeEach
-    void setUp() {
+    void setUp(){
         king = new King();
         bishop = new Bishop();
         warlord = new Warlord();
