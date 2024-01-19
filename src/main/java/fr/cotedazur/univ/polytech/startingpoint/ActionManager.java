@@ -1,6 +1,7 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
 
+import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.city.DistrictColor;
 import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 
@@ -12,18 +13,31 @@ public class ActionManager {
     }
     public static int collectGold(Player player) {
         int addenGold = 0;
+        boolean hasMagicSchool = player.getCity().containsDistrict("Ecole de magie");
         switch (player.getCharacterName()) {
             case ("Roi"):
-                addenGold = player.getNumberOfDistrictsByColor().get(DistrictColor.noble);
+                if (hasMagicSchool) {
+                    addenGold += 1;
+                }
+                addenGold += player.getNumberOfDistrictsByColor().get(DistrictColor.noble);
                 return printGold(player, addenGold);
             case ("Eveque"):
-                addenGold = player.getNumberOfDistrictsByColor().get(DistrictColor.religieux);
+                if (hasMagicSchool) {
+                    addenGold += 1;
+                }
+                addenGold += player.getNumberOfDistrictsByColor().get(DistrictColor.religieux);
                 return printGold(player, addenGold);
             case ("Condottiere"):
-                addenGold = player.getNumberOfDistrictsByColor().get(DistrictColor.militaire);
+                if (hasMagicSchool) {
+                    addenGold += 1;
+                }
+                addenGold += player.getNumberOfDistrictsByColor().get(DistrictColor.militaire);
                 return printGold(player, addenGold);
             case ("Marchand"):
-                addenGold = player.getNumberOfDistrictsByColor().get(DistrictColor.marchand);
+                if (hasMagicSchool) {
+                    addenGold += 1;
+                }
+                addenGold += player.getNumberOfDistrictsByColor().get(DistrictColor.marchand);
                 return printGold(player, addenGold);
             default:
                 return 0;

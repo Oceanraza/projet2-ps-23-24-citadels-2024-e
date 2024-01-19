@@ -34,6 +34,15 @@ public class City {
         } else throw new DistrictAlreadyBuiltException("This district is already built");
     }
 
+    public boolean containsDistrict(String districtName) {
+        for(District d: districtsBuilt) {
+            if(d.getName().equals(districtName)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     @Override
     public String toString() {
         StringBuilder city = new StringBuilder();
