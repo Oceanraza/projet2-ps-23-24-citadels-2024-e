@@ -40,10 +40,11 @@ public class Utils {
             int price = districtNode.path("price").asInt();
             String color = districtNode.path("color").asText();
             int number = districtNode.path("number").asInt();
+            int bonusPoints = districtNode.path("bonusPoints").asInt();
 
             // Create a District object and add it to the list
             for (int i = 0; i < number; i++){
-                District district = new District(name, price, DistrictColor.valueOf(color));
+                District district = new District(name, price, DistrictColor.valueOf(color),bonusPoints);
                 districtList.add(district);
             }
         }
