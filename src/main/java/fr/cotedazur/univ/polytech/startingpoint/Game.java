@@ -7,7 +7,6 @@ import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.city.DistrictColor;
 import fr.cotedazur.univ.polytech.startingpoint.player.*;
 
-
 public class Game {
     private ArrayList<District> gameDeck;
     private Crown crown;
@@ -89,8 +88,8 @@ public class Game {
         addDistrictsInGameDeck(new District("Cimetiere", 5, DistrictColor.special), 1);
         addDistrictsInGameDeck(new District("Bibliotheque", 6, DistrictColor.special), 1);
         addDistrictsInGameDeck(new District("Ecole de magie", 6, DistrictColor.special), 1);
-        addDistrictsInGameDeck(new District("Universite", 6, DistrictColor.special), 1);
-        addDistrictsInGameDeck(new District("Dracoport", 6, DistrictColor.special), 1);
+        addDistrictsInGameDeck(new District("Universite", 6, DistrictColor.special, 2), 1);
+        addDistrictsInGameDeck(new District("Dracoport", 6, DistrictColor.special, 2), 1);
 
         // Create a crown
         crown = new Crown();
@@ -159,7 +158,7 @@ public class Game {
         List<Player> sortedPlayersByScore = new ArrayList<>();
         for (Player p : getPlayers()){
             if (!p.getGameCharacter().getName().equals("Eveque")){
-                p.calculateScore();
+                p.calculateAndSetScore();
                 sortedPlayersByScore.add(p);
             }
         }
