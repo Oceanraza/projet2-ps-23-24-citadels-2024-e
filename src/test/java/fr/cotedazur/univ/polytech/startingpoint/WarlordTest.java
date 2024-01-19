@@ -20,7 +20,7 @@ class WarlordTest {
     Game game;
 
     @BeforeEach
-    void setUp() {
+    void setUp(){
         king = new King();
         bishop = new Bishop();
         warlord = new Warlord();

@@ -10,6 +10,7 @@ import fr.cotedazur.univ.polytech.startingpoint.player.algorithms.EinsteinAlgo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+
 class ActionManagerTest {
     King king;
     Bishop bishop;
@@ -17,7 +18,7 @@ class ActionManagerTest {
     Game game;
 
     @BeforeEach
-    void setUp() {
+    void setUp(){
         king = new King();
         bishop = new Bishop();
         bot = new Bot("Bot") {

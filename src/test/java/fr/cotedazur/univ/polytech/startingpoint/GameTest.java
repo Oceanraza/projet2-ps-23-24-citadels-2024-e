@@ -30,6 +30,7 @@ class GameTest {
     @Test
     void testDrawCard() {
         List<District> normalGameDeck = copyOf(game.getGameDeck());
+        assertEquals(normalGameDeck.size(),65);
         District cardDrawn = game.drawCard();
         int cardCountBeforeDraw = 0;
         for(District district: normalGameDeck) {
