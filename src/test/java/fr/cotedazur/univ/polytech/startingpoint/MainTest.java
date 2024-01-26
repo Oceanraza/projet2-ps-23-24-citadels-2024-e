@@ -26,16 +26,6 @@ class MainTest {
     }
 
     @Test
-    void testIsFinished() {
-        assertFalse(Main.isFinished(player));
-        for (int i = 0; i < 8; i++) {
-            String name = "District" + i;
-            player.getCity().addDistrict(new District(name, 0, DistrictColor.marchand));
-        }
-        assertTrue(Main.isFinished(player));
-    }
-
-    @Test
     void testRunningOrder() {
         Player firstPlayer = new Bot("Player 1");
         Player secondPlayer = new Bot("Player 2");
@@ -122,7 +112,7 @@ class MainTest {
         secondPlayer.getCity().addDistrict(new District("noble", 1, DistrictColor.noble));
         secondPlayer.getCity().addDistrict(new District("special", 1, DistrictColor.special));
 
-        List<Player> scoredPlayers = calculateScores(players, firstBuilder);
+        List<Player> scoredPlayers = calculateScores(players, firstBuilder, new GameState());
 
         assertEquals(34, scoredPlayers.get(0).getScore());
         assertEquals(10, scoredPlayers.get(1).getScore());
@@ -134,7 +124,7 @@ class MainTest {
         secondPlayer.setGameCharacter(king);
         firstBuilder.setScore(0);
         secondPlayer.setScore(0);
-        assertEquals(calculateScores(players, firstBuilder).get(0), firstBuilder);
+        assertEquals(calculateScores(players, firstBuilder, new GameState()).get(0), firstBuilder);
     }
     @Test
     void testAnnounceWinner() { //We can test with two players since adding more players doesn't change the ending message
@@ -151,7 +141,7 @@ class MainTest {
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
 
-        Main.announceWinner(players, firstBuilder);
+        Main.announceWinner(players, firstBuilder, new GameState());
 
         String expectedOutput = "Player 1 : 34 points"+ LINE_SEPARATOR+ "Player 2 : 32 points"+ LINE_SEPARATOR+ "Player 1 gagne la partie avec 34 points !"+ LINE_SEPARATOR;
         assertEquals(expectedOutput, outContent.toString());
@@ -179,7 +169,7 @@ class MainTest {
         fourthPlayer.setGameCharacter(new Merchant());
 
         firstBuilder.setScore(firstBuilder.getScore()-2); //il passe a 32 points, égalité avec les autres
-        calculateScores(players,firstBuilder);
+        calculateScores(players,firstBuilder, new GameState());
         for (Player p : players) {
             System.out.println(p.getName() + ", score : " + p.getScore());
         }

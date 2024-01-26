@@ -12,17 +12,6 @@ import java.util.Comparator;
 public class Main {
     private static final int START_CARDS_NUMBER = 4;
 
-    // If a player has 8 districts built, he wins
-    public static boolean isGameFinished(List<Player> players) {
-        for (Player p: players){
-            if (isFinished(p)){return true;}
-        }
-        return false;
-    }
-
-    public static boolean isFinished(Player player) {
-        return (player.getCity().getDistrictsBuilt().size() >= 8);
-    }
     public static void sortPlayers(List<Player> players) {
         // Use a custom Comparator to compare Players based on their score and running order
         Comparator<Player> playerComparator = Comparator
@@ -33,12 +22,12 @@ public class Main {
         // Sort the players list using the custom comparator
         players.sort(playerComparator);
     }
-    public static List<Player> calculateScores(List<Player> players, Player firstBuilder) {
+    public static List<Player> calculateScores(List<Player> players, Player firstBuilder, GameState gameState) {
         for (Player player : players) {
             player.calculateScore();
             if (player == firstBuilder) { // If the player was the first to build his 8 districts
                 player.setScore(player.getScore()+4);
-            } else if (isFinished(player)) { // If the others players have finished building his 8 districts too
+            } else if (gameState.isFinished(player)) { // If the others players have finished building his 8 districts too
                 player.setScore(player.getScore()+2);
             }
         }
@@ -46,8 +35,8 @@ public class Main {
         return players;
     }
 
-    public static void announceWinner(List<Player> players, Player firstBuilder) {
-        List<Player> playersScores = calculateScores(players, firstBuilder);
+    public static void announceWinner(List<Player> players, Player firstBuilder, GameState gameState) {
+        List<Player> playersScores = calculateScores(players, firstBuilder, gameState);
         for (Player player : playersScores) {
             System.out.println(player.getName() + " : " + player.getScore() + " points");
         }
@@ -57,6 +46,7 @@ public class Main {
 
     public static void main(String... args) {
         Game newGame = new Game();
+        GameState gameState = new GameState();
         // System.out.println(newGame);
 
         // Adding players to the game
@@ -72,16 +62,15 @@ public class Main {
             }
         }
 
-        int turn = 1;
         Player firstBuilder = null;
-        while (!isGameFinished(players)) {
+        while (!gameState.isGameFinished(players)) {
             newGame.setAllCharsToNull();
             newGame.shuffleChars(4);
             Bot crownOwner = (Bot) newGame.getCrown().getOwner();
             // "\033[0;94m" : Shinning blue
             // "\033[0;34m" : Blue
             // "\033[0m" : Reset
-            System.out.println("\033[0;94m" + "\n\n----- Tour numero " + turn + " -----" + "\033[0m" + "\nLa couronne appartient à "
+            System.out.println("\033[0;94m" + "\n\n----- Tour numero " + gameState.getTurn() + " -----" + "\033[0m" + "\nLa couronne appartient à "
                     + (crownOwner != null ? crownOwner.getName() : "personne"));
 
             // Character selection phase
@@ -100,13 +89,13 @@ public class Main {
             for (Player player: runningOrder) {
                 System.out.println(player);
                 player.play(newGame);
-                if (isFinished(player)) {
+                if (gameState.isFinished(player)) {
                     firstBuilder = player;
                 }
             }
 
-            turn++;
+            gameState.nextTurn();
         }
-        announceWinner(players, firstBuilder);
+        announceWinner(players, firstBuilder, gameState);
     }
 }
