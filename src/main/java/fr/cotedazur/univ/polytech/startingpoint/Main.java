@@ -11,7 +11,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Comparator;
 public class Main {
-    private static final int START_CARDS_NUMBER = 4;
 
     // If a player has 8 districts built, he wins
     public static boolean isGameFinished(List<Player> players) {
@@ -67,11 +66,8 @@ public class Main {
         List<Player> players = newGame.getPlayers();
 
         //Gives the startingCards to all the players.
-        for (Player p : players){
-            for (int i = 0; i < START_CARDS_NUMBER; i++) {
-                p.addDistrictInHand(newGame.drawCard());
-            }
-        }
+        newGame.startCardGame();
+
 
         int turn = 1;
         Player firstBuilder = null;

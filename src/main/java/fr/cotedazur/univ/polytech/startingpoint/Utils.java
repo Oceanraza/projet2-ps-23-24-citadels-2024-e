@@ -2,6 +2,7 @@ package fr.cotedazur.univ.polytech.startingpoint;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import fr.cotedazur.univ.polytech.startingpoint.board.Deck;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.city.DistrictColor;
 import fr.cotedazur.univ.polytech.startingpoint.player.Player;
@@ -30,9 +31,10 @@ public class Utils {
         // Read JSON from file into a JsonNode
         return objectMapper.readTree(new File(filePath));
     }
-    public static ArrayList<District> convertJsonNodeToDistrictList(JsonNode districtsNode) {
 
-        ArrayList<District> districtList = new ArrayList<>();
+    public static Deck convertJsonNodeToDistrictList(JsonNode districtsNode) {
+
+        Deck districtList = new Deck();
 
         // Iterate through each district in the array
         for (JsonNode districtNode : districtsNode) {
@@ -45,7 +47,7 @@ public class Utils {
             // Create a District object and add it to the list
             for (int i = 0; i < number; i++){
                 District district = new District(name, price, DistrictColor.valueOf(color),bonusPoints);
-                districtList.add(district);
+                districtList.addDistrict(district);
             }
         }
         return districtList;
