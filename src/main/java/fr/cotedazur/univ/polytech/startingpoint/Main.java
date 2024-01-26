@@ -6,8 +6,6 @@ import fr.cotedazur.univ.polytech.startingpoint.player.algorithms.RandomAlgo;
 import fr.cotedazur.univ.polytech.startingpoint.player.Bot;
 import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 
-
-import java.io.IOException;
 import java.util.List;
 import java.util.Comparator;
 public class Main {
