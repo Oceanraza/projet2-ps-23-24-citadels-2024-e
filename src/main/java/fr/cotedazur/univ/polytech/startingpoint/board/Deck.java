@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class Deck {
-    private static final int CARD_NUMBER_DEFAULT = 4;
     private ArrayList<District> cards;
     private ArrayList<District> discardPile;
 
@@ -32,7 +31,9 @@ public class Deck {
 
 
     public void addDistrict(District district) {
-        this.cards.add(district);
+        if (district != null) {
+            this.cards.add(district);
+        }
     }
 
     public void shuffle() {
@@ -61,4 +62,7 @@ public class Deck {
     }
 
 
+    public ArrayList<District> getCards() {
+        return this.cards;
+    }
 }
