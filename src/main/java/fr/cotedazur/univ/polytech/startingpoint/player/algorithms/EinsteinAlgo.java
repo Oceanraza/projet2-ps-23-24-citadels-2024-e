@@ -16,7 +16,7 @@ public class EinsteinAlgo extends BaseAlgo {
         super();
     }
 
-    public void startOfTurn(Game game) { //Always draws if needed
+    public void startOfTurn(Game game) { //Alwayswl draws if needed
         if (bot.getDistrictsInHand().isEmpty() || bot.districtsInHandAreBuilt()) {
             District drawnDistrict = game.drawCard();
             System.out.println(bot.getName() + " pioche le " + drawnDistrict);
@@ -34,21 +34,31 @@ public class EinsteinAlgo extends BaseAlgo {
             case("Roi"):
                 kingAlgorithm(game);
                 break;
+            case("Magicien"):
+                magicianAlgorithm(game);
+                break;
         }
     }
     public void chooseCharacterAlgorithm(Game game) { //always chooses the char that gives him the most gold, or king if can build 8th quarter next turn
         List<GameCharacter> availableChars = game.getAvailableChars();
         // If the bot can build its 8th quarter next turn, it will choose the king (if possible)
-        if (!(bot.getDistrictsInHand().isEmpty()) && (bot.getCity().getDistrictsBuilt().size() >= 7) && (bot.canBuildDistrictThisTurn())
+        if ((bot.getCity().getDistrictsBuilt().size() >= 7) && (bot.canBuildDistrictThisTurn())
                 && (bot.isCharInList(availableChars, "Roi"))) {
             bot.chooseChar(game, "Roi");
+        }
+        //If the bot's hand is empty, it chooses the magician to get someone's else's hand
+        else if ((bot.getDistrictsInHand().isEmpty()&&(bot.isCharInList(availableChars,"Magicien")))){
+            bot.chooseChar(game,"Magicien");
         }
         // If the bot doesn't have an immediate way to win, it will just pick the character who gives out the most gold for him
         else {
             GameCharacter chosenChar = availableChars.get(0);
             for (GameCharacter cha : availableChars) {
-                if (bot.getNumberOfDistrictsByColor().get(cha.getColor()) > bot.getNumberOfDistrictsByColor().get(chosenChar.getColor())) {
-                    chosenChar = cha;
+                    if (cha.getColor() != null){
+                        if (bot.getNumberOfDistrictsByColor().get(cha.getColor()) > bot.getNumberOfDistrictsByColor().get(chosenChar.getColor())) {
+                            chosenChar = cha;
+                    }
+
                 }
             }
             bot.chooseChar(game, chosenChar.getName());
@@ -71,6 +81,19 @@ public class EinsteinAlgo extends BaseAlgo {
             }
             }
         }
+    }
+    //note that this algorithm doesn't use the second part of the magician, finding it useless compared to other cards
+    public void magicianAlgorithm (Game game){
+        List<Player> playerList = game.getSortedPlayersByScoreForWarlord();
+        playerList.remove(bot);
+        Player chosenPlayer = bot;
+        for (Player p : playerList){
+            if (p.getDistrictsInHand().size() > chosenPlayer.getDistrictsInHand().size()){
+                chosenPlayer = p; //it takes the player's hand with the most cards
+            }
+        }
+        boolean switching = true;
+        bot.getGameCharacter().specialEffect(bot,game,switching,chosenPlayer);
     }
     public void kingAlgorithm(Game game){bot.getGameCharacter().specialEffect(bot,game);}
 
