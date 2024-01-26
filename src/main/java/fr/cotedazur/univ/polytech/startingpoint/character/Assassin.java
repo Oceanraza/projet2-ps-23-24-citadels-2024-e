@@ -11,6 +11,7 @@ public class Assassin extends GameCharacter {
 
     @Override
     public void specialEffect(Player player, Game game, Object... optionalArgs) {
-        GameCharacter targetedCharacter = (GameCharacter) optionalArgs[0];
+        String targetedCharacter = (String) optionalArgs[0];
+        game.killCharacter(player, targetedCharacter);
     }
 }

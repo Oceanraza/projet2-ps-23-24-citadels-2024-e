@@ -1,6 +1,7 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
+import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacter;
 import fr.cotedazur.univ.polytech.startingpoint.player.algorithms.EinsteinAlgo;
 import fr.cotedazur.univ.polytech.startingpoint.player.algorithms.RandomAlgo;
 
@@ -23,6 +24,7 @@ public class Main {
         // Sort the players list using the custom comparator
         players.sort(playerComparator);
     }
+
     public static List<Player> calculateScores(List<Player> players, Player firstBuilder, GameState gameState) {
         for (Player player : players) {
             player.calculateAndSetScore();
@@ -90,6 +92,9 @@ public class Main {
             // Character selection phase
             System.out.println("\033[0;34m" + "\n[ Phase 1 ] Choix des personnages" + "\033[0m");
 
+            // Reset character state (killed characters etc...)
+            newGame.resetCharsState();
+
             if (crownOwner != null){
                 System.out.println(crownOwner);
                 crownOwner.botAlgo.chooseCharacterAlgorithm(newGame);
@@ -101,10 +106,19 @@ public class Main {
             List<Player> runningOrder = newGame.setRunningOrder();
 
             for (Player player: runningOrder) {
-                System.out.println(player);
-                player.play(newGame, gameState);
-                if (gameState.isFinished(player)) {
-                    firstBuilder = player;
+                GameCharacter cha = player.getGameCharacter();
+                // If the character is alive
+                if (cha.getIsAlive()) {
+                    System.out.println(player);
+                    player.play(newGame, gameState);
+                    if (gameState.isFinished(player)) {
+                        firstBuilder = player;
+                    }
+                }
+                // If the player has been killed, he cannot play
+                else {
+                    System.out.println("Le " + cha.getName() + " a été tué par " + cha.getAttacker() + "\n");
+                    System.out.println(player.getName() + "ne pourra pas jouer ce tour !\n");
                 }
             }
 

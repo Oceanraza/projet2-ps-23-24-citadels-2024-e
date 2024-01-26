@@ -19,8 +19,8 @@ public class Game {
     private List<Player> players;
     private Map<String, GameCharacter> allCharacters;
     private ArrayList<GameCharacter> availableChars;
-    // Getter
 
+    // Getter
     public Crown getCrown() {
         return crown;
     }
@@ -135,10 +135,19 @@ public class Game {
     }
 
     public void setAllCharsToNull() {
-        for (Player  p: players){
+        for (Player p: players) {
             p.setGameCharacter(null);
         }
     }
+
+    // Removes attacks on characters
+    public void resetCharsState() {
+        for (GameCharacter cha: availableChars) {
+            cha.setIsAlive(true);
+            cha.setAttacker(null);
+        }
+    }
+
     public List<Player> getSortedPlayersByScoreForWarlord(){
         List<Player> sortedPlayersByScore = new ArrayList<>();
         for (Player p : getPlayers()){
@@ -165,4 +174,16 @@ public class Game {
         return deck;
     }
 
+
+    public void killCharacter(Player assassin, String killedCharacter) {
+        GameCharacter targetCharacter;
+        for (Player target: getPlayers()) {
+            targetCharacter = target.getGameCharacter();
+
+            if (targetCharacter.getName().equals(killedCharacter)) {
+                targetCharacter.setIsAlive(false);
+                targetCharacter.setAttacker(assassin);
+            }
+        }
+    }
 }
