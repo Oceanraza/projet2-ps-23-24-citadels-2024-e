@@ -15,12 +15,14 @@ class ActionManagerTest {
     King king;
     Bishop bishop;
     Bot bot;
+    Warlord warlord;
     Game game;
 
     @BeforeEach
     void setUp(){
         king = new King();
         bishop = new Bishop();
+        warlord = new Warlord();
         bot = new Bot("Bot") {
         };
         game = new Game();
@@ -89,6 +91,7 @@ class ActionManagerTest {
         bot.buildDistrict(district1);
         bot.buildDistrict(district2);
         bot.buildDistrict(district3);
+        bot.addDistrictInHand(district1);
         bot.botAlgo.chooseCharacterAlgorithm(game);
         assertEquals("Eveque", bot.getCharacterName());
         assertEquals(2,ActionManager.collectGold(bot));
@@ -105,6 +108,7 @@ class ActionManagerTest {
         bot.buildDistrict(district1);
         bot.buildDistrict(district2);
         bot.buildDistrict(district3);
+        bot.addDistrictInHand(district1);
         bot.botAlgo.chooseCharacterAlgorithm(game);
         assertEquals("Marchand", bot.getCharacterName());
         assertEquals(2,ActionManager.collectGold(bot));
@@ -118,10 +122,12 @@ class ActionManagerTest {
         District district1 = new District("Quartier 1", 0, DistrictColor.noble);
         District district2 = new District("Quartier 2", 0, DistrictColor.militaire);
         District district3 = new District("Quartier 3", 0, DistrictColor.militaire);
+        bot.addDistrictInHand(district1);
+        bot.addDistrictInHand(district2);
         bot.buildDistrict(district1);
         bot.buildDistrict(district2);
         bot.buildDistrict(district3);
-        bot.botAlgo.chooseCharacterAlgorithm(game);
+        bot.setGameCharacter(warlord);
         assertEquals("Condottiere", bot.getCharacterName());
         assertEquals(2,ActionManager.collectGold(bot));
     }
@@ -137,6 +143,7 @@ class ActionManagerTest {
         bot.buildDistrict(district1);
         bot.buildDistrict(district2);
         bot.buildDistrict(district3);
+        bot.addDistrictInHand(district1);
         bot.botAlgo.chooseCharacterAlgorithm(game);
         assertEquals("Roi", bot.getCharacterName());
         assertEquals(2,ActionManager.collectGold(bot));
