@@ -77,6 +77,7 @@ public class Game {
         allCharacters.put("Marchand", new Merchant());
         allCharacters.put("Eveque", new Bishop());
         allCharacters.put("Condottiere", new Warlord());
+        allCharacters.put("Assassin", new Assassin());
         allCharacters.put("Magicien", new Magician());
 
         // Give the cards to the players
@@ -107,6 +108,7 @@ public class Game {
         availableChars.add(allCharacters.get("Marchand"));
         availableChars.add(allCharacters.get("Eveque"));
         availableChars.add(allCharacters.get("Condottiere"));
+        availableChars.add(allCharacters.get("Assassin"));
         availableChars.add(allCharacters.get("Magicien"));
     }
 

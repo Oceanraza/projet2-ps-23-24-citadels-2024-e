@@ -38,9 +38,14 @@ public class EinsteinAlgo extends BaseAlgo {
                 break;
         }
     }
-    public void chooseCharacterAlgorithm(Game game) { //always chooses the char that gives him the most gold, or king if can build 8th quarter next turn
+    public void chooseCharacterAlgorithm(Game game) { // Always chooses the char that gives him the most gold, or king if can build 8th quarter next turn
         List<GameCharacter> availableChars = game.getAvailableChars();
+
         // If the bot can build its 8th quarter next turn, it will choose the king (if possible)
+        if (!(bot.getDistrictsInHand().isEmpty()) && (bot.getCity().getDistrictsBuilt().size() >= 7) && (bot.canBuildDistrictThisTurn())) {
+            if (bot.isCharInList(availableChars, "Assassin")) {
+                bot.chooseChar(game, "Assassin");
+            }
         if ((bot.getCity().getDistrictsBuilt().size() >= 7) && (bot.canBuildDistrictThisTurn())
                 && (bot.isCharInList(availableChars, "Roi"))) {
             bot.chooseChar(game, "Roi");
@@ -52,12 +57,17 @@ public class EinsteinAlgo extends BaseAlgo {
         // If the bot doesn't have an immediate way to win, it will just pick the character who gives out the most gold for him
         else {
             GameCharacter chosenChar = availableChars.get(0);
-            for (GameCharacter cha : availableChars) {
-                    if (cha.getColor() != null){
-                        if (bot.getNumberOfDistrictsByColor().get(cha.getColor()) > bot.getNumberOfDistrictsByColor().get(chosenChar.getColor())) {
-                            chosenChar = cha;
-                    }
+            int numberOfDistrictByColor;
+            int goldCollectedWithDistrictColor = 0;
 
+            for (GameCharacter cha : availableChars) {
+                // We only compare character that collects gold according to his districts
+                if (cha.getColor() != null) {
+                    numberOfDistrictByColor = bot.getNumberOfDistrictsByColor().get(cha.getColor());
+                    if (numberOfDistrictByColor > goldCollectedWithDistrictColor) {
+                        goldCollectedWithDistrictColor = numberOfDistrictByColor;
+                        chosenChar = cha;
+                    }
                 }
             }
             bot.chooseChar(game, chosenChar.getName());

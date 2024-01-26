@@ -11,8 +11,8 @@ public abstract class GameCharacter {
     protected int runningOrder;
     protected DistrictColor color;
 
-    private boolean isAlive;
-    private Player attacker;
+    private boolean isAlive = true;
+    private Player attacker = null;
 
     protected GameCharacter(String name, int runningOrder) {
         this.name = name;
