@@ -10,6 +10,10 @@ public abstract class GameCharacter {
     protected String name;
     protected int runningOrder;
     protected DistrictColor color;
+
+    private boolean isAlive;
+    private Player attacker;
+
     protected GameCharacter(String name, int runningOrder) {
         this.name = name;
         this.runningOrder = runningOrder;
@@ -20,11 +24,16 @@ public abstract class GameCharacter {
         this.runningOrder = runningOrder;
         this.color = color;
     }
-    public String getName() { return name; }
 
+    public String getName() { return name; }
     public int getRunningOrder() { return runningOrder; }
+    public DistrictColor getColor() { return color;}
+
+    public boolean getIsAlive() { return isAlive; }
+    public Player getAttacker() { return attacker; }
+
+    public void setIsAlive(boolean isAlive) { this.isAlive = isAlive; }
+    public void setAttacker(Player attacker) { this.attacker = attacker; }
 
     public abstract void specialEffect(Player player, Game game, Object... optionalArgs );
-
-    public DistrictColor getColor() {return color;}
 }
