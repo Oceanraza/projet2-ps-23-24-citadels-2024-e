@@ -2,12 +2,14 @@ package fr.cotedazur.univ.polytech.startingpoint;
 
 import fr.cotedazur.univ.polytech.startingpoint.character.*;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
+import fr.cotedazur.univ.polytech.startingpoint.city.DistrictColor;
 import fr.cotedazur.univ.polytech.startingpoint.player.Bot;
 import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.PrintStream;
 import java.util.Arrays;
 import java.util.List;
@@ -54,7 +56,7 @@ class MainTest {
         assertEquals(fourthPlayer.getName(), runningOrder.get(3).getName());
     }
     @Test
-    void testRunningOrderInTwoRounds() {
+    void testRunningOrderInTwoRounds(){
         Player firstPlayer = new Bot("Player 1");
         Player secondPlayer = new Bot("Player 2");
         Player thirdPlayer = new Bot("Player 3");

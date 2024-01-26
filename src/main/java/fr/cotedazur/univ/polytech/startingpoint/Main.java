@@ -6,7 +6,6 @@ import fr.cotedazur.univ.polytech.startingpoint.player.algorithms.RandomAlgo;
 import fr.cotedazur.univ.polytech.startingpoint.player.Bot;
 import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 
-
 import java.util.List;
 import java.util.Comparator;
 public class Main {
@@ -24,7 +23,7 @@ public class Main {
     }
     public static List<Player> calculateScores(List<Player> players, Player firstBuilder, GameState gameState) {
         for (Player player : players) {
-            player.calculateScore();
+            player.calculateAndSetScore();
             if (player == firstBuilder) { // If the player was the first to build his 8 districts
                 player.setScore(player.getScore()+4);
             } else if (gameState.isFinished(player)) { // If the others players have finished building his 8 districts too
@@ -44,7 +43,7 @@ public class Main {
         System.out.println(winner.getName() + " gagne la partie avec " + winner.getScore() + " points !");
     }
 
-    public static void main(String... args) {
+    public static void main(String... args){
         Game newGame = new Game();
         GameState gameState = new GameState();
         // System.out.println(newGame);

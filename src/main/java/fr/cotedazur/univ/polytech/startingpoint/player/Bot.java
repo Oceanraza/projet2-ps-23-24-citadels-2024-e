@@ -3,7 +3,7 @@ package fr.cotedazur.univ.polytech.startingpoint.player;
 import java.util.*;
 
 import fr.cotedazur.univ.polytech.startingpoint.ActionManager;
-import fr.cotedazur.univ.polytech.startingpoint.GameCharacter;
+import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacter;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.Game;
 import fr.cotedazur.univ.polytech.startingpoint.character.King;
@@ -15,8 +15,8 @@ public class Bot extends Player {
 
     public Bot(String name, BaseAlgo algo) {
         super(name);
-        algo.setPlayer(this);
         this.botAlgo = algo;
+        botAlgo.setPlayer(this);
     }
     public Bot(String name){ //for tests
         super(name);
@@ -63,9 +63,9 @@ public class Bot extends Player {
         ActionManager.applySpecialEffect(this, game);
         Collect gold
          */
-        addGold(ActionManager.collectGold(this));
         // The bot draws a card if it has no district in its hand.
         botAlgo.startOfTurn(game);
+        addGold(ActionManager.collectGold(this));
         botAlgo.charAlgorithmsManager(game);
         // The bot builds one district if it has enough money
         botAlgo.buildOrNot(game);

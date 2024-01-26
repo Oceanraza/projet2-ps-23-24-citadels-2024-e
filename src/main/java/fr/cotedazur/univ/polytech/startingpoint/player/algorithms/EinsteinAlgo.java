@@ -1,24 +1,19 @@
 package fr.cotedazur.univ.polytech.startingpoint.player.algorithms;
 
 import fr.cotedazur.univ.polytech.startingpoint.Game;
-import fr.cotedazur.univ.polytech.startingpoint.GameCharacter;
+import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacter;
+import fr.cotedazur.univ.polytech.startingpoint.character.King;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.player.Bot;
 import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 import fr.cotedazur.univ.polytech.startingpoint.Utils;
-import java.util.ArrayList;
+
 import java.util.List;
 
 public class EinsteinAlgo extends BaseAlgo {
     boolean lowestDistrictFound = false;
-    private Bot bot;
     public EinsteinAlgo(){
         super();
-    }
-    @Override
-    public void setPlayer(Bot player){
-        this.bot = player;
-        System.out.println("Le joueur " + player.getName() + " est si intelligent qu'il est comparable à Einstein !");
     }
 
     public void startOfTurn(Game game) { //Always draws if needed
@@ -35,6 +30,10 @@ public class EinsteinAlgo extends BaseAlgo {
         switch (bot.getCharacterName()){
             case("Condottiere"):
                 warlordAlgorithm(game);
+                break;
+            case("Roi"):
+                kingAlgorithm(game);
+                break;
         }
     }
     public void chooseCharacterAlgorithm(Game game) { //always chooses the char that gives him the most gold, or king if can build 8th quarter next turn
@@ -73,6 +72,7 @@ public class EinsteinAlgo extends BaseAlgo {
             }
         }
     }
+    public void kingAlgorithm(Game game){bot.getGameCharacter().specialEffect(bot,game);}
 
     public void lowestDistrictHasBeenFound() {
         lowestDistrictFound = true;
