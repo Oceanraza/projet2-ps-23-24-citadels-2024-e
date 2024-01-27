@@ -38,10 +38,11 @@ public class EinsteinAlgo extends BaseAlgo {
                 break;
         }
     }
-    public void chooseCharacterAlgorithm(Game game) { // Always chooses the char that gives him the most gold, or king if can build 8th quarter next turn
+    public void chooseCharacterAlgorithm(Game game) {
         List<GameCharacter> availableChars = game.getAvailableChars();
 
-        // If the bot can build its 8th quarter next turn, it will choose the king (if possible)
+        // If the bot can build its 8th quarter next turn, it will choose the assassin
+        // So he won't be killed
         if (!(bot.getDistrictsInHand().isEmpty()) && (bot.getCity().getDistrictsBuilt().size() >= 7) && (bot.canBuildDistrictThisTurn())) {
             if (bot.isCharInList(availableChars, "Assassin")) {
                 bot.chooseChar(game, "Assassin");
@@ -56,7 +57,7 @@ public class EinsteinAlgo extends BaseAlgo {
         }
         // If the bot doesn't have an immediate way to win, it will just pick the character who gives out the most gold for him
         else {
-            GameCharacter chosenChar = availableChars.get(0);
+            GameCharacter chosenChar = availableChars.get(1);
             int numberOfDistrictByColor;
             int goldCollectedWithDistrictColor = 0;
 

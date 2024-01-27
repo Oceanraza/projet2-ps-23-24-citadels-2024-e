@@ -71,7 +71,6 @@ public class Main {
         // Adding players to the game
         newGame.setPlayers(new Bot("Donald", new EinsteinAlgo()), new Bot("Picsou", new EinsteinAlgo()), new Bot("Riri", new RandomAlgo()), new Bot("Fifi", new RandomAlgo()));
 
-
         List<Player> players = newGame.getPlayers();
 
         //Gives the startingCards to all the players.
@@ -80,20 +79,21 @@ public class Main {
 
         Player firstBuilder = null;
         while (!gameState.isGameFinished(players)) {
-            newGame.setAllCharsToNull();
-            newGame.shuffleChars();
+            newGame.shuffleCharacters();
+
             Bot crownOwner = (Bot) newGame.getCrown().getOwner();
             // "\033[0;94m" : Shinning blue
             // "\033[0;34m" : Blue
             // "\033[0m" : Reset
-            System.out.println("\033[0;94m" + "\n\n----- Tour numero " + gameState.getTurn() + " -----" + "\033[0m" + "\nLa couronne appartient à "
-                    + (crownOwner != null ? crownOwner.getName() : "personne"));
+            System.out.println("\033[0;94m" + "\n\n----- Tour numero " + gameState.getTurn() + " -----" + "\033[0m" +
+                    "\nLa couronne appartient à " + (crownOwner != null ? crownOwner.getName() : "personne"));
+
+            // Reset characters and their states
+            newGame.resetChars();
+            newGame.resetCharsState();
 
             // Character selection phase
             System.out.println("\033[0;34m" + "\n[ Phase 1 ] Choix des personnages" + "\033[0m");
-
-            // Reset character state (killed characters etc...)
-            newGame.resetCharsState();
 
             if (crownOwner != null){
                 System.out.println(crownOwner);
@@ -107,6 +107,7 @@ public class Main {
 
             for (Player player: runningOrder) {
                 GameCharacter cha = player.getGameCharacter();
+                System.out.println(player);
                 // If the character is alive
                 if (cha.getIsAlive()) {
                     System.out.println(player);
@@ -117,8 +118,8 @@ public class Main {
                 }
                 // If the player has been killed, he cannot play
                 else {
-                    System.out.println("Le " + cha.getName() + " a été tué par " + cha.getAttacker() + "\n");
-                    System.out.println(player.getName() + "ne pourra pas jouer ce tour !\n");
+                    System.out.println("Le " + cha.getName() + " a été tué par " + cha.getAttacker().getName());
+                    System.out.println(player.getName() + " ne pourra pas jouer ce tour !");
                 }
             }
 

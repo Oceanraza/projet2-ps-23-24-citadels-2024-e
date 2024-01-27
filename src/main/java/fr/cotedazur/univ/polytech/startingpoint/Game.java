@@ -4,6 +4,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import fr.cotedazur.univ.polytech.startingpoint.board.Deck;
+import fr.cotedazur.univ.polytech.startingpoint.board.Deck;
 import fr.cotedazur.univ.polytech.startingpoint.character.*;
 
 
@@ -16,9 +17,21 @@ public class Game {
     private static final int START_CARDS_NUMBER = 4;
     private Deck deck;
     private Crown crown;
-    private List<Player> players;
-    private Map<String, GameCharacter> allCharacters;
+    private ArrayList<Player> players;
+    private ArrayList<GameCharacter> allCharacters;
+    private ArrayList<GameCharacter> charactersInGame;
     private ArrayList<GameCharacter> availableChars;
+
+    Assassin assassin;
+    King king;
+    Bishop bishop;
+    Merchant merchant;
+    Warlord warlord;
+    Magician magician;
+
+    public Game(){
+        init();
+    }
 
     // Getter
     public Crown getCrown() {
@@ -43,22 +56,17 @@ public class Game {
     }
 
     // Add and remove
-
     public void removeAvailableChar(GameCharacter cha) {
         availableChars.remove(cha);
     }
 
-    public Game(){
-        init();
-    }
-
     // Init starts off the game by creating the deck, the crown, the players and the characters
-    public void init(){
+    public void init() {
         deck = new Deck();
-        allCharacters = new HashMap<>();
+        allCharacters = new ArrayList<>();
         availableChars = new ArrayList<>();
 
-            // Specify the path to your JSON file
+        // Specify the path to your JSON file
         try {
             JsonNode tempNode = Utils.parseJsonFromFile
                     ("src/main/resources/init_database.json");
@@ -66,6 +74,7 @@ public class Game {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
         // Create a crown
         crown = new Crown();
 
@@ -73,12 +82,20 @@ public class Game {
         players = new ArrayList<>();
 
         // Creates the characters
-        allCharacters.put("Roi", new King());
-        allCharacters.put("Marchand", new Merchant());
-        allCharacters.put("Eveque", new Bishop());
-        allCharacters.put("Condottiere", new Warlord());
-        allCharacters.put("Assassin", new Assassin());
-        allCharacters.put("Magicien", new Magician());
+        assassin = new Assassin();
+        king = new King();
+        bishop = new Bishop();
+        merchant = new Merchant();
+        warlord = new Warlord();
+        magician = new Magician();
+
+        // Create the list of characters
+        allCharacters.add(assassin);
+        allCharacters.add(king);
+        allCharacters.add(bishop);
+        allCharacters.add(merchant);
+        allCharacters.add(warlord);
+        allCharacters.add(magician);
 
         // Give the cards to the players
         startCardGame();
@@ -92,24 +109,30 @@ public class Game {
         giveStartingCards();
     }
 
+    public void shuffleCharacters() {
+        int characterRemoved1;
+        int characterRemoved2;
+
+        // Reset the previous lists
+        availableChars.clear();
+        charactersInGame = new ArrayList<> (allCharacters);
+
+        // Remove 2 characters from the list of characters in game
+        characterRemoved1 = Utils.generateRandomNumber(charactersInGame.size() - 1);
+        charactersInGame.remove(characterRemoved1);
+
+        // Later, we will remove 2 characters from the charactersInGame list :
+        // characterRemoved2 = Utils.generateRandomNumber(charactersInGame.size() - 1);
+        // charactersInGame.remove(characterRemoved2);
+
+        availableChars = new ArrayList<> (charactersInGame);
+
     private void giveStartingCards() {
         for (Player player : players) {
             for (int i = 0; i < START_CARDS_NUMBER; i++) {
                 player.getDistrictsInHand().add(deck.drawCard());
             }
         }
-    }
-
-    public void shuffleChars() {
-        while (!availableChars.isEmpty()) {
-            availableChars.remove(0);
-        }
-        availableChars.add(allCharacters.get("Roi"));
-        availableChars.add(allCharacters.get("Marchand"));
-        availableChars.add(allCharacters.get("Eveque"));
-        availableChars.add(allCharacters.get("Condottiere"));
-        availableChars.add(allCharacters.get("Assassin"));
-        availableChars.add(allCharacters.get("Magicien"));
     }
 
     public void printAvailableCharacters() {
@@ -119,6 +142,7 @@ public class Game {
         }
         System.out.println(" ");
     }
+
     public void charSelectionFiller(){
         for (Player p: players){
             if (p.getGameCharacter() == null){
@@ -130,11 +154,8 @@ public class Game {
         }
     }
 
-    public String toString() {
-        return deck.toString();
-    }
-
-    public void setAllCharsToNull() {
+    // Removes characters of players
+    public void resetChars() {
         for (Player p: players) {
             p.setGameCharacter(null);
         }
@@ -142,7 +163,7 @@ public class Game {
 
     // Removes attacks on characters
     public void resetCharsState() {
-        for (GameCharacter cha: availableChars) {
+        for (GameCharacter cha: allCharacters) {
             cha.setIsAlive(true);
             cha.setAttacker(null);
         }
@@ -174,6 +195,11 @@ public class Game {
         return deck;
     }
 
+    public List<GameCharacter> getKillableCharacters() {
+        List<GameCharacter> killableCharacters = charactersInGame;
+        killableCharacters.remove(assassin);
+        return killableCharacters;
+    }
 
     public void killCharacter(Player assassin, String killedCharacter) {
         GameCharacter targetCharacter;
@@ -185,5 +211,9 @@ public class Game {
                 targetCharacter.setAttacker(assassin);
             }
         }
+    }
+
+    public String toString() {
+        return deck.toString();
     }
 }

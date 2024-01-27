@@ -17,7 +17,7 @@ import java.security.SecureRandom;
 public class Utils {
     private static final SecureRandom random = new SecureRandom();
 
-    public int generateRandomNumber(int bound) {
+    public static int generateRandomNumber(int bound) {
         return random.nextInt(bound);
     }
 

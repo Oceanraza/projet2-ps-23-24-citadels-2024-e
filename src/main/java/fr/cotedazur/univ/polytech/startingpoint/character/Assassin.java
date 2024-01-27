@@ -13,5 +13,6 @@ public class Assassin extends GameCharacter {
     public void specialEffect(Player player, Game game, Object... optionalArgs) {
         String targetedCharacter = (String) optionalArgs[0];
         game.killCharacter(player, targetedCharacter);
+        System.out.println("L'assassin a tué le " + targetedCharacter);
     }
 }

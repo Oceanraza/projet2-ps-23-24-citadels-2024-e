@@ -11,7 +11,6 @@ import fr.cotedazur.univ.polytech.startingpoint.Utils;
 import java.util.*;
 
 public class RandomAlgo extends BaseAlgo {
-    Utils utils = new Utils();
     public RandomAlgo(){
         super();
     }
@@ -22,6 +21,9 @@ public class RandomAlgo extends BaseAlgo {
                 break;
             case("Roi"):
                 kingAlgorithm(game);
+                break;
+            case("Assassin"):
+                assassinAlgorithm(game);
                 break;
             case("Magicien"):
                 magicianAlgorithm(game);
@@ -38,12 +40,12 @@ public class RandomAlgo extends BaseAlgo {
 
     public void chooseCharacterAlgorithm(Game game) {
         List<GameCharacter> availableChars = game.getAvailableChars();
-        GameCharacter chosenChar = game.getAvailableChars().get(utils.generateRandomNumber(availableChars.size()));
+        GameCharacter chosenChar = game.getAvailableChars().get(Utils.generateRandomNumber(availableChars.size()));
             bot.chooseChar(game, chosenChar.getName());
         }
 
     public void warlordAlgorithm(Game game) {
-        if (utils.generateRandomNumber(2) == 0) { // have 50% chance to decide to destroy a building of a random player or not
+        if (Utils.generateRandomNumber(2) == 0) { // have 50% chance to decide to destroy a building of a random player or not
             List<Player> playerList = game.getSortedPlayersByScoreForWarlord();
             playerList.remove(bot);
             Collections.shuffle(playerList);
@@ -59,15 +61,31 @@ public class RandomAlgo extends BaseAlgo {
             }
         }
     }
+
+    public void assassinAlgorithm(Game game) {
+        int numberOfTargets;
+        int indexPlayerKilled;
+        String targetedCharacter;
+
+        // Choose a random character and kill him
+        numberOfTargets = game.getKillableCharacters().size();
+        indexPlayerKilled = Utils.generateRandomNumber(numberOfTargets);
+        targetedCharacter = game.getKillableCharacters().get(indexPlayerKilled).getName();
+
+        bot.getGameCharacter().specialEffect(bot, game, targetedCharacter);
+    }
+
     public void magicianAlgorithm (Game game){
-        if (utils.generateRandomNumber(2) == 0) { // have 50% chance to decide to destroy a building of a random player or not
+        if (Utils.generateRandomNumber(2) == 0) { // have 50% chance to decide to destroy a building of a random player or not
             List<Player> playerList = game.getSortedPlayersByScoreForWarlord();
             playerList.remove(bot);
             bot.getGameCharacter().specialEffect(bot, game, true, playerList.get(utils.generateRandomNumber(playerList.size())));
         }
         else{bot.getGameCharacter().specialEffect(bot,game,false);}
     }
+
     public void kingAlgorithm(Game game){bot.getGameCharacter().specialEffect(bot,game);}
+
     public void buildOrNot(GameState gameState){ //builds if he can
         for (District district : bot.getDistrictsInHand()) {
             if (bot.buildDistrict(district, gameState)) {

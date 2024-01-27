@@ -24,6 +24,7 @@ class ActionManagerTest {
         game = new Game();
         game.init();
         gameState = new GameState();
+
         king = new King();
         bishop = new Bishop();
         warlord = new Warlord();
@@ -85,7 +86,7 @@ class ActionManagerTest {
 
     @Test
     void chooseCharTestKingPower() {
-        game.shuffleChars();
+        game.shuffleCharacters();
         bot.setGold(8);
         bot.botAlgo = new EinsteinAlgo();
         bot.botAlgo.setPlayer(bot);
@@ -104,7 +105,7 @@ class ActionManagerTest {
 
     @Test
     void chooseCharBishopGoldTest(){
-        game.shuffleChars();
+        game.shuffleCharacters();
         bot.botAlgo = new EinsteinAlgo();
         bot.botAlgo.setPlayer(bot);
         District district1 = new District("Quartier 1", 0, DistrictColor.noble);
@@ -121,7 +122,7 @@ class ActionManagerTest {
 
     @Test
     void chooseCharMerchantGoldTest(){
-        game.shuffleChars();
+        game.shuffleCharacters();
         bot.botAlgo = new EinsteinAlgo();
         bot.botAlgo.setPlayer(bot);
         District district1 = new District("Quartier 1", 0, DistrictColor.noble);
@@ -138,7 +139,7 @@ class ActionManagerTest {
 
     @Test
     void chooseCharWarlordGoldTest(){
-        game.shuffleChars();
+        game.shuffleCharacters();
         bot.botAlgo = new EinsteinAlgo();
         bot.botAlgo.setPlayer(bot);
         District district1 = new District("Quartier 1", 0, DistrictColor.noble);
@@ -155,7 +156,7 @@ class ActionManagerTest {
 
     @Test
     void chooseCharKingGoldTest(){
-        game.shuffleChars();
+        game.shuffleCharacters();
         bot.botAlgo = new EinsteinAlgo();
         bot.botAlgo.setPlayer(bot);
         District district1 = new District("Quartier 1", 0, DistrictColor.noble);
