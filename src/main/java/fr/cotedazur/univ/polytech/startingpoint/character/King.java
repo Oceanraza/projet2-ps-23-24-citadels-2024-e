@@ -10,7 +10,7 @@ public class King extends GameCharacter {
     }
 
     @Override
-    public void specialEffect(Player player, Game game,Object... optionalArgs) {
+    public void specialEffect(Player player, Game game, Object... optionalArgs) {
         game.getCrown().setOwner(player);
     }
 }

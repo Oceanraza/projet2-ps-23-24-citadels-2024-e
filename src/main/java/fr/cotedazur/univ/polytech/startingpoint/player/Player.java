@@ -55,7 +55,6 @@ public abstract class Player {
     public GameCharacter getGameCharacter() {
         return gameCharacter;
     }
-    public void resetGameCharacter(){gameCharacter = null;}
     public String getCharacterName() {
         return gameCharacter.getName();
     }

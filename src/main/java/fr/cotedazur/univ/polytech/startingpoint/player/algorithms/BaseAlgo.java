@@ -4,15 +4,18 @@ import fr.cotedazur.univ.polytech.startingpoint.Game;
 import fr.cotedazur.univ.polytech.startingpoint.player.Bot;
 
 public abstract class BaseAlgo {
-    protected Bot player;
+    protected Bot bot;
     public BaseAlgo(){}
     public void setPlayer(Bot player){
-        this.player = player;
+        this.bot = player;
     }
     public abstract void startOfTurn(Game game); //Always draws if needed
     public abstract void chooseCharacterAlgorithm(Game game);
     public abstract void charAlgorithmsManager(Game game);
     public abstract void warlordAlgorithm(Game game);
-    public abstract void buildOrNot(Game game);
 
+    public abstract void kingAlgorithm(Game game);
+
+    public abstract void magicianAlgorithm(Game game);
+    public abstract void buildOrNot(Game game);
 }

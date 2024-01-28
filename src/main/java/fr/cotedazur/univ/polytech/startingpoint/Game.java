@@ -12,7 +12,6 @@ import fr.cotedazur.univ.polytech.startingpoint.player.*;
 import com.fasterxml.jackson.databind.JsonNode;
 import java.io.IOException;
 
-
 public class Game {
     private static final int START_CARDS_NUMBER = 4;
     private Deck deck;
@@ -20,7 +19,6 @@ public class Game {
     private List<Player> players;
     private Map<String, GameCharacter> allCharacters;
     private ArrayList<GameCharacter> availableChars;
-    private int number;
     // Getter
 
     public Crown getCrown() {
@@ -79,6 +77,7 @@ public class Game {
         allCharacters.put("Marchand", new Merchant());
         allCharacters.put("Eveque", new Bishop());
         allCharacters.put("Condottiere", new Warlord());
+        allCharacters.put("Magicien", new Magician());
 
         // Give the cards to the players
         startCardGame();
@@ -101,8 +100,7 @@ public class Game {
         }
     }
 
-    public void shuffleChars(int numberOfPlayers) { // numberOfPlayers needs to be used for automatic code but due to
-        // time reasons, it's postponed to a later day.
+    public void shuffleChars() {
         while (!availableChars.isEmpty()) {
             availableChars.remove(0);
         }
@@ -111,6 +109,7 @@ public class Game {
         availableChars.add(allCharacters.get("Marchand"));
         availableChars.add(allCharacters.get("Eveque"));
         availableChars.add(allCharacters.get("Condottiere"));
+        availableChars.add(allCharacters.get("Magicien"));
     }
 
     public void printAvailableCharacters() {
