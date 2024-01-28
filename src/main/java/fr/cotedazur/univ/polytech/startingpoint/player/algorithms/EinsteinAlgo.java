@@ -16,7 +16,7 @@ public class EinsteinAlgo extends BaseAlgo {
         super();
     }
 
-    public void startOfTurn(Game game) { //Alwayswl draws if needed
+    public void startOfTurn(Game game) { //Always draws if needed
         if (bot.getDistrictsInHand().isEmpty() || bot.districtsInHandAreBuilt()) {
             District drawnDistrict = game.drawCard();
             System.out.println(bot.getName() + " pioche le " + drawnDistrict);
