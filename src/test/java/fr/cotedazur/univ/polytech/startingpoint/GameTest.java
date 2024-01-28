@@ -21,5 +21,4 @@ class GameTest {
         assertEquals(0, game.getPlayers().size());
         assertEquals(0, game.getPlayers().size());
     }
-
 }

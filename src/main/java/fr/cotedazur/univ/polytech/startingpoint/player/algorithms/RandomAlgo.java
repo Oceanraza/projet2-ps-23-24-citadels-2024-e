@@ -3,6 +3,7 @@ package fr.cotedazur.univ.polytech.startingpoint.player.algorithms;
 import fr.cotedazur.univ.polytech.startingpoint.Game;
 import fr.cotedazur.univ.polytech.startingpoint.GameState;
 import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacter;
+import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.city.DistrictColor;
 import fr.cotedazur.univ.polytech.startingpoint.player.Bot;
@@ -41,7 +42,7 @@ public class RandomAlgo extends BaseAlgo {
     public void chooseCharacterAlgorithm(Game game) {
         List<GameCharacter> availableChars = game.getAvailableChars();
         GameCharacter chosenChar = game.getAvailableChars().get(Utils.generateRandomNumber(availableChars.size()));
-            bot.chooseChar(game, chosenChar.getName());
+            bot.chooseChar(game, chosenChar.getRole());
         }
 
     public void warlordAlgorithm(Game game) {
@@ -65,12 +66,12 @@ public class RandomAlgo extends BaseAlgo {
     public void assassinAlgorithm(Game game) {
         int numberOfTargets;
         int indexPlayerKilled;
-        String targetedCharacter;
+        GameCharacterRole targetedCharacter;
 
         // Choose a random character and kill him
         numberOfTargets = game.getKillableCharacters().size();
         indexPlayerKilled = Utils.generateRandomNumber(numberOfTargets);
-        targetedCharacter = game.getKillableCharacters().get(indexPlayerKilled).getName();
+        targetedCharacter = game.getKillableCharacters().get(indexPlayerKilled).getRole();
 
         bot.getGameCharacter().specialEffect(bot, game, targetedCharacter);
     }

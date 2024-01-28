@@ -6,7 +6,7 @@ import fr.cotedazur.univ.polytech.startingpoint.player.*;
 
 public class Bishop extends GameCharacter {
     public Bishop() {
-        super("Eveque", 5, DistrictColor.religieux);
+        super(GameCharacterRole.BISHOP, 5, DistrictColor.RELIGIOUS);
     }
 
     @Override

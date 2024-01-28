@@ -29,9 +29,9 @@ public class Main {
         for (Player player : players) {
             player.calculateAndSetScore();
             if (player == firstBuilder) { // If the player was the first to build his 8 districts
-                player.setScore(player.getScore()+4);
+                player.setScore(player.getScore() + 4);
             } else if (gameState.isFinished(player)) { // If the others players have finished building his 8 districts too
-                player.setScore(player.getScore()+2);
+                player.setScore(player.getScore() + 2);
             }
         }
         sortPlayers(players);
@@ -79,18 +79,17 @@ public class Main {
 
         Player firstBuilder = null;
         while (!gameState.isGameFinished(players)) {
-            newGame.shuffleCharacters();
-
             Bot crownOwner = (Bot) newGame.getCrown().getOwner();
             // "\033[0;94m" : Shinning blue
             // "\033[0;34m" : Blue
             // "\033[0m" : Reset
-            System.out.println("\033[0;94m" + "\n\n----- Tour numero " + gameState.getTurn() + " -----" + "\033[0m" +
+            System.out.println("\033[0;94m" + "\n\n----- Tour numéro " + gameState.getTurn() + " -----" + "\033[0m" +
                     "\nLa couronne appartient à " + (crownOwner != null ? crownOwner.getName() : "personne"));
 
-            // Reset characters and their states
+            // Reset characters, their states and shuffle cards
             newGame.resetChars();
             newGame.resetCharsState();
+            newGame.shuffleCharacters();
 
             // Character selection phase
             System.out.println("\033[0;34m" + "\n[ Phase 1 ] Choix des personnages" + "\033[0m");
@@ -118,7 +117,7 @@ public class Main {
                 }
                 // If the player has been killed, he cannot play
                 else {
-                    System.out.println("Le " + cha.getName() + " a été tué par " + cha.getAttacker().getName());
+                    System.out.println("Le " + cha.getRole() + " a été tué par " + cha.getAttacker().getName());
                     System.out.println(player.getName() + " ne pourra pas jouer ce tour !");
                 }
             }

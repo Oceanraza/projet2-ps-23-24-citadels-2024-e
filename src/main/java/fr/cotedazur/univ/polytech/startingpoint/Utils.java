@@ -45,12 +45,11 @@ public class Utils {
             int bonusPoints = districtNode.path("bonusPoints").asInt();
 
             // Create a District object and add it to the list
-            for (int i = 0; i < number; i++){
+            for (int i = 0; i < number; i++) {
                 District district = new District(name, price, DistrictColor.valueOf(color),bonusPoints);
                 districtList.addDistrict(district);
             }
         }
         return districtList;
     }
-
 }

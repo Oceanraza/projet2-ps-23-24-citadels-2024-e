@@ -23,7 +23,7 @@ class GameCharacterTest {
 
     @Test
     void kingTest() {
-        assertEquals("Roi", king.getName());
+        assertEquals("Roi", king.getRole());
         assertEquals(4, king.getRunningOrder());
         assertEquals(game.getCrown().getOwner(),null);
         Bot p =  new Bot("Daffy");
@@ -34,7 +34,7 @@ class GameCharacterTest {
 
     @Test
     void evequeTest() {
-        assertEquals("Eveque", bishop.getName());
+        assertEquals("Eveque", bishop.getRole());
         assertEquals(5, bishop.getRunningOrder());
     }
 }

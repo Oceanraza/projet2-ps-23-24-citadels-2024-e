@@ -119,10 +119,20 @@ public class Game {
 
         // Remove 2 characters from the list of characters in game
         characterRemoved1 = Utils.generateRandomNumber(charactersInGame.size() - 1);
+        // The king must be available for the players
+        while (charactersInGame.get(characterRemoved1).getRole().equals(GameCharacterRole.KING)) {
+            characterRemoved1 = Utils.generateRandomNumber(charactersInGame.size() - 1);
+        }
+
+        System.out.println("Le " + charactersInGame.get(characterRemoved1) + " ne sera pas joué ce tour");
         charactersInGame.remove(characterRemoved1);
 
         // Later, we will remove 2 characters from the charactersInGame list :
         // characterRemoved2 = Utils.generateRandomNumber(charactersInGame.size() - 1);
+        // while (charactersInGame.get(characterRemoved2).getRole().getRoleName().equals("Roi")) {
+        //    characterRemoved1 = Utils.generateRandomNumber(charactersInGame.size() - 1);
+        //}
+        // System.out.println("\nLe " + charactersInGame.get(characterRemoved2) + " ne sera pas joué ce tour");
         // charactersInGame.remove(characterRemoved2);
 
         availableChars = new ArrayList<> (charactersInGame);
@@ -138,7 +148,7 @@ public class Game {
     public void printAvailableCharacters() {
         System.out.println("Les personnages disponibles sont : ");
         for (GameCharacter temp : availableChars) {
-            System.out.print(temp.getName() + " ");
+            System.out.print(temp.getRole() + " ");
         }
         System.out.println(" ");
     }
@@ -172,7 +182,7 @@ public class Game {
     public List<Player> getSortedPlayersByScoreForWarlord(){
         List<Player> sortedPlayersByScore = new ArrayList<>();
         for (Player p : getPlayers()){
-            if (!p.getGameCharacter().getName().equals("Eveque")){
+            if (!p.getGameCharacter().getRole().equals(GameCharacterRole.BISHOP)){
                 p.calculateAndSetScore();
                 sortedPlayersByScore.add(p);
             }
@@ -195,22 +205,23 @@ public class Game {
         return deck;
     }
 
-    public List<GameCharacter> getKillableCharacters() {
-        List<GameCharacter> killableCharacters = charactersInGame;
+    public ArrayList<GameCharacter> getKillableCharacters() {
+        ArrayList<GameCharacter> killableCharacters = charactersInGame;
         killableCharacters.remove(assassin);
         return killableCharacters;
     }
 
-    public void killCharacter(Player assassin, String killedCharacter) {
+    public void killCharacter(Player assassin, GameCharacterRole killedCharacter) {
         GameCharacter targetCharacter;
         for (Player target: getPlayers()) {
             targetCharacter = target.getGameCharacter();
-
-            if (targetCharacter.getName().equals(killedCharacter)) {
+            if (targetCharacter.getRole().equals(killedCharacter)) {
                 targetCharacter.setIsAlive(false);
                 targetCharacter.setAttacker(assassin);
+                return;
             }
         }
+        System.out.println("Le personnage tué n'est pas en jeu !");
     }
 
     public String toString() {

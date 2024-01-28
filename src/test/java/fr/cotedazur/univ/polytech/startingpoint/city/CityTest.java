@@ -21,7 +21,7 @@ class CityTest {
     void setUp() {
         gameState = new GameState();
         city = new City();
-        district = new District("Castle", 5, DistrictColor.noble);
+        district = new District("Castle", 5, DistrictColor.NOBLE);
     }
 
     @Test

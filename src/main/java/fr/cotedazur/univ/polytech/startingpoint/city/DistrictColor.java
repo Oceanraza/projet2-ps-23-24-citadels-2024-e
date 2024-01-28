@@ -1,3 +1,37 @@
 package fr.cotedazur.univ.polytech.startingpoint.city;
 
-public enum DistrictColor {militaire, religieux, marchand, special, noble}
+public enum DistrictColor {
+    NOBLE("noble"),
+    RELIGIOUS("religieux"),
+    TRADE("marchand"),
+    MILITARY("militaire"),
+    SPECIAL("special");
+
+    private final String colorName;
+
+    DistrictColor(String colorName) {
+        this.colorName = colorName;
+    }
+
+    public static DistrictColor valueOfByString(String str) {
+        switch (str) {
+            case "noble" -> {
+                return DistrictColor.NOBLE;
+            }
+            case "religieux" -> {
+                return DistrictColor.RELIGIOUS;
+            }
+            case "marchand" -> {
+                return DistrictColor.TRADE;
+            }
+            case "militaire" -> {
+                return DistrictColor.MILITARY;
+            }
+        }
+        return DistrictColor.SPECIAL;
+    }
+
+    public String toString() {
+        return colorName;
+    }
+}

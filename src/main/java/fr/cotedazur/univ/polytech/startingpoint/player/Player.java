@@ -26,11 +26,11 @@ public abstract class Player {
         score = 0;
         gameCharacter = null;
         numberOfDistrictsByColor = new EnumMap<>(DistrictColor.class);
-        numberOfDistrictsByColor.put(DistrictColor.militaire,0);
-        numberOfDistrictsByColor.put(DistrictColor.noble,0);
-        numberOfDistrictsByColor.put(DistrictColor.special,0);
-        numberOfDistrictsByColor.put(DistrictColor.religieux,0);
-        numberOfDistrictsByColor.put(DistrictColor.marchand,0);
+        numberOfDistrictsByColor.put(DistrictColor.MILITARY,0);
+        numberOfDistrictsByColor.put(DistrictColor.NOBLE,0);
+        numberOfDistrictsByColor.put(DistrictColor.SPECIAL,0);
+        numberOfDistrictsByColor.put(DistrictColor.RELIGIOUS,0);
+        numberOfDistrictsByColor.put(DistrictColor.TRADE,0);
     }
 
     // Getter
@@ -53,7 +53,7 @@ public abstract class Player {
         return gameCharacter;
     }
     public String getCharacterName() {
-        return gameCharacter.getName();
+        return gameCharacter.getRole().getRoleName();
     }
 
     // Setter
@@ -161,7 +161,7 @@ public abstract class Player {
         }
 
         // If a character is chosen, we specify the character
-        return "\nC'est au tour du " + gameCharacter.getName() + " : " + name + "\n" + (!districtsInHand.isEmpty() ? "Et sa main est composée de: "
+        return "\nC'est au tour du " + gameCharacter.getRole() + " : " + name + "\n" + (!districtsInHand.isEmpty() ? "Et sa main est composée de: "
                 + districtsInHand : "Sa main est vide. ") + "\n" + "Il a " + gold + " d'or(s)\n" +
                 (!city.getDistrictsBuilt().isEmpty() ? "Et il a déjà posé: " + city : "Il n'a pas posé de quartiers.");
     }
