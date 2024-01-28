@@ -78,12 +78,9 @@ public class Game {
         allCharacters.put("Eveque", new Bishop());
         allCharacters.put("Condottiere", new Warlord());
         allCharacters.put("Magicien", new Magician());
-<<<<<<<HEAD
 
         // Give the cards to the players
         startCardGame();
-=======
->>>>>>>c8235454eeaec6fc8dcaa5165ca7534daa80cb56
     }
 
     public void startCardGame() {
@@ -95,7 +92,6 @@ public class Game {
 
     }
 
-<<<<<<<HEAD
     private void giveStartingCards() {
         for (Player player : players) {
             for (int i = 0; i < START_CARDS_NUMBER; i++) {
@@ -104,8 +100,6 @@ public class Game {
         }
     }
 
-=======
-        >>>>>>>c8235454eeaec6fc8dcaa5165ca7534daa80cb56
     public void shuffleChars() {
         while (!availableChars.isEmpty()) {
             availableChars.remove(0);

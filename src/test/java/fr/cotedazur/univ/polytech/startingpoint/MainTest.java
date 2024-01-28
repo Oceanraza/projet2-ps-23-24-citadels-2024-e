@@ -171,11 +171,8 @@ class MainTest {
         fourthPlayer.setGameCharacter(new Merchant());
 
         firstBuilder.setScore(firstBuilder.getScore()-2); //il passe a 32 points, égalité avec les autres
-<<<<<<<HEAD
         calculateScores(players, firstBuilder, new GameState());
-=======
-        calculateScores(players, firstBuilder, new GameState());
->>>>>>>c8235454eeaec6fc8dcaa5165ca7534daa80cb56
+
         for (Player p : players) {
             System.out.println(p.getName() + ", score : " + p.getScore());
         }
