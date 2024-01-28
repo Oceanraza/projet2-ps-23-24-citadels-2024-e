@@ -9,7 +9,6 @@ import fr.cotedazur.univ.polytech.startingpoint.player.Bot;
 import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -55,7 +54,6 @@ class MagicianTest {
         assertEquals(1, secondPlayer.getDistrictsInHand().size());
         assertEquals(3, firstBuilder.getDistrictsInHand().size());
     }
-
     @Test
     void switchWithDeckTest() { //Tests if the card has been switched
         Player firstBuilder = new Bot("Player 1");

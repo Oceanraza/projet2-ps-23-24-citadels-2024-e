@@ -24,11 +24,11 @@ class GameCharacterTest {
     void kingTest() {
         assertEquals("Roi", king.getName());
         assertEquals(4, king.getRunningOrder());
-        assertEquals(game.getCrown().getOwner(), null);
-        Bot p = new Bot("Daffy");
+        assertEquals(game.getCrown().getOwner(),null);
+        Bot p =  new Bot("Daffy");
         p.setGameCharacter(new King());
-        p.getGameCharacter().specialEffect(p, game);
-        assertEquals(game.getCrown().getOwner(), p);
+        p.getGameCharacter().specialEffect(p,game);
+        assertEquals(game.getCrown().getOwner(),p);
     }
 
     @Test

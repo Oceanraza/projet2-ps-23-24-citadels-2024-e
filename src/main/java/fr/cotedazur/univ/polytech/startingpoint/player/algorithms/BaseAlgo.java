@@ -13,9 +13,7 @@ public abstract class BaseAlgo {
     public abstract void chooseCharacterAlgorithm(Game game);
     public abstract void charAlgorithmsManager(Game game);
     public abstract void warlordAlgorithm(Game game);
-
-    public abstract void kingAlgorithm(Game game);
-
+    public abstract void kingAlgorithm (Game game);
     public abstract void magicianAlgorithm(Game game);
     public abstract void buildOrNot(Game game);
 }

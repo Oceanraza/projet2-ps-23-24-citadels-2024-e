@@ -14,14 +14,14 @@ public class RandomAlgo extends BaseAlgo {
         super();
     }
     public void charAlgorithmsManager(Game game){
-        switch (bot.getCharacterName()) {
+        switch (bot.getCharacterName()){
             case("Condottiere"):
                 warlordAlgorithm(game);
                 break;
-            case ("Roi"):
+            case("Roi"):
                 kingAlgorithm(game);
                 break;
-            case ("Magicien"):
+            case("Magicien"):
                 magicianAlgorithm(game);
                 break;
         }
@@ -40,7 +40,7 @@ public class RandomAlgo extends BaseAlgo {
     public void chooseCharacterAlgorithm(Game game) {
         List<GameCharacter> availableChars = game.getAvailableChars();
         GameCharacter chosenChar = game.getAvailableChars().get(utils.generateRandomNumber(availableChars.size()));
-        bot.chooseChar(game, chosenChar.getName());
+            bot.chooseChar(game, chosenChar.getName());
         }
 
     public void warlordAlgorithm(Game game) {
@@ -60,20 +60,15 @@ public class RandomAlgo extends BaseAlgo {
             }
         }
     }
-
-    public void magicianAlgorithm(Game game) {
+    public void magicianAlgorithm (Game game){
         if (utils.generateRandomNumber(10) > 5) { // have 50% chance to decide to destroy a building of a random player or not
             List<Player> playerList = game.getSortedPlayersByScoreForWarlord();
             playerList.remove(bot);
             bot.getGameCharacter().specialEffect(bot, game, true, playerList.get(utils.generateRandomNumber(playerList.size())));
-        } else {
-            bot.getGameCharacter().specialEffect(bot, game, false);
         }
+        else{bot.getGameCharacter().specialEffect(bot,game,false);}
     }
-
-    public void kingAlgorithm(Game game) {
-        bot.getGameCharacter().specialEffect(bot, game);
-    }
+    public void kingAlgorithm(Game game){bot.getGameCharacter().specialEffect(bot,game);}
     public void buildOrNot(Game game){ //builds if he can
         for (District district : bot.getDistrictsInHand()) {
             if (bot.buildDistrict(district)) {

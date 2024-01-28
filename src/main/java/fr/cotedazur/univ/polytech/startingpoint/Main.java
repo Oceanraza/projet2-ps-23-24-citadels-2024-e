@@ -20,7 +20,10 @@ public class Main {
         // Sort the players list using the custom comparator
         players.sort(playerComparator);
     }
+<<<<<<<HEAD
 
+=======
+        >>>>>>>c8235454eeaec6fc8dcaa5165ca7534daa80cb56
     public static List<Player> calculateScores(List<Player> players, Player firstBuilder, GameState gameState) {
         for (Player player : players) {
             player.calculateAndSetScore();
@@ -49,7 +52,11 @@ public class Main {
         // System.out.println(newGame);
 
         // Adding players to the game
+<<<<<<<HEAD
         newGame.setPlayers(new Bot("Donald", new EinsteinAlgo()), new Bot("Picsou", new EinsteinAlgo()), new Bot("Riri", new RandomAlgo()), new Bot("Fifi", new RandomAlgo()));
+=======
+        newGame.setPlayers(new Bot("Donald", new EinsteinAlgo()), new Bot("Picsou", new EinsteinAlgo()), new Bot("Riri", new RandomAlgo()), new Bot("Fifi", new RandomAlgo()));
+>>>>>>>c8235454eeaec6fc8dcaa5165ca7534daa80cb56
 
 
         List<Player> players = newGame.getPlayers();

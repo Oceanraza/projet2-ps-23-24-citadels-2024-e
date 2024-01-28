@@ -16,7 +16,6 @@ public class GameStateTest {
     void setUp() {
         player = new Bot("Test");
     }
-
     @Test
     void testIsFinished() {
         GameState gameState = new GameState();
