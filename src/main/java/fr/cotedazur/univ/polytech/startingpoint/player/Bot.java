@@ -11,7 +11,6 @@ import fr.cotedazur.univ.polytech.startingpoint.Game;
 import fr.cotedazur.univ.polytech.startingpoint.character.King;
 import fr.cotedazur.univ.polytech.startingpoint.player.algorithms.BaseAlgo;
 
-
 public class Bot extends Player {
     public BaseAlgo botAlgo;
 
@@ -52,12 +51,13 @@ public class Bot extends Player {
         // après isCharInList **A CHANGER ABSOLUMENT AVANT RENDU FINAL, VERSION
         // TEMPORAIRE POUR RESPECT DES DATES DE RENDU**
     }
+
     public void chooseChar(Game game, GameCharacterRole askedChar){
         GameCharacter chosenCharacter = getCharInList(game.getAvailableChars(), askedChar);
         game.printAvailableCharacters();
         setGameCharacter(chosenCharacter);
         game.removeAvailableChar(chosenCharacter);
-        System.out.println(this.getName() + " a choisi le " + chosenCharacter.getRole());
+        System.out.println(this.getName() + " a choisi " + chosenCharacter.getRole().toStringLeOrL());
     }
     @Override
     public void play(Game game, GameState gameState) {

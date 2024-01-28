@@ -73,9 +73,8 @@ public class Main {
 
         List<Player> players = newGame.getPlayers();
 
-        //Gives the startingCards to all the players.
+        // Gives the startingCards to all the players.
         newGame.startCardGame();
-
 
         Player firstBuilder = null;
         while (!gameState.isGameFinished(players)) {
@@ -117,11 +116,10 @@ public class Main {
                 }
                 // If the player has been killed, he cannot play
                 else {
-                    System.out.println("Le " + cha.getRole() + " a été tué par " + cha.getAttacker().getName());
+                    System.out.println(cha.getRole().toStringLeOrL() + " a été tué par " + cha.getAttacker().getName());
                     System.out.println(player.getName() + " ne pourra pas jouer ce tour !");
                 }
             }
-
             gameState.nextTurn();
         }
         finalChoice(players, gameState);

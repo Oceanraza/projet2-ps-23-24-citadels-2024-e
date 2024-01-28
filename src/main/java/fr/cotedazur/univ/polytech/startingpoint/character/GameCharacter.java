@@ -23,13 +23,14 @@ public abstract class GameCharacter {
         this.color = color;
     }
 
+    // Getter
     public GameCharacterRole getRole() { return role; }
     public int getRunningOrder() { return runningOrder; }
     public DistrictColor getColor() { return color;}
-
     public boolean getIsAlive() { return isAlive; }
     public Player getAttacker() { return attacker; }
 
+    // Setter
     public void setIsAlive(boolean isAlive) { this.isAlive = isAlive; }
     public void setAttacker(Player attacker) { this.attacker = attacker; }
 

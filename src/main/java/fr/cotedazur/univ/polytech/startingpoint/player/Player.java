@@ -155,13 +155,13 @@ public abstract class Player {
 
     public String toString() {
         if (gameCharacter == null) {
-            return "\nC'est au tour de : " + name + "\n" + (!districtsInHand.isEmpty() ? "Et sa main est composée de: "
+            return "\nC'est au tour de " + name + "\n" + (!districtsInHand.isEmpty() ? "Et sa main est composée de: "
                     + districtsInHand : "Sa main est vide. ") + "\n" + "Il a " + gold + " d'or(s)\n" +
                     (!city.getDistrictsBuilt().isEmpty() ? "Et il a déjà posé: " + city : "Il n'a pas posé de quartiers.");
         }
 
         // If a character is chosen, we specify the character
-        return "\nC'est au tour du " + gameCharacter.getRole() + " : " + name + "\n" + (!districtsInHand.isEmpty() ? "Et sa main est composée de: "
+        return "\nC'est au tour " + gameCharacter.getRole().toStringDuOrDeL() + " : " + name + "\n" + (!districtsInHand.isEmpty() ? "Et sa main est composée de: "
                 + districtsInHand : "Sa main est vide. ") + "\n" + "Il a " + gold + " d'or(s)\n" +
                 (!city.getDistrictsBuilt().isEmpty() ? "Et il a déjà posé: " + city : "Il n'a pas posé de quartiers.");
     }

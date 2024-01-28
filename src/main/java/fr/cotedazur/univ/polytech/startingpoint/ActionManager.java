@@ -9,6 +9,14 @@ public class ActionManager {
         throw new IllegalStateException("Action Manager is a utility class");
     }
 
+    public static int printGold(Player player, int addenGold){
+        player.addGold(addenGold);
+        if (addenGold != 0) {
+            System.out.println((player.getCharacterName().equals("Eveque")? "L'" :"Le ") + player.getCharacterName() + " a donné " + addenGold + " or a " + player.getName());
+        }
+        return addenGold;
+    }
+
     public static void startOfTurn(Game game, Player player) {
         Bot bot = (Bot) player;
         int choice = bot.botAlgo.startOfTurnChoice();

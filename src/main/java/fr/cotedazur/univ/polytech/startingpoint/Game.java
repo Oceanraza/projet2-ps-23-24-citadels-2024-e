@@ -4,7 +4,6 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import fr.cotedazur.univ.polytech.startingpoint.board.Deck;
-import fr.cotedazur.univ.polytech.startingpoint.board.Deck;
 import fr.cotedazur.univ.polytech.startingpoint.character.*;
 
 
@@ -37,18 +36,18 @@ public class Game {
     public Crown getCrown() {
         return crown;
     }
-    public List<Player> getPlayers() {
+    public ArrayList<Player> getPlayers() {
         return players;
     }
-    public List<GameCharacter> getAvailableChars() {
+    public ArrayList<GameCharacter> getAvailableChars() {
         return availableChars;
     }
+    public ArrayList<GameCharacter> getCharactersInGame() { return charactersInGame; }
 
     // Setter
     public void setPlayers(Player... bots) { // Add players to the list of players
         players.addAll(Arrays.asList(bots));
     }
-
     public List<Player> setRunningOrder() { // Set running order depending on the running order of the characters
         return this.getPlayers().stream()
                 .sorted(Comparator.comparingInt(player -> player.getGameCharacter().getRunningOrder()))
@@ -58,6 +57,23 @@ public class Game {
     // Add and remove
     public void removeAvailableChar(GameCharacter cha) {
         availableChars.remove(cha);
+    }
+    private void removeCharactersInGame() {
+        for (int i = 0; i < 2; i++) {
+            int indexCharacter;
+            GameCharacter cha;
+
+            indexCharacter = Utils.generateRandomNumber(charactersInGame.size() - 1);
+            cha = charactersInGame.get(indexCharacter);
+
+            // The king must be available for the players
+            while (cha.getRole().equals(GameCharacterRole.KING)) {
+                indexCharacter = Utils.generateRandomNumber(charactersInGame.size() - 1);
+                cha = charactersInGame.get(indexCharacter);
+            }
+            charactersInGame.remove(cha);
+            System.out.println(cha.getRole().toStringLeOrL() + " ne sera pas joué ce tour");
+        }
     }
 
     // Init starts off the game by creating the deck, the crown, the players and the characters
@@ -110,32 +126,15 @@ public class Game {
     }
 
     public void shuffleCharacters() {
-        int characterRemoved1;
-        int characterRemoved2;
-
         // Reset the previous lists
         availableChars.clear();
-        charactersInGame = new ArrayList<> (allCharacters);
+        charactersInGame = new ArrayList<>(allCharacters);
 
         // Remove 2 characters from the list of characters in game
-        characterRemoved1 = Utils.generateRandomNumber(charactersInGame.size() - 1);
-        // The king must be available for the players
-        while (charactersInGame.get(characterRemoved1).getRole().equals(GameCharacterRole.KING)) {
-            characterRemoved1 = Utils.generateRandomNumber(charactersInGame.size() - 1);
-        }
+        removeCharactersInGame();
 
-        System.out.println("Le " + charactersInGame.get(characterRemoved1) + " ne sera pas joué ce tour");
-        charactersInGame.remove(characterRemoved1);
-
-        // Later, we will remove 2 characters from the charactersInGame list :
-        // characterRemoved2 = Utils.generateRandomNumber(charactersInGame.size() - 1);
-        // while (charactersInGame.get(characterRemoved2).getRole().getRoleName().equals("Roi")) {
-        //    characterRemoved1 = Utils.generateRandomNumber(charactersInGame.size() - 1);
-        //}
-        // System.out.println("\nLe " + charactersInGame.get(characterRemoved2) + " ne sera pas joué ce tour");
-        // charactersInGame.remove(characterRemoved2);
-
-        availableChars = new ArrayList<> (charactersInGame);
+        availableChars = new ArrayList<>(charactersInGame);
+    }
 
     private void giveStartingCards() {
         for (Player player : players) {
@@ -203,25 +202,6 @@ public class Game {
 
     public Deck getDeck() {
         return deck;
-    }
-
-    public ArrayList<GameCharacter> getKillableCharacters() {
-        ArrayList<GameCharacter> killableCharacters = charactersInGame;
-        killableCharacters.remove(assassin);
-        return killableCharacters;
-    }
-
-    public void killCharacter(Player assassin, GameCharacterRole killedCharacter) {
-        GameCharacter targetCharacter;
-        for (Player target: getPlayers()) {
-            targetCharacter = target.getGameCharacter();
-            if (targetCharacter.getRole().equals(killedCharacter)) {
-                targetCharacter.setIsAlive(false);
-                targetCharacter.setAttacker(assassin);
-                return;
-            }
-        }
-        System.out.println("Le personnage tué n'est pas en jeu !");
     }
 
     public String toString() {

@@ -46,7 +46,7 @@ public class RandomAlgo extends BaseAlgo {
         }
 
     public void warlordAlgorithm(Game game) {
-        if (Utils.generateRandomNumber(2) == 0) { // have 50% chance to decide to destroy a building of a random player or not
+        if (Utils.generateRandomNumber(2) == 0) { // Have 50% chance to decide to destroy a building of a random player or not
             List<Player> playerList = game.getSortedPlayersByScoreForWarlord();
             playerList.remove(bot);
             Collections.shuffle(playerList);
@@ -69,9 +69,9 @@ public class RandomAlgo extends BaseAlgo {
         GameCharacterRole targetedCharacter;
 
         // Choose a random character and kill him
-        numberOfTargets = game.getKillableCharacters().size();
+        numberOfTargets = super.getKillableCharacters(game).size();
         indexPlayerKilled = Utils.generateRandomNumber(numberOfTargets);
-        targetedCharacter = game.getKillableCharacters().get(indexPlayerKilled).getRole();
+        targetedCharacter = super.getKillableCharacters(game).get(indexPlayerKilled).getRole();
 
         bot.getGameCharacter().specialEffect(bot, game, targetedCharacter);
     }
@@ -80,12 +80,14 @@ public class RandomAlgo extends BaseAlgo {
         if (Utils.generateRandomNumber(2) == 0) { // have 50% chance to decide to destroy a building of a random player or not
             List<Player> playerList = game.getSortedPlayersByScoreForWarlord();
             playerList.remove(bot);
-            bot.getGameCharacter().specialEffect(bot, game, true, playerList.get(utils.generateRandomNumber(playerList.size())));
+            bot.getGameCharacter().specialEffect(bot, game, true, playerList.get(Utils.generateRandomNumber(playerList.size())));
         }
         else{bot.getGameCharacter().specialEffect(bot,game,false);}
     }
 
-    public void kingAlgorithm(Game game){bot.getGameCharacter().specialEffect(bot,game);}
+    public void kingAlgorithm(Game game) {
+        bot.getGameCharacter().specialEffect(bot,game);
+    }
 
     public void buildOrNot(GameState gameState){ //builds if he can
         for (District district : bot.getDistrictsInHand()) {
@@ -99,4 +101,3 @@ public class RandomAlgo extends BaseAlgo {
         huntedQuarter.setColor(DistrictColor.values()[utils.generateRandomNumber(DistrictColor.values().length)]);
     }
 }
-

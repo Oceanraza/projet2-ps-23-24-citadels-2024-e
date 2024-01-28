@@ -23,7 +23,7 @@ public class EinsteinAlgo extends BaseAlgo {
         super();
     }
 
-    public int startOfTurnChoice() { //Always draws if needed
+    public int startOfTurnChoice() { // Always draws if needed
         if (bot.getDistrictsInHand().isEmpty() || bot.districtsInHandAreBuilt()) {
             return 2; // Draw a card
         } else {
@@ -40,6 +40,7 @@ public class EinsteinAlgo extends BaseAlgo {
                 break;
             case("Assassin"):
                 assassinAlgorithm(game);
+                break;
             case("Magicien"):
                 magicianAlgorithm(game);
                 break;
@@ -58,7 +59,7 @@ public class EinsteinAlgo extends BaseAlgo {
             }
         }
         // If the bot's hand is empty, it chooses the magician to get someone's else's hand
-        else if ((bot.getDistrictsInHand().isEmpty() && (bot.isCharInList(GameCharacterRole.MAGICIAN)))){
+        else if (bot.getDistrictsInHand().isEmpty() && bot.isCharInList(availableChars, GameCharacterRole.MAGICIAN)){
             bot.chooseChar(game, GameCharacterRole.MAGICIAN);
             return;
         }
@@ -108,7 +109,7 @@ public class EinsteinAlgo extends BaseAlgo {
             }
         }
         boolean switching = true;
-        bot.getGameCharacter().specialEffect(bot,game,switching,chosenPlayer);
+        bot.getGameCharacter().specialEffect(bot, game, switching, chosenPlayer);
     }
     public void kingAlgorithm(Game game){bot.getGameCharacter().specialEffect(bot,game);}
 
@@ -120,7 +121,7 @@ public class EinsteinAlgo extends BaseAlgo {
         int indexWarlord;
         int indexKing;
 
-        killableCharacters = game.getKillableCharacters();
+        killableCharacters = super.getKillableCharacters(game);
         indexWarlord = isKillable(killableCharacters, WARLORD);
         indexKing = isKillable(killableCharacters, KING);
 
@@ -134,11 +135,11 @@ public class EinsteinAlgo extends BaseAlgo {
         }
         // Kill a random character if neither the warlord nor the king can be killed
         else {
-            int numberOfTargets = game.getKillableCharacters().size();
+            int numberOfTargets = super.getKillableCharacters(game).size();
             indexKilledCharacter = Utils.generateRandomNumber(numberOfTargets);
         }
 
-        targetedCharacter = game.getKillableCharacters().get(indexKilledCharacter).getRole();
+        targetedCharacter = super.getKillableCharacters(game).get(indexKilledCharacter).getRole();
         bot.getGameCharacter().specialEffect(bot, game, targetedCharacter);
     }
 
@@ -156,7 +157,7 @@ public class EinsteinAlgo extends BaseAlgo {
     public void lowestDistrictHasBeenFound() {
         lowestDistrictFound = true;
     }
-    public void buildOrNot(GameState gameState){ // builds if he can
+    public void buildOrNot(GameState gameState) { // builds if he can
         for (District district : bot.getDistrictsInHand()) {
             if (bot.buildDistrict(district, gameState)) {
                 break;
@@ -180,4 +181,3 @@ public class EinsteinAlgo extends BaseAlgo {
         }
     }
 }
-
