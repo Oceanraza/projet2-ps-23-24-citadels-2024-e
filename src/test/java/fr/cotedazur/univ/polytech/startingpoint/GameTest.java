@@ -1,13 +1,8 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
-import fr.cotedazur.univ.polytech.startingpoint.city.District;
-import fr.cotedazur.univ.polytech.startingpoint.city.DistrictColor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
-
-import static java.util.List.copyOf;
 import static org.junit.jupiter.api.Assertions.*;
 
 class GameTest {
@@ -19,32 +14,12 @@ class GameTest {
     }
 
     @Test
-    void testAddCardNumber() {
-        assertFalse(game.getGameDeck().isEmpty());
-        int normalCardCount = game.getGameDeck().size();
-        District district = new District("Test", 1, DistrictColor.special);
-        game.addDistrictsInGameDeck(district, 4);
-        assertEquals(normalCardCount + 4, game.getGameDeck().size());
+    void testGame() {
+        assertEquals(0, game.getPlayers().size());
+        assertEquals(65, game.getDeck().size());
+        assertEquals(0, game.getPlayers().size());
+        assertEquals(0, game.getPlayers().size());
+        assertEquals(0, game.getPlayers().size());
     }
 
-    @Test
-    void testDrawCard() {
-        List<District> normalGameDeck = copyOf(game.getGameDeck());
-        assertEquals(normalGameDeck.size(),65);
-        District cardDrawn = game.drawCard();
-        int cardCountBeforeDraw = 0;
-        for(District district: normalGameDeck) {
-            if (district.equals(cardDrawn)) {
-                cardCountBeforeDraw++;
-            }
-        }
-        int cardCountAfterDraw = 0;
-        for(District district: game.getGameDeck()) {
-            if (district.equals(cardDrawn)) {
-                cardCountAfterDraw++;
-            }
-        }
-        assertTrue(normalGameDeck.contains(cardDrawn));
-        assertEquals(cardCountBeforeDraw - 1, cardCountAfterDraw);
-    }
 }

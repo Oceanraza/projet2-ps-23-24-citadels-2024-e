@@ -9,7 +9,6 @@ import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 import java.util.List;
 import java.util.Comparator;
 public class Main {
-    private static final int START_CARDS_NUMBER = 4;
 
     public static void sortPlayers(List<Player> players) {
         // Use a custom Comparator to compare Players based on their score and running order
@@ -49,17 +48,14 @@ public class Main {
         // System.out.println(newGame);
 
         // Adding players to the game
-        newGame.setPlayers(new Bot("Donald",new EinsteinAlgo()), new Bot("Picsou",new EinsteinAlgo()), new Bot("Riri",new RandomAlgo()), new Bot("Fifi",new RandomAlgo()));
+        newGame.setPlayers(new Bot("Donald", new EinsteinAlgo()), new Bot("Picsou", new EinsteinAlgo()), new Bot("Riri", new RandomAlgo()), new Bot("Fifi", new RandomAlgo()));
 
 
         List<Player> players = newGame.getPlayers();
 
         //Gives the startingCards to all the players.
-        for (Player p : players){
-            for (int i = 0; i < START_CARDS_NUMBER; i++) {
-                p.addDistrictInHand(newGame.drawCard());
-            }
-        }
+        newGame.startCardGame();
+
 
         Player firstBuilder = null;
         while (!gameState.isGameFinished(players)) {
