@@ -81,6 +81,7 @@ public class Game {
         allCharacters.put("Marchand", new Merchant());
         allCharacters.put("Eveque", new Bishop());
         allCharacters.put("Condottiere", new Warlord());
+        allCharacters.put("Magicien", new Magician());
     }
 
     public District drawCard() {
@@ -90,16 +91,15 @@ public class Game {
         return cardDrawn;
     }
 
-    public void shuffleChars(int numberOfPlayers) { // numberOfPlayers needs to be used for automatic code but due to
-        // time reasons, it's postponed to a later day.
+    public void shuffleChars() {
         while (!availableChars.isEmpty()) {
             availableChars.remove(0);
         }
-
         availableChars.add(allCharacters.get("Roi"));
         availableChars.add(allCharacters.get("Marchand"));
         availableChars.add(allCharacters.get("Eveque"));
         availableChars.add(allCharacters.get("Condottiere"));
+        availableChars.add(allCharacters.get("Magicien"));
     }
 
     public void printAvailableCharacters() {

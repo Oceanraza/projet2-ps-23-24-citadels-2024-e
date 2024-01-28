@@ -49,7 +49,7 @@ public class Main {
         // System.out.println(newGame);
 
         // Adding players to the game
-        newGame.setPlayers(new Bot("Donald",new EinsteinAlgo()), new Bot("Picsou",new RandomAlgo()), new Bot("Riri",new RandomAlgo()), new Bot("Fifi",new RandomAlgo()));
+        newGame.setPlayers(new Bot("Donald",new EinsteinAlgo()), new Bot("Picsou",new EinsteinAlgo()), new Bot("Riri",new RandomAlgo()), new Bot("Fifi",new RandomAlgo()));
 
 
         List<Player> players = newGame.getPlayers();
@@ -64,7 +64,7 @@ public class Main {
         Player firstBuilder = null;
         while (!gameState.isGameFinished(players)) {
             newGame.setAllCharsToNull();
-            newGame.shuffleChars(4);
+            newGame.shuffleChars();
             Bot crownOwner = (Bot) newGame.getCrown().getOwner();
             // "\033[0;94m" : Shinning blue
             // "\033[0;34m" : Blue
