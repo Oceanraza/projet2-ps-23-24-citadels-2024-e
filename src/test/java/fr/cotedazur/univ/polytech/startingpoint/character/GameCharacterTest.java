@@ -1,7 +1,6 @@
 package fr.cotedazur.univ.polytech.startingpoint.character;
 
 import fr.cotedazur.univ.polytech.startingpoint.Game;
-import fr.cotedazur.univ.polytech.startingpoint.character.*;
 import fr.cotedazur.univ.polytech.startingpoint.player.Bot;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
