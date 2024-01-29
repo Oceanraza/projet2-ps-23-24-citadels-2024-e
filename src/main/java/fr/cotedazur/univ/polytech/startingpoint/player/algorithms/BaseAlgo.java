@@ -6,8 +6,11 @@ import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole;
 import fr.cotedazur.univ.polytech.startingpoint.GameState;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.player.Bot;
+import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 
 public abstract class BaseAlgo {
     protected Bot bot;
@@ -25,15 +28,4 @@ public abstract class BaseAlgo {
 
     public abstract void buildOrNot(GameState gamestate);
     public abstract void huntedQuarterAlgorithm(District huntedQuarter);
-
-    protected ArrayList<GameCharacter> getKillableCharacters(Game game) {
-        ArrayList<GameCharacter> killableCharacters = game.getCharactersInGame();
-        for (GameCharacter cha: killableCharacters) {
-            if (cha.getRole().equals(GameCharacterRole.ASSASSIN)) {
-                killableCharacters.remove(cha);
-                break;
-            }
-        }
-        return killableCharacters;
-    }
 }

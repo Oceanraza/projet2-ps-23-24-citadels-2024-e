@@ -178,19 +178,39 @@ public class Game {
         }
     }
 
-    public List<Player> getSortedPlayersByScoreForWarlord(){
+    public List<Player> getSortedPlayersByScore(){
         List<Player> sortedPlayersByScore = new ArrayList<>();
-        for (Player p : getPlayers()){
-            if (!p.getGameCharacter().getRole().equals(GameCharacterRole.BISHOP)){
-                p.calculateAndSetScore();
-                sortedPlayersByScore.add(p);
-            }
+        for (Player player: getPlayers()) {
+            player.calculateAndSetScore();
+            sortedPlayersByScore.add(player);
         }
         Comparator<Player> playerComparator = Comparator
                 .comparingInt(Player::getScore)
                 .reversed();
         sortedPlayersByScore.sort(playerComparator);
         return sortedPlayersByScore;
+    }
+
+    public List<Player> getSortedPlayersByScoreForWarlord(){
+        List<Player> sortedPlayersByScore = getSortedPlayersByScore();
+        for (Player player: sortedPlayersByScore) {
+            // Warlord can't destroy bishop's districts
+            if (player.getGameCharacter().getRole().equals(GameCharacterRole.BISHOP)) {
+                sortedPlayersByScore.remove(player);
+            }
+        }
+        return sortedPlayersByScore;
+    }
+
+    public ArrayList<GameCharacter> getKillableCharacters() {
+        ArrayList<GameCharacter> killableCharacters = getCharactersInGame();
+        for (GameCharacter cha: killableCharacters) {
+            if (cha.getRole().equals(GameCharacterRole.ASSASSIN)) {
+                killableCharacters.remove(cha);
+                break;
+            }
+        }
+        return killableCharacters;
     }
 
     public District drawCard(Player player) {

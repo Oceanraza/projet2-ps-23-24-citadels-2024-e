@@ -100,12 +100,12 @@ public class EinsteinAlgo extends BaseAlgo {
     }
     // Note that this algorithm doesn't use the second part of the magician, finding it useless compared to other cards
     public void magicianAlgorithm (Game game){
-        List<Player> playerList = game.getSortedPlayersByScoreForWarlord();
+        List<Player> playerList = game.getSortedPlayersByScore();
         playerList.remove(bot);
         Player chosenPlayer = bot;
         for (Player p : playerList){
             if (p.getDistrictsInHand().size() > chosenPlayer.getDistrictsInHand().size()){
-                chosenPlayer = p; //it takes the player's hand with the most cards
+                chosenPlayer = p; // It takes the player's hand with the most cards
             }
         }
         boolean switching = true;
@@ -121,7 +121,7 @@ public class EinsteinAlgo extends BaseAlgo {
         int indexWarlord;
         int indexKing;
 
-        killableCharacters = super.getKillableCharacters(game);
+        killableCharacters = game.getKillableCharacters();
         indexWarlord = isKillable(killableCharacters, WARLORD);
         indexKing = isKillable(killableCharacters, KING);
 
@@ -135,11 +135,11 @@ public class EinsteinAlgo extends BaseAlgo {
         }
         // Kill a random character if neither the warlord nor the king can be killed
         else {
-            int numberOfTargets = super.getKillableCharacters(game).size();
+            int numberOfTargets = game.getKillableCharacters().size();
             indexKilledCharacter = Utils.generateRandomNumber(numberOfTargets);
         }
 
-        targetedCharacter = super.getKillableCharacters(game).get(indexKilledCharacter).getRole();
+        targetedCharacter = game.getKillableCharacters().get(indexKilledCharacter).getRole();
         bot.getGameCharacter().specialEffect(bot, game, targetedCharacter);
     }
 

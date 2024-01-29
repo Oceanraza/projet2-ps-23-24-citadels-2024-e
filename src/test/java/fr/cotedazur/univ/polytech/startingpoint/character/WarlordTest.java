@@ -4,11 +4,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import fr.cotedazur.univ.polytech.startingpoint.Game;
 import fr.cotedazur.univ.polytech.startingpoint.GameState;
+import fr.cotedazur.univ.polytech.startingpoint.Game;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.character.*;
 import fr.cotedazur.univ.polytech.startingpoint.city.DistrictColor;
 import fr.cotedazur.univ.polytech.startingpoint.player.Bot;
 import fr.cotedazur.univ.polytech.startingpoint.player.Player;
+import fr.cotedazur.univ.polytech.startingpoint.player.algorithms.BaseAlgo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
@@ -52,7 +54,6 @@ class WarlordTest {
     }
     @Test
     void getSortedPlayersByScoreTest(){
-
         Player firstBuilder = new Bot("Player 1");
         Player secondPlayer = new Bot("Player 2");
         Player thirdPlayer = new Bot("Player 3");

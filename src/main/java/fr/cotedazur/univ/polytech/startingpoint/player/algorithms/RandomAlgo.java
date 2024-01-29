@@ -69,16 +69,16 @@ public class RandomAlgo extends BaseAlgo {
         GameCharacterRole targetedCharacter;
 
         // Choose a random character and kill him
-        numberOfTargets = super.getKillableCharacters(game).size();
+        numberOfTargets = game.getKillableCharacters().size();
         indexPlayerKilled = Utils.generateRandomNumber(numberOfTargets);
-        targetedCharacter = super.getKillableCharacters(game).get(indexPlayerKilled).getRole();
+        targetedCharacter = game.getKillableCharacters().get(indexPlayerKilled).getRole();
 
         bot.getGameCharacter().specialEffect(bot, game, targetedCharacter);
     }
 
     public void magicianAlgorithm (Game game){
         if (Utils.generateRandomNumber(2) == 0) { // have 50% chance to decide to destroy a building of a random player or not
-            List<Player> playerList = game.getSortedPlayersByScoreForWarlord();
+            List<Player> playerList = game.getSortedPlayersByScore();
             playerList.remove(bot);
             bot.getGameCharacter().specialEffect(bot, game, true, playerList.get(Utils.generateRandomNumber(playerList.size())));
         }
