@@ -7,7 +7,13 @@ import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.player.Bot;
 import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 
+import static fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole.*;
+
 public class ActionManager {
+    public static int printGold(Player player, int addedGold){
+        player.addGold(addedGold);
+        if (addedGold != 0) {
+            System.out.println((player.getGameCharacter().getRole().toStringLeOrL()) + " a donné " + addedGold + " or à " + player.getName());
     private ActionManager() {
         throw new IllegalStateException("Action Manager is a utility class");
     }
@@ -17,7 +23,7 @@ public class ActionManager {
         if (addenGold != 0) {
             System.out.println((player.getGameCharacter().getRole().toStringLeOrL()) + " a donné " + addenGold + " or à " + player.getName());
         }
-        return addenGold;
+        return addedGold;
     }
 
     private static int collectGoldUtil(Player player,  DistrictColor districtColor) {

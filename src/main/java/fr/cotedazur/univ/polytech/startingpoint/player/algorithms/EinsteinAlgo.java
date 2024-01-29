@@ -14,8 +14,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole.KING;
-import static fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole.WARLORD;
+import static fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole.*;
 
 public class EinsteinAlgo extends BaseAlgo {
     boolean lowestDistrictFound = false;

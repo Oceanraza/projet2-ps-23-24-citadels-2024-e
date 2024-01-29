@@ -197,6 +197,7 @@ public class Game {
             // Warlord can't destroy bishop's districts
             if (player.getGameCharacter().getRole().equals(GameCharacterRole.BISHOP)) {
                 sortedPlayersByScore.remove(player);
+                return sortedPlayersByScore;
             }
         }
         return sortedPlayersByScore;

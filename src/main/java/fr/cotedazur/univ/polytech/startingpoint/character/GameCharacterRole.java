@@ -19,10 +19,10 @@ public enum GameCharacterRole {
     }
 
     /*
-To print the role name of the character when we have to write :
-Du ... or
-De l' ...
- */
+    To print the role name of the character when we have to write :
+    Du ... or
+    De l' ...
+    */
     public String toStringDuOrDeL() {
         if (this.equals(GameCharacterRole.BISHOP) || this.equals(GameCharacterRole.ASSASSIN)) {
             return "de l'" + this;
