@@ -31,20 +31,11 @@ public class EinsteinAlgo extends BaseAlgo {
         }
     }
     public void charAlgorithmsManager(Game game){
-        switch (bot.getCharacterName()){
-            case("Condottiere"):
-                warlordAlgorithm(game);
-                break;
-            case("Roi"):
-                kingAlgorithm(game);
-                break;
-            case("Assassin"):
-                assassinAlgorithm(game);
-                break;
-            case("Magicien"):
-                magicianAlgorithm(game);
-                break;
-        }
+        GameCharacterRole role = bot.getGameCharacter().getRole();
+        if(role == WARLORD) warlordAlgorithm(game);
+        else if(role == KING) kingAlgorithm(game);
+        else if(role == ASSASSIN) assassinAlgorithm(game);
+        else if(role == MAGICIAN) magicianAlgorithm(game);
     }
 
     public void chooseCharacterAlgorithm(Game game) {

@@ -1,5 +1,8 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
+
+import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole;
+import fr.cotedazur.univ.polytech.startingpoint.city.DistrictColor;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.player.Bot;
 import fr.cotedazur.univ.polytech.startingpoint.player.Player;
@@ -15,6 +18,11 @@ public class ActionManager {
             System.out.println((player.getGameCharacter().getRole().toStringLeOrL()) + " a donné " + addenGold + " or à " + player.getName());
         }
         return addenGold;
+    }
+
+    private static int collectGoldUtil(Player player,  DistrictColor districtColor) {
+        int addedGold = player.getNumberOfDistrictsByColor().get(districtColor);
+        return printGold(player, addedGold);
     }
 
     public static void startOfTurn(Game game, Player player) {
@@ -45,11 +53,11 @@ public class ActionManager {
     }
 
     public static int collectGold(Player player) {
-        String characterName = player.getCharacterName();
-        if (characterName.equals("Roi") || characterName.equals("Eveque") ||
-            characterName.equals("Condottiere") || characterName.equals("Marchand")) {
-            return printGold(player, calculateGold(player));
-        }
+        GameCharacterRole role = player.getGameCharacter().getRole();
+        if (role == WARLORD) return collectGoldUtil(player, DistrictColor.MILITARY);
+        else if(role == KING) return collectGoldUtil(player, DistrictColor.NOBLE);
+        else if (role == BISHOP) return collectGoldUtil(player, DistrictColor.RELIGIOUS);
+        else if (role == MERCHANT) return collectGoldUtil(player, DistrictColor.TRADE);
         return 0;
     }
 

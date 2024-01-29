@@ -12,16 +12,25 @@ public class Assassin extends GameCharacter {
     public void specialEffect(Player player, Game game, Object... optionalArgs) {
         GameCharacterRole targetedCharacter = (GameCharacterRole) optionalArgs[0];
         killCharacter(player, game, targetedCharacter);
-        System.out.println("L'assassin a tué le " + targetedCharacter);
     }
 
-    private void killCharacter(Player assassin, Game game, GameCharacterRole killedCharacter) {
+    protected void killCharacter(Player assassin, Game game, GameCharacterRole killedCharacter) {
         GameCharacter targetCharacter;
+        if (killedCharacter.equals(GameCharacterRole.ASSASSIN)) {
+            System.out.println("Vous ne pouvez pas vous assassinez vous-même !");
+            return;
+        }
         for (Player target: game.getPlayers()) {
             targetCharacter = target.getGameCharacter();
             if (targetCharacter.getRole().equals(killedCharacter)) {
                 targetCharacter.setIsAlive(false);
                 targetCharacter.setAttacker(assassin);
+                System.out.println("L'assassin a tué le " + killedCharacter);
+                // If the king is killed, the crown goes to the assassin
+                if (killedCharacter.equals(GameCharacterRole.KING)) {
+                    game.getCrown().setOwner(assassin);
+                    System.out.println("La couronne lui revient !");
+                }
                 return;
             }
         }

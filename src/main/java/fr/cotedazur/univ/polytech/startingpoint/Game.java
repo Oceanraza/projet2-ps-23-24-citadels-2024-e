@@ -178,8 +178,8 @@ public class Game {
         }
     }
 
-    public List<Player> getSortedPlayersByScore(){
-        List<Player> sortedPlayersByScore = new ArrayList<>();
+    public ArrayList<Player> getSortedPlayersByScore(){
+        ArrayList<Player> sortedPlayersByScore = new ArrayList<>();
         for (Player player: getPlayers()) {
             player.calculateAndSetScore();
             sortedPlayersByScore.add(player);
@@ -191,8 +191,8 @@ public class Game {
         return sortedPlayersByScore;
     }
 
-    public List<Player> getSortedPlayersByScoreForWarlord(){
-        List<Player> sortedPlayersByScore = getSortedPlayersByScore();
+    public ArrayList<Player> getSortedPlayersByScoreForWarlord(){
+        ArrayList<Player> sortedPlayersByScore = getSortedPlayersByScore();
         for (Player player: sortedPlayersByScore) {
             // Warlord can't destroy bishop's districts
             if (player.getGameCharacter().getRole().equals(GameCharacterRole.BISHOP)) {

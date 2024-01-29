@@ -10,7 +10,6 @@ import fr.cotedazur.univ.polytech.startingpoint.player.algorithms.EinsteinAlgo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-
 class ActionManagerTest {
     King king;
     Bishop bishop;
