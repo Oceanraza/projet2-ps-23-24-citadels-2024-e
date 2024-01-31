@@ -85,13 +85,12 @@ class ActionManagerTest {
         game.shuffleChars();
         bot.botAlgo = new EinsteinAlgo();
         bot.botAlgo.setPlayer(bot);
-        District district1 = new District("Quartier 1", 0, DistrictColor.noble);
+        bot.botAlgo.startOfTurn(game);
+        District district1 = new District("Quartier 1", 0, DistrictColor.religieux);
         District district2 = new District("Quartier 2", 0, DistrictColor.religieux);
-        District district3 = new District("Quartier 3", 0, DistrictColor.religieux);
         District magicSchool = new District("Ecole de magie", 0, DistrictColor.special);
         bot.buildDistrict(district1);
         bot.buildDistrict(district2);
-        bot.buildDistrict(district3);
         bot.buildDistrict(magicSchool);
         bot.botAlgo.chooseCharacterAlgorithm(game);
         assertEquals("Eveque", bot.getCharacterName());
@@ -103,13 +102,12 @@ class ActionManagerTest {
         game.shuffleChars();
         bot.botAlgo = new EinsteinAlgo();
         bot.botAlgo.setPlayer(bot);
-        District district1 = new District("Quartier 1", 0, DistrictColor.noble);
+        bot.botAlgo.startOfTurn(game);
+        District district1 = new District("Quartier 1", 0, DistrictColor.marchand);
         District district2 = new District("Quartier 2", 0, DistrictColor.marchand);
-        District district3 = new District("Quartier 3", 0, DistrictColor.marchand);
         District magicSchool = new District("Ecole de magie", 0, DistrictColor.special);
         bot.buildDistrict(district1);
         bot.buildDistrict(district2);
-        bot.buildDistrict(district3);
         bot.buildDistrict(magicSchool);
         bot.botAlgo.chooseCharacterAlgorithm(game);
         assertEquals("Marchand", bot.getCharacterName());
@@ -121,13 +119,12 @@ class ActionManagerTest {
         game.shuffleChars();
         bot.botAlgo = new EinsteinAlgo();
         bot.botAlgo.setPlayer(bot);
-        District district1 = new District("Quartier 1", 0, DistrictColor.noble);
+        bot.botAlgo.startOfTurn(game);
+        District district1 = new District("Quartier 1", 0, DistrictColor.militaire);
         District district2 = new District("Quartier 2", 0, DistrictColor.militaire);
-        District district3 = new District("Quartier 3", 0, DistrictColor.militaire);
         District magicSchool = new District("Ecole de magie", 0, DistrictColor.special);
         bot.buildDistrict(district1);
         bot.buildDistrict(district2);
-        bot.buildDistrict(district3);
         bot.buildDistrict(magicSchool);
         bot.botAlgo.chooseCharacterAlgorithm(game);
         assertEquals("Condottiere", bot.getCharacterName());
@@ -139,20 +136,15 @@ class ActionManagerTest {
         game.shuffleChars();
         bot.botAlgo = new EinsteinAlgo();
         bot.botAlgo.setPlayer(bot);
+        bot.botAlgo.startOfTurn(game);
         District district1 = new District("Quartier 1", 0, DistrictColor.noble);
         District district2 = new District("Quartier 2", 0, DistrictColor.noble);
-        District district3 = new District("Quartier 3", 0, DistrictColor.religieux);
         District magicSchool = new District("Ecole de magie", 0, DistrictColor.special);
         bot.buildDistrict(district1);
         bot.buildDistrict(district2);
-        bot.buildDistrict(district3);
         bot.buildDistrict(magicSchool);
         bot.botAlgo.chooseCharacterAlgorithm(game);
         assertEquals("Roi", bot.getCharacterName());
         assertEquals(3,ActionManager.collectGold(bot));
     }
-
-
-
-
 }
