@@ -3,6 +3,7 @@ package fr.cotedazur.univ.polytech.startingpoint;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import fr.cotedazur.univ.polytech.startingpoint.board.Deck;
 import fr.cotedazur.univ.polytech.startingpoint.character.*;
 
 
@@ -12,15 +13,14 @@ import com.fasterxml.jackson.databind.JsonNode;
 import java.io.IOException;
 
 public class Game {
-    private ArrayList<District> gameDeck;
+    private static final int START_CARDS_NUMBER = 4;
+    private Deck deck;
     private Crown crown;
     private List<Player> players;
     private Map<String, GameCharacter> allCharacters;
     private ArrayList<GameCharacter> availableChars;
     // Getter
-    public List<District> getGameDeck() {
-        return gameDeck;
-    }
+
     public Crown getCrown() {
         return crown;
     }
@@ -43,11 +43,6 @@ public class Game {
     }
 
     // Add and remove
-    public void addDistrictsInGameDeck(District district, int n) {
-        for (int i = 0; i < n; i++) {
-            gameDeck.add(district);
-        }
-    }
 
     public void removeAvailableChar(GameCharacter cha) {
         availableChars.remove(cha);
@@ -57,8 +52,9 @@ public class Game {
         init();
     }
 
+    // Init starts off the game by creating the deck, the crown, the players and the characters
     public void init(){
-        gameDeck = new ArrayList<>();
+        deck = new Deck();
         allCharacters = new HashMap<>();
         availableChars = new ArrayList<>();
 
@@ -66,7 +62,7 @@ public class Game {
         try {
             JsonNode tempNode = Utils.parseJsonFromFile
                     ("src/main/resources/init_database.json");
-            gameDeck = Utils.convertJsonNodeToDistrictList(tempNode.path("Game").path("Districts"));
+            deck = Utils.convertJsonNodeToDistrictList(tempNode.path("Game").path("Districts"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -74,32 +70,45 @@ public class Game {
         crown = new Crown();
 
         // Create the list of players
-        players = new ArrayList<Player>();
+        players = new ArrayList<>();
 
         // Creates the characters
         allCharacters.put("Roi", new King());
         allCharacters.put("Marchand", new Merchant());
         allCharacters.put("Eveque", new Bishop());
         allCharacters.put("Condottiere", new Warlord());
+        allCharacters.put("Magicien", new Magician());
+
+        // Give the cards to the players
+        startCardGame();
     }
 
-    public District drawCard() {
-        Utils utils = new Utils();
-        District cardDrawn = gameDeck.get(utils.generateRandomNumber(gameDeck.size() - 1));
-        gameDeck.remove(cardDrawn);
-        return cardDrawn;
+    public void startCardGame() {
+        // Shuffle the deck
+        deck.shuffle();
+
+        // Give 4 cards to each player
+        giveStartingCards();
+
     }
 
-    public void shuffleChars(int numberOfPlayers) { // numberOfPlayers needs to be used for automatic code but due to
-        // time reasons, it's postponed to a later day.
+    private void giveStartingCards() {
+        for (Player player : players) {
+            for (int i = 0; i < START_CARDS_NUMBER; i++) {
+                player.getDistrictsInHand().add(deck.drawCard());
+            }
+        }
+    }
+
+    public void shuffleChars() {
         while (!availableChars.isEmpty()) {
             availableChars.remove(0);
         }
-
         availableChars.add(allCharacters.get("Roi"));
         availableChars.add(allCharacters.get("Marchand"));
         availableChars.add(allCharacters.get("Eveque"));
         availableChars.add(allCharacters.get("Condottiere"));
+        availableChars.add(allCharacters.get("Magicien"));
     }
 
     public void printAvailableCharacters() {
@@ -121,11 +130,7 @@ public class Game {
     }
 
     public String toString() {
-        StringBuilder str = new StringBuilder("Les cartes dans le deck sont : \n");
-        for (District district : gameDeck) {
-            str.append(district.toString()).append('\n');
-        }
-        return str.toString();
+        return deck.toString();
     }
 
     public void setAllCharsToNull() {
@@ -147,4 +152,13 @@ public class Game {
         sortedPlayersByScore.sort(playerComparator);
         return sortedPlayersByScore;
     }
+
+    public District drawCard() {
+        return deck.drawCard();
+    }
+
+    public Deck getDeck() {
+        return deck;
+    }
+
 }
