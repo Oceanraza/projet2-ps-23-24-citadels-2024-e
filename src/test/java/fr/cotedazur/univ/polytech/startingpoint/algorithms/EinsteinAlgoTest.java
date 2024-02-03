@@ -63,13 +63,55 @@ class EinsteinAlgoTest {
 
         verify(game).drawCard();
     }
-
     @Test
     void shouldAddTwoGoldWhenHandIsNotEmptyAndNotAllDistrictsAreBuilt() {
         List<District> districtsInHand = mock(List.class);
         when(bot.getDistrictsInHand()).thenReturn(districtsInHand);
         when(districtsInHand.isEmpty()).thenReturn(false);
         when(bot.districtsInHandAreBuilt()).thenReturn(false);
+
+        einsteinAlgo.startOfTurn(game);
+
+        verify(bot).addGold(2);
+    }
+    @Test
+    void shouldDrawTwoCardsWhenLibraryIsBuiltAndHandSizeIsLessThanTwo() {
+        District library = new District("Bibliothèque", 6, DistrictColor.special);
+        when(bot.getCity().hasDistrict(library)).thenReturn(true);
+        List<District> districtsInHand = mock(List.class);
+        when(bot.getDistrictsInHand()).thenReturn(districtsInHand);
+        when(districtsInHand.size()).thenReturn(1);
+        when(bot.districtsInHandAreBuilt()).thenReturn(true);
+
+        einsteinAlgo.startOfTurn(game);
+
+        verify(game, times(2)).drawCard();
+    }
+
+    @Test
+    void shouldDrawOneCardWhenHandIsEmptyAndNoSpecialDistrictsAreBuilt() {
+        District library = new District("Bibliothèque", 6, DistrictColor.special);
+        District observatory = new District("Observatoire", 4, DistrictColor.special);
+        when(bot.getCity().hasDistrict(library)).thenReturn(false);
+        when(bot.getCity().hasDistrict(observatory)).thenReturn(false);
+        List<District> districtsInHand = mock(List.class);
+        when(bot.getDistrictsInHand()).thenReturn(districtsInHand);
+        when(districtsInHand.isEmpty()).thenReturn(true);
+
+        einsteinAlgo.startOfTurn(game);
+
+        verify(game).drawCard();
+    }
+
+    @Test
+    void shouldAddTwoGoldWhenHandIsNotEmptyAndNoSpecialDistrictsAreBuilt() {
+        District library = new District("Bibliothèque", 6, DistrictColor.special);
+        District observatory = new District("Observatoire", 4, DistrictColor.special);
+        when(bot.getCity().hasDistrict(library)).thenReturn(false);
+        when(bot.getCity().hasDistrict(observatory)).thenReturn(false);
+        List<District> districtsInHand = mock(List.class);
+        when(bot.getDistrictsInHand()).thenReturn(districtsInHand);
+        when(districtsInHand.isEmpty()).thenReturn(false);
 
         einsteinAlgo.startOfTurn(game);
 
