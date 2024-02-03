@@ -53,6 +53,7 @@ public class Main {
                     if(turnBuilt.isPresent() && gameState.getTurn() > turnBuilt.get()) {
                         Bot bot = (Bot) player;
                         bot.botAlgo.huntedQuarterAlgorithm(district);
+                        System.out.println(player.getName() + " utilise la Cour des miracles en tant que quartier " + district.getColor() + ".");
                     }
                 }
             }

@@ -9,7 +9,7 @@ public class ActionManager {
 
     public static int printGold(Player player, int addedGold){
         player.addGold(addedGold);
-        if (addedGold !=0){System.out.println((player.getCharacterName().equals("Eveque")? "L'" :"Le ") + player.getCharacterName() + " a donné " + addedGold + " or a " + player.getName());}
+        if (addedGold !=0){System.out.println((player.getCharacterName().equals("Eveque")? "L'" :"Le ") + player.getCharacterName() + " a donné " + addedGold + " or a " + player.getName() + ".");}
         return addedGold;
     }
 
