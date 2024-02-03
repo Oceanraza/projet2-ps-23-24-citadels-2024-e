@@ -1,33 +1,35 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
-
-import fr.cotedazur.univ.polytech.startingpoint.city.DistrictColor;
 import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 
 public class ActionManager {
-    public static int printGold(Player player, int addenGold){
-        player.addGold(addenGold);
-        if (addenGold !=0){System.out.println((player.getCharacterName().equals("Eveque")? "L'" :"Le ") + player.getCharacterName() + " a donné " + addenGold + " or a " + player.getName());}
-        return addenGold;
+    private ActionManager() {
+        throw new IllegalStateException("Action Manager is a utility class");
     }
-    public static int collectGold(Player player) {
-        int addenGold = 0;
-        switch (player.getCharacterName()) {
-            case ("Roi"):
-                addenGold = player.getNumberOfDistrictsByColor().get(DistrictColor.noble);
-                return printGold(player, addenGold);
-            case ("Eveque"):
-                addenGold = player.getNumberOfDistrictsByColor().get(DistrictColor.religieux);
-                return printGold(player, addenGold);
-            case ("Condottiere"):
-                addenGold = player.getNumberOfDistrictsByColor().get(DistrictColor.militaire);
-                return printGold(player, addenGold);
-            case ("Marchand"):
-                addenGold = player.getNumberOfDistrictsByColor().get(DistrictColor.marchand);
-                return printGold(player, addenGold);
-            default:
-                return 0;
+
+    public static int printGold(Player player, int addedGold){
+        player.addGold(addedGold);
+        if (addedGold !=0){System.out.println((player.getCharacterName().equals("Eveque")? "L'" :"Le ") + player.getCharacterName() + " a donné " + addedGold + " or a " + player.getName());}
+        return addedGold;
+    }
+
+    public static int calculateGold(Player player) {
+        int addedGold = 0;
+        boolean hasMagicSchool = player.getCity().containsDistrict("Ecole de magie");
+        if (hasMagicSchool) {
+            addedGold += 1;
         }
+        addedGold += player.getNumberOfDistrictsByColor().get(player.getGameCharacter().getColor());
+        return addedGold;
+    }
+
+    public static int collectGold(Player player) {
+        String characterName = player.getCharacterName();
+        if (characterName.equals("Roi") || characterName.equals("Eveque") ||
+            characterName.equals("Condottiere") || characterName.equals("Marchand")) {
+            return printGold(player, calculateGold(player));
+        }
+        return 0;
     }
 
     public static void applySpecialEffect(Player player, Game game) {
