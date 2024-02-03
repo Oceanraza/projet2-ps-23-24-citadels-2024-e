@@ -10,6 +10,10 @@ import java.util.List;
 import java.util.Comparator;
 public class Main {
 
+    protected static final String Shinning_blue = "\033[0;94m";
+    protected static final String Blue = "\033[0;34m";
+    protected static final String Reset = "\033[0m";
+
     public static void sortPlayers(List<Player> players) {
         // Use a custom Comparator to compare Players based on their score and running order
         Comparator<Player> playerComparator = Comparator
@@ -48,8 +52,12 @@ public class Main {
         // System.out.println(newGame);
 
         // Adding players to the game
-        newGame.setPlayers(new Bot("Donald", new EinsteinAlgo()), new Bot("Picsou", new EinsteinAlgo()), new Bot("Riri", new RandomAlgo()), new Bot("Fifi", new RandomAlgo()));
-
+        newGame.setPlayers(
+                new Bot("Donald", new EinsteinAlgo()),
+                new Bot("Picsou", new EinsteinAlgo()),
+                new Bot("Riri", new RandomAlgo()),
+                new Bot("Fifi", new RandomAlgo())
+        );
 
         List<Player> players = newGame.getPlayers();
 
@@ -62,14 +70,12 @@ public class Main {
             newGame.setAllCharsToNull();
             newGame.shuffleChars();
             Bot crownOwner = (Bot) newGame.getCrown().getOwner();
-            // "\033[0;94m" : Shinning blue
-            // "\033[0;34m" : Blue
-            // "\033[0m" : Reset
-            System.out.println("\033[0;94m" + "\n\n----- Tour numero " + gameState.getTurn() + " -----" + "\033[0m" + "\nLa couronne appartient à "
+
+            System.out.println(Shinning_blue + "\n\n----- Tour numero " + gameState.getTurn() + " -----" + Reset + "\nLa couronne appartient à "
                     + (crownOwner != null ? crownOwner.getName() : "personne"));
 
             // Character selection phase
-            System.out.println("\033[0;34m" + "\n[ Phase 1 ] Choix des personnages" + "\033[0m");
+            System.out.println(Blue + "\n[ Phase 1 ] Choix des personnages" + Reset);
 
             if (crownOwner != null){
                 System.out.println(crownOwner);
@@ -78,7 +84,7 @@ public class Main {
             newGame.charSelectionFiller();
 
             // Character reveal phase
-            System.out.println("\033[0;34m" + "\n[ Phase 2 ] Tour des joueurs" + "\033[0m");
+            System.out.println(Blue + "\n[ Phase 2 ] Tour des joueurs" + Reset);
             List<Player> runningOrder = newGame.setRunningOrder();
 
             for (Player player: runningOrder) {
