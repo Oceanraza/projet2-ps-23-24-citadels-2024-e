@@ -60,6 +60,14 @@ public class EinsteinAlgo extends BaseAlgo {
             addTwoGold();
         }
     }
+    public void cemeteryLogic(Game game, Player targetedPlayer, District destroyedDistrict) {
+        District cemetery = new District("Cimetière", 5, DistrictColor.special);
+        if (bot.getCity().hasDistrict(cemetery) && bot.getGold() >= 1 && !bot.getCharacterName().equals("Condottiere")) {
+            System.out.println(bot.getName() + " utilise le Cimetière pour reprendre le " + destroyedDistrict + " dans sa main.");
+            bot.getDistrictsInHand().add(destroyedDistrict);
+            bot.addGold(-1);
+        }
+    }
 
     private void drawOneCard(Game game) {
         District drawnDistrict = game.drawCard();
@@ -119,12 +127,13 @@ public class EinsteinAlgo extends BaseAlgo {
                 targetedPlayer.getLowestDistrict().ifPresent(value -> {
                     if (Utils.canDestroyDistrict(value, bot)) {
                         bot.getGameCharacter().specialEffect(bot, game, targetedPlayer, value);
+                        cemeteryLogic(game, targetedPlayer, value); // Call the cemetery logic here
                         lowestDistrictHasBeenFound();
                     }
                 });
-            if (lowestDistrictFound) {
-                break;
-            }
+                if (lowestDistrictFound) {
+                    break;
+                }   
             }
         }
     }
