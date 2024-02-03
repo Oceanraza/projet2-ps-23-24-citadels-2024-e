@@ -19,12 +19,19 @@ public class EinsteinAlgo extends BaseAlgo {
     }
 
     public void startOfTurn(Game game) { //Always draws if needed
-        ObservatoryLogic(game);
+        drawCardOrAddGold(game);
     }
 
-    private void ObservatoryLogic(Game game) {
-        District observatory = new District("Observatoire", 4, DistrictColor.special);
-        if (bot.getCity().hasDistrict(observatory)) {
+    private void LybraryLogic(Game game) { //draws 2 cards
+        District library = new District("Bibliothèque", 6, DistrictColor.special);
+        if (bot.getCity().hasDistrict(library)) {
+            for (int i = 0; i < 2; i++) {
+                drawOneCard(game);
+            }
+        }
+    }
+
+    private void ObservatoryLogic(Game game) { //draws 3 cards and keeps one
             List<District> threeCards = new ArrayList<>();
             for (int i = 0; i < 3; i++) {
                 threeCards.add(game.drawCard());
@@ -36,14 +43,33 @@ public class EinsteinAlgo extends BaseAlgo {
             }
             System.out.println(bot.getName() + " pioche le " + chosenCard);
             bot.getDistrictsInHand().add(chosenCard);
-        } else if (bot.getDistrictsInHand().isEmpty() || bot.districtsInHandAreBuilt()) {
-            District drawnDistrict = game.drawCard();
-            System.out.println(bot.getName() + " pioche le " + drawnDistrict);
-            bot.getDistrictsInHand().add(drawnDistrict);
-        } else { // Otherwise it gets 2 gold coins
-            System.out.println(bot.getName() + " prend deux pièces d'or.");
-            bot.addGold(2);
+    }
+    private void drawCardOrAddGold(Game game) {
+        District library = new District("Bibliothèque", 6, DistrictColor.special);
+        District observatory = new District("Observatoire", 4, DistrictColor.special);
+
+        if (bot.getDistrictsInHand().isEmpty() || bot.districtsInHandAreBuilt()) {
+            if (bot.getCity().hasDistrict(library) && bot.getDistrictsInHand().size() < 2) {
+                LybraryLogic(game); //draws 2 cards
+            } else if (bot.getCity().hasDistrict(observatory)) {
+                ObservatoryLogic(game); //draws 3 cards and keeps one
+            } else {
+                drawOneCard(game); //draws one card
+            }
+        } else {
+            addTwoGold();
         }
+    }
+
+    private void drawOneCard(Game game) {
+        District drawnDistrict = game.drawCard();
+        System.out.println(bot.getName() + " pioche le " + drawnDistrict);
+        bot.getDistrictsInHand().add(drawnDistrict);
+    }
+
+    private void addTwoGold() {
+        System.out.println(bot.getName() + " prend deux pièces d'or.");
+        bot.addGold(2);
     }
 
     public void charAlgorithmsManager(Game game){
