@@ -117,4 +117,21 @@ class EinsteinAlgoTest {
 
         verify(bot).addGold(2);
     }
+    @Test
+    void shouldNotTakeBackDestroyedDistrictWhenPlayerIsCondottiere() {
+        District cemetery = new District("Cimetière", 5, DistrictColor.special);
+        District destroyedDistrict = new District("Quartier", 3, DistrictColor.marchand);
+        when(bot.getCity().hasDistrict(cemetery)).thenReturn(true);
+        when(bot.getGold()).thenReturn(2);
+        when(bot.getCharacterName()).thenReturn("Condottiere");
+
+        // Mock the districtsInHand list
+        List<District> districtsInHand = mock(List.class);
+        when(bot.getDistrictsInHand()).thenReturn(districtsInHand);
+
+        einsteinAlgo.cemeteryLogic(game, bot, destroyedDistrict);
+
+        verify(bot, never()).addGold(-1);
+        verify(districtsInHand, never()).add(destroyedDistrict); // Use the mock here
+    }
 }
