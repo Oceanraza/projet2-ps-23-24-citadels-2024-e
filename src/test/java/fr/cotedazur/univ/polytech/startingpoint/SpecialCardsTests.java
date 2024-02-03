@@ -11,33 +11,28 @@ import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-
-import java.io.IOException;
-import java.util.ArrayList;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class SpecialCardsTests {
     King king;
     Bishop bishop;
     Warlord warlord;
-    Bot bot;
     Game game;
+    GameState gameState;
 
     @BeforeEach
     void setUp(){
+        game = new Game();
+        game.init();
+        gameState = new GameState();
+
         king = new King();
         bishop = new Bishop();
         warlord = new Warlord();
-        Bot bot = new Bot("Bot");
-        game = new Game();
-        game.init();
     }
-
 
     @Test
     void donjonTest(){
-
         Player firstBuilder = new Bot("Player 1",new EinsteinAlgo());
         Bot secondPlayer = new Bot("Player 2",new EinsteinAlgo());
         Player thirdPlayer = new Bot("Player 3",new EinsteinAlgo());
@@ -51,10 +46,10 @@ class SpecialCardsTests {
         secondPlayer.setGameCharacter(king);
         fourthPlayer.setGameCharacter(king);
 
-        firstBuilder.buildDistrict(new District("Donjon", 3, DistrictColor.special));
+        firstBuilder.buildDistrict(new District("Donjon", 3, DistrictColor.special), gameState);
 
-        assertEquals(firstBuilder.getCity().getDistrictsBuilt().size(),1);
-        secondPlayer.botAlgo.warlordAlgorithm(game); //La seule carte construite est le dongeon, qui ne peut être détruit, cet algo ne détruit alors rien
-        assertEquals(firstBuilder.getCity().getDistrictsBuilt().size(),1);
+        assertEquals(1, firstBuilder.getCity().getDistrictsBuilt().size());
+        secondPlayer.botAlgo.warlordAlgorithm(game); //La seule carte construite est le donjon, qui ne peut être détruit, cet algo ne détruit alors rien
+        assertEquals(1, firstBuilder.getCity().getDistrictsBuilt().size());
     }
 }

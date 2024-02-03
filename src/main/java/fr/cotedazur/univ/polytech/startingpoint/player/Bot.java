@@ -3,6 +3,7 @@ package fr.cotedazur.univ.polytech.startingpoint.player;
 import java.util.*;
 
 import fr.cotedazur.univ.polytech.startingpoint.ActionManager;
+import fr.cotedazur.univ.polytech.startingpoint.GameState;
 import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacter;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.Game;
@@ -58,7 +59,7 @@ public class Bot extends Player {
         System.out.println(this.getName() + " a choisi le " + chosenCharacter.getName());
     }
     @Override
-    public void play(Game game) {
+    public void play(Game game, GameState gameState) {
         /* Apply special effect, no need for now
         ActionManager.applySpecialEffect(this, game);
         Collect gold
@@ -68,7 +69,7 @@ public class Bot extends Player {
         addGold(ActionManager.collectGold(this));
         botAlgo.charAlgorithmsManager(game);
         // The bot builds one district if it has enough money
-        botAlgo.buildOrNot(game);
+        botAlgo.buildOrNot(gameState);
     }
 
 

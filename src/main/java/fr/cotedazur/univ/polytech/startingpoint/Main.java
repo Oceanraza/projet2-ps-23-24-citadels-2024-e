@@ -1,5 +1,6 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
+import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.player.algorithms.EinsteinAlgo;
 import fr.cotedazur.univ.polytech.startingpoint.player.algorithms.RandomAlgo;
 
@@ -8,6 +9,8 @@ import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 
 import java.util.List;
 import java.util.Comparator;
+import java.util.Optional;
+
 public class Main {
 
     public static void sortPlayers(List<Player> players) {
@@ -40,6 +43,21 @@ public class Main {
         }
         Player winner = playersScores.get(0);
         System.out.println(winner.getName() + " gagne la partie avec " + winner.getScore() + " points !");
+    }
+
+    public static void finalChoice(List<Player> players, GameState gameState) {
+        for(Player player: players) {
+            for(District district: player.getCity().getDistrictsBuilt()) {
+                if(district.getName().equals("Cour des miracles") && district.getTurnBuilt().isPresent()) {
+                    Optional<Integer> turnBuilt = district.getTurnBuilt();
+                    if(turnBuilt.isPresent() && gameState.getTurn() > turnBuilt.get()) {
+                        Bot bot = (Bot) player;
+                        bot.botAlgo.huntedQuarterAlgorithm(district);
+                    }
+                }
+            }
+        }
+
     }
 
     public static void main(String... args){
@@ -83,7 +101,7 @@ public class Main {
 
             for (Player player: runningOrder) {
                 System.out.println(player);
-                player.play(newGame);
+                player.play(newGame, gameState);
                 if (gameState.isFinished(player)) {
                     firstBuilder = player;
                 }
@@ -91,6 +109,7 @@ public class Main {
 
             gameState.nextTurn();
         }
+        finalChoice(players, gameState);
         announceWinner(players, firstBuilder, gameState);
     }
 }

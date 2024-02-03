@@ -1,8 +1,10 @@
 package fr.cotedazur.univ.polytech.startingpoint.player.algorithms;
 
 import fr.cotedazur.univ.polytech.startingpoint.Game;
+import fr.cotedazur.univ.polytech.startingpoint.GameState;
 import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacter;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
+import fr.cotedazur.univ.polytech.startingpoint.city.DistrictColor;
 import fr.cotedazur.univ.polytech.startingpoint.player.Bot;
 import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 import fr.cotedazur.univ.polytech.startingpoint.Utils;
@@ -69,12 +71,16 @@ public class RandomAlgo extends BaseAlgo {
         else{bot.getGameCharacter().specialEffect(bot,game,false);}
     }
     public void kingAlgorithm(Game game){bot.getGameCharacter().specialEffect(bot,game);}
-    public void buildOrNot(Game game){ //builds if he can
+    public void buildOrNot(GameState gameState){ //builds if he can
         for (District district : bot.getDistrictsInHand()) {
-            if (bot.buildDistrict(district)) {
+            if (bot.buildDistrict(district, gameState)) {
                 break;
             }
         }
+    }
+
+    public void huntedQuarterAlgorithm(District huntedQuarter) {
+        huntedQuarter.setColor(DistrictColor.values()[utils.generateRandomNumber(DistrictColor.values().length)]);
     }
 }
 

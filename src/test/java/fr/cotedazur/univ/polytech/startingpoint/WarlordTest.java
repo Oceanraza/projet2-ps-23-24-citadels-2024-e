@@ -18,25 +18,30 @@ class WarlordTest {
     Warlord warlord;
     Bot bot;
     Game game;
+    GameState gameState;
 
     @BeforeEach
     void setUp(){
+        game = new Game();
+        game.init();
+        gameState = new GameState();
+
         king = new King();
         bishop = new Bishop();
         warlord = new Warlord();
+
         bot = new Bot("Bot") {
         };
-        game = new Game();
-        game.init();
     }
     @Test
     void getLowestDistrictTest(){
         District district1 = new District("Quartier 1", 3, DistrictColor.noble);
         District district2 = new District("Quartier 2", 1, DistrictColor.noble);
         District district3 = new District("Quartier 3", 4, DistrictColor.religieux);
-        bot.buildDistrict(district1);
-        bot.buildDistrict(district2);
-        bot.buildDistrict(district3);
+        bot.buildDistrict(district1, gameState);
+        bot.buildDistrict(district2, gameState);
+        bot.buildDistrict(district3, gameState);
+        assertTrue(bot.getLowestDistrict().isPresent());
         assertEquals(district2, bot.getLowestDistrict().get());
     }
     @Test
