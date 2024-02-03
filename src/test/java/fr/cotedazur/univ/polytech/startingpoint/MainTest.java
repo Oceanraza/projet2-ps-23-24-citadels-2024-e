@@ -5,6 +5,7 @@ import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.city.DistrictColor;
 import fr.cotedazur.univ.polytech.startingpoint.player.Bot;
 import fr.cotedazur.univ.polytech.startingpoint.player.Player;
+import fr.cotedazur.univ.polytech.startingpoint.player.algorithms.EinsteinAlgo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -15,16 +16,19 @@ import java.util.Arrays;
 import java.util.List;
 
 import static fr.cotedazur.univ.polytech.startingpoint.Main.calculateScores;
+import static fr.cotedazur.univ.polytech.startingpoint.Main.finalChoice;
 import static org.junit.jupiter.api.Assertions.*;
 
 class MainTest {
     private static final String LINE_SEPARATOR = System.lineSeparator();
 
     Player player;
+    GameState gameState;
 
     @BeforeEach
     void setUp() {
         player = new Bot("Test");
+        gameState = new GameState();
     }
 
     @Test
@@ -105,14 +109,14 @@ class MainTest {
 
         for (int i = 0; i < 8; i++) {
             String name = "District" + i;
-            firstBuilder.getCity().addDistrict(new District(name, i, DistrictColor.marchand));
+            firstBuilder.getCity().addDistrict(new District(name, i, DistrictColor.marchand), gameState);
         }
 
-        secondPlayer.getCity().addDistrict(new District("marchand", 1, DistrictColor.marchand));
-        secondPlayer.getCity().addDistrict(new District("militaire", 1, DistrictColor.militaire));
-        secondPlayer.getCity().addDistrict(new District("religieux", 1, DistrictColor.religieux));
-        secondPlayer.getCity().addDistrict(new District("noble", 1, DistrictColor.noble));
-        secondPlayer.getCity().addDistrict(new District("special", 1, DistrictColor.special));
+        secondPlayer.getCity().addDistrict(new District("marchand", 1, DistrictColor.marchand), gameState);
+        secondPlayer.getCity().addDistrict(new District("militaire", 1, DistrictColor.militaire), gameState);
+        secondPlayer.getCity().addDistrict(new District("religieux", 1, DistrictColor.religieux), gameState);
+        secondPlayer.getCity().addDistrict(new District("noble", 1, DistrictColor.noble), gameState);
+        secondPlayer.getCity().addDistrict(new District("special", 1, DistrictColor.special), gameState);
 
         List<Player> scoredPlayers = calculateScores(players, firstBuilder, new GameState());
 
@@ -136,8 +140,8 @@ class MainTest {
 
         for (int i = 0; i < 8; i++) {
             String name = "District" + i;
-            firstBuilder.getCity().addDistrict(new District(name, i, DistrictColor.marchand)); // 34 points
-            secondPlayer.getCity().addDistrict(new District(name, i, DistrictColor.marchand)); // 32 points
+            firstBuilder.getCity().addDistrict(new District(name, i, DistrictColor.marchand), gameState); // 34 points
+            secondPlayer.getCity().addDistrict(new District(name, i, DistrictColor.marchand), gameState); // 32 points
         }
 
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
@@ -160,10 +164,10 @@ class MainTest {
         System.setOut(new PrintStream(outContent));
         for (int i = 0; i < 8; i++) {
             String name = "District" + i;
-            firstBuilder.getCity().addDistrict(new District(name, i, DistrictColor.marchand)); // 34 points
-            secondPlayer.getCity().addDistrict(new District(name, i, DistrictColor.marchand)); // 32 points
-            thirdPlayer.getCity().addDistrict(new District(name, i, DistrictColor.marchand)); // 32 points
-            fourthPlayer.getCity().addDistrict(new District(name, i, DistrictColor.marchand)); // 32 points
+            firstBuilder.getCity().addDistrict(new District(name, i, DistrictColor.marchand), gameState); // 34 points
+            secondPlayer.getCity().addDistrict(new District(name, i, DistrictColor.marchand), gameState); // 32 points
+            thirdPlayer.getCity().addDistrict(new District(name, i, DistrictColor.marchand), gameState); // 32 points
+            fourthPlayer.getCity().addDistrict(new District(name, i, DistrictColor.marchand), gameState); // 32 points
         }
         firstBuilder.setGameCharacter(new Warlord());
         secondPlayer.setGameCharacter(new King());
@@ -180,8 +184,46 @@ class MainTest {
                 + "Player 4, score : 32" + LINE_SEPARATOR
                 + "Player 3, score : 32" + LINE_SEPARATOR
                 + "Player 2, score : 32" + LINE_SEPARATOR;
-
         assertEquals(expectedOutput, outContent.toString());
     }
 
+    @Test
+    void finalChoiceHuntedQuarterTest() {
+        Bot firstPlayer = new Bot("Player 1");
+        Bot secondPlayer = new Bot("Player 2");
+        King king = new King();
+        Merchant merchant = new Merchant();
+        Game newGame = new Game();
+
+        firstPlayer.botAlgo = new EinsteinAlgo();
+        firstPlayer.botAlgo.setPlayer(firstPlayer);
+        secondPlayer.botAlgo = new EinsteinAlgo();
+        secondPlayer.botAlgo.setPlayer(secondPlayer);
+
+        // Create list of players
+        newGame.setPlayers(firstPlayer, secondPlayer);
+        firstPlayer.setGold(0);
+        secondPlayer.setGold(0);
+
+        assertEquals(1, gameState.getTurn());
+        for (Player player : newGame.getPlayers()) {
+            player.getCity().addDistrict(new District("Marchand", 0, DistrictColor.marchand), gameState);
+            player.getCity().addDistrict(new District("Militaire", 0, DistrictColor.militaire), gameState);
+            player.getCity().addDistrict(new District("Religieux", 0, DistrictColor.religieux), gameState);
+            player.getCity().addDistrict(new District("Special", 0, DistrictColor.special), gameState);
+        }
+        firstPlayer.getCity().addDistrict(new District("Cour des miracles", 0, DistrictColor.special), gameState);
+        assertEquals(5, firstPlayer.getCity().getDistrictsBuilt().size());
+
+        gameState.nextTurn();
+        assertEquals(2, gameState.getTurn());
+        secondPlayer.getCity().addDistrict(new District("Cour des miracles", 0, DistrictColor.special), gameState);
+        District huntedQuarter = secondPlayer.getCity().getDistrictsBuilt().get(4);
+        assertTrue(huntedQuarter.getTurnBuilt().isPresent());
+        assertEquals(2, huntedQuarter.getTurnBuilt().get());
+
+        finalChoice(newGame.getPlayers(), gameState);
+        assertEquals(3, firstPlayer.calculateScore()); // +3 HuntedQuarter goes from special to noble
+        assertEquals(0, secondPlayer.calculateScore()); // HuntedQuarter's effect can't be used (built at the last turn)
+    }
 }
