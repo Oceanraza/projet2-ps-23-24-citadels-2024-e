@@ -99,4 +99,9 @@ public class Deck {
     public ArrayList<District> getCards() {
         return this.cards;
     }
+
+    public void discard(District card) {
+        this.cards.remove(card);
+        this.discardPile.add(card);
+    }
 }

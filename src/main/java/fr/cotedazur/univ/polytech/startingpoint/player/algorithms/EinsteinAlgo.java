@@ -4,10 +4,12 @@ import fr.cotedazur.univ.polytech.startingpoint.Game;
 import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacter;
 import fr.cotedazur.univ.polytech.startingpoint.character.King;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
+import fr.cotedazur.univ.polytech.startingpoint.city.DistrictColor;
 import fr.cotedazur.univ.polytech.startingpoint.player.Bot;
 import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 import fr.cotedazur.univ.polytech.startingpoint.Utils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class EinsteinAlgo extends BaseAlgo {
@@ -17,7 +19,24 @@ public class EinsteinAlgo extends BaseAlgo {
     }
 
     public void startOfTurn(Game game) { //Always draws if needed
-        if (bot.getDistrictsInHand().isEmpty() || bot.districtsInHandAreBuilt()) {
+        ObservatoryLogic(game);
+    }
+
+    private void ObservatoryLogic(Game game) {
+        District observatory = new District("Observatoire", 4, DistrictColor.special);
+        if (bot.getCity().hasDistrict(observatory)) {
+            List<District> threeCards = new ArrayList<>();
+            for (int i = 0; i < 3; i++) {
+                threeCards.add(game.drawCard());
+            }
+            District chosenCard = bot.chooseCard(threeCards);
+            threeCards.remove(chosenCard);
+            for (District card : threeCards) {
+                game.getDeck().discard(card);
+            }
+            System.out.println(bot.getName() + " pioche le " + chosenCard);
+            bot.getDistrictsInHand().add(chosenCard);
+        } else if (bot.getDistrictsInHand().isEmpty() || bot.districtsInHandAreBuilt()) {
             District drawnDistrict = game.drawCard();
             System.out.println(bot.getName() + " pioche le " + drawnDistrict);
             bot.getDistrictsInHand().add(drawnDistrict);
@@ -26,6 +45,7 @@ public class EinsteinAlgo extends BaseAlgo {
             bot.addGold(2);
         }
     }
+
     public void charAlgorithmsManager(Game game){
         switch (bot.getCharacterName()){
             case("Condottiere"):
@@ -106,6 +126,10 @@ public class EinsteinAlgo extends BaseAlgo {
                 break;
             }
         }
+    }
+
+    public void setBot(Bot bot) {
+        this.bot = bot;
     }
 }
 

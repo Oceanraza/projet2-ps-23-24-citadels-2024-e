@@ -72,4 +72,15 @@ public class Bot extends Player {
     }
 
 
+    public District chooseCard(List<District> cards) {
+        District chosenCard = null;
+        int minCost = Integer.MAX_VALUE;
+        for (District card : cards) {
+            if (card.getPrice() <= this.getGold() && card.getPrice() < minCost) {
+                chosenCard = card;
+                minCost = card.getPrice();
+            }
+        }
+        return chosenCard;
+    }
 }
