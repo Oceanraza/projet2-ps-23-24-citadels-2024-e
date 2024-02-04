@@ -30,9 +30,7 @@ public class RandomAlgo extends BaseAlgo {
     }
     public void startOfTurn(Game game) { //Always draws if needed
         if (utils.generateRandomNumber(10) > 5) {
-            District drawnDistrict = game.drawCard();
-            System.out.println(bot.getName() + " pioche le " + drawnDistrict);
-            bot.getDistrictsInHand().add(drawnDistrict);
+            game.drawCard(bot);
         } else { // Otherwise it gets 2 gold coins
             System.out.println(bot.getName() + " prend deux pièces d'or.");
             bot.addGold(2);

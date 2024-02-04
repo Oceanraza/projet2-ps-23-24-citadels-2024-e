@@ -1,8 +1,6 @@
 package fr.cotedazur.univ.polytech.startingpoint.character;
 
-import fr.cotedazur.univ.polytech.startingpoint.city.City;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
-import fr.cotedazur.univ.polytech.startingpoint.city.DistrictColor;
 import fr.cotedazur.univ.polytech.startingpoint.Game;
 import fr.cotedazur.univ.polytech.startingpoint.player.*;
 
@@ -43,7 +41,7 @@ public class Magician extends GameCharacter {
             int nb = player.getDistrictsInHand().size();
             for (int i  = 0 ; i < nb; i++){
                 player.getDistrictsInHand().remove(0);
-                player.addDistrictInHand(game.drawCard());
+                game.drawCard(player);
             }
             System.out.println(player.getName() + " a échangé sa main avec le deck");
         }

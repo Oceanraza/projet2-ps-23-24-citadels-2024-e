@@ -89,7 +89,6 @@ public class Game {
 
         // Give 4 cards to each player
         giveStartingCards();
-
     }
 
     private void giveStartingCards() {
@@ -153,8 +152,11 @@ public class Game {
         return sortedPlayersByScore;
     }
 
-    public District drawCard() {
-        return deck.drawCard();
+    public District drawCard(Player player) {
+        District drawnDistrict = deck.drawCard();
+        System.out.println(player.getName() + " pioche le " + drawnDistrict);
+        player.getDistrictsInHand().add(drawnDistrict);
+        return drawnDistrict;
     }
 
     public Deck getDeck() {

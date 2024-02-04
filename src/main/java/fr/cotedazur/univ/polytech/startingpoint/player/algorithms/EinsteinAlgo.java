@@ -21,9 +21,7 @@ public class EinsteinAlgo extends BaseAlgo {
 
     public void startOfTurn(Game game) { //Always draws if needed
         if (bot.getDistrictsInHand().isEmpty() || bot.districtsInHandAreBuilt()) {
-            District drawnDistrict = game.drawCard();
-            System.out.println(bot.getName() + " pioche le " + drawnDistrict);
-            bot.getDistrictsInHand().add(drawnDistrict);
+            game.drawCard(bot);
         } else { // Otherwise it gets 2 gold coins
             System.out.println(bot.getName() + " prend deux pièces d'or.");
             bot.addGold(2);
