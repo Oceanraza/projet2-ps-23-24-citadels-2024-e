@@ -5,6 +5,8 @@ import fr.cotedazur.univ.polytech.startingpoint.GameState;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.player.Bot;
 
+import java.util.Optional;
+
 public abstract class BaseAlgo {
     protected Bot bot;
     public BaseAlgo(){}
@@ -19,4 +21,6 @@ public abstract class BaseAlgo {
     public abstract void magicianAlgorithm(Game game);
     public abstract void buildOrNot(GameState gameState);
     public abstract void huntedQuarterAlgorithm(District huntedQuarter);
+    public abstract boolean manufactureChoice();
+    public abstract Optional<District> laboratoryChoice();
 }
