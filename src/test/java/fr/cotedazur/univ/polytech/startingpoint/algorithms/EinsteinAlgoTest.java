@@ -12,7 +12,6 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class EinsteinAlgoTest {
@@ -37,7 +36,7 @@ class EinsteinAlgoTest {
     @Test
     void shouldDrawThreeCardsWhenObservatoryIsBuilt() {
         District observatory = new District("Observatoire", 4, DistrictColor.special);
-        when(bot.getCity().hasDistrict(observatory)).thenReturn(true);
+        when(bot.getCity().containsDistrict("Observatoire")).thenReturn(true);
         when(game.drawCard()).thenReturn(observatory);
 
         einsteinAlgo.startOfTurn(game);
@@ -63,6 +62,7 @@ class EinsteinAlgoTest {
 
         verify(game).drawCard();
     }
+
     @Test
     void shouldAddTwoGoldWhenHandIsNotEmptyAndNotAllDistrictsAreBuilt() {
         List<District> districtsInHand = mock(List.class);
@@ -74,10 +74,10 @@ class EinsteinAlgoTest {
 
         verify(bot).addGold(2);
     }
+
     @Test
     void shouldDrawTwoCardsWhenLibraryIsBuiltAndHandSizeIsLessThanTwo() {
-        District library = new District("Bibliothèque", 6, DistrictColor.special);
-        when(bot.getCity().hasDistrict(library)).thenReturn(true);
+        when(bot.getCity().containsDistrict("Bibliothèque")).thenReturn(true);
         List<District> districtsInHand = mock(List.class);
         when(bot.getDistrictsInHand()).thenReturn(districtsInHand);
         when(districtsInHand.size()).thenReturn(1);
@@ -90,10 +90,8 @@ class EinsteinAlgoTest {
 
     @Test
     void shouldDrawOneCardWhenHandIsEmptyAndNoSpecialDistrictsAreBuilt() {
-        District library = new District("Bibliothèque", 6, DistrictColor.special);
-        District observatory = new District("Observatoire", 4, DistrictColor.special);
-        when(bot.getCity().hasDistrict(library)).thenReturn(false);
-        when(bot.getCity().hasDistrict(observatory)).thenReturn(false);
+        when(bot.getCity().containsDistrict("Bibliothèque")).thenReturn(false);
+        when(bot.getCity().containsDistrict("Observatoire")).thenReturn(false);
         List<District> districtsInHand = mock(List.class);
         when(bot.getDistrictsInHand()).thenReturn(districtsInHand);
         when(districtsInHand.isEmpty()).thenReturn(true);
@@ -105,10 +103,8 @@ class EinsteinAlgoTest {
 
     @Test
     void shouldAddTwoGoldWhenHandIsNotEmptyAndNoSpecialDistrictsAreBuilt() {
-        District library = new District("Bibliothèque", 6, DistrictColor.special);
-        District observatory = new District("Observatoire", 4, DistrictColor.special);
-        when(bot.getCity().hasDistrict(library)).thenReturn(false);
-        when(bot.getCity().hasDistrict(observatory)).thenReturn(false);
+        when(bot.getCity().containsDistrict("Bibliothèque")).thenReturn(false);
+        when(bot.getCity().containsDistrict("Observatoire")).thenReturn(false);
         List<District> districtsInHand = mock(List.class);
         when(bot.getDistrictsInHand()).thenReturn(districtsInHand);
         when(districtsInHand.isEmpty()).thenReturn(false);
@@ -117,11 +113,11 @@ class EinsteinAlgoTest {
 
         verify(bot).addGold(2);
     }
+
     @Test
     void shouldNotTakeBackDestroyedDistrictWhenPlayerIsCondottiere() {
-        District cemetery = new District("Cimetière", 5, DistrictColor.special);
         District destroyedDistrict = new District("Quartier", 3, DistrictColor.marchand);
-        when(bot.getCity().hasDistrict(cemetery)).thenReturn(true);
+        when(bot.getCity().containsDistrict("Cimetière")).thenReturn(true);
         when(bot.getGold()).thenReturn(2);
         when(bot.getCharacterName()).thenReturn("Condottiere");
 

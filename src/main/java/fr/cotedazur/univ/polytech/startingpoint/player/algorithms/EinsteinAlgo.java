@@ -2,7 +2,6 @@ package fr.cotedazur.univ.polytech.startingpoint.player.algorithms;
 
 import fr.cotedazur.univ.polytech.startingpoint.Game;
 import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacter;
-import fr.cotedazur.univ.polytech.startingpoint.character.King;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.city.DistrictColor;
 import fr.cotedazur.univ.polytech.startingpoint.player.Bot;
@@ -22,21 +21,21 @@ public class EinsteinAlgo extends BaseAlgo {
         drawCardOrAddGold(game);
     }
 
-    private void LybraryLogic(Game game) { //draws 2 cards
+    public void lybraryLogic(Game game) { //draws 2 cards
         District library = new District("Bibliothèque", 6, DistrictColor.special);
-        if (bot.getCity().hasDistrict(library)) {
+        if (bot.getCity().containsDistrict("Bibliothèque")) {
             for (int i = 0; i < 2; i++) {
                 drawOneCard(game);
             }
         }
     }
 
-    private void ObservatoryLogic(Game game) { //draws 3 cards and keeps one
+    public void observatoryLogic(Game game) { //draws 3 cards and keeps one
             List<District> threeCards = new ArrayList<>();
             for (int i = 0; i < 3; i++) {
                 threeCards.add(game.drawCard());
             }
-            District chosenCard = bot.chooseCard(threeCards);
+            District chosenCard = chooseCard(threeCards);
             threeCards.remove(chosenCard);
             for (District card : threeCards) {
                 game.getDeck().discard(card);
@@ -45,14 +44,12 @@ public class EinsteinAlgo extends BaseAlgo {
             bot.getDistrictsInHand().add(chosenCard);
     }
     private void drawCardOrAddGold(Game game) {
-        District library = new District("Bibliothèque", 6, DistrictColor.special);
-        District observatory = new District("Observatoire", 4, DistrictColor.special);
 
         if (bot.getDistrictsInHand().isEmpty() || bot.districtsInHandAreBuilt()) {
-            if (bot.getCity().hasDistrict(library) && bot.getDistrictsInHand().size() < 2) {
-                LybraryLogic(game); //draws 2 cards
-            } else if (bot.getCity().hasDistrict(observatory)) {
-                ObservatoryLogic(game); //draws 3 cards and keeps one
+            if (bot.getCity().containsDistrict("Bibliothèque") && bot.getDistrictsInHand().size() < 2) {
+                lybraryLogic(game); //draws 2 cards
+            } else if (bot.getCity().containsDistrict("Observatoire")) {
+                observatoryLogic(game); //draws 3 cards and keeps one
             } else {
                 drawOneCard(game); //draws one card
             }
@@ -62,7 +59,7 @@ public class EinsteinAlgo extends BaseAlgo {
     }
     public void cemeteryLogic(Game game, Player targetedPlayer, District destroyedDistrict) {
         District cemetery = new District("Cimetière", 5, DistrictColor.special);
-        if (bot.getCity().hasDistrict(cemetery) && bot.getGold() >= 1 && !bot.getCharacterName().equals("Condottiere")) {
+        if (bot.getCity().containsDistrict("Cimetière") && bot.getGold() >= 1 && !bot.getCharacterName().equals("Condottiere")) {
             System.out.println(bot.getName() + " utilise le Cimetière pour reprendre le " + destroyedDistrict + " dans sa main.");
             bot.getDistrictsInHand().add(destroyedDistrict);
             bot.addGold(-1);
@@ -165,6 +162,18 @@ public class EinsteinAlgo extends BaseAlgo {
 
     public void setBot(Bot bot) {
         this.bot = bot;
+    }
+
+    public District chooseCard(List<District> cards) {
+        District chosenCard = null;
+        int minCost = Integer.MAX_VALUE;
+        for (District card : cards) {
+            if (card.getPrice() <= bot.getGold() && card.getPrice() < minCost) {
+                chosenCard = card;
+                minCost = card.getPrice();
+            }
+        }
+        return chosenCard;
     }
 }
 

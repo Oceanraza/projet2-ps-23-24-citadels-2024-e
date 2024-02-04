@@ -60,7 +60,4 @@ public class City {
         }
     }
 
-    public boolean hasDistrict(District district) {
-        return this.getDistrictsBuilt().contains(district);
-    }
 }

@@ -76,5 +76,9 @@ public class RandomAlgo extends BaseAlgo {
             }
         }
     }
+
+    public District chooseCard(List<District> cards){
+        return cards.get(utils.generateRandomNumber(cards.size()));
+    }
 }
 
