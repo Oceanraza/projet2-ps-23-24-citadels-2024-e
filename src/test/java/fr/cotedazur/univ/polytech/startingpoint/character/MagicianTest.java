@@ -64,7 +64,6 @@ class MagicianTest {
         firstBuilder.setGameCharacter(magician);
         District distToSwitch = new District("ToSwitch", 0, DistrictColor.marchand);
         firstBuilder.addDistrictInHand(distToSwitch);
-        firstBuilder.addDistrictInHand(distToSwitch);
         firstBuilder.getGameCharacter().specialEffect(firstBuilder, game, false);
         assertNotEquals(distToSwitch, firstBuilder.getDistrictsInHand().get(0));
     }

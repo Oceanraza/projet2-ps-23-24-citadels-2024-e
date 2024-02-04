@@ -28,6 +28,7 @@ public class RandomAlgo extends BaseAlgo {
                 break;
         }
     }
+
     public int startOfTurnChoice() {
         if (utils.generateRandomNumber(2) == 0) {
             return 1; // Take 2 gold coins

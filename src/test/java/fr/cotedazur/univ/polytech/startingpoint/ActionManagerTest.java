@@ -89,9 +89,9 @@ class ActionManagerTest {
         bot.setGold(8);
         bot.botAlgo = new EinsteinAlgo();
         bot.botAlgo.setPlayer(bot);
-        bot.addDistrictInHand(game.drawCard());
+        bot.addDistrictInHand(game.drawCard(bot));
         for (int i = 0; i < 7; i++) {
-            District district = game.drawCard();
+            District district = game.drawCard(bot);
             try {
                 bot.addDistrictBuilt(district, gameState);
             } catch (DistrictAlreadyBuiltException e) {
