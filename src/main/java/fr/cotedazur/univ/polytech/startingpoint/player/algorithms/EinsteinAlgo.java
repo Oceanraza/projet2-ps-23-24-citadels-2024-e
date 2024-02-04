@@ -30,19 +30,29 @@ public class EinsteinAlgo extends BaseAlgo {
         }
     }
 
-    public void observatoryLogic(Game game) { //draws 3 cards and keeps one
-            List<District> threeCards = new ArrayList<>();
-            for (int i = 0; i < 3; i++) {
-                threeCards.add(game.drawCard());
-            }
-            District chosenCard = chooseCard(threeCards);
-            threeCards.remove(chosenCard);
-            for (District card : threeCards) {
-                game.getDeck().discard(card);
-            }
-            System.out.println(bot.getName() + " pioche le " + chosenCard);
-            bot.getDistrictsInHand().add(chosenCard);
+    public void observatoryLogic(Game game) {
+        List<District> threeCards = drawThreeCards(game);
+        botChoosesCard(game, threeCards);
     }
+
+    public List<District> drawThreeCards(Game game) {
+        List<District> threeCards = new ArrayList<>();
+        for (int i = 0; i < 3; i++) {
+            threeCards.add(game.drawCard());
+        }
+        return threeCards;
+    }
+
+    public void botChoosesCard(Game game, List<District> threeCards) {
+        District chosenCard = chooseCard(threeCards);
+        threeCards.remove(chosenCard);
+        for (District card : threeCards) {
+            game.getDeck().discard(card);
+        }
+        System.out.println(bot.getName() + " pioche le " + chosenCard);
+        bot.getDistrictsInHand().add(chosenCard);
+    }
+
     private void drawCardOrAddGold(Game game) {
 
         if (bot.getDistrictsInHand().isEmpty() || bot.districtsInHandAreBuilt()) {
