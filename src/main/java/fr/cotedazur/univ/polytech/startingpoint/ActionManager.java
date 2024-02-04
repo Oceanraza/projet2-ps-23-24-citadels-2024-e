@@ -1,10 +1,25 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
+import fr.cotedazur.univ.polytech.startingpoint.city.District;
+import fr.cotedazur.univ.polytech.startingpoint.player.Bot;
 import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 
 public class ActionManager {
     private ActionManager() {
         throw new IllegalStateException("Action Manager is a utility class");
+    }
+
+    public static void startOfTurn(Game game, Player player) {
+        Bot bot = (Bot) player;
+        int choice = bot.botAlgo.startOfTurnChoice();
+        if (choice == 1) { // Take 2 gold coins
+            System.out.println(bot.getName() + " prend deux pièces d'or.");
+            bot.addGold(2);
+        } else { // Draw a card
+            District drawnDistrict = game.drawCard();
+            System.out.println(bot.getName() + " pioche le " + drawnDistrict);
+            bot.getDistrictsInHand().add(drawnDistrict);
+        }
     }
 
     public static int printGold(Player player, int addedGold){

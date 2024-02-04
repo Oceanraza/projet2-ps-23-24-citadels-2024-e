@@ -3,7 +3,6 @@ package fr.cotedazur.univ.polytech.startingpoint.player.algorithms;
 import fr.cotedazur.univ.polytech.startingpoint.Game;
 import fr.cotedazur.univ.polytech.startingpoint.GameState;
 import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacter;
-import fr.cotedazur.univ.polytech.startingpoint.character.King;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.city.DistrictColor;
 import fr.cotedazur.univ.polytech.startingpoint.player.Player;
@@ -19,14 +18,11 @@ public class EinsteinAlgo extends BaseAlgo {
         super();
     }
 
-    public void startOfTurn(Game game) { //Always draws if needed
+    public int startOfTurnChoice() { //Always draws if needed
         if (bot.getDistrictsInHand().isEmpty() || bot.districtsInHandAreBuilt()) {
-            District drawnDistrict = game.drawCard();
-            System.out.println(bot.getName() + " pioche le " + drawnDistrict);
-            bot.getDistrictsInHand().add(drawnDistrict);
-        } else { // Otherwise it gets 2 gold coins
-            System.out.println(bot.getName() + " prend deux pièces d'or.");
-            bot.addGold(2);
+            return 2; // Draw a card
+        } else {
+            return 1; // Take 2 gold coins
         }
     }
     public void charAlgorithmsManager(Game game){

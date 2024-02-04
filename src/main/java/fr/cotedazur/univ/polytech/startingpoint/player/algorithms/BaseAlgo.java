@@ -11,7 +11,7 @@ public abstract class BaseAlgo {
     public void setPlayer(Bot player){
         this.bot = player;
     }
-    public abstract void startOfTurn(Game game); //Always draws if needed
+    public abstract int startOfTurnChoice();
     public abstract void chooseCharacterAlgorithm(Game game);
     public abstract void charAlgorithmsManager(Game game);
     public abstract void warlordAlgorithm(Game game);

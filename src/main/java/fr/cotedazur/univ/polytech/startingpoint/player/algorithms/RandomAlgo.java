@@ -28,15 +28,11 @@ public class RandomAlgo extends BaseAlgo {
                 break;
         }
     }
-    public void startOfTurn(Game game) { //Always draws if needed
-        if (utils.generateRandomNumber(10) > 5) {
-            District drawnDistrict = game.drawCard();
-            System.out.println(bot.getName() + " pioche le " + drawnDistrict);
-            bot.getDistrictsInHand().add(drawnDistrict);
-        } else { // Otherwise it gets 2 gold coins
-            System.out.println(bot.getName() + " prend deux pièces d'or.");
-            bot.addGold(2);
+    public int startOfTurnChoice() {
+        if (utils.generateRandomNumber(2) == 0) {
+            return 1; // Take 2 gold coins
         }
+        return 2; // Draw a card
     }
 
     public void chooseCharacterAlgorithm(Game game) {
@@ -46,7 +42,7 @@ public class RandomAlgo extends BaseAlgo {
         }
 
     public void warlordAlgorithm(Game game) {
-        if (utils.generateRandomNumber(10) > 5) { // have 50% chance to decide to destroy a building of a random player or not
+        if (utils.generateRandomNumber(2) == 0) { // have 50% chance to decide to destroy a building of a random player or not
             List<Player> playerList = game.getSortedPlayersByScoreForWarlord();
             playerList.remove(bot);
             Collections.shuffle(playerList);
@@ -63,7 +59,7 @@ public class RandomAlgo extends BaseAlgo {
         }
     }
     public void magicianAlgorithm (Game game){
-        if (utils.generateRandomNumber(10) > 5) { // have 50% chance to decide to destroy a building of a random player or not
+        if (utils.generateRandomNumber(2) == 0) { // have 50% chance to decide to destroy a building of a random player or not
             List<Player> playerList = game.getSortedPlayersByScoreForWarlord();
             playerList.remove(bot);
             bot.getGameCharacter().specialEffect(bot, game, true, playerList.get(utils.generateRandomNumber(playerList.size())));
