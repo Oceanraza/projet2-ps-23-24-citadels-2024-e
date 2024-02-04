@@ -65,7 +65,7 @@ public class Bot extends Player {
         Collect gold
          */
         // The bot draws a card if it has no district in its hand.
-        botAlgo.startOfTurn(game);
+        ActionManager.startOfTurn(game, this);
         addGold(ActionManager.collectGold(this));
         botAlgo.charAlgorithmsManager(game);
         // The bot builds one district if it has enough money
