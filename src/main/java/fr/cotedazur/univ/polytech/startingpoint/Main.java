@@ -8,6 +8,9 @@ import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 
 import java.util.List;
 import java.util.Comparator;
+/**
+ * Main class of the game
+ */
 public class Main {
 
     protected static final String Shinning_blue = "\033[0;94m";

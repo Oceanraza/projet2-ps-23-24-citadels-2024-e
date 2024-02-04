@@ -3,7 +3,10 @@ package fr.cotedazur.univ.polytech.startingpoint;
 import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 
 import java.util.List;
-
+/**
+ * This class represents the state of the game
+ * It contains the current turn
+ */
 public class GameState {
     private int turn;
 

@@ -12,6 +12,10 @@ import fr.cotedazur.univ.polytech.startingpoint.player.*;
 import com.fasterxml.jackson.databind.JsonNode;
 import java.io.IOException;
 
+/**
+ * The Game class is the main class of the game. It contains the deck, the crown, the players and the characters.
+ * It also contains the methods to start the game, to shuffle the characters and to give the cards to the players.
+ */
 public class Game {
     private static final int START_CARDS_NUMBER = 4;
     private Deck deck;

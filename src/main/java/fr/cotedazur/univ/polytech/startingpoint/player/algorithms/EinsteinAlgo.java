@@ -10,6 +10,10 @@ import fr.cotedazur.univ.polytech.startingpoint.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
+/**
+ * This class represents the algorithm of the bot Einstein
+ * It contains the logic of the bot's actions
+ */
 
 public class EinsteinAlgo extends BaseAlgo {
     boolean lowestDistrictFound = false;

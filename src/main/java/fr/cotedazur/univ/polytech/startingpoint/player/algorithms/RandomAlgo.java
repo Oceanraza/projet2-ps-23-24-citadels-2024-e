@@ -7,6 +7,10 @@ import fr.cotedazur.univ.polytech.startingpoint.player.Bot;
 import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 import fr.cotedazur.univ.polytech.startingpoint.Utils;
 import java.util.*;
+/**
+ * This class represents the random algorithm
+ * It contains the random algorithm for the bot
+ */
 
 public class RandomAlgo extends BaseAlgo {
     Utils utils = new Utils();

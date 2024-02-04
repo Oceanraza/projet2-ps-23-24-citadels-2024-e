@@ -2,6 +2,11 @@ package fr.cotedazur.univ.polytech.startingpoint;
 
 import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 
+/**
+ * This class is a utility class that contains methods to perform actions in the game
+ *
+ */
+
 public class ActionManager {
     private ActionManager() {
         throw new IllegalStateException("Action Manager is a utility class");
