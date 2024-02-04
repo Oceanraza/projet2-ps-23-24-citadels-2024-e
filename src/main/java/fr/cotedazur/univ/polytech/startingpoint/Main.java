@@ -53,6 +53,7 @@ public class Main {
                     if(turnBuilt.isPresent() && gameState.getTurn() > turnBuilt.get()) {
                         Bot bot = (Bot) player;
                         bot.botAlgo.huntedQuarterAlgorithm(district);
+                        System.out.println("\n[ Choix de fin de partie ]");
                         System.out.println(player.getName() + " utilise la Cour des miracles en tant que quartier " + district.getColor() + ".");
                     }
                 }
@@ -111,6 +112,7 @@ public class Main {
             gameState.nextTurn();
         }
         finalChoice(players, gameState);
+        System.out.println();
         announceWinner(players, firstBuilder, gameState);
     }
 }
