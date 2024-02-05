@@ -6,7 +6,7 @@ import fr.cotedazur.univ.polytech.startingpoint.player.*;
 
 public class Merchant extends GameCharacter {
     public Merchant() {
-        super("Marchand", 6, DistrictColor.marchand);
+        super(GameCharacterRole.MERCHANT, 6, DistrictColor.TRADE);
     }
 
     @Override

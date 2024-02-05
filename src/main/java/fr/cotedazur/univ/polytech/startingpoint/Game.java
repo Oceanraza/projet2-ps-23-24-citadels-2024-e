@@ -17,10 +17,22 @@ public class Game {
     private Deck deck;
     private Crown crown;
     private List<Player> players;
-    private Map<String, GameCharacter> allCharacters;
-    private ArrayList<GameCharacter> availableChars;
-    // Getter
+    private List<GameCharacter> allCharacters;
+    private List<GameCharacter> charactersInGame;
+    private List<GameCharacter> availableChars;
 
+    Assassin assassin;
+    King king;
+    Bishop bishop;
+    Merchant merchant;
+    Warlord warlord;
+    Magician magician;
+
+    public Game(){
+        init();
+    }
+
+    // Getter
     public Crown getCrown() {
         return crown;
     }
@@ -30,12 +42,12 @@ public class Game {
     public List<GameCharacter> getAvailableChars() {
         return availableChars;
     }
+    public List<GameCharacter> getCharactersInGame() { return charactersInGame; }
 
     // Setter
     public void setPlayers(Player... bots) { // Add players to the list of players
         players.addAll(Arrays.asList(bots));
     }
-
     public List<Player> setRunningOrder() { // Set running order depending on the running order of the characters
         return this.getPlayers().stream()
                 .sorted(Comparator.comparingInt(player -> player.getGameCharacter().getRunningOrder()))
@@ -43,22 +55,34 @@ public class Game {
     }
 
     // Add and remove
-
     public void removeAvailableChar(GameCharacter cha) {
         availableChars.remove(cha);
     }
+    private void removeCharactersInGame() {
+        for (int i = 0; i < 2; i++) {
+            int indexCharacter;
+            GameCharacter cha;
 
-    public Game(){
-        init();
+            indexCharacter = Utils.generateRandomNumber(charactersInGame.size() - 1);
+            cha = charactersInGame.get(indexCharacter);
+
+            // The king must be available for the players
+            while (cha.getRole().equals(GameCharacterRole.KING)) {
+                indexCharacter = Utils.generateRandomNumber(charactersInGame.size() - 1);
+                cha = charactersInGame.get(indexCharacter);
+            }
+            charactersInGame.remove(cha);
+            System.out.println(cha.getRole().toStringLeOrL() + " ne sera pas joué ce tour");
+        }
     }
 
     // Init starts off the game by creating the deck, the crown, the players and the characters
-    public void init(){
+    public void init() {
         deck = new Deck();
-        allCharacters = new HashMap<>();
+        allCharacters = new ArrayList<>();
         availableChars = new ArrayList<>();
 
-            // Specify the path to your JSON file
+        // Specify the path to your JSON file
         try {
             JsonNode tempNode = Utils.parseJsonFromFile
                     ("src/main/resources/init_database.json");
@@ -66,6 +90,7 @@ public class Game {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
         // Create a crown
         crown = new Crown();
 
@@ -73,11 +98,20 @@ public class Game {
         players = new ArrayList<>();
 
         // Creates the characters
-        allCharacters.put("Roi", new King());
-        allCharacters.put("Marchand", new Merchant());
-        allCharacters.put("Eveque", new Bishop());
-        allCharacters.put("Condottiere", new Warlord());
-        allCharacters.put("Magicien", new Magician());
+        assassin = new Assassin();
+        king = new King();
+        bishop = new Bishop();
+        merchant = new Merchant();
+        warlord = new Warlord();
+        magician = new Magician();
+
+        // Create the list of characters
+        allCharacters.add(assassin);
+        allCharacters.add(king);
+        allCharacters.add(bishop);
+        allCharacters.add(merchant);
+        allCharacters.add(warlord);
+        allCharacters.add(magician);
 
         // Give the cards to the players
         startCardGame();
@@ -91,6 +125,17 @@ public class Game {
         giveStartingCards();
     }
 
+    public void shuffleCharacters() {
+        // Reset the previous lists
+        availableChars.clear();
+        charactersInGame = new ArrayList<>(allCharacters);
+
+        // Remove 2 characters from the list of characters in game
+        removeCharactersInGame();
+
+        availableChars = new ArrayList<>(charactersInGame);
+    }
+
     private void giveStartingCards() {
         for (Player player : players) {
             for (int i = 0; i < START_CARDS_NUMBER; i++) {
@@ -99,24 +144,14 @@ public class Game {
         }
     }
 
-    public void shuffleChars() {
-        while (!availableChars.isEmpty()) {
-            availableChars.remove(0);
-        }
-        availableChars.add(allCharacters.get("Roi"));
-        availableChars.add(allCharacters.get("Marchand"));
-        availableChars.add(allCharacters.get("Eveque"));
-        availableChars.add(allCharacters.get("Condottiere"));
-        availableChars.add(allCharacters.get("Magicien"));
-    }
-
     public void printAvailableCharacters() {
         System.out.println("Les personnages disponibles sont : ");
         for (GameCharacter temp : availableChars) {
-            System.out.print(temp.getName() + " ");
+            System.out.print(temp.getRole() + " ");
         }
         System.out.println(" ");
     }
+
     public void charSelectionFiller(){
         for (Player p: players){
             if (p.getGameCharacter() == null){
@@ -128,28 +163,55 @@ public class Game {
         }
     }
 
-    public String toString() {
-        return deck.toString();
-    }
-
-    public void setAllCharsToNull() {
-        for (Player  p: players){
+    // Removes characters of players
+    public void resetChars() {
+        for (Player p: players) {
             p.setGameCharacter(null);
         }
     }
-    public List<Player> getSortedPlayersByScoreForWarlord(){
+
+    // Removes attacks on characters
+    public void resetCharsState() {
+        for (GameCharacter cha: allCharacters) {
+            cha.setIsAlive(true);
+            cha.setAttacker(null);
+        }
+    }
+
+    public List<Player> getSortedPlayersByScore(){
         List<Player> sortedPlayersByScore = new ArrayList<>();
-        for (Player p : getPlayers()){
-            if (!p.getGameCharacter().getName().equals("Eveque")){
-                p.calculateAndSetScore();
-                sortedPlayersByScore.add(p);
-            }
+        for (Player player: getPlayers()) {
+            player.calculateAndSetScore();
+            sortedPlayersByScore.add(player);
         }
         Comparator<Player> playerComparator = Comparator
                 .comparingInt(Player::getScore)
                 .reversed();
         sortedPlayersByScore.sort(playerComparator);
         return sortedPlayersByScore;
+    }
+
+    public List<Player> getSortedPlayersByScoreForWarlord(){
+        List<Player> sortedPlayersByScore = getSortedPlayersByScore();
+        for (Player player: sortedPlayersByScore) {
+            // Warlord can't destroy bishop's districts
+            if (player.getGameCharacter().getRole().equals(GameCharacterRole.BISHOP)) {
+                sortedPlayersByScore.remove(player);
+                return sortedPlayersByScore;
+            }
+        }
+        return sortedPlayersByScore;
+    }
+
+    public List<GameCharacter> getKillableCharacters() {
+        List<GameCharacter> killableCharacters = getCharactersInGame();
+        for (GameCharacter cha: killableCharacters) {
+            if (cha.getRole().equals(GameCharacterRole.ASSASSIN)) {
+                killableCharacters.remove(cha);
+                break;
+            }
+        }
+        return killableCharacters;
     }
 
     public District drawCard(Player player) {
@@ -163,4 +225,8 @@ public class Game {
         return deck;
     }
 
+    @Override
+    public String toString() {
+        return deck.toString();
+    }
 }

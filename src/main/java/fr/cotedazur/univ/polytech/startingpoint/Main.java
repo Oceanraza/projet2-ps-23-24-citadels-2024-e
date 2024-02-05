@@ -1,6 +1,8 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
+import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacter;
+import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole;
 import fr.cotedazur.univ.polytech.startingpoint.player.algorithms.EinsteinAlgo;
 import fr.cotedazur.univ.polytech.startingpoint.player.algorithms.RandomAlgo;
 
@@ -23,13 +25,14 @@ public class Main {
         // Sort the players list using the custom comparator
         players.sort(playerComparator);
     }
+
     public static List<Player> calculateScores(List<Player> players, Player firstBuilder, GameState gameState) {
         for (Player player : players) {
             player.calculateAndSetScore();
             if (player == firstBuilder) { // If the player was the first to build his 8 districts
-                player.setScore(player.getScore()+4);
+                player.setScore(player.getScore() + 4);
             } else if (gameState.isFinished(player)) { // If the others players have finished building his 8 districts too
-                player.setScore(player.getScore()+2);
+                player.setScore(player.getScore() + 2);
             }
         }
         sortPlayers(players);
@@ -71,23 +74,24 @@ public class Main {
         // Adding players to the game
         newGame.setPlayers(new Bot("Donald", new EinsteinAlgo()), new Bot("Picsou", new EinsteinAlgo()), new Bot("Riri", new RandomAlgo()), new Bot("Fifi", new RandomAlgo()));
 
-
         List<Player> players = newGame.getPlayers();
 
-        //Gives the startingCards to all the players.
+        // Gives the startingCards to all the players.
         newGame.startCardGame();
-
 
         Player firstBuilder = null;
         while (!gameState.isGameFinished(players)) {
-            newGame.setAllCharsToNull();
-            newGame.shuffleChars();
             Bot crownOwner = (Bot) newGame.getCrown().getOwner();
             // "\033[0;94m" : Shinning blue
             // "\033[0;34m" : Blue
             // "\033[0m" : Reset
-            System.out.println("\033[0;94m" + "\n\n----- Tour numero " + gameState.getTurn() + " -----" + "\033[0m" + "\nLa couronne appartient à "
-                    + (crownOwner != null ? crownOwner.getName() : "personne"));
+            System.out.println("\033[0;94m" + "\n\n----- Tour numéro " + gameState.getTurn() + " -----" + "\033[0m" +
+                    "\nLa couronne appartient à " + (crownOwner != null ? crownOwner.getName() : "personne"));
+
+            // Reset characters, their states and shuffle cards
+            newGame.resetChars();
+            newGame.resetCharsState();
+            newGame.shuffleCharacters();
 
             // Character selection phase
             System.out.println("\033[0;34m" + "\n[ Phase 1 ] Choix des personnages" + "\033[0m");
@@ -103,13 +107,27 @@ public class Main {
             List<Player> runningOrder = newGame.setRunningOrder();
 
             for (Player player: runningOrder) {
+                GameCharacter cha = player.getGameCharacter();
                 System.out.println(player);
-                player.play(newGame, gameState);
-                if (gameState.isFinished(player)) {
-                    firstBuilder = player;
+                // If the character is alive
+                if (cha.getIsAlive()) {
+                    System.out.println(player);
+                    player.play(newGame, gameState);
+                    if (gameState.isFinished(player)) {
+                        firstBuilder = player;
+                    }
+                }
+                // If the player has been killed, he cannot play
+                else {
+                    System.out.println(cha.getRole().toStringLeOrL() + " a été tué par " + cha.getAttacker().getName());
+                    System.out.println(player.getName() + " ne pourra pas jouer ce tour !");
+                    // If the king is killed, he gets the crown at the end of this turn
+                    if (cha.getRole() == GameCharacterRole.KING) {
+                        newGame.getCrown().setOwner(player);
+                        System.out.println("Il récupèrera la couronne à la fin de ce tour");
+                    }
                 }
             }
-
             gameState.nextTurn();
         }
         finalChoice(players, gameState);
