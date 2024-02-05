@@ -10,18 +10,14 @@ import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 import static fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole.*;
 
 public class ActionManager {
-    public static int printGold(Player player, int addedGold){
-        player.addGold(addedGold);
-        if (addedGold != 0) {
-            System.out.println((player.getGameCharacter().getRole().toStringLeOrL()) + " a donné " + addedGold + " or à " + player.getName());
     private ActionManager() {
         throw new IllegalStateException("Action Manager is a utility class");
     }
 
-    public static int printGold(Player player, int addenGold){
-        player.addGold(addenGold);
-        if (addenGold != 0) {
-            System.out.println((player.getGameCharacter().getRole().toStringLeOrL()) + " a donné " + addenGold + " or à " + player.getName());
+    public static int printGold(Player player, int addedGold){
+        player.addGold(addedGold);
+        if (addedGold != 0) {
+            System.out.println((player.getGameCharacter().getRole().toStringLeOrL()) + " a donné " + addedGold + " or à " + player.getName());
         }
         return addedGold;
     }
@@ -40,12 +36,6 @@ public class ActionManager {
         } else { // Draw a card
             game.drawCard(bot);
         }
-    }
-
-    public static int printGold(Player player, int addedGold){
-        player.addGold(addedGold);
-        if (addedGold !=0){System.out.println((player.getCharacterName().equals("Eveque")? "L'" :"Le ") + player.getCharacterName() + " a donné " + addedGold + " or a " + player.getName() + ".");}
-        return addedGold;
     }
 
     public static int calculateGold(Player player) {

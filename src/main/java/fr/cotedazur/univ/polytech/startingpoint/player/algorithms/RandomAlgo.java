@@ -33,7 +33,7 @@ public class RandomAlgo extends BaseAlgo {
     }
 
     public int startOfTurnChoice() {
-        if (utils.generateRandomNumber(2) == 0) {
+        if (Utils.generateRandomNumber(2) == 0) {
             return 1; // Take 2 gold coins
         }
         return 2; // Draw a card
@@ -98,6 +98,6 @@ public class RandomAlgo extends BaseAlgo {
     }
 
     public void huntedQuarterAlgorithm(District huntedQuarter) {
-        huntedQuarter.setColor(DistrictColor.values()[utils.generateRandomNumber(DistrictColor.values().length)]);
+        huntedQuarter.setColor(DistrictColor.values()[Utils.generateRandomNumber(DistrictColor.values().length)]);
     }
 }
