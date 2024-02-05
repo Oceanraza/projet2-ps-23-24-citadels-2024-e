@@ -40,7 +40,7 @@ class ArchitectTest {
         game = new Game();
         game.init();
     }
-/*
+
     @Test
     void DrawsTwoTest() { //Tests if the player drew two additionnal cards
         BaseAlgo botAlgo = new EinsteinAlgo();
@@ -72,7 +72,7 @@ class ArchitectTest {
         assertEquals(0, firstBuilder.getCity().getDistrictsBuilt().size());
         botAlgo.buildOrNot(new GameState());
         assertEquals(3, firstBuilder.getCity().getDistrictsBuilt().size());
-    }*/
+    }
     @Test
     void EinsteinAlgoChoosesArchitectTest() { //Tests if the player builds more than one district if he can
         BaseAlgo botAlgo = new EinsteinAlgo();
