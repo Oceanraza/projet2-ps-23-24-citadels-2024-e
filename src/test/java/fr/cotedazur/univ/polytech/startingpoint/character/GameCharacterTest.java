@@ -5,7 +5,8 @@ import fr.cotedazur.univ.polytech.startingpoint.player.Bot;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 class GameCharacterTest {
     King king;
@@ -25,10 +26,10 @@ class GameCharacterTest {
         assertEquals(GameCharacterRole.KING, king.getRole());
         assertEquals(4, king.getRunningOrder());
         assertNull(game.getCrown().getOwner());
-        Bot p =  new Bot("Daffy");
+        Bot p = new Bot("Daffy");
         p.setGameCharacter(new King());
-        p.getGameCharacter().specialEffect(p,game);
-        assertEquals(game.getCrown().getOwner(),p);
+        p.getGameCharacter().specialEffect(p, game);
+        assertEquals(game.getCrown().getOwner(), p);
     }
 
     @Test

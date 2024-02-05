@@ -2,15 +2,21 @@ package fr.cotedazur.univ.polytech.startingpoint.player.algorithms;
 
 import fr.cotedazur.univ.polytech.startingpoint.Game;
 import fr.cotedazur.univ.polytech.startingpoint.GameState;
+import fr.cotedazur.univ.polytech.startingpoint.Utils;
 import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacter;
 import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.city.DistrictColor;
-import fr.cotedazur.univ.polytech.startingpoint.player.Bot;
 import fr.cotedazur.univ.polytech.startingpoint.player.Player;
-import fr.cotedazur.univ.polytech.startingpoint.Utils;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+
+/**
+ * This class represents the random algorithm
+ * It contains the random algorithm for the bot
+ */
 
 public class RandomAlgo extends BaseAlgo {
     public RandomAlgo() {
@@ -87,14 +93,18 @@ public class RandomAlgo extends BaseAlgo {
             bot.getGameCharacter().specialEffect(bot, game, false);
         }
     }
-    public void kingAlgorithm(Game game){bot.getGameCharacter().specialEffect(bot,game);}
-    public void buildOrNot(GameState gameState){ //builds if he can
+
+    public void kingAlgorithm(Game game) {
+        bot.getGameCharacter().specialEffect(bot, game);
+    }
+
+    public void buildOrNot(GameState gameState) { //builds if he can
         int builtThisTurn = 0;
 
         for (District district : bot.getDistrictsInHand()) {
             if (bot.buildDistrict(district, gameState)) {
                 builtThisTurn++;
-                if ((!bot.getCharacterName().equals("Architect"))||(builtThisTurn == 3)){
+                if ((!bot.getCharacterName().equals("Architect")) || (builtThisTurn == 3)) {
                     break;
                 }
             }
@@ -115,5 +125,15 @@ public class RandomAlgo extends BaseAlgo {
             return Optional.ofNullable(districtsInHand.get(Utils.generateRandomNumber(districtsInHand.size())));
         }
         return Optional.empty();
+    }
+
+    @Override
+    public void botChoosesCard(Game game, List<District> threeCards) {
+        District chosenCard = threeCards.get(Utils.generateRandomNumber(threeCards.size()));
+        bot.getDistrictsInHand().add(chosenCard);
+    }
+
+    public District chooseCard(List<District> cards){
+        return cards.get(Utils.generateRandomNumber(cards.size()));
     }
 }

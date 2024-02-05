@@ -6,7 +6,7 @@ import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 import static fr.cotedazur.univ.polytech.startingpoint.CitadelsLogger.LOGGER;
 
 public class Assassin extends GameCharacter {
-    public Assassin () {
+    public Assassin() {
         super(GameCharacterRole.ASSASSIN, 1);
     }
 
@@ -22,7 +22,7 @@ public class Assassin extends GameCharacter {
             LOGGER.info("Vous ne pouvez pas vous assassiner vous-meme !");
             return;
         }
-        for (Player target: game.getPlayers()) {
+        for (Player target : game.getPlayers()) {
             targetCharacter = target.getGameCharacter();
             if (targetCharacter.getRole().equals(killedCharacter)) {
                 targetCharacter.setIsAlive(false);

@@ -15,7 +15,7 @@ public class Magician extends GameCharacter {
     }
 
     @Override
-    public void specialEffect(Player player, Game game,Object... optionalArgs) {
+    public void specialEffect(Player player, Game game, Object... optionalArgs) {
         if ((boolean) optionalArgs[0]) { // If you decide to switch with another player
             List<District> tempD = new ArrayList<>(player.getDistrictsInHand());
             Player victim = (Player) optionalArgs[1];

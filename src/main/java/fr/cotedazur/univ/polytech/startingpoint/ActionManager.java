@@ -7,6 +7,8 @@ import fr.cotedazur.univ.polytech.startingpoint.city.DistrictColor;
 import fr.cotedazur.univ.polytech.startingpoint.player.Bot;
 import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static fr.cotedazur.univ.polytech.startingpoint.CitadelsLogger.LOGGER;
@@ -17,7 +19,7 @@ public class ActionManager {
         throw new IllegalStateException("Action Manager is a utility class");
     }
 
-    public static int printGold(Player player, int addedGold){
+    public static int printGold(Player player, int addedGold) {
         player.addGold(addedGold);
         if (addedGold != 0) {
             LOGGER.info((player.getGameCharacter().getRole().toStringLeOrL()) + " a donne " + addedGold + " or a " + player.getName());
@@ -25,7 +27,7 @@ public class ActionManager {
         return addedGold;
     }
 
-    private static int collectGoldUtil(Player player,  DistrictColor districtColor) {
+    private static int collectGoldUtil(Player player, DistrictColor districtColor) {
         int addedGold = player.getNumberOfDistrictsByColor().get(districtColor);
         return printGold(player, addedGold);
     }
@@ -37,28 +39,56 @@ public class ActionManager {
             LOGGER.info(bot.getName() + " prend deux pieces d'or.");
             bot.addGold(2);
         } else { // Draw a card
+            drawChoice(game, bot);
+        }
+    }
+
+    public static void drawChoice(Game game, Player player) {
+        Bot bot = (Bot) player;
+        if (bot.getGameCharacter().getRole().equals(ARCHITECT)) {
+            architectLogic(game, bot); //draws 2 cards
+        }
+        if (bot.getCity().containsDistrict("Bibliothèque")) {
+            libraryLogic(game, bot); //draws 2 cards
+        } else if (bot.getCity().containsDistrict("Observatoire")) {
+            observatoryLogic(game, bot); //draws 3 cards and keeps one
+        } else {
+            game.drawCard(bot); //draws one card
+        }
+    }
+
+    public static void architectLogic(Game game, Player player) {
+        Bot bot = (Bot) player;
+        for (int i = 0; i < 2; i++) {
             game.drawCard(bot);
-            if (bot.getGameCharacter().getRole().equals(ARCHITECT)){
+        }
+    }
+
+    public static void libraryLogic(Game game, Player player) { //draws 2 cards
+        Bot bot = (Bot) player;
+        for (int i = 0; i < 2; i++) {
+            game.drawCard(bot);
+            if (bot.getGameCharacter().getRole().equals(ARCHITECT)) {
                 game.drawCard(bot);
                 game.drawCard(bot);
             }
         }
     }
 
-    public static int calculateGold(Player player) {
-        int addedGold = 0;
-        boolean hasMagicSchool = player.getCity().containsDistrict("Ecole de magie");
-        if (hasMagicSchool) {
-            addedGold += 1;
+    public static void observatoryLogic(Game game, Player player) {
+        Bot bot = (Bot) player;
+        List<District> threeCards = new ArrayList<>();
+        for (int i = 0; i < 3; i++) {
+            threeCards.add(game.drawCard(bot));
         }
-        addedGold += player.getNumberOfDistrictsByColor().get(player.getGameCharacter().getColor());
-        return addedGold;
+        bot.botAlgo.botChoosesCard(game, threeCards);
     }
+
 
     public static int collectGold(Player player) {
         GameCharacterRole role = player.getGameCharacter().getRole();
         if (role == WARLORD) return collectGoldUtil(player, DistrictColor.MILITARY);
-        else if(role == KING) return collectGoldUtil(player, DistrictColor.NOBLE);
+        else if (role == KING) return collectGoldUtil(player, DistrictColor.NOBLE);
         else if (role == BISHOP) return collectGoldUtil(player, DistrictColor.RELIGIOUS);
         else if (role == MERCHANT) return collectGoldUtil(player, DistrictColor.TRADE);
         return 0;
@@ -72,23 +102,22 @@ public class ActionManager {
         boolean hasManufacture = player.getCity().containsDistrict("Manufacture");
         boolean hasLaboratory = player.getCity().containsDistrict("Laboratoire");
         Bot bot = (Bot) player;
-        if(hasManufacture && bot.getGold() >= 3) {
+        if (hasManufacture && bot.getGold() >= 3) {
             boolean useManufactureEffect = bot.botAlgo.manufactureChoice();
             if(useManufactureEffect) {
                 LOGGER.info(player.getName() + " utilise la Manufacture pour piocher 3 cartes et paye 3 pieces.");
                 bot.removeGold(3);
-                for(int i=0; i<3; i++) {
+                for (int i = 0; i < 3; i++) {
                     game.drawCard(bot);
                 }
             }
         }
-        if(hasLaboratory) {
+        if (hasLaboratory) {
             Optional<District> districtToDiscard = bot.botAlgo.laboratoryChoice();
             if(districtToDiscard.isPresent()) {
                 LOGGER.info(player.getName() + " utilise le Laboratoire pour defausser sa carte " + districtToDiscard.get().getName() + " contre 1 piece d'or.");
                 bot.getDistrictsInHand().remove(districtToDiscard.get());
                 game.getDeck().addDistrict(districtToDiscard.get());
-
                 bot.addGold(1);
             }
         }

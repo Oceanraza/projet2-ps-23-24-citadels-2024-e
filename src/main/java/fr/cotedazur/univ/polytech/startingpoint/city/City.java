@@ -37,9 +37,9 @@ public class City {
         } else throw new DistrictAlreadyBuiltException("This district is already built");
     }
 
-    public void destroyDistrict(District districtToDestroy){
-        for (District d : districtsBuilt){
-            if (d.equals(districtToDestroy)){
+    public void destroyDistrict(District districtToDestroy) {
+        for (District d : districtsBuilt) {
+            if (d.equals(districtToDestroy)) {
                 districtsBuilt.remove(d);
                 return;
             }

@@ -28,11 +28,11 @@ public abstract class Player {
         score = 0;
         gameCharacter = null;
         numberOfDistrictsByColor = new EnumMap<>(DistrictColor.class);
-        numberOfDistrictsByColor.put(DistrictColor.MILITARY,0);
-        numberOfDistrictsByColor.put(DistrictColor.NOBLE,0);
-        numberOfDistrictsByColor.put(DistrictColor.SPECIAL,0);
-        numberOfDistrictsByColor.put(DistrictColor.RELIGIOUS,0);
-        numberOfDistrictsByColor.put(DistrictColor.TRADE,0);
+        numberOfDistrictsByColor.put(DistrictColor.MILITARY, 0);
+        numberOfDistrictsByColor.put(DistrictColor.NOBLE, 0);
+        numberOfDistrictsByColor.put(DistrictColor.SPECIAL, 0);
+        numberOfDistrictsByColor.put(DistrictColor.RELIGIOUS, 0);
+        numberOfDistrictsByColor.put(DistrictColor.TRADE, 0);
     }
 
     // Getter
@@ -79,7 +79,8 @@ public abstract class Player {
                 numberOfDistrictsByColor.get(district.getColor()) + 1);
         this.city.addDistrict(district, gameState);
     }
-    public void removeGold(int g){
+
+    public void removeGold(int g) {
         gold -= g;
     }
 

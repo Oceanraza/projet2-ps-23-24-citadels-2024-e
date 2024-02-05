@@ -54,7 +54,7 @@ public class Bot extends Player {
         // TEMPORAIRE POUR RESPECT DES DATES DE RENDU**
     }
 
-    public void chooseChar(Game game, GameCharacterRole askedChar){
+    public void chooseChar(Game game, GameCharacterRole askedChar) {
         GameCharacter chosenCharacter = getCharInList(game.getAvailableChars(), askedChar);
         game.printAvailableCharacters();
         setGameCharacter(chosenCharacter);
@@ -75,4 +75,6 @@ public class Bot extends Player {
         // The bot builds one district if it has enough money
         botAlgo.buildOrNot(gameState);
     }
+
+
 }

@@ -6,9 +6,9 @@ import fr.cotedazur.univ.polytech.startingpoint.board.Deck;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.city.DistrictColor;
 import fr.cotedazur.univ.polytech.startingpoint.player.Player;
+
 import java.io.File;
 import java.io.IOException;
-
 import java.security.SecureRandom;
 import java.util.List;
 
@@ -19,7 +19,8 @@ public class Utils {
     public static int generateRandomNumber(int bound) {
         return random.nextInt(bound);
     }
-    public static int getHighestNumberOfCardsInHand(List<Player> players, Player currentPlayer){
+
+    public static int getHighestNumberOfCardsInHand(List<Player> players, Player currentPlayer) {
         return players.stream()
                 .filter(player -> !player.equals(currentPlayer))
                 .mapToInt(player -> player.getDistrictsInHand().size())

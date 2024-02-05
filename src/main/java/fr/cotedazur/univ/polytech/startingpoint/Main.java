@@ -16,6 +16,10 @@ import static fr.cotedazur.univ.polytech.startingpoint.CitadelsLogger.LOGGER;
 
 public class Main {
 
+    protected static final String Shinning_blue = "\033[0;94m";
+    protected static final String Blue = "\033[0;34m";
+    protected static final String Reset = "\033[0m";
+
     public static void sortPlayers(List<Player> players) {
         // Use a custom Comparator to compare Players based on their score and running order
         Comparator<Player> playerComparator = Comparator
@@ -51,11 +55,11 @@ public class Main {
     }
 
     public static void finalChoice(List<Player> players, GameState gameState) {
-        for(Player player: players) {
-            for(District district: player.getCity().getDistrictsBuilt()) {
-                if(district.getName().equals("Cour des miracles") && district.getTurnBuilt().isPresent()) {
+        for (Player player : players) {
+            for (District district : player.getCity().getDistrictsBuilt()) {
+                if (district.getName().equals("Cour des miracles") && district.getTurnBuilt().isPresent()) {
                     Optional<Integer> turnBuilt = district.getTurnBuilt();
-                    if(turnBuilt.isPresent() && gameState.getTurn() > turnBuilt.get()) {
+                    if (turnBuilt.isPresent() && gameState.getTurn() > turnBuilt.get()) {
                         Bot bot = (Bot) player;
                         bot.botAlgo.huntedQuarterAlgorithm(district);
                         LOGGER.info("\n[ Choix de fin de partie ]");
@@ -75,7 +79,12 @@ public class Main {
         GameState gameState = new GameState();
 
         // Adding players to the game
-        newGame.setPlayers(new Bot("Donald", new EinsteinAlgo()), new Bot("Picsou", new EinsteinAlgo()), new Bot("Riri", new RandomAlgo()), new Bot("Fifi", new RandomAlgo()));
+        newGame.setPlayers(
+                new Bot("Donald", new EinsteinAlgo()),
+                new Bot("Picsou", new EinsteinAlgo()),
+                new Bot("Riri", new RandomAlgo()),
+                new Bot("Fifi", new RandomAlgo())
+        );
 
         List<Player> players = newGame.getPlayers();
 
