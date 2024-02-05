@@ -8,6 +8,7 @@ import fr.cotedazur.univ.polytech.startingpoint.city.DistrictColor;
 import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 import fr.cotedazur.univ.polytech.startingpoint.Utils;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -19,7 +20,7 @@ public class EinsteinAlgo extends BaseAlgo {
     }
 
     public int startOfTurnChoice() { //Always draws if needed
-        if (bot.getDistrictsInHand().isEmpty() || bot.districtsInHandAreBuilt()) {
+        if ((bot.getDistrictsInHand().isEmpty() || bot.districtsInHandAreBuilt()) || (bot.getCharacterName().equals("Architecte"))){
             return 2; // Draw a card
         } else {
             return 1; // Take 2 gold coins
@@ -45,9 +46,14 @@ public class EinsteinAlgo extends BaseAlgo {
                 && (bot.isCharInList(availableChars, "Roi"))) {
             bot.chooseChar(game, "Roi");
         }
-        //If the bot's hand is empty, it chooses the magician to get someone's else's hand
-        else if ((bot.getDistrictsInHand().isEmpty()&&(bot.isCharInList(availableChars,"Magicien")))){
-            bot.chooseChar(game,"Magicien");
+        //If the bot's hand is empty, it chooses the magician if he gives him more cards than the architect would
+        else if (bot.getDistrictsInHand().isEmpty()){
+            if ((bot.isCharInList(availableChars,"Magicien")) && (Utils.getHighestNumberOfCardsInHand(game.getPlayers(),this.bot) > 2)){
+                bot.chooseChar(game,"Magicien");
+            }
+            else if (bot.isCharInList(availableChars,"Architecte")){
+                bot.chooseChar(game,"Architecte");
+            }
         }
         // If the bot doesn't have an immediate way to win, it will just pick the character who gives out the most gold for him
         else {
@@ -100,9 +106,18 @@ public class EinsteinAlgo extends BaseAlgo {
         lowestDistrictFound = true;
     }
     public void buildOrNot(GameState gameState){ //builds if he can
-        for (District district : bot.getDistrictsInHand()) {
+        int builtThisTurn = 0;
+        ArrayList<District> tempHand = new ArrayList<>(); //Need to create a deep copy to avoid concurrent modification
+        for (District district : bot.getDistrictsInHand()){
+            tempHand.add(district);
+        }
+        for (District district : tempHand) {
             if (bot.buildDistrict(district, gameState)) {
-                break;
+                builtThisTurn++;
+                System.out.println(bot.getCharacterName());
+                if ((!bot.getCharacterName().equals("Architecte"))||(builtThisTurn == 3)){
+                    break;
+                }
             }
         }
     }

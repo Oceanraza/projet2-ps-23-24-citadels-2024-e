@@ -78,6 +78,7 @@ public class Game {
         allCharacters.put("Eveque", new Bishop());
         allCharacters.put("Condottiere", new Warlord());
         allCharacters.put("Magicien", new Magician());
+        allCharacters.put("Architecte", new Architect());
 
         // Give the cards to the players
         startCardGame();
@@ -108,6 +109,7 @@ public class Game {
         availableChars.add(allCharacters.get("Eveque"));
         availableChars.add(allCharacters.get("Condottiere"));
         availableChars.add(allCharacters.get("Magicien"));
+        availableChars.add(allCharacters.get("Architecte"));
     }
 
     public void printAvailableCharacters() {

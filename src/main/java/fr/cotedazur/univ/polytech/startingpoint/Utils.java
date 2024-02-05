@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import java.security.SecureRandom;
+import java.util.List;
 
 //this class is used for basic methods that only have niche purposes and
 // are generally just math.
@@ -19,6 +20,13 @@ public class Utils {
 
     public int generateRandomNumber(int bound) {
         return random.nextInt(bound);
+    }
+    public static int getHighestNumberOfCardsInHand(List<Player> players, Player currentPlayer){
+        return players.stream()
+                .filter(player -> !player.equals(currentPlayer))
+                .mapToInt(player -> player.getDistrictsInHand().size())
+                .max()
+                .orElse(0);
     }
 
     public static boolean canDestroyDistrict(District d, Player p){

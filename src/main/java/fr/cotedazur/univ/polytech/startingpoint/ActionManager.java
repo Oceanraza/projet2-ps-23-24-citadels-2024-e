@@ -17,6 +17,10 @@ public class ActionManager {
             bot.addGold(2);
         } else { // Draw a card
             game.drawCard(bot);
+            if (bot.getCharacterName().equals("Architecte")){
+                game.drawCard(bot);
+                game.drawCard(bot);
+            }
         }
     }
 
