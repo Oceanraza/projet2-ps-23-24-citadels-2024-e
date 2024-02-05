@@ -6,7 +6,8 @@ public enum GameCharacterRole {
     BISHOP("Eveque"),
     KING("Roi"),
     MERCHANT("Marchand"),
-    WARLORD("Condottiere");
+    WARLORD("Condottiere"),
+    ARCHITECT("Architecte");
 
     private final String roleName;
 
@@ -24,7 +25,7 @@ public enum GameCharacterRole {
     De l' ...
     */
     public String toStringDuOrDeL() {
-        if (this.equals(GameCharacterRole.BISHOP) || this.equals(GameCharacterRole.ASSASSIN)) {
+        if (this.equals(GameCharacterRole.BISHOP) || this.equals(GameCharacterRole.ASSASSIN) || (this.equals(GameCharacterRole.ARCHITECT))) {
             return "de l'" + this;
         }
         return "du " + this;
@@ -36,7 +37,7 @@ public enum GameCharacterRole {
     L' ...
      */
     public String toStringLeOrL() {
-        if (this.equals(GameCharacterRole.BISHOP) || this.equals(GameCharacterRole.ASSASSIN)) {
+        if (this.equals(GameCharacterRole.BISHOP) || this.equals(GameCharacterRole.ASSASSIN) || (this.equals(GameCharacterRole.ARCHITECT))) {
             return "L'" + this;
         }
         return "Le " + this;

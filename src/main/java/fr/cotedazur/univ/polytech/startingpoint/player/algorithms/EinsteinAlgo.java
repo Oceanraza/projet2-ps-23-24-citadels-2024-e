@@ -22,7 +22,7 @@ public class EinsteinAlgo extends BaseAlgo {
     }
 
     public int startOfTurnChoice() { //Always draws if needed
-        if ((bot.getDistrictsInHand().isEmpty() || bot.districtsInHandAreBuilt()) || (bot.getCharacterName().equals("Architecte"))){
+        if ((bot.getDistrictsInHand().isEmpty() || bot.districtsInHandAreBuilt()) || (bot.getGameCharacter().getRole().equals(ARCHITECT))){
             return 2; // Draw a card
         } else {
             return 1; // Take 2 gold coins
@@ -38,7 +38,6 @@ public class EinsteinAlgo extends BaseAlgo {
 
     public void chooseCharacterAlgorithm(Game game) {
         List<GameCharacter> availableChars = game.getAvailableChars();
-
         // If the bot can build its 8th quarter next turn, it will choose the assassin
         // So he won't be killed
         if ((bot.getCity().getDistrictsBuilt().size() >= 7) && (bot.canBuildDistrictThisTurn())) {
@@ -55,24 +54,25 @@ public class EinsteinAlgo extends BaseAlgo {
             else if (bot.isCharInList(availableChars,GameCharacterRole.ARCHITECT)){
                 bot.chooseChar(game,GameCharacterRole.ARCHITECT);
             }
-
         }
-        // If the bot doesn't have an immediate way to win, it will just pick the character who gives out the most gold for him
-        GameCharacter chosenChar = availableChars.get(1);
-        int numberOfDistrictByColor;
-        int goldCollectedWithDistrictColor = 0;
+        else {
+            // If the bot doesn't have an immediate way to win, it will just pick the character who gives out the most gold for him
+            GameCharacter chosenChar = availableChars.get(1);
+            int numberOfDistrictByColor;
+            int goldCollectedWithDistrictColor = 0;
 
-        for (GameCharacter cha : availableChars) {
-            // We only compare character that collects gold according to his districts
-            if (cha.getColor() != null) {
-                numberOfDistrictByColor = bot.getNumberOfDistrictsByColor().get(cha.getColor());
-                if (numberOfDistrictByColor > goldCollectedWithDistrictColor) {
-                    goldCollectedWithDistrictColor = numberOfDistrictByColor;
-                    chosenChar = cha;
+            for (GameCharacter cha : availableChars) {
+                // We only compare character that collects gold according to his districts
+                if (cha.getColor() != null) {
+                    numberOfDistrictByColor = bot.getNumberOfDistrictsByColor().get(cha.getColor());
+                    if (numberOfDistrictByColor > goldCollectedWithDistrictColor) {
+                        goldCollectedWithDistrictColor = numberOfDistrictByColor;
+                        chosenChar = cha;
+                    }
                 }
             }
+            bot.chooseChar(game, chosenChar.getRole());
         }
-        bot.chooseChar(game, chosenChar.getRole());
     }
 
     public void warlordAlgorithm(Game game) {

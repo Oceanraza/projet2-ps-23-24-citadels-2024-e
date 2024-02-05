@@ -27,6 +27,7 @@ public class Game {
     Merchant merchant;
     Warlord warlord;
     Magician magician;
+    Architect architect;
 
     public Game(){
         init();

@@ -6,7 +6,7 @@ import fr.cotedazur.univ.polytech.startingpoint.player.*;
 
 public class Architect extends GameCharacter {
     public Architect() {
-        super("Architecte", 7);
+        super(GameCharacterRole.ARCHITECT, 7);
     }
 
     @Override
