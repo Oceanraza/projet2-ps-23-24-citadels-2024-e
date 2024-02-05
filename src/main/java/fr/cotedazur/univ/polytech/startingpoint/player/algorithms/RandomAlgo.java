@@ -9,24 +9,26 @@ import fr.cotedazur.univ.polytech.startingpoint.city.DistrictColor;
 import fr.cotedazur.univ.polytech.startingpoint.player.Bot;
 import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 import fr.cotedazur.univ.polytech.startingpoint.Utils;
+
 import java.util.*;
 
 public class RandomAlgo extends BaseAlgo {
-    public RandomAlgo(){
+    public RandomAlgo() {
         super();
     }
-    public void charAlgorithmsManager(Game game){
-        switch (bot.getCharacterName()){
-            case("Condottiere"):
+
+    public void charAlgorithmsManager(Game game) {
+        switch (bot.getCharacterName()) {
+            case ("Condottiere"):
                 warlordAlgorithm(game);
                 break;
-            case("Roi"):
+            case ("Roi"):
                 kingAlgorithm(game);
                 break;
-            case("Assassin"):
+            case ("Assassin"):
                 assassinAlgorithm(game);
                 break;
-            case("Magicien"):
+            case ("Magicien"):
                 magicianAlgorithm(game);
                 break;
         }
@@ -42,8 +44,8 @@ public class RandomAlgo extends BaseAlgo {
     public void chooseCharacterAlgorithm(Game game) {
         List<GameCharacter> availableChars = game.getAvailableChars();
         GameCharacter chosenChar = game.getAvailableChars().get(Utils.generateRandomNumber(availableChars.size()));
-            bot.chooseChar(game, chosenChar.getRole());
-        }
+        bot.chooseChar(game, chosenChar.getRole());
+    }
 
     public void warlordAlgorithm(Game game) {
         if (Utils.generateRandomNumber(2) == 0) { // Have 50% chance to decide to destroy a building of a random player or not
@@ -76,20 +78,21 @@ public class RandomAlgo extends BaseAlgo {
         bot.getGameCharacter().specialEffect(bot, game, targetedCharacter);
     }
 
-    public void magicianAlgorithm (Game game){
+    public void magicianAlgorithm(Game game) {
         if (Utils.generateRandomNumber(2) == 0) { // have 50% chance to decide to destroy a building of a random player or not
             List<Player> playerList = game.getSortedPlayersByScore();
             playerList.remove(bot);
             bot.getGameCharacter().specialEffect(bot, game, true, playerList.get(Utils.generateRandomNumber(playerList.size())));
+        } else {
+            bot.getGameCharacter().specialEffect(bot, game, false);
         }
-        else{bot.getGameCharacter().specialEffect(bot,game,false);}
     }
 
     public void kingAlgorithm(Game game) {
-        bot.getGameCharacter().specialEffect(bot,game);
+        bot.getGameCharacter().specialEffect(bot, game);
     }
 
-    public void buildOrNot(GameState gameState){ //builds if he can
+    public void buildOrNot(GameState gameState) { //builds if he can
         for (District district : bot.getDistrictsInHand()) {
             if (bot.buildDistrict(district, gameState)) {
                 break;
@@ -106,21 +109,9 @@ public class RandomAlgo extends BaseAlgo {
     }
 
     public Optional<District> laboratoryChoice() {
-        if(Utils.generateRandomNumber(2) == 0) {
+        if (Utils.generateRandomNumber(2) == 0) {
             List<District> districtsInHand = bot.getDistrictsInHand();
             return Optional.ofNullable(districtsInHand.get(Utils.generateRandomNumber(districtsInHand.size())));
-        }
-        return Optional.empty();
-    }
-
-    public boolean manufactureChoice() {
-        return utils.generateRandomNumber(2) == 0;
-    }
-
-    public Optional<District> laboratoryChoice() {
-        if(utils.generateRandomNumber(2) == 0) {
-            List<District> districtsInHand = bot.getDistrictsInHand();
-            return Optional.ofNullable(districtsInHand.get(utils.generateRandomNumber(districtsInHand.size())));
         }
         return Optional.empty();
     }
