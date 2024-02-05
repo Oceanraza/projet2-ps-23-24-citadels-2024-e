@@ -33,6 +33,7 @@ public class Game {
     Merchant merchant;
     Warlord warlord;
     Magician magician;
+    Architect architect;
 
     public Game() {
         init();
@@ -108,12 +109,14 @@ public class Game {
         players = new ArrayList<>();
 
         // Creates the characters
+
         assassin = new Assassin();
         king = new King();
         bishop = new Bishop();
         merchant = new Merchant();
         warlord = new Warlord();
         magician = new Magician();
+        architect = new Architect();
 
         // Create the list of characters
         allCharacters.add(assassin);
@@ -122,7 +125,7 @@ public class Game {
         allCharacters.add(merchant);
         allCharacters.add(warlord);
         allCharacters.add(magician);
-
+        allCharacters.add(architect);
         // Give the cards to the players
         startCardGame();
     }

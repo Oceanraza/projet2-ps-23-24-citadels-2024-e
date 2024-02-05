@@ -99,9 +99,14 @@ public class RandomAlgo extends BaseAlgo {
     }
 
     public void buildOrNot(GameState gameState) { //builds if he can
+        int builtThisTurn = 0;
+
         for (District district : bot.getDistrictsInHand()) {
             if (bot.buildDistrict(district, gameState)) {
-                break;
+                builtThisTurn++;
+                if ((!bot.getCharacterName().equals("Architect")) || (builtThisTurn == 3)) {
+                    break;
+                }
             }
         }
     }

@@ -72,6 +72,7 @@ public class Main {
     public static void main(String... args){
         Game newGame = new Game();
         GameState gameState = new GameState();
+        gameState.nextTurn();
         // System.out.println(newGame);
 
         // Adding players to the game
@@ -87,9 +88,9 @@ public class Main {
         // Gives the startingCards to all the players.
         newGame.startCardGame();
 
-
         Player firstBuilder = null;
         while (!gameState.isGameFinished(players)) {
+            gameState.nextTurn();
             Bot crownOwner = (Bot) newGame.getCrown().getOwner();
 
             System.out.println(Shinning_blue + "\n\n----- Tour numero " + gameState.getTurn() + " -----" + Reset + "\nLa couronne appartient à "
@@ -135,8 +136,6 @@ public class Main {
                     }
                 }
             }
-
-            gameState.nextTurn();
         }
         finalChoice(players, gameState);
         announceWinner(players, firstBuilder, gameState);

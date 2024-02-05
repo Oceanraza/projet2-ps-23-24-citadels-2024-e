@@ -2,6 +2,8 @@ package fr.cotedazur.univ.polytech.startingpoint.algorithms;
 
 import fr.cotedazur.univ.polytech.startingpoint.Game;
 import fr.cotedazur.univ.polytech.startingpoint.board.Deck;
+import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacter;
+import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole;
 import fr.cotedazur.univ.polytech.startingpoint.city.City;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.city.DistrictColor;
@@ -92,7 +94,9 @@ class EinsteinAlgoTest {
 
         when(bot.getDistrictsInHand()).thenReturn(districtsInHand);
         when(bot.districtsInHandAreBuilt()).thenReturn(false);
-
+        GameCharacter gameCharacter = mock(GameCharacter.class); // Create a mock GameCharacter
+        when(bot.getGameCharacter()).thenReturn(gameCharacter); // Set the GameCharacter of the bot
+        when(gameCharacter.getRole()).thenReturn(GameCharacterRole.ASSASSIN); // Set the role of the GameCharacter
         int choice = einsteinAlgo.startOfTurnChoice();
 
         assertEquals(1, choice);

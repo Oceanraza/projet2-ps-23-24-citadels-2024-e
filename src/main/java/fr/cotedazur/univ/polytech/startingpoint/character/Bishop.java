@@ -11,6 +11,6 @@ public class Bishop extends GameCharacter {
 
     @Override
     public void specialEffect(Player player, Game game,Object... optionalArgs) {
-        //System.out.println("L'évèque n'a pas de compétences programmée");
+        // No tiene special effecto
     }
 }

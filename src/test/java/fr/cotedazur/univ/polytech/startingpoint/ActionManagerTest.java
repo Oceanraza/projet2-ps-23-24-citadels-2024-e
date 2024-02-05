@@ -52,12 +52,12 @@ class ActionManagerTest {
         bot.buildDistrict(district3, gameState);
         assertEquals(2, ActionManager.collectGold(bot));
     }
-
     @Test
     void startOfTurnTest() {
         bot.botAlgo = new EinsteinAlgo();
         bot.botAlgo.setPlayer(bot);
         bot.setGold(10);
+        bot.setGameCharacter(new King());
         ActionManager.startOfTurn(game, bot);
         assertEquals(1, bot.getDistrictsInHand().size());
         District districtPicked = bot.getDistrictsInHand().get(0);
@@ -78,7 +78,6 @@ class ActionManagerTest {
         }
         assertEquals(2, bot.getGold());
     }
-
     @Test
     void getCrownTest() {
         bot.setGameCharacter(king);
