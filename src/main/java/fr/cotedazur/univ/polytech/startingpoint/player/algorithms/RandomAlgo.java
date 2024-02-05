@@ -37,6 +37,9 @@ public class RandomAlgo extends BaseAlgo {
             case ("Magicien"):
                 magicianAlgorithm(game);
                 break;
+            case ("Voleur"):
+                thiefAlgorithm(game);
+                break;
         }
     }
 
@@ -80,6 +83,19 @@ public class RandomAlgo extends BaseAlgo {
         numberOfTargets = game.getKillableCharacters().size();
         indexPlayerKilled = Utils.generateRandomNumber(numberOfTargets);
         targetedCharacter = game.getKillableCharacters().get(indexPlayerKilled).getRole();
+
+        bot.getGameCharacter().specialEffect(bot, game, targetedCharacter);
+    }
+
+    public void thiefAlgorithm(Game game) {
+        int numberOfTargets;
+        int indexPlayerStolen;
+        GameCharacterRole targetedCharacter;
+
+        // Choose a random character and steal him
+        numberOfTargets = game.getCharactersThatCanBeStolen().size();
+        indexPlayerStolen = Utils.generateRandomNumber(numberOfTargets);
+        targetedCharacter = game.getCharactersThatCanBeStolen().get(indexPlayerStolen).getRole();
 
         bot.getGameCharacter().specialEffect(bot, game, targetedCharacter);
     }

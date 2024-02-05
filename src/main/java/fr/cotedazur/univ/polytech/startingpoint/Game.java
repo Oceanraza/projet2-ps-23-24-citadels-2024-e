@@ -30,6 +30,7 @@ public class Game {
     private List<GameCharacter> availableChars;
 
     Assassin assassin;
+    Thief thief;
     King king;
     Bishop bishop;
     Merchant merchant;
@@ -113,6 +114,7 @@ public class Game {
         // Creates the characters
 
         assassin = new Assassin();
+        thief = new Thief();
         king = new King();
         bishop = new Bishop();
         merchant = new Merchant();
@@ -122,12 +124,14 @@ public class Game {
 
         // Create the list of characters
         allCharacters.add(assassin);
+        allCharacters.add(thief);
         allCharacters.add(king);
         allCharacters.add(bishop);
         allCharacters.add(merchant);
         allCharacters.add(warlord);
         allCharacters.add(magician);
         allCharacters.add(architect);
+
         // Give the cards to the players
         startCardGame();
     }
@@ -218,14 +222,35 @@ public class Game {
     }
 
     public List<GameCharacter> getKillableCharacters() {
-        List<GameCharacter> killableCharacters = getCharactersInGame();
+        List<GameCharacter> killableCharacters = new ArrayList<>(getCharactersInGame());
         for (GameCharacter cha : killableCharacters) {
+            // Assassin can't kill himself
             if (cha.getRole().equals(GameCharacterRole.ASSASSIN)) {
                 killableCharacters.remove(cha);
                 break;
             }
         }
         return killableCharacters;
+    }
+
+    public List<GameCharacter> getCharactersThatCanBeStolen() {
+        // Thief can't steal from the Assassin
+        List<GameCharacter> charactersThatCanBeStolen = new ArrayList<>(getKillableCharacters());
+        List<GameCharacter> temp = new ArrayList<>(getKillableCharacters());
+
+        for (GameCharacter cha: temp) {
+            // Thief can't steal from himself
+            if (cha.getRole().equals(GameCharacterRole.THIEF)) {
+                charactersThatCanBeStolen.remove(cha);
+            }
+            // Thief can't steal from a dead character
+            else if (!cha.getIsAlive()) {
+                System.out.println(cha.getRole().toStringLeOrL() + " a été assassiné. Il ne peut pas être volé");
+                charactersThatCanBeStolen.remove(cha);
+            }
+        }
+
+        return charactersThatCanBeStolen;
     }
 
     public District drawCard(Player player) {

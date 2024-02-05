@@ -42,7 +42,24 @@ public class EinsteinAlgo extends BaseAlgo {
             return 1; // Take 2 gold coins
         }
     }
-
+    public void charAlgorithmsManager(Game game) {
+        switch (bot.getCharacterName()) {
+            case ("Condottiere"):
+                warlordAlgorithm(game);
+                break;
+            case ("Roi"):
+                kingAlgorithm(game);
+                break;
+            case ("Assassin"):
+                assassinAlgorithm(game);
+                break;
+            case ("Magicien"):
+                magicianAlgorithm(game);
+                break;
+            case ("Voleur"):
+                thiefAlgorithm(game);
+                break;
+        }
 
     public void graveyardLogic(Game game, Player targetedPlayer, District destroyedDistrict) {
         if (bot.getCity().containsDistrict("Cimetière") && bot.getGold() >= 1 && !bot.getCharacterName().equals("Condottiere")) {
@@ -52,19 +69,9 @@ public class EinsteinAlgo extends BaseAlgo {
         }
     }
 
-
     private void addTwoGold() {
         System.out.println(bot.getName() + " prend deux pièces d'or.");
         bot.addGold(2);
-    }
-
-
-    public void charAlgorithmsManager(Game game){
-        GameCharacterRole role = bot.getGameCharacter().getRole();
-        if (role == WARLORD) warlordAlgorithm(game);
-        else if (role == KING) kingAlgorithm(game);
-        else if (role == ASSASSIN) assassinAlgorithm(game);
-        else if (role == MAGICIAN) magicianAlgorithm(game);
     }
 
     public void chooseCharacterAlgorithm(Game game) {
@@ -164,6 +171,19 @@ public class EinsteinAlgo extends BaseAlgo {
         }
 
         targetedCharacter = game.getKillableCharacters().get(indexKilledCharacter).getRole();
+        bot.getGameCharacter().specialEffect(bot, game, targetedCharacter);
+    }
+
+    public void thiefAlgorithm(Game game) {
+        int numberOfTargets;
+        int indexPlayerStolen;
+        GameCharacterRole targetedCharacter;
+
+        // Choose a random character and steal him
+        numberOfTargets = game.getCharactersThatCanBeStolen().size();
+        indexPlayerStolen = Utils.generateRandomNumber(numberOfTargets);
+        targetedCharacter = game.getCharactersThatCanBeStolen().get(indexPlayerStolen).getRole();
+
         bot.getGameCharacter().specialEffect(bot, game, targetedCharacter);
     }
 
