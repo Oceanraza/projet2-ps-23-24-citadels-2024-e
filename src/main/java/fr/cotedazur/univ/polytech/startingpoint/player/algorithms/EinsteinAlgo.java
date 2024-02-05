@@ -11,6 +11,8 @@ import fr.cotedazur.univ.polytech.startingpoint.Utils;
 import java.util.*;
 
 
+
+
 public class EinsteinAlgo extends BaseAlgo {
     boolean lowestDistrictFound = false;
     public EinsteinAlgo(){
@@ -134,6 +136,30 @@ public class EinsteinAlgo extends BaseAlgo {
                 }
             }
         }
+    }
+
+    public boolean manufactureChoice() { // Use manufacture effect if the player has less than 7 built + buildable districts
+        Set<District> builtAndBuildableDistricts = new HashSet<>(bot.getCity().getDistrictsBuilt());
+        builtAndBuildableDistricts.addAll(bot.getDistrictsInHand());
+        return builtAndBuildableDistricts.size() < 8 - 1; // If player has 7 built + buildable districts he can just draw without paying 3 gold coins
+    }
+
+    public Optional<District> laboratoryChoice() {
+        List<District> districtsBuilt = bot.getCity().getDistrictsBuilt();
+        List<District> districtsInHand = bot.getDistrictsInHand();
+        for(District district: districtsInHand) {
+            if(districtsBuilt.contains(district)) {
+                return Optional.ofNullable(district); // Discard districts already built
+            }
+            int count = Collections.frequency(districtsInHand, district);
+            if(count > 1) {
+                return Optional.ofNullable(district); // Discard duplicates
+            }
+        }
+        if(districtsBuilt.size() + districtsInHand.size() > 8) {
+            return Optional.ofNullable(districtsInHand.remove(districtsInHand.size()-1)); // Discard last district drawn
+        }
+        return Optional.empty();
     }
 }
 
