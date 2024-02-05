@@ -220,7 +220,7 @@ class ActionManagerTest {
         bot.botAlgo.setPlayer(bot);
 
         bot.setGold(3);
-        bot.addDistrictBuilt(new District("Manufacture", 0, DistrictColor.special), gameState);
+        bot.addDistrictBuilt(new District("Manufacture", 0, DistrictColor.SPECIAL), gameState);
         ActionManager.applySpecialCardsEffect(game, bot);
         assertEquals(3, bot.getDistrictsInHand().size());
     }
@@ -231,11 +231,11 @@ class ActionManagerTest {
         bot.botAlgo.setPlayer(bot);
 
         bot.setGold(0);
-        bot.addDistrictBuilt(new District("Laboratoire", 0, DistrictColor.special), gameState);
+        bot.addDistrictBuilt(new District("Laboratoire", 0, DistrictColor.SPECIAL), gameState);
         ActionManager.applySpecialCardsEffect(game, bot);
         assertEquals(0, bot.getGold());
 
-        District marche = new District("Marche", 0, DistrictColor.marchand);
+        District marche = new District("Marche", 0, DistrictColor.TRADE);
         bot.addDistrictInHand(marche);
         bot.addDistrictInHand(marche);
         ActionManager.applySpecialCardsEffect(game, bot);
@@ -245,13 +245,13 @@ class ActionManagerTest {
         ActionManager.applySpecialCardsEffect(game, bot);
         assertEquals(2, bot.getGold());
 
-        bot.addDistrictInHand(new District("District1", 0, DistrictColor.marchand));
-        bot.addDistrictInHand(new District("District2", 0, DistrictColor.marchand));
-        bot.addDistrictInHand(new District("District3", 0, DistrictColor.marchand));
-        bot.addDistrictInHand(new District("District4", 0, DistrictColor.marchand));
-        bot.addDistrictInHand(new District("District5", 0, DistrictColor.marchand));
-        bot.addDistrictInHand(new District("District6", 0, DistrictColor.marchand));
-        bot.addDistrictInHand(new District("District7", 0, DistrictColor.marchand));
+        bot.addDistrictInHand(new District("District1", 0, DistrictColor.TRADE));
+        bot.addDistrictInHand(new District("District2", 0, DistrictColor.TRADE));
+        bot.addDistrictInHand(new District("District3", 0, DistrictColor.TRADE));
+        bot.addDistrictInHand(new District("District4", 0, DistrictColor.TRADE));
+        bot.addDistrictInHand(new District("District5", 0, DistrictColor.TRADE));
+        bot.addDistrictInHand(new District("District6", 0, DistrictColor.TRADE));
+        bot.addDistrictInHand(new District("District7", 0, DistrictColor.TRADE));
         ActionManager.applySpecialCardsEffect(game, bot);
         assertEquals(3, bot.getGold());
 
