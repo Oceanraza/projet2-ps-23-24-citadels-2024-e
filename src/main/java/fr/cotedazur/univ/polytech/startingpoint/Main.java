@@ -38,6 +38,7 @@ public class Main {
 
     public static void announceWinner(List<Player> players, Player firstBuilder, GameState gameState) {
         List<Player> playersScores = calculateScores(players, firstBuilder, gameState);
+        System.out.println();
         for (Player player : playersScores) {
             System.out.println(player.getName() + " : " + player.getScore() + " points");
         }
@@ -112,7 +113,6 @@ public class Main {
             gameState.nextTurn();
         }
         finalChoice(players, gameState);
-        System.out.println();
         announceWinner(players, firstBuilder, gameState);
     }
 }
