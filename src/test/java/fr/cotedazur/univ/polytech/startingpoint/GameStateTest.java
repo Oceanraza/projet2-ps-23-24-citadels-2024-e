@@ -7,22 +7,24 @@ import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class GameStateTest {
+class GameStateTest {
     Player player;
+    GameState gameState;
 
     @BeforeEach
     void setUp() {
+        gameState = new GameState();
         player = new Bot("Test");
     }
     @Test
     void testIsFinished() {
-        GameState gameState = new GameState();
         assertFalse(gameState.isFinished(player));
         for (int i = 0; i < 8; i++) {
             String name = "District" + i;
-            player.getCity().addDistrict(new District(name, 0, DistrictColor.marchand));
+            player.getCity().addDistrict(new District(name, 0, DistrictColor.marchand), gameState);
         }
         assertTrue(gameState.isFinished(player));
     }

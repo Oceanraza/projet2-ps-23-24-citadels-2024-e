@@ -1,10 +1,11 @@
 package fr.cotedazur.univ.polytech.startingpoint.player;
 
-import fr.cotedazur.univ.polytech.startingpoint.city.DistrictColor;
 import fr.cotedazur.univ.polytech.startingpoint.Game;
+import fr.cotedazur.univ.polytech.startingpoint.GameState;
 import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacter;
 import fr.cotedazur.univ.polytech.startingpoint.city.City;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
+import fr.cotedazur.univ.polytech.startingpoint.city.DistrictColor;
 
 import java.util.*;
 
@@ -74,11 +75,12 @@ public abstract class Player {
     public void addDistrictInHand(District district) {
         this.districtsInHand.add(district);
     }
-    public void addDistrictBuilt(District district) {
+
+    public void addDistrictBuilt(District district, GameState gameState) {
         numberOfDistrictsByColor.replace(
                 district.getColor(),
                 numberOfDistrictsByColor.get(district.getColor()) + 1);
-        this.city.addDistrict(district);
+        this.city.addDistrict(district, gameState);
     }
 
     public Map<DistrictColor, Integer> getNumberOfDistrictsByColor() {return numberOfDistrictsByColor;}
@@ -87,13 +89,13 @@ public abstract class Player {
         this.gold += gold;
     }
 
-    public abstract void play(Game game);
+    public abstract void play(Game game, GameState gameState);
     // Function to build a district
-    public boolean buildDistrict(District district) {
+    public boolean buildDistrict(District district, GameState gameState) {
         // Checks if the player has enough gold to build the district. If so it is
         // built.
         if (gold >= district.getPrice() && this.city.isNotBuilt(district)) {
-            addDistrictBuilt(district);
+            addDistrictBuilt(district, gameState);
             gold -= district.getPrice();
             districtsInHand.remove(district);
             System.out.println(getName() + " a construit le quartier " + district.getName());
@@ -125,7 +127,7 @@ public abstract class Player {
     public int calculateScore(){
         int tempScore = getGold();
         City playerCity = this.getCity();
-        ArrayList<DistrictColor> districtColors = new ArrayList<>();
+        Set<DistrictColor> districtColors = new HashSet<>();
         for (District district : playerCity.getDistrictsBuilt()) {
             tempScore += district.getPrice();
             tempScore += district.getBonusPoints();

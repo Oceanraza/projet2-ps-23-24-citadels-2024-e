@@ -1,13 +1,14 @@
 package fr.cotedazur.univ.polytech.startingpoint.player;
 
-import java.util.*;
-
 import fr.cotedazur.univ.polytech.startingpoint.ActionManager;
-import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacter;
-import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.Game;
+import fr.cotedazur.univ.polytech.startingpoint.GameState;
+import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacter;
 import fr.cotedazur.univ.polytech.startingpoint.character.King;
+import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.player.algorithms.BaseAlgo;
+
+import java.util.List;
 
 
 public class Bot extends Player {
@@ -58,17 +59,17 @@ public class Bot extends Player {
         System.out.println(this.getName() + " a choisi le " + chosenCharacter.getName());
     }
     @Override
-    public void play(Game game) {
+    public void play(Game game, GameState gameState) {
         /* Apply special effect, no need for now
         ActionManager.applySpecialEffect(this, game);
         Collect gold
          */
         // The bot draws a card if it has no district in its hand.
-        botAlgo.startOfTurn(game);
+        ActionManager.startOfTurn(game, this);
         addGold(ActionManager.collectGold(this));
         botAlgo.charAlgorithmsManager(game);
         // The bot builds one district if it has enough money
-        botAlgo.buildOrNot(game);
+        botAlgo.buildOrNot(gameState);
     }
 
 }

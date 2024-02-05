@@ -1,11 +1,11 @@
-package fr.cotedazur.univ.polytech.startingpoint;
+package fr.cotedazur.univ.polytech.startingpoint.character;
 
-import fr.cotedazur.univ.polytech.startingpoint.character.*;
+import fr.cotedazur.univ.polytech.startingpoint.Game;
 import fr.cotedazur.univ.polytech.startingpoint.player.Bot;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class GameCharacterTest {
     King king;
@@ -24,11 +24,11 @@ class GameCharacterTest {
     void kingTest() {
         assertEquals("Roi", king.getName());
         assertEquals(4, king.getRunningOrder());
-        assertEquals(game.getCrown().getOwner(),null);
-        Bot p =  new Bot("Daffy");
+        assertEquals(game.getCrown().getOwner(), null);
+        Bot p = new Bot("Daffy");
         p.setGameCharacter(new King());
-        p.getGameCharacter().specialEffect(p,game);
-        assertEquals(game.getCrown().getOwner(),p);
+        p.getGameCharacter().specialEffect(p, game);
+        assertEquals(game.getCrown().getOwner(), p);
     }
 
     @Test

@@ -1,15 +1,18 @@
 package fr.cotedazur.univ.polytech.startingpoint.player.algorithms;
 
 import fr.cotedazur.univ.polytech.startingpoint.Game;
+import fr.cotedazur.univ.polytech.startingpoint.GameState;
+import fr.cotedazur.univ.polytech.startingpoint.Utils;
 import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacter;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.city.DistrictColor;
 import fr.cotedazur.univ.polytech.startingpoint.player.Bot;
 import fr.cotedazur.univ.polytech.startingpoint.player.Player;
-import fr.cotedazur.univ.polytech.startingpoint.Utils;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 /**
  * This class represents the algorithm of the bot Einstein
  * It contains the logic of the bot's actions
@@ -19,10 +22,6 @@ public class EinsteinAlgo extends BaseAlgo {
     boolean lowestDistrictFound = false;
     public EinsteinAlgo(){
         super();
-    }
-
-    public void startOfTurn(Game game) { //Always draws if needed
-        drawCardOrAddGold(game);
     }
 
     public void lybraryLogic(Game game) { //draws 2 cards
@@ -42,7 +41,7 @@ public class EinsteinAlgo extends BaseAlgo {
     public List<District> drawThreeCards(Game game) {
         List<District> threeCards = new ArrayList<>();
         for (int i = 0; i < 3; i++) {
-            threeCards.add(game.drawCard());
+            threeCards.add(game.drawCard(this.bot));
         }
         return threeCards;
     }
@@ -57,8 +56,7 @@ public class EinsteinAlgo extends BaseAlgo {
         bot.getDistrictsInHand().add(chosenCard);
     }
 
-    private void drawCardOrAddGold(Game game) {
-
+    private void drawCardLogic(Game game) {
         if (bot.getDistrictsInHand().isEmpty() || bot.districtsInHandAreBuilt()) {
             if (bot.getCity().containsDistrict("Bibliothèque") && bot.getDistrictsInHand().size() < 2) {
                 lybraryLogic(game); //draws 2 cards
@@ -67,8 +65,6 @@ public class EinsteinAlgo extends BaseAlgo {
             } else {
                 drawOneCard(game); //draws one card
             }
-        } else {
-            addTwoGold();
         }
     }
     public void cemeteryLogic(Game game, Player targetedPlayer, District destroyedDistrict) {
@@ -80,15 +76,24 @@ public class EinsteinAlgo extends BaseAlgo {
         }
     }
 
-    private void drawOneCard(Game game) {
-        District drawnDistrict = game.drawCard();
-        System.out.println(bot.getName() + " pioche le " + drawnDistrict);
-        bot.getDistrictsInHand().add(drawnDistrict);
-    }
 
     private void addTwoGold() {
         System.out.println(bot.getName() + " prend deux pièces d'or.");
         bot.addGold(2);
+    }
+
+    public int startOfTurnChoice() { //Always draws if needed
+        if (bot.getDistrictsInHand().isEmpty() || bot.districtsInHandAreBuilt()) {
+            if (bot.getCity().containsDistrict("Bibliothèque") && bot.getDistrictsInHand().size() < 2) {
+                lybraryLogic(game); //draws 2 cards
+            } else if (bot.getCity().containsDistrict("Observatoire")) {
+                observatoryLogic(game); //draws 3 cards and keeps one
+            } else {
+                ; //draws one card 2
+            }
+        } else {
+            addTwoGold(); // 1
+        }
     }
 
     public void charAlgorithmsManager(Game game){
@@ -144,7 +149,7 @@ public class EinsteinAlgo extends BaseAlgo {
                 });
                 if (lowestDistrictFound) {
                     break;
-                }   
+                }
             }
         }
     }
@@ -166,10 +171,27 @@ public class EinsteinAlgo extends BaseAlgo {
     public void lowestDistrictHasBeenFound() {
         lowestDistrictFound = true;
     }
-    public void buildOrNot(Game game){ //builds if he can
+
+    public void buildOrNot(GameState gameState) { //builds if he can
         for (District district : bot.getDistrictsInHand()) {
-            if (bot.buildDistrict(district)) {
+            if (bot.buildDistrict(district, gameState)) {
                 break;
+            }
+        }
+    }
+
+    public void huntedQuarterAlgorithm(District huntedQuarter) {
+        Set<DistrictColor> colorList = new HashSet<>();
+        List<District> districtsBuilt = bot.getCity().getDistrictsBuilt();
+        for (District district : districtsBuilt) {
+            colorList.add(district.getColor());
+        }
+        DistrictColor[] districtColors = DistrictColor.values();
+        if (colorList.size() == districtColors.length - 1) {
+            for (DistrictColor districtColor : districtColors) {
+                if (!colorList.contains(districtColor)) {
+                    huntedQuarter.setColor(districtColor);
+                }
             }
         }
     }

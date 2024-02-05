@@ -1,5 +1,6 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
+import fr.cotedazur.univ.polytech.startingpoint.player.Bot;
 import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 
 /**
@@ -12,9 +13,23 @@ public class ActionManager {
         throw new IllegalStateException("Action Manager is a utility class");
     }
 
+    public static void startOfTurn(Game game, Player player) {
+        Bot bot = (Bot) player;
+        int choice = bot.botAlgo.startOfTurnChoice();
+
+        if (choice == 1) { // Take 2 gold coins
+            System.out.println(bot.getName() + " prend deux pièces d'or.");
+            bot.addGold(2);
+        } else { // Draw a card
+            game.drawCard(bot);
+        }
+    }
+
     public static int printGold(Player player, int addedGold){
         player.addGold(addedGold);
-        if (addedGold !=0){System.out.println((player.getCharacterName().equals("Eveque")? "L'" :"Le ") + player.getCharacterName() + " a donné " + addedGold + " or a " + player.getName());}
+        if (addedGold != 0) {
+            System.out.println((player.getCharacterName().equals("Eveque") ? "L'" : "Le ") + player.getCharacterName() + " a donné " + addedGold + " or a " + player.getName() + ".");
+        }
         return addedGold;
     }
 

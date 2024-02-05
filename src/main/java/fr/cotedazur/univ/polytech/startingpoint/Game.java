@@ -1,16 +1,15 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
-import java.util.*;
-import java.util.stream.Collectors;
-
+import com.fasterxml.jackson.databind.JsonNode;
 import fr.cotedazur.univ.polytech.startingpoint.board.Deck;
 import fr.cotedazur.univ.polytech.startingpoint.character.*;
-
-
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
-import fr.cotedazur.univ.polytech.startingpoint.player.*;
-import com.fasterxml.jackson.databind.JsonNode;
+import fr.cotedazur.univ.polytech.startingpoint.player.Bot;
+import fr.cotedazur.univ.polytech.startingpoint.player.Player;
+
 import java.io.IOException;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * The Game class is the main class of the game. It contains the deck, the crown, the players and the characters.
@@ -93,7 +92,6 @@ public class Game {
 
         // Give 4 cards to each player
         giveStartingCards();
-
     }
 
     private void giveStartingCards() {
@@ -157,8 +155,11 @@ public class Game {
         return sortedPlayersByScore;
     }
 
-    public District drawCard() {
-        return deck.drawCard();
+    public District drawCard(Player player) {
+        District drawnDistrict = deck.drawCard();
+        System.out.println(player.getName() + " pioche le " + drawnDistrict);
+        player.getDistrictsInHand().add(drawnDistrict);
+        return drawnDistrict;
     }
 
     public Deck getDeck() {

@@ -37,11 +37,11 @@ class EinsteinAlgoTest {
     void shouldDrawThreeCardsWhenObservatoryIsBuilt() {
         District observatory = new District("Observatoire", 4, DistrictColor.special);
         when(bot.getCity().containsDistrict("Observatoire")).thenReturn(true);
-        when(game.drawCard()).thenReturn(observatory);
+        when(game.drawCard(this.bot)).thenReturn(observatory);
 
         einsteinAlgo.startOfTurn(game);
 
-        verify(game, times(3)).drawCard();
+        verify(game, times(3)).drawCard(this.bot);
     }
 
     @Test
@@ -51,7 +51,7 @@ class EinsteinAlgoTest {
         when(districtsInHand.isEmpty()).thenReturn(true);
         einsteinAlgo.startOfTurn(game);
 
-        verify(game).drawCard();
+        verify(game).drawCard(this.bot);
     }
 
     @Test
@@ -60,7 +60,7 @@ class EinsteinAlgoTest {
 
         einsteinAlgo.startOfTurn(game);
 
-        verify(game).drawCard();
+        verify(game).drawCard(this.bot);
     }
 
     @Test
@@ -85,7 +85,7 @@ class EinsteinAlgoTest {
 
         einsteinAlgo.startOfTurn(game);
 
-        verify(game, times(2)).drawCard();
+        verify(game, times(2)).drawCard(this.bot);
     }
 
     @Test
@@ -98,7 +98,7 @@ class EinsteinAlgoTest {
 
         einsteinAlgo.startOfTurn(game);
 
-        verify(game).drawCard();
+        verify(game).drawCard(this.bot);
     }
 
     @Test
