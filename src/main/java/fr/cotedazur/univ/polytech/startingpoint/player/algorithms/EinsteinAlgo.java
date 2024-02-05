@@ -40,14 +40,11 @@ public class EinsteinAlgo extends BaseAlgo {
         List<GameCharacter> availableChars = game.getAvailableChars();
         // If the bot can build its 8th quarter next turn, it will choose the assassin
         // So he won't be killed
-        if ((bot.getCity().getDistrictsBuilt().size() >= 7) && (bot.canBuildDistrictThisTurn())) {
-            if (bot.isCharInList(availableChars, ASSASSIN)) {
+        if ((bot.getCity().getDistrictsBuilt().size() >= 7) && (bot.canBuildDistrictThisTurn()) && (bot.isCharInList(availableChars, ASSASSIN))){
                 bot.chooseChar(game, ASSASSIN);
-                return;
-            }
         }
         //If the bot's hand is empty, it chooses the magician if he gives him more cards than the architect would
-        else if (bot.getDistrictsInHand().isEmpty()){
+        else if ((bot.getDistrictsInHand().isEmpty())&& (((bot.isCharInList(availableChars,GameCharacterRole.MAGICIAN)) || (bot.isCharInList(availableChars, ARCHITECT))))){
             if ((bot.isCharInList(availableChars,GameCharacterRole.MAGICIAN)) && (Utils.getHighestNumberOfCardsInHand(game.getPlayers(),this.bot) > 2)){
                 bot.chooseChar(game,GameCharacterRole.MAGICIAN);
             }

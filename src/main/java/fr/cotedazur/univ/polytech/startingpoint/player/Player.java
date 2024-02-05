@@ -53,9 +53,6 @@ public abstract class Player {
         return gameCharacter;
     }
     public String getCharacterName() {
-        if (this.getGameCharacter() == null){
-            return "null";
-        }
         return gameCharacter.getRole().getRoleName();
     }
 
