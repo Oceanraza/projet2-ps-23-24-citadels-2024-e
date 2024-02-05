@@ -83,5 +83,17 @@ public class RandomAlgo extends BaseAlgo {
     public void huntedQuarterAlgorithm(District huntedQuarter) {
         huntedQuarter.setColor(DistrictColor.values()[utils.generateRandomNumber(DistrictColor.values().length)]);
     }
+
+    public boolean manufactureChoice() {
+        return utils.generateRandomNumber(2) == 0;
+    }
+
+    public Optional<District> laboratoryChoice() {
+        if(utils.generateRandomNumber(2) == 0) {
+            List<District> districtsInHand = bot.getDistrictsInHand();
+            return Optional.ofNullable(districtsInHand.get(utils.generateRandomNumber(districtsInHand.size())));
+        }
+        return Optional.empty();
+    }
 }
 
