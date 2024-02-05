@@ -51,16 +51,17 @@ class ActionManagerTest {
         bot.buildDistrict(district2, gameState);
         bot.buildDistrict(district3, gameState);
         assertEquals(2, ActionManager.collectGold(bot));
-    }/*
+    }
     @Test
     void startOfTurnTest() {
         bot.botAlgo = new EinsteinAlgo();
         bot.botAlgo.setPlayer(bot);
         bot.setGold(10);
+        bot.setGameCharacter(new King());
         ActionManager.startOfTurn(game, bot);
         assertEquals(1, bot.getDistrictsInHand().size());
-
         District districtPicked = bot.getDistrictsInHand().get(0);
+
         bot.buildDistrict(districtPicked, gameState);
         bot.setGold(0);
         assertEquals(0, bot.getDistrictsInHand().size());
@@ -68,10 +69,15 @@ class ActionManagerTest {
         bot.addDistrictInHand(districtPicked);
         ActionManager.startOfTurn(game, bot);
         assertEquals(2, bot.getDistrictsInHand().size());
+        District newDistrictPicked = bot.getDistrictsInHand().get(bot.getDistrictsInHand().size()-1);
 
         ActionManager.startOfTurn(game, bot);
+        while(newDistrictPicked.equals(districtPicked)) {
+            ActionManager.startOfTurn(game, bot);
+            newDistrictPicked = bot.getDistrictsInHand().get(bot.getDistrictsInHand().size()-1);
+        }
         assertEquals(2, bot.getGold());
-    }*/
+    }
     @Test
     void getCrownTest() {
         bot.setGameCharacter(king);
