@@ -8,7 +8,7 @@ public class GameState {
     private int turn;
 
     public GameState() {
-        this.turn = 1;
+        this.turn = 0;
     }
 
     public int getTurn() {

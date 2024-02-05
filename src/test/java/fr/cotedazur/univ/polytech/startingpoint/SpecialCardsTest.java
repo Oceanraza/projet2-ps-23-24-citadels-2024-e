@@ -71,7 +71,7 @@ class SpecialCardsTest {
         firstPlayer.setGold(0);
         secondPlayer.setGold(0);
 
-        assertEquals(1, gameState.getTurn());
+        assertEquals(0, gameState.getTurn());
         for (Player player : game.getPlayers()) {
             player.getCity().addDistrict(new District("Marchand", 0, DistrictColor.TRADE), gameState);
             player.getCity().addDistrict(new District("Militaire", 0, DistrictColor.MILITARY), gameState);
@@ -82,11 +82,11 @@ class SpecialCardsTest {
         assertEquals(5, firstPlayer.getCity().getDistrictsBuilt().size());
 
         gameState.nextTurn();
-        assertEquals(2, gameState.getTurn());
+        assertEquals(1, gameState.getTurn());
         secondPlayer.getCity().addDistrict(new District("Cour des miracles", 0, DistrictColor.SPECIAL), gameState);
         District huntedQuarter = secondPlayer.getCity().getDistrictsBuilt().get(4);
         assertTrue(huntedQuarter.getTurnBuilt().isPresent());
-        assertEquals(2, huntedQuarter.getTurnBuilt().get());
+        assertEquals(1, huntedQuarter.getTurnBuilt().get());
 
         finalChoice(game.getPlayers(), gameState);
         assertEquals(3, firstPlayer.calculateScore()); // +3 HuntedQuarter goes from special to noble

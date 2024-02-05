@@ -87,15 +87,16 @@ public class RandomAlgo extends BaseAlgo {
             bot.getGameCharacter().specialEffect(bot, game, false);
         }
     }
+    public void kingAlgorithm(Game game){bot.getGameCharacter().specialEffect(bot,game);}
+    public void buildOrNot(GameState gameState){ //builds if he can
+        int builtThisTurn = 0;
 
-    public void kingAlgorithm(Game game) {
-        bot.getGameCharacter().specialEffect(bot, game);
-    }
-
-    public void buildOrNot(GameState gameState) { //builds if he can
         for (District district : bot.getDistrictsInHand()) {
             if (bot.buildDistrict(district, gameState)) {
-                break;
+                builtThisTurn++;
+                if ((!bot.getCharacterName().equals("Architect"))||(builtThisTurn == 3)){
+                    break;
+                }
             }
         }
     }

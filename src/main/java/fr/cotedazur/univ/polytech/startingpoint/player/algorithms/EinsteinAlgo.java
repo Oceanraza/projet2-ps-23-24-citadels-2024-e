@@ -12,14 +12,17 @@ import static fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRo
 
 import java.util.*;
 
+
+
+
 public class EinsteinAlgo extends BaseAlgo {
     boolean lowestDistrictFound = false;
     public EinsteinAlgo(){
         super();
     }
 
-    public int startOfTurnChoice() { // Always draws if needed
-        if (bot.getDistrictsInHand().isEmpty() || bot.districtsInHandAreBuilt()) {
+    public int startOfTurnChoice() { //Always draws if needed
+        if ((bot.getDistrictsInHand().isEmpty() || bot.districtsInHandAreBuilt()) || (bot.getGameCharacter().getRole().equals(ARCHITECT))){
             return 2; // Draw a card
         } else {
             return 1; // Take 2 gold coins
@@ -35,36 +38,38 @@ public class EinsteinAlgo extends BaseAlgo {
 
     public void chooseCharacterAlgorithm(Game game) {
         List<GameCharacter> availableChars = game.getAvailableChars();
-
         // If the bot can build its 8th quarter next turn, it will choose the assassin
         // So he won't be killed
-        if ((bot.getCity().getDistrictsBuilt().size() >= 7) && (bot.canBuildDistrictThisTurn())) {
-            if (bot.isCharInList(availableChars, ASSASSIN)) {
+        if ((bot.getCity().getDistrictsBuilt().size() >= 7) && (bot.canBuildDistrictThisTurn()) && (bot.isCharInList(availableChars, ASSASSIN))){
                 bot.chooseChar(game, ASSASSIN);
-                return;
+        }
+        //If the bot's hand is empty, it chooses the magician if he gives him more cards than the architect would
+        else if ((bot.getDistrictsInHand().isEmpty())&& (((bot.isCharInList(availableChars,GameCharacterRole.MAGICIAN)) || (bot.isCharInList(availableChars, ARCHITECT))))){
+            if ((bot.isCharInList(availableChars,GameCharacterRole.MAGICIAN)) && (Utils.getHighestNumberOfCardsInHand(game.getPlayers(),this.bot) > 2)){
+                bot.chooseChar(game,GameCharacterRole.MAGICIAN);
+            }
+            else if (bot.isCharInList(availableChars,GameCharacterRole.ARCHITECT)){
+                bot.chooseChar(game,GameCharacterRole.ARCHITECT);
             }
         }
-        // If the bot's hand is empty, it chooses the magician to get someone's else's hand
-        else if (bot.getDistrictsInHand().isEmpty() && bot.isCharInList(availableChars, GameCharacterRole.MAGICIAN)){
-            bot.chooseChar(game, GameCharacterRole.MAGICIAN);
-            return;
-        }
-        // If the bot doesn't have an immediate way to win, it will just pick the character who gives out the most gold for him
-        GameCharacter chosenChar = availableChars.get(1);
-        int numberOfDistrictByColor;
-        int goldCollectedWithDistrictColor = 0;
+        else {
+            // If the bot doesn't have an immediate way to win, it will just pick the character who gives out the most gold for him
+            GameCharacter chosenChar = availableChars.get(1);
+            int numberOfDistrictByColor;
+            int goldCollectedWithDistrictColor = 0;
 
-        for (GameCharacter cha : availableChars) {
-            // We only compare character that collects gold according to his districts
-            if (cha.getColor() != null) {
-                numberOfDistrictByColor = bot.getNumberOfDistrictsByColor().get(cha.getColor());
-                if (numberOfDistrictByColor > goldCollectedWithDistrictColor) {
-                    goldCollectedWithDistrictColor = numberOfDistrictByColor;
-                    chosenChar = cha;
+            for (GameCharacter cha : availableChars) {
+                // We only compare character that collects gold according to his districts
+                if (cha.getColor() != null) {
+                    numberOfDistrictByColor = bot.getNumberOfDistrictsByColor().get(cha.getColor());
+                    if (numberOfDistrictByColor > goldCollectedWithDistrictColor) {
+                        goldCollectedWithDistrictColor = numberOfDistrictByColor;
+                        chosenChar = cha;
+                    }
                 }
             }
+            bot.chooseChar(game, chosenChar.getRole());
         }
-        bot.chooseChar(game, chosenChar.getRole());
     }
 
     public void warlordAlgorithm(Game game) {
@@ -143,10 +148,20 @@ public class EinsteinAlgo extends BaseAlgo {
     public void lowestDistrictHasBeenFound() {
         lowestDistrictFound = true;
     }
-    public void buildOrNot(GameState gameState) { // builds if he can
-        for (District district : bot.getDistrictsInHand()) {
+    public void buildOrNot(GameState gameState){ //builds if he can
+        int builtThisTurn = 0;
+        ArrayList<District> tempHand = new ArrayList<>(); //Need to create a deep copy to avoid concurrent modification
+        for (District district : bot.getDistrictsInHand()){
+            tempHand.add(district);
+        }
+        for (District district : tempHand) {
+
             if (bot.buildDistrict(district, gameState)) {
-                break;
+                builtThisTurn++;
+                System.out.println(bot.getCharacterName());
+                if ((!bot.getCharacterName().equals("Architecte"))||(builtThisTurn == 3)){
+                    break;
+                }
             }
         }
     }
