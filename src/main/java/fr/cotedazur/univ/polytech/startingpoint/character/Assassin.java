@@ -4,7 +4,7 @@ import fr.cotedazur.univ.polytech.startingpoint.Game;
 import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 
 public class Assassin extends GameCharacter {
-    public Assassin () {
+    public Assassin() {
         super(GameCharacterRole.ASSASSIN, 1);
     }
 
@@ -20,7 +20,7 @@ public class Assassin extends GameCharacter {
             System.out.println("Vous ne pouvez pas vous assassinez vous-même !");
             return;
         }
-        for (Player target: game.getPlayers()) {
+        for (Player target : game.getPlayers()) {
             targetCharacter = target.getGameCharacter();
             if (targetCharacter.getRole().equals(killedCharacter)) {
                 targetCharacter.setIsAlive(false);

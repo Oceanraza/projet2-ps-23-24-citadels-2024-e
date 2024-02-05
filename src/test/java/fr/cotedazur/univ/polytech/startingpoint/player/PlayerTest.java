@@ -57,10 +57,10 @@ class PlayerTest {
         player.addDistrictBuilt(noble, gameState);
         player.addDistrictBuilt(militaire, gameState);
         player.addDistrictBuilt(marchand, gameState);
-        assertEquals(2+4, player.calculateScore());
+        assertEquals(2 + 4, player.calculateScore());
         District special = new District("special", 1, DistrictColor.SPECIAL, 1);
         player.addDistrictBuilt(special, gameState);
-        assertEquals(2+5+3+1, player.calculateScore());
+        assertEquals(2 + 5 + 3 + 1, player.calculateScore());
     }
 
     @Test

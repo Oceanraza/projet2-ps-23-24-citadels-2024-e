@@ -1,14 +1,13 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
-import fr.cotedazur.univ.polytech.startingpoint.character.Merchant;
-import fr.cotedazur.univ.polytech.startingpoint.city.District;
-import fr.cotedazur.univ.polytech.startingpoint.character.Warlord;
 import fr.cotedazur.univ.polytech.startingpoint.character.Bishop;
 import fr.cotedazur.univ.polytech.startingpoint.character.King;
+import fr.cotedazur.univ.polytech.startingpoint.character.Warlord;
+import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.city.DistrictColor;
 import fr.cotedazur.univ.polytech.startingpoint.player.Bot;
-import fr.cotedazur.univ.polytech.startingpoint.player.algorithms.EinsteinAlgo;
 import fr.cotedazur.univ.polytech.startingpoint.player.Player;
+import fr.cotedazur.univ.polytech.startingpoint.player.algorithms.EinsteinAlgo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -24,7 +23,7 @@ class SpecialCardsTest {
     GameState gameState;
 
     @BeforeEach
-    void setUp(){
+    void setUp() {
         game = new Game();
         game.init();
         gameState = new GameState();
@@ -35,11 +34,11 @@ class SpecialCardsTest {
     }
 
     @Test
-    void donjonTest(){
-        Player firstBuilder = new Bot("Player 1",new EinsteinAlgo());
-        Bot secondPlayer = new Bot("Player 2",new EinsteinAlgo());
-        Player thirdPlayer = new Bot("Player 3",new EinsteinAlgo());
-        Player fourthPlayer = new Bot("Player 4",new EinsteinAlgo());
+    void donjonTest() {
+        Player firstBuilder = new Bot("Player 1", new EinsteinAlgo());
+        Bot secondPlayer = new Bot("Player 2", new EinsteinAlgo());
+        Player thirdPlayer = new Bot("Player 3", new EinsteinAlgo());
+        Player fourthPlayer = new Bot("Player 4", new EinsteinAlgo());
         Game game = new Game();
         game.setPlayers(firstBuilder, secondPlayer, thirdPlayer, fourthPlayer);
         firstBuilder.setGold(4);

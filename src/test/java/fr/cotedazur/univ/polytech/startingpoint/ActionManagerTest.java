@@ -1,14 +1,15 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
-import static org.junit.jupiter.api.Assertions.*;
-import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.character.*;
-import fr.cotedazur.univ.polytech.startingpoint.city.DistrictAlreadyBuiltException;
+import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.city.DistrictColor;
 import fr.cotedazur.univ.polytech.startingpoint.player.Bot;
 import fr.cotedazur.univ.polytech.startingpoint.player.algorithms.EinsteinAlgo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 
 class ActionManagerTest {
     King king;
@@ -25,14 +26,13 @@ class ActionManagerTest {
         game = new Game();
         game.init();
         gameState = new GameState();
-
         king = new King();
         bishop = new Bishop();
         warlord = new Warlord();
         merchant = new Merchant();
         magician = new Magician();
-
-        bot = new Bot("Bot") {};
+        bot = new Bot("Bot") {
+        };
     }
 
     @Test
@@ -69,12 +69,12 @@ class ActionManagerTest {
         bot.addDistrictInHand(districtPicked);
         ActionManager.startOfTurn(game, bot);
         assertEquals(2, bot.getDistrictsInHand().size());
-        District newDistrictPicked = bot.getDistrictsInHand().get(bot.getDistrictsInHand().size()-1);
+        District newDistrictPicked = bot.getDistrictsInHand().get(bot.getDistrictsInHand().size() - 1);
 
         ActionManager.startOfTurn(game, bot);
-        while(newDistrictPicked.equals(districtPicked)) {
+        while (newDistrictPicked.equals(districtPicked)) {
             ActionManager.startOfTurn(game, bot);
-            newDistrictPicked = bot.getDistrictsInHand().get(bot.getDistrictsInHand().size()-1);
+            newDistrictPicked = bot.getDistrictsInHand().get(bot.getDistrictsInHand().size() - 1);
         }
         assertEquals(2, bot.getGold());
     }

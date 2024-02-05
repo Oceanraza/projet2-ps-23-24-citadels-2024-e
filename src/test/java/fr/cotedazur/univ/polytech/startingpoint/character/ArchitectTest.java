@@ -1,23 +1,17 @@
 package fr.cotedazur.univ.polytech.startingpoint.character;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import com.fasterxml.jackson.databind.introspect.DefaultAccessorNamingStrategy;
-import com.fasterxml.jackson.databind.ser.Serializers;
 import fr.cotedazur.univ.polytech.startingpoint.ActionManager;
 import fr.cotedazur.univ.polytech.startingpoint.Game;
 import fr.cotedazur.univ.polytech.startingpoint.GameState;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
-import fr.cotedazur.univ.polytech.startingpoint.character.*;
 import fr.cotedazur.univ.polytech.startingpoint.city.DistrictColor;
 import fr.cotedazur.univ.polytech.startingpoint.player.Bot;
-import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 import fr.cotedazur.univ.polytech.startingpoint.player.algorithms.BaseAlgo;
 import fr.cotedazur.univ.polytech.startingpoint.player.algorithms.EinsteinAlgo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import java.util.ArrayList;
-import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ArchitectTest {
     King king;
@@ -44,21 +38,22 @@ class ArchitectTest {
     @Test
     void DrawsTwoTest() { //Tests if the player drew two additionnal cards
         BaseAlgo botAlgo = new EinsteinAlgo();
-        Bot firstBuilder = new Bot("Player 1",botAlgo);
+        Bot firstBuilder = new Bot("Player 1", botAlgo);
         botAlgo.setPlayer(firstBuilder);
         Game game = new Game();
         game.setPlayers(firstBuilder);
         firstBuilder.setGold(5);
         firstBuilder.setGameCharacter(architect);
         assertEquals(0, firstBuilder.getDistrictsInHand().size());
-        assertEquals(botAlgo.startOfTurnChoice(),2); //draws card because doesn't have any/has architect
-        ActionManager.startOfTurn(game,firstBuilder);
+        assertEquals(botAlgo.startOfTurnChoice(), 2); //draws card because doesn't have any/has architect
+        ActionManager.startOfTurn(game, firstBuilder);
         assertEquals(3, firstBuilder.getDistrictsInHand().size());
     }
+
     @Test
     void CanBuildMoreThanOneDistrictTest() { //Tests if the player builds more than one district if he can
         BaseAlgo botAlgo = new EinsteinAlgo();
-        Bot firstBuilder = new Bot("Player 1",botAlgo);
+        Bot firstBuilder = new Bot("Player 1", botAlgo);
         botAlgo.setPlayer(firstBuilder);
         Game game = new Game();
         game.setPlayers(firstBuilder);
@@ -73,10 +68,11 @@ class ArchitectTest {
         botAlgo.buildOrNot(new GameState());
         assertEquals(3, firstBuilder.getCity().getDistrictsBuilt().size());
     }
+
     @Test
     void EinsteinAlgoChoosesArchitectTest() { //Tests if the player builds more than one district if he can
         BaseAlgo botAlgo = new EinsteinAlgo();
-        Bot firstBuilder = new Bot("Player 1",botAlgo);
+        Bot firstBuilder = new Bot("Player 1", botAlgo);
         botAlgo.setPlayer(firstBuilder);
         Game game = new Game();
         //game.shuffleCharacters();

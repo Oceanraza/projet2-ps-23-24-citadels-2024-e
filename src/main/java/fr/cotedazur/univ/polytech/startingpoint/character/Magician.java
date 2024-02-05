@@ -1,8 +1,8 @@
 package fr.cotedazur.univ.polytech.startingpoint.character;
 
-import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.Game;
-import fr.cotedazur.univ.polytech.startingpoint.player.*;
+import fr.cotedazur.univ.polytech.startingpoint.city.District;
+import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +13,7 @@ public class Magician extends GameCharacter {
     }
 
     @Override
-    public void specialEffect(Player player, Game game,Object... optionalArgs) {
+    public void specialEffect(Player player, Game game, Object... optionalArgs) {
         if ((boolean) optionalArgs[0]) { // If you decide to switch with another player
             List<District> tempD = new ArrayList<>(player.getDistrictsInHand());
             Player victim = (Player) optionalArgs[1];

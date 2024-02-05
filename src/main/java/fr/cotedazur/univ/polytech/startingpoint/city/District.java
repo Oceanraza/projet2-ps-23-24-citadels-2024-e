@@ -16,6 +16,7 @@ public class District {
         this.name = name;
         this.bonusPoints = 0;
     }
+
     public District(String name, int price, DistrictColor color, int bonusPoints) {
         this.color = color;
         this.price = price;

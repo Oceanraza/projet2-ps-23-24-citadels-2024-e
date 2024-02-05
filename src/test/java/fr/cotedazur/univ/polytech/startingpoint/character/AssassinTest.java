@@ -18,7 +18,7 @@ public class AssassinTest {
     Player targetPlayer;
 
     @BeforeEach
-    void setUp(){
+    void setUp() {
         game = new Game();
         assassin = new Assassin();
         warlord = new Warlord();

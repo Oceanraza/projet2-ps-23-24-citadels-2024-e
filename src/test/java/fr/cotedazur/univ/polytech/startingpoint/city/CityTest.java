@@ -1,10 +1,6 @@
 package fr.cotedazur.univ.polytech.startingpoint.city;
 
 import fr.cotedazur.univ.polytech.startingpoint.GameState;
-import fr.cotedazur.univ.polytech.startingpoint.city.City;
-import fr.cotedazur.univ.polytech.startingpoint.city.District;
-import fr.cotedazur.univ.polytech.startingpoint.city.DistrictAlreadyBuiltException;
-import fr.cotedazur.univ.polytech.startingpoint.city.DistrictColor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -21,7 +17,7 @@ class CityTest {
     void setUp() {
         gameState = new GameState();
         city = new City();
-        district = new District("Castle", 5, DistrictColor.NOBLE);
+        district = new District("Chateau", 5, DistrictColor.NOBLE);
     }
 
     @Test

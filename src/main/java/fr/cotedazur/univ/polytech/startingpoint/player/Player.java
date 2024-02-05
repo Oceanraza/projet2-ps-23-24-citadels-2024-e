@@ -1,11 +1,11 @@
 package fr.cotedazur.univ.polytech.startingpoint.player;
 
-import fr.cotedazur.univ.polytech.startingpoint.GameState;
-import fr.cotedazur.univ.polytech.startingpoint.city.DistrictColor;
 import fr.cotedazur.univ.polytech.startingpoint.Game;
+import fr.cotedazur.univ.polytech.startingpoint.GameState;
 import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacter;
 import fr.cotedazur.univ.polytech.startingpoint.city.City;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
+import fr.cotedazur.univ.polytech.startingpoint.city.DistrictColor;
 
 import java.util.*;
 
@@ -26,11 +26,11 @@ public abstract class Player {
         score = 0;
         gameCharacter = null;
         numberOfDistrictsByColor = new EnumMap<>(DistrictColor.class);
-        numberOfDistrictsByColor.put(DistrictColor.MILITARY,0);
-        numberOfDistrictsByColor.put(DistrictColor.NOBLE,0);
-        numberOfDistrictsByColor.put(DistrictColor.SPECIAL,0);
-        numberOfDistrictsByColor.put(DistrictColor.RELIGIOUS,0);
-        numberOfDistrictsByColor.put(DistrictColor.TRADE,0);
+        numberOfDistrictsByColor.put(DistrictColor.MILITARY, 0);
+        numberOfDistrictsByColor.put(DistrictColor.NOBLE, 0);
+        numberOfDistrictsByColor.put(DistrictColor.SPECIAL, 0);
+        numberOfDistrictsByColor.put(DistrictColor.RELIGIOUS, 0);
+        numberOfDistrictsByColor.put(DistrictColor.TRADE, 0);
     }
 
     // Getter
@@ -77,7 +77,8 @@ public abstract class Player {
                 numberOfDistrictsByColor.get(district.getColor()) + 1);
         this.city.addDistrict(district, gameState);
     }
-    public void removeGold(int g){
+
+    public void removeGold(int g) {
         gold -= g;
     }
 

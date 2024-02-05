@@ -1,19 +1,22 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
-import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacter;
 import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole;
+import fr.cotedazur.univ.polytech.startingpoint.city.District;
+import fr.cotedazur.univ.polytech.startingpoint.player.Bot;
+import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 import fr.cotedazur.univ.polytech.startingpoint.player.algorithms.EinsteinAlgo;
 import fr.cotedazur.univ.polytech.startingpoint.player.algorithms.RandomAlgo;
 
-import fr.cotedazur.univ.polytech.startingpoint.player.Bot;
-import fr.cotedazur.univ.polytech.startingpoint.player.Player;
-
-import java.util.List;
 import java.util.Comparator;
+import java.util.List;
 import java.util.Optional;
 
 public class Main {
+
+    protected static final String Shinning_blue = "\033[0;94m";
+    protected static final String Blue = "\033[0;34m";
+    protected static final String Reset = "\033[0m";
 
     public static void sortPlayers(List<Player> players) {
         // Use a custom Comparator to compare Players based on their score and running order
@@ -50,11 +53,11 @@ public class Main {
     }
 
     public static void finalChoice(List<Player> players, GameState gameState) {
-        for(Player player: players) {
-            for(District district: player.getCity().getDistrictsBuilt()) {
-                if(district.getName().equals("Cour des miracles") && district.getTurnBuilt().isPresent()) {
+        for (Player player : players) {
+            for (District district : player.getCity().getDistrictsBuilt()) {
+                if (district.getName().equals("Cour des miracles") && district.getTurnBuilt().isPresent()) {
                     Optional<Integer> turnBuilt = district.getTurnBuilt();
-                    if(turnBuilt.isPresent() && gameState.getTurn() > turnBuilt.get()) {
+                    if (turnBuilt.isPresent() && gameState.getTurn() > turnBuilt.get()) {
                         Bot bot = (Bot) player;
                         bot.botAlgo.huntedQuarterAlgorithm(district);
                         System.out.println("\n[ Choix de fin de partie ]");
@@ -73,7 +76,12 @@ public class Main {
         // System.out.println(newGame);
 
         // Adding players to the game
-        newGame.setPlayers(new Bot("Donald", new EinsteinAlgo()), new Bot("Picsou", new EinsteinAlgo()), new Bot("Riri", new RandomAlgo()), new Bot("Fifi", new RandomAlgo()));
+        newGame.setPlayers(
+                new Bot("Donald", new EinsteinAlgo()),
+                new Bot("Picsou", new EinsteinAlgo()),
+                new Bot("Riri", new RandomAlgo()),
+                new Bot("Fifi", new RandomAlgo())
+        );
 
         List<Player> players = newGame.getPlayers();
 
@@ -84,11 +92,9 @@ public class Main {
         while (!gameState.isGameFinished(players)) {
             gameState.nextTurn();
             Bot crownOwner = (Bot) newGame.getCrown().getOwner();
-            // "\033[0;94m" : Shinning blue
-            // "\033[0;34m" : Blue
-            // "\033[0m" : Reset
-            System.out.println("\033[0;94m" + "\n\n----- Tour numéro " + gameState.getTurn() + " -----" + "\033[0m" +
-                    "\nLa couronne appartient à " + (crownOwner != null ? crownOwner.getName() : "personne"));
+
+            System.out.println(Shinning_blue + "\n\n----- Tour numero " + gameState.getTurn() + " -----" + Reset + "\nLa couronne appartient à "
+                    + (crownOwner != null ? crownOwner.getName() : "personne"));
 
             // Reset characters, their states and shuffle cards
             newGame.resetChars();
@@ -96,7 +102,7 @@ public class Main {
             newGame.shuffleCharacters();
 
             // Character selection phase
-            System.out.println("\033[0;34m" + "\n[ Phase 1 ] Choix des personnages" + "\033[0m");
+            System.out.println(Blue + "\n[ Phase 1 ] Choix des personnages" + Reset);
 
             if (crownOwner != null){
                 System.out.println(crownOwner);
@@ -105,7 +111,7 @@ public class Main {
             newGame.charSelectionFiller();
 
             // Character reveal phase
-            System.out.println("\033[0;34m" + "\n[ Phase 2 ] Tour des joueurs" + "\033[0m");
+            System.out.println(Blue + "\n[ Phase 2 ] Tour des joueurs" + Reset);
             List<Player> runningOrder = newGame.setRunningOrder();
 
             for (Player player: runningOrder) {

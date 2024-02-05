@@ -1,17 +1,23 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
-import java.util.*;
-import java.util.stream.Collectors;
-
+import com.fasterxml.jackson.databind.JsonNode;
 import fr.cotedazur.univ.polytech.startingpoint.board.Deck;
 import fr.cotedazur.univ.polytech.startingpoint.character.*;
-
-
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
-import fr.cotedazur.univ.polytech.startingpoint.player.*;
-import com.fasterxml.jackson.databind.JsonNode;
-import java.io.IOException;
+import fr.cotedazur.univ.polytech.startingpoint.player.Bot;
+import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
+
+/**
+ * The Game class is the main class of the game. It contains the deck, the crown, the players and the characters.
+ * It also contains the methods to start the game, to shuffle the characters and to give the cards to the players.
+ */
 public class Game {
     private static final int START_CARDS_NUMBER = 4;
     private Deck deck;
@@ -29,7 +35,7 @@ public class Game {
     Magician magician;
     Architect architect;
 
-    public Game(){
+    public Game() {
         init();
     }
 
@@ -43,7 +49,10 @@ public class Game {
     public List<GameCharacter> getAvailableChars() {
         return availableChars;
     }
-    public List<GameCharacter> getCharactersInGame() { return charactersInGame; }
+
+    public List<GameCharacter> getCharactersInGame() {
+        return charactersInGame;
+    }
 
     // Setter
     public void setPlayers(Player... bots) { // Add players to the list of players
@@ -59,6 +68,7 @@ public class Game {
     public void removeAvailableChar(GameCharacter cha) {
         availableChars.remove(cha);
     }
+
     private void removeCharactersInGame() {
         for (int i = 0; i < 2; i++) {
             int indexCharacter;
@@ -168,22 +178,22 @@ public class Game {
 
     // Removes characters of players
     public void resetChars() {
-        for (Player p: players) {
+        for (Player p : players) {
             p.setGameCharacter(null);
         }
     }
 
     // Removes attacks on characters
     public void resetCharsState() {
-        for (GameCharacter cha: allCharacters) {
+        for (GameCharacter cha : allCharacters) {
             cha.setIsAlive(true);
             cha.setAttacker(null);
         }
     }
 
-    public List<Player> getSortedPlayersByScore(){
+    public List<Player> getSortedPlayersByScore() {
         List<Player> sortedPlayersByScore = new ArrayList<>();
-        for (Player player: getPlayers()) {
+        for (Player player : getPlayers()) {
             player.calculateAndSetScore();
             sortedPlayersByScore.add(player);
         }
@@ -194,9 +204,9 @@ public class Game {
         return sortedPlayersByScore;
     }
 
-    public List<Player> getSortedPlayersByScoreForWarlord(){
+    public List<Player> getSortedPlayersByScoreForWarlord() {
         List<Player> sortedPlayersByScore = getSortedPlayersByScore();
-        for (Player player: sortedPlayersByScore) {
+        for (Player player : sortedPlayersByScore) {
             // Warlord can't destroy bishop's districts
             if (player.getGameCharacter().getRole().equals(GameCharacterRole.BISHOP)) {
                 sortedPlayersByScore.remove(player);
@@ -208,7 +218,7 @@ public class Game {
 
     public List<GameCharacter> getKillableCharacters() {
         List<GameCharacter> killableCharacters = getCharactersInGame();
-        for (GameCharacter cha: killableCharacters) {
+        for (GameCharacter cha : killableCharacters) {
             if (cha.getRole().equals(GameCharacterRole.ASSASSIN)) {
                 killableCharacters.remove(cha);
                 break;

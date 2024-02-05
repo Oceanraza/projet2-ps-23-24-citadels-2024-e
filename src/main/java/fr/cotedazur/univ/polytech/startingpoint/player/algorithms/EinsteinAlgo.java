@@ -2,18 +2,21 @@ package fr.cotedazur.univ.polytech.startingpoint.player.algorithms;
 
 import fr.cotedazur.univ.polytech.startingpoint.Game;
 import fr.cotedazur.univ.polytech.startingpoint.GameState;
+import fr.cotedazur.univ.polytech.startingpoint.Utils;
 import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacter;
 import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.city.DistrictColor;
+import fr.cotedazur.univ.polytech.startingpoint.player.Bot;
 import fr.cotedazur.univ.polytech.startingpoint.player.Player;
-import fr.cotedazur.univ.polytech.startingpoint.Utils;
-import static fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole.*;
 
 import java.util.*;
 
-
-
+import static fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole.*;
+/**
+ * This class represents the algorithm of the bot Einstein
+ * It contains the logic of the bot's actions
+ */
 
 public class EinsteinAlgo extends BaseAlgo {
     boolean lowestDistrictFound = false;
@@ -21,38 +24,64 @@ public class EinsteinAlgo extends BaseAlgo {
         super();
     }
 
-    public int startOfTurnChoice() { //Always draws if needed
-        if ((bot.getDistrictsInHand().isEmpty() || bot.districtsInHandAreBuilt()) || (bot.getGameCharacter().getRole().equals(ARCHITECT))){
+    public void botChoosesCard(Game game, List<District> threeCards) {
+        District chosenCard = chooseCard(threeCards);
+        threeCards.remove(chosenCard);
+        for (District card : threeCards) {
+            game.getDeck().discard(card);
+        }
+        System.out.println(bot.getName() + " pioche le " + chosenCard);
+        bot.getDistrictsInHand().add(chosenCard);
+    }
+
+
+    public int startOfTurnChoice() { // Always draws if needed
+        if (bot.getDistrictsInHand().isEmpty() || bot.districtsInHandAreBuilt() || bot.getGameCharacter().getRole().equals(ARCHITECT)) {
             return 2; // Draw a card
         } else {
             return 1; // Take 2 gold coins
         }
     }
+
+
+    public void graveyardLogic(Game game, Player targetedPlayer, District destroyedDistrict) {
+        if (bot.getCity().containsDistrict("Cimetière") && bot.getGold() >= 1 && !bot.getCharacterName().equals("Condottiere")) {
+            System.out.println(bot.getName() + " utilise le Cimetière pour reprendre le " + destroyedDistrict + " dans sa main.");
+            bot.getDistrictsInHand().add(destroyedDistrict);
+            bot.addGold(-1);
+        }
+    }
+
+
+    private void addTwoGold() {
+        System.out.println(bot.getName() + " prend deux pièces d'or.");
+        bot.addGold(2);
+    }
+
+
     public void charAlgorithmsManager(Game game){
         GameCharacterRole role = bot.getGameCharacter().getRole();
-        if(role == WARLORD) warlordAlgorithm(game);
-        else if(role == KING) kingAlgorithm(game);
-        else if(role == ASSASSIN) assassinAlgorithm(game);
-        else if(role == MAGICIAN) magicianAlgorithm(game);
+        if (role == WARLORD) warlordAlgorithm(game);
+        else if (role == KING) kingAlgorithm(game);
+        else if (role == ASSASSIN) assassinAlgorithm(game);
+        else if (role == MAGICIAN) magicianAlgorithm(game);
     }
 
     public void chooseCharacterAlgorithm(Game game) {
         List<GameCharacter> availableChars = game.getAvailableChars();
         // If the bot can build its 8th quarter next turn, it will choose the assassin
         // So he won't be killed
-        if ((bot.getCity().getDistrictsBuilt().size() >= 7) && (bot.canBuildDistrictThisTurn()) && (bot.isCharInList(availableChars, ASSASSIN))){
+        if ((bot.getCity().getDistrictsBuilt().size() >= 7) && (bot.canBuildDistrictThisTurn()) && (bot.isCharInList(availableChars, ASSASSIN))) {
                 bot.chooseChar(game, ASSASSIN);
         }
         //If the bot's hand is empty, it chooses the magician if he gives him more cards than the architect would
-        else if ((bot.getDistrictsInHand().isEmpty())&& (((bot.isCharInList(availableChars,GameCharacterRole.MAGICIAN)) || (bot.isCharInList(availableChars, ARCHITECT))))){
-            if ((bot.isCharInList(availableChars,GameCharacterRole.MAGICIAN)) && (Utils.getHighestNumberOfCardsInHand(game.getPlayers(),this.bot) > 2)){
-                bot.chooseChar(game,GameCharacterRole.MAGICIAN);
+        else if ((bot.getDistrictsInHand().isEmpty()) && (((bot.isCharInList(availableChars, GameCharacterRole.MAGICIAN)) || (bot.isCharInList(availableChars, ARCHITECT))))) {
+            if ((bot.isCharInList(availableChars, GameCharacterRole.MAGICIAN)) && (Utils.getHighestNumberOfCardsInHand(game.getPlayers(), this.bot) > 2)) {
+                bot.chooseChar(game, GameCharacterRole.MAGICIAN);
+            } else if (bot.isCharInList(availableChars, GameCharacterRole.ARCHITECT)) {
+                bot.chooseChar(game, GameCharacterRole.ARCHITECT);
             }
-            else if (bot.isCharInList(availableChars,GameCharacterRole.ARCHITECT)){
-                bot.chooseChar(game,GameCharacterRole.ARCHITECT);
-            }
-        }
-        else {
+        } else {
             // If the bot doesn't have an immediate way to win, it will just pick the character who gives out the most gold for him
             GameCharacter chosenChar = availableChars.get(1);
             int numberOfDistrictByColor;
@@ -80,12 +109,13 @@ public class EinsteinAlgo extends BaseAlgo {
                 targetedPlayer.getLowestDistrict().ifPresent(value -> {
                     if (Utils.canDestroyDistrict(value, bot)) {
                         bot.getGameCharacter().specialEffect(bot, game, targetedPlayer, value);
+                        graveyardLogic(game, targetedPlayer, value); // Call the graveyard logic here
                         lowestDistrictHasBeenFound();
                     }
                 });
-            if (lowestDistrictFound) {
-                break;
-            }
+                if (lowestDistrictFound) {
+                    break;
+                }
             }
         }
     }
@@ -102,7 +132,10 @@ public class EinsteinAlgo extends BaseAlgo {
         boolean switching = true;
         bot.getGameCharacter().specialEffect(bot, game, switching, chosenPlayer);
     }
-    public void kingAlgorithm(Game game){bot.getGameCharacter().specialEffect(bot,game);}
+
+    public void kingAlgorithm(Game game) {
+        bot.getGameCharacter().specialEffect(bot, game);
+    }
 
     public void assassinAlgorithm(Game game) {
         List<GameCharacter> killableCharacters;
@@ -148,10 +181,11 @@ public class EinsteinAlgo extends BaseAlgo {
     public void lowestDistrictHasBeenFound() {
         lowestDistrictFound = true;
     }
-    public void buildOrNot(GameState gameState){ //builds if he can
+
+    public void buildOrNot(GameState gameState) { //builds if he can
         int builtThisTurn = 0;
         ArrayList<District> tempHand = new ArrayList<>(); //Need to create a deep copy to avoid concurrent modification
-        for (District district : bot.getDistrictsInHand()){
+        for (District district : bot.getDistrictsInHand()) {
             tempHand.add(district);
         }
         for (District district : tempHand) {
@@ -159,7 +193,7 @@ public class EinsteinAlgo extends BaseAlgo {
             if (bot.buildDistrict(district, gameState)) {
                 builtThisTurn++;
                 System.out.println(bot.getCharacterName());
-                if ((!bot.getCharacterName().equals("Architecte"))||(builtThisTurn == 3)){
+                if ((!bot.getCharacterName().equals("Architecte")) || (builtThisTurn == 3)) {
                     break;
                 }
             }
@@ -174,8 +208,8 @@ public class EinsteinAlgo extends BaseAlgo {
         }
         DistrictColor[] districtColors = DistrictColor.values();
         if (colorList.size() == districtColors.length - 1) {
-            for(DistrictColor districtColor: districtColors) {
-                if(!colorList.contains(districtColor)) {
+            for (DistrictColor districtColor : districtColors) {
+                if (!colorList.contains(districtColor)) {
                     huntedQuarter.setColor(districtColor);
                 }
             }
@@ -191,19 +225,35 @@ public class EinsteinAlgo extends BaseAlgo {
     public Optional<District> laboratoryChoice() {
         List<District> districtsBuilt = bot.getCity().getDistrictsBuilt();
         List<District> districtsInHand = bot.getDistrictsInHand();
-        for(District district: districtsInHand) {
-            if(districtsBuilt.contains(district)) {
+        for (District district : districtsInHand) {
+            if (districtsBuilt.contains(district)) {
                 return Optional.ofNullable(district); // Discard districts already built
             }
             int count = Collections.frequency(districtsInHand, district);
-            if(count > 1) {
+            if (count > 1) {
                 return Optional.ofNullable(district); // Discard duplicates
             }
         }
-        if(districtsBuilt.size() + districtsInHand.size() > 8) {
-            return Optional.ofNullable(districtsInHand.remove(districtsInHand.size()-1)); // Discard last district drawn
+        if (districtsBuilt.size() + districtsInHand.size() > 8) {
+            return Optional.ofNullable(districtsInHand.remove(districtsInHand.size() - 1)); // Discard last district drawn
         }
         return Optional.empty();
     }
+    public void setBot(Bot bot) {
+        this.bot = bot;
+    }
+
+    public District chooseCard(List<District> cards) {
+        District chosenCard = null;
+        int minCost = Integer.MAX_VALUE;
+        for (District card : cards) {
+            if (card.getPrice() <= bot.getGold() && card.getPrice() < minCost) {
+                chosenCard = card;
+                minCost = card.getPrice();
+            }
+        }
+        return chosenCard;
+    }
+
 }
 

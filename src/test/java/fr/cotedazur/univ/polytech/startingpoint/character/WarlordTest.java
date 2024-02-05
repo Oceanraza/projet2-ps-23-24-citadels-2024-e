@@ -1,19 +1,20 @@
 package fr.cotedazur.univ.polytech.startingpoint.character;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import fr.cotedazur.univ.polytech.startingpoint.Game;
 import fr.cotedazur.univ.polytech.startingpoint.GameState;
-import fr.cotedazur.univ.polytech.startingpoint.Game;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.city.DistrictColor;
 import fr.cotedazur.univ.polytech.startingpoint.player.Bot;
 import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class WarlordTest {
     King king;
@@ -24,7 +25,7 @@ class WarlordTest {
     GameState gameState;
 
     @BeforeEach
-    void setUp(){
+    void setUp() {
         game = new Game();
         game.init();
         gameState = new GameState();
@@ -37,7 +38,7 @@ class WarlordTest {
         };
     }
     @Test
-    void getLowestDistrictTest(){
+    void getLowestDistrictTest() {
         District district1 = new District("Quartier 1", 3, DistrictColor.NOBLE);
         District district2 = new District("Quartier 2", 1, DistrictColor.NOBLE);
         District district3 = new District("Quartier 3", 4, DistrictColor.RELIGIOUS);
@@ -48,11 +49,11 @@ class WarlordTest {
         assertEquals(district2, bot.getLowestDistrict().get());
     }
     @Test
-    void getWrongDistrictTest(){
-        assertEquals(Optional.empty(),bot.getLowestDistrict());
+    void getWrongDistrictTest() {
+        assertEquals(Optional.empty(), bot.getLowestDistrict());
     }
     @Test
-    void getSortedPlayersByScoreTest(){
+    void getSortedPlayersByScoreTest() {
         Player firstBuilder = new Bot("Player 1");
         Player secondPlayer = new Bot("Player 2");
         Player thirdPlayer = new Bot("Player 3");
@@ -78,7 +79,7 @@ class WarlordTest {
         assertEquals(expectedOutput, game.getSortedPlayersByScoreForWarlord());
     }
     @Test
-    void WarlordGameCanDestroyFirstTest(){
+    void WarlordGameCanDestroyFirstTest() {
         Player firstBuilder = new Bot("Player 1");
         Player secondPlayer = new Bot("Player 2");
         Game game = new Game();
@@ -90,9 +91,9 @@ class WarlordTest {
         District distToDestroy = new District("test", 5, DistrictColor.TRADE);
         secondPlayer.getCity().getDistrictsBuilt().add(distToDestroy);
 
-        assertEquals(1,secondPlayer.getCity().getDistrictsBuilt().size());
-        firstBuilder.getGameCharacter().specialEffect(firstBuilder,game,secondPlayer,distToDestroy);
-        assertEquals(1,firstBuilder.getGold());
-        assertEquals(0,secondPlayer.getCity().getDistrictsBuilt().size());
+        assertEquals(1, secondPlayer.getCity().getDistrictsBuilt().size());
+        firstBuilder.getGameCharacter().specialEffect(firstBuilder, game, secondPlayer, distToDestroy);
+        assertEquals(1, firstBuilder.getGold());
+        assertEquals(0, secondPlayer.getCity().getDistrictsBuilt().size());
     }
 }

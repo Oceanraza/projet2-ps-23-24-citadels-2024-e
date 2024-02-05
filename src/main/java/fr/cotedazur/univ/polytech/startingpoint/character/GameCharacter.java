@@ -17,6 +17,7 @@ public abstract class GameCharacter {
         this.runningOrder = runningOrder;
         this.color = null;
     }
+
     protected GameCharacter(GameCharacterRole role, int runningOrder, DistrictColor color) {
         this.role = role;
         this.runningOrder = runningOrder;
@@ -24,15 +25,31 @@ public abstract class GameCharacter {
     }
 
     // Getter
-    public GameCharacterRole getRole() { return role; }
+    public GameCharacterRole getRole() {
+        return role;
+    }
     public int getRunningOrder() { return runningOrder; }
-    public DistrictColor getColor() { return color;}
-    public boolean getIsAlive() { return isAlive; }
-    public Player getAttacker() { return attacker; }
+
+    public DistrictColor getColor() {
+        return color;
+    }
+
+    public boolean getIsAlive() {
+        return isAlive;
+    }
+
+    public Player getAttacker() {
+        return attacker;
+    }
 
     // Setter
-    public void setIsAlive(boolean isAlive) { this.isAlive = isAlive; }
-    public void setAttacker(Player attacker) { this.attacker = attacker; }
+    public void setIsAlive(boolean isAlive) {
+        this.isAlive = isAlive;
+    }
+
+    public void setAttacker(Player attacker) {
+        this.attacker = attacker;
+    }
 
     public abstract void specialEffect(Player player, Game game, Object... optionalArgs);
 
