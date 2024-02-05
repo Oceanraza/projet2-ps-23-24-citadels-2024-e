@@ -26,11 +26,6 @@ public class Assassin extends GameCharacter {
                 targetCharacter.setIsAlive(false);
                 targetCharacter.setAttacker(assassin);
                 System.out.println("L'assassin a tué le " + killedCharacter);
-                // If the king is killed, the crown goes to the assassin
-                if (killedCharacter.equals(GameCharacterRole.KING)) {
-                    game.getCrown().setOwner(assassin);
-                    System.out.println("La couronne lui revient !");
-                }
                 return;
             }
         }

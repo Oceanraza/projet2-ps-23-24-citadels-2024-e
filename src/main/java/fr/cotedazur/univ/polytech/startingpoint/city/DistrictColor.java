@@ -31,6 +31,7 @@ public enum DistrictColor {
         return DistrictColor.SPECIAL;
     }
 
+    @Override
     public String toString() {
         return colorName;
     }

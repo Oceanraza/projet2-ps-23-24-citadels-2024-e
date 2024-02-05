@@ -114,7 +114,7 @@ public abstract class Player {
     public int calculateScore(){
         int tempScore = getGold();
         City playerCity = this.getCity();
-        Set<DistrictColor> districtColors = new HashSet<>();
+        List<DistrictColor> districtColors = new ArrayList<>();
         for (District district : playerCity.getDistrictsBuilt()) {
             tempScore += district.getPrice();
             tempScore += district.getBonusPoints();
@@ -153,6 +153,7 @@ public abstract class Player {
         return Optional.of(minPriceDistrict);
     }
 
+    @Override
     public String toString() {
         if (gameCharacter == null) {
             return "\nC'est au tour de " + name + "\n" + (!districtsInHand.isEmpty() ? "Et sa main est composée de: "

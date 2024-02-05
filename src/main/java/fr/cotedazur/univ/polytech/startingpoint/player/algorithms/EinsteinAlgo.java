@@ -104,7 +104,7 @@ public class EinsteinAlgo extends BaseAlgo {
     public void kingAlgorithm(Game game){bot.getGameCharacter().specialEffect(bot,game);}
 
     public void assassinAlgorithm(Game game) {
-        ArrayList<GameCharacter> killableCharacters;
+        List<GameCharacter> killableCharacters;
         int indexKilledCharacter;
         GameCharacterRole targetedCharacter;
 
@@ -134,7 +134,7 @@ public class EinsteinAlgo extends BaseAlgo {
     }
 
     // To know if the assassin can kill this character
-    int isKillable(ArrayList<GameCharacter> killableCharacters, GameCharacterRole charEnum) {
+    int isKillable(List<GameCharacter> killableCharacters, GameCharacterRole charEnum) {
         for (int i = 0; i < killableCharacters.size(); i++) {
             // If the character can be killed, this functions returns the index of this character
             if (killableCharacters.get(i).getRole() == charEnum) {

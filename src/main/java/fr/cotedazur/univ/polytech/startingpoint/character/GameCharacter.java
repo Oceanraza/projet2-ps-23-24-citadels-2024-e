@@ -36,6 +36,7 @@ public abstract class GameCharacter {
 
     public abstract void specialEffect(Player player, Game game, Object... optionalArgs);
 
+    @Override
     public String toString() {
         return role.toString();
     }

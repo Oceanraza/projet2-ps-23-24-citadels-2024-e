@@ -42,6 +42,7 @@ public enum GameCharacterRole {
         return "Le " + this;
     }
 
+    @Override
     public String toString() {
         return roleName;
     }

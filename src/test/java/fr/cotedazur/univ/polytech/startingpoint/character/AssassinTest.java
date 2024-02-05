@@ -56,24 +56,9 @@ public class AssassinTest {
         assertNull(warlord.getAttacker());
     }
 
-    // Kill the king that is not selected by any player
+    // Kill a character
     @Test
-    void killUnselectedKingTest() {
-        // Add players to the game
-        game.setPlayers(assassinPlayer);
-        // Set characters to players
-        assassinPlayer.setGameCharacter(assassin);
-
-        assassin.killCharacter(assassinPlayer, game, GameCharacterRole.KING);
-        assertTrue(king.getIsAlive());
-        assertNull(king.getAttacker());
-        // The assassin doesn't have the crown because he didn't kill anyone
-        assertNotSame(assassinPlayer, game.getCrown().getOwner());
-    }
-
-    // Kill the king
-    @Test
-    void killKingTest() {
+    void killSelectedCharacterTest() {
         // Add players to the game
         game.setPlayers(assassinPlayer, targetPlayer);
         // Set characters to players
@@ -83,9 +68,5 @@ public class AssassinTest {
         assassin.killCharacter(assassinPlayer, game, GameCharacterRole.KING);
         assertFalse(king.getIsAlive());
         assertEquals(assassinPlayer, king.getAttacker());
-
-        // Crown goes to assassin
-        assertNotSame(targetPlayer, game.getCrown().getOwner());
-        assertSame(assassinPlayer, game.getCrown().getOwner());
     }
 }

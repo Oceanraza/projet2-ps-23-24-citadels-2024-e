@@ -16,10 +16,10 @@ public class Game {
     private static final int START_CARDS_NUMBER = 4;
     private Deck deck;
     private Crown crown;
-    private ArrayList<Player> players;
-    private ArrayList<GameCharacter> allCharacters;
-    private ArrayList<GameCharacter> charactersInGame;
-    private ArrayList<GameCharacter> availableChars;
+    private List<Player> players;
+    private List<GameCharacter> allCharacters;
+    private List<GameCharacter> charactersInGame;
+    private List<GameCharacter> availableChars;
 
     Assassin assassin;
     King king;
@@ -36,13 +36,13 @@ public class Game {
     public Crown getCrown() {
         return crown;
     }
-    public ArrayList<Player> getPlayers() {
+    public List<Player> getPlayers() {
         return players;
     }
-    public ArrayList<GameCharacter> getAvailableChars() {
+    public List<GameCharacter> getAvailableChars() {
         return availableChars;
     }
-    public ArrayList<GameCharacter> getCharactersInGame() { return charactersInGame; }
+    public List<GameCharacter> getCharactersInGame() { return charactersInGame; }
 
     // Setter
     public void setPlayers(Player... bots) { // Add players to the list of players
@@ -178,8 +178,8 @@ public class Game {
         }
     }
 
-    public ArrayList<Player> getSortedPlayersByScore(){
-        ArrayList<Player> sortedPlayersByScore = new ArrayList<>();
+    public List<Player> getSortedPlayersByScore(){
+        List<Player> sortedPlayersByScore = new ArrayList<>();
         for (Player player: getPlayers()) {
             player.calculateAndSetScore();
             sortedPlayersByScore.add(player);
@@ -191,8 +191,8 @@ public class Game {
         return sortedPlayersByScore;
     }
 
-    public ArrayList<Player> getSortedPlayersByScoreForWarlord(){
-        ArrayList<Player> sortedPlayersByScore = getSortedPlayersByScore();
+    public List<Player> getSortedPlayersByScoreForWarlord(){
+        List<Player> sortedPlayersByScore = getSortedPlayersByScore();
         for (Player player: sortedPlayersByScore) {
             // Warlord can't destroy bishop's districts
             if (player.getGameCharacter().getRole().equals(GameCharacterRole.BISHOP)) {
@@ -203,8 +203,8 @@ public class Game {
         return sortedPlayersByScore;
     }
 
-    public ArrayList<GameCharacter> getKillableCharacters() {
-        ArrayList<GameCharacter> killableCharacters = getCharactersInGame();
+    public List<GameCharacter> getKillableCharacters() {
+        List<GameCharacter> killableCharacters = getCharactersInGame();
         for (GameCharacter cha: killableCharacters) {
             if (cha.getRole().equals(GameCharacterRole.ASSASSIN)) {
                 killableCharacters.remove(cha);
@@ -225,6 +225,7 @@ public class Game {
         return deck;
     }
 
+    @Override
     public String toString() {
         return deck.toString();
     }

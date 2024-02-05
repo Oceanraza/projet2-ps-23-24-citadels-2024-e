@@ -57,6 +57,7 @@ public class District {
         return Objects.hash(name, price, color);
     }
 
+    @Override
     public String toString() {
         return name + "-" + price + "-" + color;
     }

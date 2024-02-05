@@ -2,6 +2,7 @@ package fr.cotedazur.univ.polytech.startingpoint;
 
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacter;
+import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole;
 import fr.cotedazur.univ.polytech.startingpoint.player.algorithms.EinsteinAlgo;
 import fr.cotedazur.univ.polytech.startingpoint.player.algorithms.RandomAlgo;
 
@@ -118,6 +119,11 @@ public class Main {
                 else {
                     System.out.println(cha.getRole().toStringLeOrL() + " a été tué par " + cha.getAttacker().getName());
                     System.out.println(player.getName() + " ne pourra pas jouer ce tour !");
+                    // If the king is killed, he gets the crown at the end of this turn
+                    if (cha.getRole() == GameCharacterRole.KING) {
+                        newGame.getCrown().setOwner(player);
+                        System.out.println("Il récupèrera la couronne à la fin de ce tour");
+                    }
                 }
             }
             gameState.nextTurn();

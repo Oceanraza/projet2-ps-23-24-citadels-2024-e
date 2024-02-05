@@ -5,6 +5,7 @@ import fr.cotedazur.univ.polytech.startingpoint.Game;
 import fr.cotedazur.univ.polytech.startingpoint.player.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Magician extends GameCharacter {
     public Magician() {
@@ -14,7 +15,7 @@ public class Magician extends GameCharacter {
     @Override
     public void specialEffect(Player player, Game game,Object... optionalArgs) {
         if ((boolean) optionalArgs[0]) { // If you decide to switch with another player
-            ArrayList<District> tempD = new ArrayList<>(player.getDistrictsInHand());
+            List<District> tempD = new ArrayList<>(player.getDistrictsInHand());
             Player victim = (Player) optionalArgs[1];
             int temp = player.getDistrictsInHand().size();
             // We remove the first player's hand

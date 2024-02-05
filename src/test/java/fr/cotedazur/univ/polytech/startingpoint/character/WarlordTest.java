@@ -12,6 +12,7 @@ import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 class WarlordTest {
@@ -69,7 +70,7 @@ class WarlordTest {
             thirdPlayer.getCity().getDistrictsBuilt().add(new District("test", 2, DistrictColor.TRADE));
             fourthPlayer.getCity().getDistrictsBuilt().add(new District("test", 1, DistrictColor.TRADE));
         }
-        ArrayList<Player> expectedOutput = new ArrayList<>();
+        List<Player> expectedOutput = new ArrayList<>();
         expectedOutput.add(secondPlayer);
         expectedOutput.add(firstBuilder);
         expectedOutput.add(fourthPlayer);
