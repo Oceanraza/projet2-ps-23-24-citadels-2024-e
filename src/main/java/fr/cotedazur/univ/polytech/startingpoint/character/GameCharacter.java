@@ -1,7 +1,7 @@
-package fr.cotedazur.univ.polytech.startingpoint;
+package fr.cotedazur.univ.polytech.startingpoint.character;
 
-import fr.cotedazur.univ.polytech.startingpoint.city.District;
-
+import fr.cotedazur.univ.polytech.startingpoint.Game;
+import fr.cotedazur.univ.polytech.startingpoint.city.DistrictColor;
 import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 
 
@@ -24,7 +24,7 @@ public abstract class GameCharacter {
 
     public int getRunningOrder() { return runningOrder; }
 
-    public abstract void specialEffect(Player player,Game game,Object... optionalArgs );
+    public abstract void specialEffect(Player player, Game game, Object... optionalArgs );
 
     public DistrictColor getColor() {return color;}
 }

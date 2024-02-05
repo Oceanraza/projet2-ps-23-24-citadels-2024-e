@@ -1,16 +1,27 @@
 package fr.cotedazur.univ.polytech.startingpoint.city;
 
-import fr.cotedazur.univ.polytech.startingpoint.DistrictColor;
-
 import java.util.Objects;
+import java.util.Optional;
 
 public class District {
-    private final DistrictColor color;
+    private DistrictColor color;
     private final int price;
     private final String name;
+    private final int bonusPoints;
+    private Optional<Integer> builtAtTurn;
 
     public District(String name, int price, DistrictColor color){
-        this.color = color; this.price = price; this.name = name;
+        this.color = color;
+        this.price = price;
+        this.name = name;
+        this.bonusPoints = 0;
+    }
+
+    public District(String name, int price, DistrictColor color, int bonusPoints){
+        this.color = color;
+        this.price = price;
+        this.name = name;
+        this.bonusPoints = bonusPoints;
     }
 
     public String getName(){
@@ -21,6 +32,18 @@ public class District {
     }
     public DistrictColor getColor() {
         return color;
+    }
+    public void setColor(DistrictColor districtColor) {
+        color = districtColor;
+    }
+    public int getBonusPoints() {
+        return bonusPoints;
+    }
+    public Optional<Integer> getTurnBuilt() {
+        return builtAtTurn;
+    }
+    public void setTurnBuilt(int turn) {
+        this.builtAtTurn = Optional.of(turn);
     }
 
     public String toString() {

@@ -2,37 +2,33 @@ package fr.cotedazur.univ.polytech.startingpoint;
 
 import fr.cotedazur.univ.polytech.startingpoint.character.*;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
+import fr.cotedazur.univ.polytech.startingpoint.city.DistrictColor;
 import fr.cotedazur.univ.polytech.startingpoint.player.Bot;
 import fr.cotedazur.univ.polytech.startingpoint.player.Player;
+import fr.cotedazur.univ.polytech.startingpoint.player.algorithms.EinsteinAlgo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.PrintStream;
 import java.util.Arrays;
 import java.util.List;
 
 import static fr.cotedazur.univ.polytech.startingpoint.Main.calculateScores;
+import static fr.cotedazur.univ.polytech.startingpoint.Main.finalChoice;
 import static org.junit.jupiter.api.Assertions.*;
 
 class MainTest {
     private static final String LINE_SEPARATOR = System.lineSeparator();
 
     Player player;
+    GameState gameState;
 
     @BeforeEach
     void setUp() {
         player = new Bot("Test");
-    }
-
-    @Test
-    void testIsFinished() {
-        assertFalse(Main.isFinished(player));
-        for (int i = 0; i < 8; i++) {
-            String name = "District" + i;
-            player.getCity().addDistrict(new District(name, 0, DistrictColor.marchand));
-        }
-        assertTrue(Main.isFinished(player));
+        gameState = new GameState();
     }
 
     @Test
@@ -64,7 +60,7 @@ class MainTest {
         assertEquals(fourthPlayer.getName(), runningOrder.get(3).getName());
     }
     @Test
-    void testRunningOrderInTwoRounds() {
+    void testRunningOrderInTwoRounds(){
         Player firstPlayer = new Bot("Player 1");
         Player secondPlayer = new Bot("Player 2");
         Player thirdPlayer = new Bot("Player 3");
@@ -113,16 +109,16 @@ class MainTest {
 
         for (int i = 0; i < 8; i++) {
             String name = "District" + i;
-            firstBuilder.getCity().addDistrict(new District(name, i, DistrictColor.marchand));
+            firstBuilder.getCity().addDistrict(new District(name, i, DistrictColor.marchand), gameState);
         }
 
-        secondPlayer.getCity().addDistrict(new District("marchand", 1, DistrictColor.marchand));
-        secondPlayer.getCity().addDistrict(new District("militaire", 1, DistrictColor.militaire));
-        secondPlayer.getCity().addDistrict(new District("religieux", 1, DistrictColor.religieux));
-        secondPlayer.getCity().addDistrict(new District("noble", 1, DistrictColor.noble));
-        secondPlayer.getCity().addDistrict(new District("special", 1, DistrictColor.special));
+        secondPlayer.getCity().addDistrict(new District("marchand", 1, DistrictColor.marchand), gameState);
+        secondPlayer.getCity().addDistrict(new District("militaire", 1, DistrictColor.militaire), gameState);
+        secondPlayer.getCity().addDistrict(new District("religieux", 1, DistrictColor.religieux), gameState);
+        secondPlayer.getCity().addDistrict(new District("noble", 1, DistrictColor.noble), gameState);
+        secondPlayer.getCity().addDistrict(new District("special", 1, DistrictColor.special), gameState);
 
-        List<Player> scoredPlayers = calculateScores(players, firstBuilder);
+        List<Player> scoredPlayers = calculateScores(players, firstBuilder, new GameState());
 
         assertEquals(34, scoredPlayers.get(0).getScore());
         assertEquals(10, scoredPlayers.get(1).getScore());
@@ -134,7 +130,7 @@ class MainTest {
         secondPlayer.setGameCharacter(king);
         firstBuilder.setScore(0);
         secondPlayer.setScore(0);
-        assertEquals(calculateScores(players, firstBuilder).get(0), firstBuilder);
+        assertEquals(calculateScores(players, firstBuilder, new GameState()).get(0), firstBuilder);
     }
     @Test
     void testAnnounceWinner() { //We can test with two players since adding more players doesn't change the ending message
@@ -144,16 +140,16 @@ class MainTest {
 
         for (int i = 0; i < 8; i++) {
             String name = "District" + i;
-            firstBuilder.getCity().addDistrict(new District(name, i, DistrictColor.marchand)); // 34 points
-            secondPlayer.getCity().addDistrict(new District(name, i, DistrictColor.marchand)); // 32 points
+            firstBuilder.getCity().addDistrict(new District(name, i, DistrictColor.marchand), gameState); // 34 points
+            secondPlayer.getCity().addDistrict(new District(name, i, DistrictColor.marchand), gameState); // 32 points
         }
 
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
 
-        Main.announceWinner(players, firstBuilder);
+        Main.announceWinner(players, firstBuilder, new GameState());
 
-        String expectedOutput = "Player 1 : 34 points"+ LINE_SEPARATOR+ "Player 2 : 32 points"+ LINE_SEPARATOR+ "Player 1 gagne la partie avec 34 points !"+ LINE_SEPARATOR;
+        String expectedOutput =  LINE_SEPARATOR + "Player 1 : 34 points"+ LINE_SEPARATOR+ "Player 2 : 32 points"+ LINE_SEPARATOR+ "Player 1 gagne la partie avec 34 points !"+ LINE_SEPARATOR;
         assertEquals(expectedOutput, outContent.toString());
     }
     @Test
@@ -168,10 +164,10 @@ class MainTest {
         System.setOut(new PrintStream(outContent));
         for (int i = 0; i < 8; i++) {
             String name = "District" + i;
-            firstBuilder.getCity().addDistrict(new District(name, i, DistrictColor.marchand)); // 34 points
-            secondPlayer.getCity().addDistrict(new District(name, i, DistrictColor.marchand)); // 32 points
-            thirdPlayer.getCity().addDistrict(new District(name, i, DistrictColor.marchand)); // 32 points
-            fourthPlayer.getCity().addDistrict(new District(name, i, DistrictColor.marchand)); // 32 points
+            firstBuilder.getCity().addDistrict(new District(name, i, DistrictColor.marchand), gameState); // 34 points
+            secondPlayer.getCity().addDistrict(new District(name, i, DistrictColor.marchand), gameState); // 32 points
+            thirdPlayer.getCity().addDistrict(new District(name, i, DistrictColor.marchand), gameState); // 32 points
+            fourthPlayer.getCity().addDistrict(new District(name, i, DistrictColor.marchand), gameState); // 32 points
         }
         firstBuilder.setGameCharacter(new Warlord());
         secondPlayer.setGameCharacter(new King());
@@ -179,7 +175,8 @@ class MainTest {
         fourthPlayer.setGameCharacter(new Merchant());
 
         firstBuilder.setScore(firstBuilder.getScore()-2); //il passe a 32 points, égalité avec les autres
-        calculateScores(players,firstBuilder);
+        calculateScores(players, firstBuilder, new GameState());
+
         for (Player p : players) {
             System.out.println(p.getName() + ", score : " + p.getScore());
         }
@@ -187,8 +184,6 @@ class MainTest {
                 + "Player 4, score : 32" + LINE_SEPARATOR
                 + "Player 3, score : 32" + LINE_SEPARATOR
                 + "Player 2, score : 32" + LINE_SEPARATOR;
-
         assertEquals(expectedOutput, outContent.toString());
     }
-
 }

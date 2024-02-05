@@ -2,21 +2,25 @@ package fr.cotedazur.univ.polytech.startingpoint;
 
 import java.util.*;
 import java.util.stream.Collectors;
+
+import fr.cotedazur.univ.polytech.startingpoint.board.Deck;
 import fr.cotedazur.univ.polytech.startingpoint.character.*;
+
+
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.player.*;
-
+import com.fasterxml.jackson.databind.JsonNode;
+import java.io.IOException;
 
 public class Game {
-    private ArrayList<District> gameDeck;
+    private static final int START_CARDS_NUMBER = 4;
+    private Deck deck;
     private Crown crown;
     private List<Player> players;
     private Map<String, GameCharacter> allCharacters;
     private ArrayList<GameCharacter> availableChars;
     // Getter
-    public List<District> getGameDeck() {
-        return gameDeck;
-    }
+
     public Crown getCrown() {
         return crown;
     }
@@ -39,88 +43,71 @@ public class Game {
     }
 
     // Add and remove
-    public void addDistrictsInGameDeck(District district, int n) {
-        for (int i = 0; i < n; i++) {
-            gameDeck.add(district);
-        }
-    }
 
     public void removeAvailableChar(GameCharacter cha) {
         availableChars.remove(cha);
     }
 
-    public Game() {
+    public Game(){
         init();
     }
 
+    // Init starts off the game by creating the deck, the crown, the players and the characters
     public void init(){
-        gameDeck = new ArrayList<>();
+        deck = new Deck();
         allCharacters = new HashMap<>();
         availableChars = new ArrayList<>();
 
-        // Adding religieux districts
-        addDistrictsInGameDeck(new District("Temple", 1, DistrictColor.religieux), 3);
-        addDistrictsInGameDeck(new District("Eglise", 2, DistrictColor.religieux), 4);
-        addDistrictsInGameDeck(new District("Monastere", 3, DistrictColor.religieux), 3);
-        addDistrictsInGameDeck(new District("Cathedrale", 5, DistrictColor.religieux), 2);
-
-        addDistrictsInGameDeck(new District("Manoir", 3, DistrictColor.noble), 5);
-        addDistrictsInGameDeck(new District("Chateau", 4, DistrictColor.noble), 4);
-        addDistrictsInGameDeck(new District("Palais", 5, DistrictColor.noble), 2);
-
-        addDistrictsInGameDeck(new District("Taverne", 1, DistrictColor.marchand), 5);
-        addDistrictsInGameDeck(new District("Echoppe", 2, DistrictColor.marchand), 3);
-        addDistrictsInGameDeck(new District("Marche", 2, DistrictColor.marchand), 4);
-        addDistrictsInGameDeck(new District("Comptoir", 3, DistrictColor.marchand), 3);
-        addDistrictsInGameDeck(new District("Port", 4, DistrictColor.marchand), 3);
-        addDistrictsInGameDeck(new District("Hotel de ville", 5, DistrictColor.marchand), 2);
-
-        addDistrictsInGameDeck(new District("Tour de guet", 1, DistrictColor.militaire), 3);
-        addDistrictsInGameDeck(new District("Prison", 2, DistrictColor.militaire), 3);
-        addDistrictsInGameDeck(new District("Caserne", 3, DistrictColor.militaire), 3);
-        addDistrictsInGameDeck(new District("Forteresse", 5, DistrictColor.militaire), 2);
-
-        addDistrictsInGameDeck(new District("Cour des miracles", 2, DistrictColor.special), 1);
-        addDistrictsInGameDeck(new District("Donjon", 3, DistrictColor.special), 2);
-        addDistrictsInGameDeck(new District("Laboratoire", 5, DistrictColor.special), 1);
-        addDistrictsInGameDeck(new District("Manufacture", 5, DistrictColor.special), 1);
-        addDistrictsInGameDeck(new District("Observatoire", 5, DistrictColor.special), 1);
-        addDistrictsInGameDeck(new District("Cimetiere", 5, DistrictColor.special), 1);
-        addDistrictsInGameDeck(new District("Bibliotheque", 6, DistrictColor.special), 1);
-        addDistrictsInGameDeck(new District("Ecole de magie", 6, DistrictColor.special), 1);
-        addDistrictsInGameDeck(new District("Universite", 6, DistrictColor.special), 1);
-        addDistrictsInGameDeck(new District("Dracoport", 6, DistrictColor.special), 1);
-
+            // Specify the path to your JSON file
+        try {
+            JsonNode tempNode = Utils.parseJsonFromFile
+                    ("src/main/resources/init_database.json");
+            deck = Utils.convertJsonNodeToDistrictList(tempNode.path("Game").path("Districts"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         // Create a crown
         crown = new Crown();
 
         // Create the list of players
-        players = new ArrayList<Player>();
+        players = new ArrayList<>();
 
         // Creates the characters
         allCharacters.put("Roi", new King());
         allCharacters.put("Marchand", new Merchant());
         allCharacters.put("Eveque", new Bishop());
         allCharacters.put("Condottiere", new Warlord());
+        allCharacters.put("Magicien", new Magician());
+
+        // Give the cards to the players
+        startCardGame();
     }
 
-    public District drawCard() {
-        Utils utils = new Utils();
-        District cardDrawn = gameDeck.get(utils.generateRandomNumber(gameDeck.size() - 1));
-        gameDeck.remove(cardDrawn);
-        return cardDrawn;
+    public void startCardGame() {
+        // Shuffle the deck
+        deck.shuffle();
+
+        // Give 4 cards to each player
+        giveStartingCards();
     }
 
-    public void shuffleChars(int numberOfPlayers) { // numberOfPlayers needs to be used for automatic code but due to
-        // time reasons, it's postponed to a later day.
+    private void giveStartingCards() {
+        for (Player player : players) {
+            for (int i = 0; i < START_CARDS_NUMBER; i++) {
+                player.getDistrictsInHand().add(deck.drawCard());
+            }
+        }
+    }
+
+    public void shuffleChars() {
         while (!availableChars.isEmpty()) {
             availableChars.remove(0);
         }
-
         availableChars.add(allCharacters.get("Roi"));
         availableChars.add(allCharacters.get("Marchand"));
         availableChars.add(allCharacters.get("Eveque"));
         availableChars.add(allCharacters.get("Condottiere"));
+        availableChars.add(allCharacters.get("Magicien"));
     }
 
     public void printAvailableCharacters() {
@@ -142,11 +129,7 @@ public class Game {
     }
 
     public String toString() {
-        StringBuilder str = new StringBuilder("Les cartes dans le deck sont : \n");
-        for (District district : gameDeck) {
-            str.append(district.toString()).append('\n');
-        }
-        return str.toString();
+        return deck.toString();
     }
 
     public void setAllCharsToNull() {
@@ -158,7 +141,7 @@ public class Game {
         List<Player> sortedPlayersByScore = new ArrayList<>();
         for (Player p : getPlayers()){
             if (!p.getGameCharacter().getName().equals("Eveque")){
-                p.calculateScore();
+                p.calculateAndSetScore();
                 sortedPlayersByScore.add(p);
             }
         }
@@ -168,4 +151,16 @@ public class Game {
         sortedPlayersByScore.sort(playerComparator);
         return sortedPlayersByScore;
     }
+
+    public District drawCard(Player player) {
+        District drawnDistrict = deck.drawCard();
+        System.out.println(player.getName() + " pioche le " + drawnDistrict);
+        player.getDistrictsInHand().add(drawnDistrict);
+        return drawnDistrict;
+    }
+
+    public Deck getDeck() {
+        return deck;
+    }
+
 }

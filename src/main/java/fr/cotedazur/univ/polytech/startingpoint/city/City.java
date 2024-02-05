@@ -1,5 +1,7 @@
 package fr.cotedazur.univ.polytech.startingpoint.city;
 
+import fr.cotedazur.univ.polytech.startingpoint.GameState;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,10 +30,20 @@ public class City {
     }
 
     // Adds a district to the city
-    public void addDistrict(District district) {
+    public void addDistrict(District district, GameState gameState) {
         if (isNotBuilt(district)) {
             districtsBuilt.add(district);
+            district.setTurnBuilt(gameState.getTurn());
         } else throw new DistrictAlreadyBuiltException("This district is already built");
+    }
+
+    public boolean containsDistrict(String districtName) {
+        for(District d: districtsBuilt) {
+            if(d.getName().equals(districtName)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
