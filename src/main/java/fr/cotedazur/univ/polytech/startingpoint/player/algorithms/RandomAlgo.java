@@ -112,4 +112,16 @@ public class RandomAlgo extends BaseAlgo {
         }
         return Optional.empty();
     }
+
+    public boolean manufactureChoice() {
+        return utils.generateRandomNumber(2) == 0;
+    }
+
+    public Optional<District> laboratoryChoice() {
+        if(utils.generateRandomNumber(2) == 0) {
+            List<District> districtsInHand = bot.getDistrictsInHand();
+            return Optional.ofNullable(districtsInHand.get(utils.generateRandomNumber(districtsInHand.size())));
+        }
+        return Optional.empty();
+    }
 }

@@ -8,10 +8,9 @@ import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.city.DistrictColor;
 import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 import fr.cotedazur.univ.polytech.startingpoint.Utils;
+import static fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole.*;
 
 import java.util.*;
-
-import static fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole.*;
 
 public class EinsteinAlgo extends BaseAlgo {
     boolean lowestDistrictFound = false;

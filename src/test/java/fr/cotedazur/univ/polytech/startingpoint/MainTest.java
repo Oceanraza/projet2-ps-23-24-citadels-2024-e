@@ -148,7 +148,7 @@ class MainTest {
 
         Main.announceWinner(players, firstBuilder, new GameState());
 
-        String expectedOutput = "Player 1 : 34 points"+ LINE_SEPARATOR+ "Player 2 : 32 points"+ LINE_SEPARATOR+ "Player 1 gagne la partie avec 34 points !"+ LINE_SEPARATOR;
+        String expectedOutput =  LINE_SEPARATOR + "Player 1 : 34 points"+ LINE_SEPARATOR+ "Player 2 : 32 points"+ LINE_SEPARATOR+ "Player 1 gagne la partie avec 34 points !"+ LINE_SEPARATOR;
         assertEquals(expectedOutput, outContent.toString());
     }
     @Test
