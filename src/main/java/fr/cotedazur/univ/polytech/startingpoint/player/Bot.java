@@ -1,15 +1,17 @@
 package fr.cotedazur.univ.polytech.startingpoint.player;
 
-import java.util.*;
-
 import fr.cotedazur.univ.polytech.startingpoint.ActionManager;
+import fr.cotedazur.univ.polytech.startingpoint.Game;
 import fr.cotedazur.univ.polytech.startingpoint.GameState;
 import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacter;
 import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole;
-import fr.cotedazur.univ.polytech.startingpoint.city.District;
-import fr.cotedazur.univ.polytech.startingpoint.Game;
 import fr.cotedazur.univ.polytech.startingpoint.character.King;
+import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.player.algorithms.BaseAlgo;
+
+import java.util.List;
+
+import static fr.cotedazur.univ.polytech.startingpoint.CitadelsLogger.LOGGER;
 
 public class Bot extends Player {
     public BaseAlgo botAlgo;
@@ -57,7 +59,7 @@ public class Bot extends Player {
         game.printAvailableCharacters();
         setGameCharacter(chosenCharacter);
         game.removeAvailableChar(chosenCharacter);
-        System.out.println(this.getName() + " a choisi " + chosenCharacter.getRole().toStringLeOrL());
+        LOGGER.info(this.getName() + " a choisi " + chosenCharacter.getRole().toStringLeOrL());
     }
     @Override
     public void play(Game game, GameState gameState) {

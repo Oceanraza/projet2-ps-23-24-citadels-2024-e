@@ -1,11 +1,13 @@
 package fr.cotedazur.univ.polytech.startingpoint.character;
 
-import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.Game;
-import fr.cotedazur.univ.polytech.startingpoint.player.*;
+import fr.cotedazur.univ.polytech.startingpoint.city.District;
+import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static fr.cotedazur.univ.polytech.startingpoint.CitadelsLogger.LOGGER;
 
 public class Magician extends GameCharacter {
     public Magician() {
@@ -36,7 +38,7 @@ public class Magician extends GameCharacter {
             for (District d : tempD){
                 victim.addDistrictInHand(d);
             }
-            System.out.println(player.getName() + " a échangé sa main avec " + victim.getName() + " !");
+            LOGGER.info(player.getName() + " a echange sa main avec " + victim.getName() + " !");
         }
         else {
             int nb = player.getDistrictsInHand().size();
@@ -44,8 +46,8 @@ public class Magician extends GameCharacter {
                 player.getDistrictsInHand().remove(0);
                 game.drawCard(player);
             }
-            System.out.println(player.getName() + " a échangé sa main avec le deck");
+            LOGGER.info(player.getName() + " a echange sa main avec le deck");
         }
-        System.out.println("Sa nouvelle main est : " + player.getDistrictsInHand());
+        LOGGER.info("Sa nouvelle main est : " + player.getDistrictsInHand());
     }
 }

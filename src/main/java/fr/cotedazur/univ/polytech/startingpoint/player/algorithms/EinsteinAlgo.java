@@ -2,15 +2,16 @@ package fr.cotedazur.univ.polytech.startingpoint.player.algorithms;
 
 import fr.cotedazur.univ.polytech.startingpoint.Game;
 import fr.cotedazur.univ.polytech.startingpoint.GameState;
+import fr.cotedazur.univ.polytech.startingpoint.Utils;
 import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacter;
 import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.city.DistrictColor;
 import fr.cotedazur.univ.polytech.startingpoint.player.Player;
-import fr.cotedazur.univ.polytech.startingpoint.Utils;
-import static fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole.*;
 
 import java.util.*;
+
+import static fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole.*;
 
 
 
@@ -158,7 +159,6 @@ public class EinsteinAlgo extends BaseAlgo {
 
             if (bot.buildDistrict(district, gameState)) {
                 builtThisTurn++;
-                System.out.println(bot.getCharacterName());
                 if ((!bot.getCharacterName().equals("Architecte"))||(builtThisTurn == 3)){
                     break;
                 }

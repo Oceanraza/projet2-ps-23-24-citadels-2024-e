@@ -2,13 +2,15 @@ package fr.cotedazur.univ.polytech.startingpoint;
 
 
 import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole;
-import fr.cotedazur.univ.polytech.startingpoint.city.DistrictColor;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
+import fr.cotedazur.univ.polytech.startingpoint.city.DistrictColor;
 import fr.cotedazur.univ.polytech.startingpoint.player.Bot;
 import fr.cotedazur.univ.polytech.startingpoint.player.Player;
-import static fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole.*;
 
 import java.util.Optional;
+
+import static fr.cotedazur.univ.polytech.startingpoint.CitadelsLogger.LOGGER;
+import static fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole.*;
 
 public class ActionManager {
     private ActionManager() {
@@ -18,7 +20,7 @@ public class ActionManager {
     public static int printGold(Player player, int addedGold){
         player.addGold(addedGold);
         if (addedGold != 0) {
-            System.out.println((player.getGameCharacter().getRole().toStringLeOrL()) + " a donné " + addedGold + " or à " + player.getName());
+            LOGGER.info((player.getGameCharacter().getRole().toStringLeOrL()) + " a donne " + addedGold + " or a " + player.getName());
         }
         return addedGold;
     }
@@ -32,7 +34,7 @@ public class ActionManager {
         Bot bot = (Bot) player;
         int choice = bot.botAlgo.startOfTurnChoice();
         if (choice == 1) { // Take 2 gold coins
-            System.out.println(bot.getName() + " prend deux pièces d'or.");
+            LOGGER.info(bot.getName() + " prend deux pieces d'or.");
             bot.addGold(2);
         } else { // Draw a card
             game.drawCard(bot);
@@ -73,7 +75,7 @@ public class ActionManager {
         if(hasManufacture && bot.getGold() >= 3) {
             boolean useManufactureEffect = bot.botAlgo.manufactureChoice();
             if(useManufactureEffect) {
-                System.out.println(player.getName() + " utilise la Manufacture pour piocher 3 cartes et paye 3 pièces.");
+                LOGGER.info(player.getName() + " utilise la Manufacture pour piocher 3 cartes et paye 3 pieces.");
                 bot.removeGold(3);
                 for(int i=0; i<3; i++) {
                     game.drawCard(bot);
@@ -83,7 +85,7 @@ public class ActionManager {
         if(hasLaboratory) {
             Optional<District> districtToDiscard = bot.botAlgo.laboratoryChoice();
             if(districtToDiscard.isPresent()) {
-                System.out.println(player.getName() + " utilise le Laboratoire pour défausser sa carte " + districtToDiscard.get().getName() + " contre 1 pièce d'or.");
+                LOGGER.info(player.getName() + " utilise le Laboratoire pour defausser sa carte " + districtToDiscard.get().getName() + " contre 1 piece d'or.");
                 bot.getDistrictsInHand().remove(districtToDiscard.get());
                 game.getDeck().addDistrict(districtToDiscard.get());
 
