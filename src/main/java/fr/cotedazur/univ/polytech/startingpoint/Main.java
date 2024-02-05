@@ -38,6 +38,7 @@ public class Main {
 
     public static void announceWinner(List<Player> players, Player firstBuilder, GameState gameState) {
         List<Player> playersScores = calculateScores(players, firstBuilder, gameState);
+        System.out.println();
         for (Player player : playersScores) {
             System.out.println(player.getName() + " : " + player.getScore() + " points");
         }
@@ -53,6 +54,7 @@ public class Main {
                     if(turnBuilt.isPresent() && gameState.getTurn() > turnBuilt.get()) {
                         Bot bot = (Bot) player;
                         bot.botAlgo.huntedQuarterAlgorithm(district);
+                        System.out.println("\n[ Choix de fin de partie ]");
                         System.out.println(player.getName() + " utilise la Cour des miracles en tant que quartier " + district.getColor() + ".");
                     }
                 }
