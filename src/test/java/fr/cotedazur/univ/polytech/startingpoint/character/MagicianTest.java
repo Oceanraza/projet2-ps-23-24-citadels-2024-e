@@ -4,29 +4,29 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import fr.cotedazur.univ.polytech.startingpoint.Game;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
-import fr.cotedazur.univ.polytech.startingpoint.character.*;
 import fr.cotedazur.univ.polytech.startingpoint.city.DistrictColor;
 import fr.cotedazur.univ.polytech.startingpoint.player.Bot;
 import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import java.util.ArrayList;
-import java.util.Optional;
 
 class MagicianTest {
+    Assassin assassin;
+    Magician magician;
     King king;
     Bishop bishop;
     Warlord warlord;
-    Magician magician;
     Bot bot;
     Game game;
 
     @BeforeEach
     void setUp() {
+        assassin = new Assassin();
+        magician = new Magician();
         king = new King();
         bishop = new Bishop();
         warlord = new Warlord();
-        magician = new Magician();
+
         bot = new Bot("Bot") {
         };
         game = new Game();
@@ -43,7 +43,7 @@ class MagicianTest {
         firstBuilder.setGameCharacter(magician);
         secondPlayer.setGameCharacter(king);
 
-        District distToSwitch = new District("test", 5, DistrictColor.marchand);
+        District distToSwitch = new District("test", 5, DistrictColor.TRADE);
         secondPlayer.addDistrictInHand(distToSwitch);
         secondPlayer.addDistrictInHand(distToSwitch);
         secondPlayer.addDistrictInHand(distToSwitch);
@@ -62,7 +62,7 @@ class MagicianTest {
         game.init();
         game.setPlayers(firstBuilder);
         firstBuilder.setGameCharacter(magician);
-        District distToSwitch = new District("ToSwitch", 0, DistrictColor.marchand);
+        District distToSwitch = new District("ToSwitch", 0, DistrictColor.TRADE);
         firstBuilder.addDistrictInHand(distToSwitch);
         firstBuilder.getGameCharacter().specialEffect(firstBuilder, game, false);
         assertNotEquals(distToSwitch, firstBuilder.getDistrictsInHand().get(0));

@@ -1,7 +1,6 @@
 package fr.cotedazur.univ.polytech.startingpoint.character;
 
 import fr.cotedazur.univ.polytech.startingpoint.Game;
-import fr.cotedazur.univ.polytech.startingpoint.character.*;
 import fr.cotedazur.univ.polytech.startingpoint.player.Bot;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,9 +22,9 @@ class GameCharacterTest {
 
     @Test
     void kingTest() {
-        assertEquals("Roi", king.getName());
+        assertEquals(GameCharacterRole.KING, king.getRole());
         assertEquals(4, king.getRunningOrder());
-        assertEquals(game.getCrown().getOwner(),null);
+        assertNull(game.getCrown().getOwner());
         Bot p =  new Bot("Daffy");
         p.setGameCharacter(new King());
         p.getGameCharacter().specialEffect(p,game);
@@ -34,7 +33,7 @@ class GameCharacterTest {
 
     @Test
     void evequeTest() {
-        assertEquals("Eveque", bishop.getName());
+        assertEquals(GameCharacterRole.BISHOP, bishop.getRole());
         assertEquals(5, bishop.getRunningOrder());
     }
 }

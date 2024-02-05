@@ -23,7 +23,7 @@ class GameStateTest {
         assertFalse(gameState.isFinished(player));
         for (int i = 0; i < 8; i++) {
             String name = "District" + i;
-            player.getCity().addDistrict(new District(name, 0, DistrictColor.marchand), gameState);
+            player.getCity().addDistrict(new District(name, 0, DistrictColor.TRADE), gameState);
         }
         assertTrue(gameState.isFinished(player));
     }

@@ -10,14 +10,13 @@ public class District {
     private final int bonusPoints;
     private Optional<Integer> builtAtTurn;
 
-    public District(String name, int price, DistrictColor color){
+    public District(String name, int price, DistrictColor color) {
         this.color = color;
         this.price = price;
         this.name = name;
         this.bonusPoints = 0;
     }
-
-    public District(String name, int price, DistrictColor color, int bonusPoints){
+    public District(String name, int price, DistrictColor color, int bonusPoints) {
         this.color = color;
         this.price = price;
         this.name = name;
@@ -46,10 +45,6 @@ public class District {
         this.builtAtTurn = Optional.of(turn);
     }
 
-    public String toString() {
-        return name + "-" + price + "-" + color;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -61,5 +56,10 @@ public class District {
     @Override
     public int hashCode() {
         return Objects.hash(name, price, color);
+    }
+
+    @Override
+    public String toString() {
+        return name + "-" + price + "-" + color;
     }
 }

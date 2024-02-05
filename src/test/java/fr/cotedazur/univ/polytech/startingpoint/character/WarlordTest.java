@@ -4,14 +4,15 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import fr.cotedazur.univ.polytech.startingpoint.Game;
 import fr.cotedazur.univ.polytech.startingpoint.GameState;
+import fr.cotedazur.univ.polytech.startingpoint.Game;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
-import fr.cotedazur.univ.polytech.startingpoint.character.*;
 import fr.cotedazur.univ.polytech.startingpoint.city.DistrictColor;
 import fr.cotedazur.univ.polytech.startingpoint.player.Bot;
 import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 class WarlordTest {
@@ -37,9 +38,9 @@ class WarlordTest {
     }
     @Test
     void getLowestDistrictTest(){
-        District district1 = new District("Quartier 1", 3, DistrictColor.noble);
-        District district2 = new District("Quartier 2", 1, DistrictColor.noble);
-        District district3 = new District("Quartier 3", 4, DistrictColor.religieux);
+        District district1 = new District("Quartier 1", 3, DistrictColor.NOBLE);
+        District district2 = new District("Quartier 2", 1, DistrictColor.NOBLE);
+        District district3 = new District("Quartier 3", 4, DistrictColor.RELIGIOUS);
         bot.buildDistrict(district1, gameState);
         bot.buildDistrict(district2, gameState);
         bot.buildDistrict(district3, gameState);
@@ -52,7 +53,6 @@ class WarlordTest {
     }
     @Test
     void getSortedPlayersByScoreTest(){
-
         Player firstBuilder = new Bot("Player 1");
         Player secondPlayer = new Bot("Player 2");
         Player thirdPlayer = new Bot("Player 3");
@@ -65,12 +65,12 @@ class WarlordTest {
         fourthPlayer.setGameCharacter(king);
 
         for (int i = 0; i < 8; i++) {
-            firstBuilder.getCity().getDistrictsBuilt().add(new District("test", 4, DistrictColor.marchand));
-            secondPlayer.getCity().getDistrictsBuilt().add(new District("test", 5, DistrictColor.marchand));
-            thirdPlayer.getCity().getDistrictsBuilt().add(new District("test", 2, DistrictColor.marchand));
-            fourthPlayer.getCity().getDistrictsBuilt().add(new District("test", 1, DistrictColor.marchand));
+            firstBuilder.getCity().getDistrictsBuilt().add(new District("test", 4, DistrictColor.TRADE));
+            secondPlayer.getCity().getDistrictsBuilt().add(new District("test", 5, DistrictColor.TRADE));
+            thirdPlayer.getCity().getDistrictsBuilt().add(new District("test", 2, DistrictColor.TRADE));
+            fourthPlayer.getCity().getDistrictsBuilt().add(new District("test", 1, DistrictColor.TRADE));
         }
-        ArrayList<Player> expectedOutput = new ArrayList<>();
+        List<Player> expectedOutput = new ArrayList<>();
         expectedOutput.add(secondPlayer);
         expectedOutput.add(firstBuilder);
         expectedOutput.add(fourthPlayer);
@@ -87,7 +87,7 @@ class WarlordTest {
         firstBuilder.setGameCharacter(warlord);
         secondPlayer.setGameCharacter(king);
 
-        District distToDestroy = new District("test", 5, DistrictColor.marchand);
+        District distToDestroy = new District("test", 5, DistrictColor.TRADE);
         secondPlayer.getCity().getDistrictsBuilt().add(distToDestroy);
 
         assertEquals(1,secondPlayer.getCity().getDistrictsBuilt().size());

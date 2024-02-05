@@ -8,17 +8,15 @@ import fr.cotedazur.univ.polytech.startingpoint.city.DistrictColor;
 import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 
 import java.security.SecureRandom;
 import java.util.List;
 
-//this class is used for basic methods that only have niche purposes and
-// are generally just math.
+// This class is used for basic methods that only have niche purposes and are generally just math
 public class Utils {
     private static final SecureRandom random = new SecureRandom();
 
-    public int generateRandomNumber(int bound) {
+    public static int generateRandomNumber(int bound) {
         return random.nextInt(bound);
     }
     public static int getHighestNumberOfCardsInHand(List<Player> players, Player currentPlayer){
@@ -41,7 +39,6 @@ public class Utils {
     }
 
     public static Deck convertJsonNodeToDistrictList(JsonNode districtsNode) {
-
         Deck districtList = new Deck();
 
         // Iterate through each district in the array
@@ -53,12 +50,11 @@ public class Utils {
             int bonusPoints = districtNode.path("bonusPoints").asInt();
 
             // Create a District object and add it to the list
-            for (int i = 0; i < number; i++){
-                District district = new District(name, price, DistrictColor.valueOf(color),bonusPoints);
+            for (int i = 0; i < number; i++) {
+                District district = new District(name, price, DistrictColor.valueOfByString(color), bonusPoints);
                 districtList.addDistrict(district);
             }
         }
         return districtList;
     }
-
 }

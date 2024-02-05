@@ -1,14 +1,31 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
+
+import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole;
+import fr.cotedazur.univ.polytech.startingpoint.city.DistrictColor;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.player.Bot;
 import fr.cotedazur.univ.polytech.startingpoint.player.Player;
+import static fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole.*;
 
 import java.util.Optional;
 
 public class ActionManager {
     private ActionManager() {
         throw new IllegalStateException("Action Manager is a utility class");
+    }
+
+    public static int printGold(Player player, int addedGold){
+        player.addGold(addedGold);
+        if (addedGold != 0) {
+            System.out.println((player.getGameCharacter().getRole().toStringLeOrL()) + " a donné " + addedGold + " or à " + player.getName());
+        }
+        return addedGold;
+    }
+
+    private static int collectGoldUtil(Player player,  DistrictColor districtColor) {
+        int addedGold = player.getNumberOfDistrictsByColor().get(districtColor);
+        return printGold(player, addedGold);
     }
 
     public static void startOfTurn(Game game, Player player) {
@@ -26,12 +43,6 @@ public class ActionManager {
         }
     }
 
-    public static int printGold(Player player, int addedGold){
-        player.addGold(addedGold);
-        if (addedGold !=0){System.out.println((player.getCharacterName().equals("Eveque")? "L'" :"Le ") + player.getCharacterName() + " a donné " + addedGold + " or a " + player.getName() + ".");}
-        return addedGold;
-    }
-
     public static int calculateGold(Player player) {
         int addedGold = 0;
         boolean hasMagicSchool = player.getCity().containsDistrict("Ecole de magie");
@@ -43,11 +54,11 @@ public class ActionManager {
     }
 
     public static int collectGold(Player player) {
-        String characterName = player.getCharacterName();
-        if (characterName.equals("Roi") || characterName.equals("Eveque") ||
-            characterName.equals("Condottiere") || characterName.equals("Marchand")) {
-            return printGold(player, calculateGold(player));
-        }
+        GameCharacterRole role = player.getGameCharacter().getRole();
+        if (role == WARLORD) return collectGoldUtil(player, DistrictColor.MILITARY);
+        else if(role == KING) return collectGoldUtil(player, DistrictColor.NOBLE);
+        else if (role == BISHOP) return collectGoldUtil(player, DistrictColor.RELIGIOUS);
+        else if (role == MERCHANT) return collectGoldUtil(player, DistrictColor.TRADE);
         return 0;
     }
 
@@ -75,6 +86,7 @@ public class ActionManager {
                 System.out.println(player.getName() + " utilise le Laboratoire pour défausser sa carte " + districtToDiscard.get().getName() + " contre 1 pièce d'or.");
                 bot.getDistrictsInHand().remove(districtToDiscard.get());
                 game.getDeck().addDistrict(districtToDiscard.get());
+
                 bot.addGold(1);
             }
         }

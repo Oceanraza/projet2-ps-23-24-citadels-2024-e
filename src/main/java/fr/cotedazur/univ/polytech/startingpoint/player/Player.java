@@ -26,21 +26,17 @@ public abstract class Player {
         score = 0;
         gameCharacter = null;
         numberOfDistrictsByColor = new EnumMap<>(DistrictColor.class);
-        numberOfDistrictsByColor.put(DistrictColor.militaire,0);
-        numberOfDistrictsByColor.put(DistrictColor.noble,0);
-        numberOfDistrictsByColor.put(DistrictColor.special,0);
-        numberOfDistrictsByColor.put(DistrictColor.religieux,0);
-        numberOfDistrictsByColor.put(DistrictColor.marchand,0);
-    }
-    public void removeGold(int g){
-        gold -= g;
+        numberOfDistrictsByColor.put(DistrictColor.MILITARY,0);
+        numberOfDistrictsByColor.put(DistrictColor.NOBLE,0);
+        numberOfDistrictsByColor.put(DistrictColor.SPECIAL,0);
+        numberOfDistrictsByColor.put(DistrictColor.RELIGIOUS,0);
+        numberOfDistrictsByColor.put(DistrictColor.TRADE,0);
     }
 
     // Getter
     public List<District> getDistrictsInHand() {
         return districtsInHand;
     }
-
     public City getCity() {
         return city;
     }
@@ -60,7 +56,7 @@ public abstract class Player {
         if (this.getGameCharacter() == null){
             return "null";
         }
-        return gameCharacter.getName();
+        return gameCharacter.getRole().getRoleName();
     }
 
     // Setter
@@ -74,7 +70,7 @@ public abstract class Player {
         this.gameCharacter = gameCharacter;
     }
 
-    // Functions to add
+    // Functions to add or remove
     public void addDistrictInHand(District district) {
         this.districtsInHand.add(district);
     }
@@ -83,6 +79,9 @@ public abstract class Player {
                 district.getColor(),
                 numberOfDistrictsByColor.get(district.getColor()) + 1);
         this.city.addDistrict(district, gameState);
+    }
+    public void removeGold(int g){
+        gold -= g;
     }
 
     public Map<DistrictColor, Integer> getNumberOfDistrictsByColor() {return numberOfDistrictsByColor;}
@@ -114,18 +113,7 @@ public abstract class Player {
         }
         return true;
     }
-    public String toString() {
-        if (gameCharacter == null) {
-            return "\nC'est au tour de : " + name + "\n" + (!districtsInHand.isEmpty() ? "Et sa main est composée de: "
-                    + districtsInHand : "Sa main est vide. ") + "\n" + "Il a " + gold + " d'or(s)\n" +
-                    (!districtsInHand.isEmpty() ? "Et il a déjà posé: " + city : "Il n'a pas posé de quartiers.");
-        }
 
-        // If a character is chosen, we specify the character
-        return "\nC'est au tour du " + gameCharacter.getName() + " : " + name + "\n" + (!districtsInHand.isEmpty() ? "Et sa main est composée de: "
-                + districtsInHand : "Sa main est vide. ") + "\n" + "Il a " + gold + " d'or(s)\n" +
-                (!districtsInHand.isEmpty() ? "Et il a déjà posé: " + city : "Il n'a pas posé de quartiers.");
-    }
     public int calculateScore(){
         int tempScore = getGold();
         City playerCity = this.getCity();
@@ -159,7 +147,6 @@ public abstract class Player {
         return Objects.hash(name);
     }
 
-
     public Optional<District> getLowestDistrict(){
         List<District> sortedDistrictByScore = getCity().getDistrictsBuilt();
         if (sortedDistrictByScore.isEmpty()){return Optional.empty();}
@@ -167,5 +154,19 @@ public abstract class Player {
                 .min(Comparator.comparingDouble(District::getPrice))
                 .orElse(null);
         return Optional.of(minPriceDistrict);
+    }
+
+    @Override
+    public String toString() {
+        if (gameCharacter == null) {
+            return "\nC'est au tour de " + name + "\n" + (!districtsInHand.isEmpty() ? "Et sa main est composée de: "
+                    + districtsInHand : "Sa main est vide. ") + "\n" + "Il a " + gold + " d'or(s)\n" +
+                    (!city.getDistrictsBuilt().isEmpty() ? "Et il a déjà posé: " + city : "Il n'a pas posé de quartiers.");
+        }
+
+        // If a character is chosen, we specify the character
+        return "\nC'est au tour " + gameCharacter.getRole().toStringDuOrDeL() + " : " + name + "\n" + (!districtsInHand.isEmpty() ? "Et sa main est composée de: "
+                + districtsInHand : "Sa main est vide. ") + "\n" + "Il a " + gold + " d'or(s)\n" +
+                (!city.getDistrictsBuilt().isEmpty() ? "Et il a déjà posé: " + city : "Il n'a pas posé de quartiers.");
     }
 }
