@@ -37,6 +37,15 @@ public class City {
         } else throw new DistrictAlreadyBuiltException("This district is already built");
     }
 
+    public void destroyDistrict(District districtToDestroy) {
+        for (District d : districtsBuilt) {
+            if (d.equals(districtToDestroy)) {
+                districtsBuilt.remove(d);
+                return;
+            }
+        }
+    }
+
     public boolean containsDistrict(String districtName) {
         for(District d: districtsBuilt) {
             if(d.getName().equals(districtName)) {
@@ -54,13 +63,4 @@ public class City {
         }
         return city.toString();
     }
-    public void destroyDistrict(District districtToDestroy){
-        for (District d : districtsBuilt){
-            if (d.equals(districtToDestroy)){
-                districtsBuilt.remove(d);
-                return;
-            }
-        }
-    }
-
 }

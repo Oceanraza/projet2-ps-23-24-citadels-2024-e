@@ -3,7 +3,7 @@ package fr.cotedazur.univ.polytech.startingpoint;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class GameTest {
     Game game;
@@ -21,5 +21,4 @@ class GameTest {
         assertEquals(0, game.getPlayers().size());
         assertEquals(0, game.getPlayers().size());
     }
-
 }

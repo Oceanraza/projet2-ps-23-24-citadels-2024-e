@@ -4,6 +4,7 @@ import fr.cotedazur.univ.polytech.startingpoint.ActionManager;
 import fr.cotedazur.univ.polytech.startingpoint.Game;
 import fr.cotedazur.univ.polytech.startingpoint.GameState;
 import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacter;
+import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole;
 import fr.cotedazur.univ.polytech.startingpoint.character.King;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.player.algorithms.BaseAlgo;
@@ -32,18 +33,18 @@ public class Bot extends Player {
         return false;
     }
 
-    public boolean isCharInList(List<GameCharacter> cha, String askedChar) {
+    public boolean isCharInList(List<GameCharacter> cha, GameCharacterRole askedChar) {
         for (GameCharacter temp : cha) {
-            if (temp.getName().equals(askedChar)) {
+            if (temp.getRole().equals(askedChar)) {
                 return true;
             }
         }
         return false;
     }
 
-    public GameCharacter getCharInList(List<GameCharacter> cha, String askedChar) {
+    public GameCharacter getCharInList(List<GameCharacter> cha, GameCharacterRole askedChar) {
         for (GameCharacter temp : cha) {
-            if (temp.getName().equals(askedChar)) {
+            if (temp.getRole().equals(askedChar)) {
                 return temp;
             }
         }
@@ -51,12 +52,13 @@ public class Bot extends Player {
         // après isCharInList **A CHANGER ABSOLUMENT AVANT RENDU FINAL, VERSION
         // TEMPORAIRE POUR RESPECT DES DATES DE RENDU**
     }
-    public void chooseChar(Game game,String askedChar){
+
+    public void chooseChar(Game game, GameCharacterRole askedChar) {
         GameCharacter chosenCharacter = getCharInList(game.getAvailableChars(), askedChar);
         game.printAvailableCharacters();
         setGameCharacter(chosenCharacter);
         game.removeAvailableChar(chosenCharacter);
-        System.out.println(this.getName() + " a choisi le " + chosenCharacter.getName());
+        System.out.println(this.getName() + " a choisi " + chosenCharacter.getRole().toStringLeOrL());
     }
     @Override
     public void play(Game game, GameState gameState) {
@@ -65,7 +67,6 @@ public class Bot extends Player {
         Collect gold
          */
         // The bot draws a card if it has no district in its hand.
-
         ActionManager.startOfTurn(game, this);
         addGold(ActionManager.collectGold(this));
         ActionManager.applySpecialCardsEffect(game, this);

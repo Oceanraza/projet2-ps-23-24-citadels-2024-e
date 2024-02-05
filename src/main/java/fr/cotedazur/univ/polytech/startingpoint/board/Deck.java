@@ -5,22 +5,22 @@ import fr.cotedazur.univ.polytech.startingpoint.city.District;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 /**
  * Deck
  */
 
 public class Deck {
-    private ArrayList<District> cards;
-    private ArrayList<District> discardPile;
-
+    private List<District> cards;
+    private List<District> discardPile;
     private Game game;
 
     public Deck() {
         this.cards = new ArrayList<>();
     }
 
-    public void setDeck(ArrayList<District> cards) {
+    public void setDeck(List<District> cards) {
         this.cards = cards;
     }
 
@@ -28,7 +28,7 @@ public class Deck {
     public String toString() {
         StringBuilder str = new StringBuilder("Les cartes dans le deck sont : \n");
         for (District district : this.cards) {
-            str.append(district.toString()).append('\n');
+            str.append(district).append('\n');
         }
         return str.toString();
     }
@@ -96,7 +96,7 @@ public class Deck {
         this.discardPile.add(district);
     }
 
-    public ArrayList<District> getCards() {
+    public List<District> getCards() {
         return this.cards;
     }
 

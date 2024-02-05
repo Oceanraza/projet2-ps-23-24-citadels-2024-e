@@ -39,9 +39,9 @@ class EinsteinAlgoTest {
     @Test
     void shouldChooseCardWithLowestPrice() {
         List<District> threeCards = Arrays.asList(
-                new District("District 1", 5, DistrictColor.noble),
-                new District("District 2", 3, DistrictColor.marchand),
-                new District("District 3", 4, DistrictColor.special)
+                new District("District 1", 5, DistrictColor.NOBLE),
+                new District("District 2", 3, DistrictColor.TRADE),
+                new District("District 3", 4, DistrictColor.SPECIAL)
         );
 
         when(bot.getGold()).thenReturn(4);
@@ -54,9 +54,9 @@ class EinsteinAlgoTest {
     @Test
     void shouldNotChooseCardIfNotAffordable() {
         List<District> threeCards = Arrays.asList(
-                new District("District 1", 5, DistrictColor.noble),
-                new District("District 2", 6, DistrictColor.marchand),
-                new District("District 3", 7, DistrictColor.special)
+                new District("District 1", 5, DistrictColor.NOBLE),
+                new District("District 2", 6, DistrictColor.TRADE),
+                new District("District 3", 7, DistrictColor.SPECIAL)
         );
 
         when(bot.getGold()).thenReturn(4);
@@ -87,7 +87,7 @@ class EinsteinAlgoTest {
     @Test
     void shouldChooseToTakeGoldWhenHandIsNotEmptyAndNotAllDistrictsAreBuilt() {
         List<District> districtsInHand = Arrays.asList(
-                new District("District 1", 5, DistrictColor.noble)
+                new District("District 1", 5, DistrictColor.NOBLE)
         );
 
         when(bot.getDistrictsInHand()).thenReturn(districtsInHand);

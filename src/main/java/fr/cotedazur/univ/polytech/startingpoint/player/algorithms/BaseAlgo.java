@@ -20,6 +20,9 @@ public abstract class BaseAlgo {
     public abstract void warlordAlgorithm(Game game);
     public abstract void kingAlgorithm (Game game);
     public abstract void magicianAlgorithm(Game game);
+
+    public abstract void assassinAlgorithm(Game game);
+
     public abstract void buildOrNot(GameState gameState);
     public abstract void huntedQuarterAlgorithm(District huntedQuarter);
 

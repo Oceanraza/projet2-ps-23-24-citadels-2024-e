@@ -4,18 +4,15 @@ import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.city.DistrictColor;
 import org.junit.jupiter.api.Test;
 
-
-import java.util.Collections;
-
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class DeckTest {
 
     @Test
     void addDistrictShouldAddDistrictToDeck() {
         Deck deck = new Deck();
-        District district = new District("Test District", 1, DistrictColor.marchand);
+        District district = new District("Test District", 1, DistrictColor.TRADE);
         deck.addDistrict(district);
         assertEquals(1, deck.size());
     }
@@ -31,7 +28,7 @@ class DeckTest {
     @Test
     void drawCardShouldReturnLastCardAndRemoveItFromDeck() {
         Deck deck = new Deck();
-        District district = new District("Test District", 1, DistrictColor.marchand);
+        District district = new District("Test District", 1, DistrictColor.TRADE);
         deck.addDistrict(district);
         District drawnCard = deck.drawCard();
         assertEquals(district, drawnCard);

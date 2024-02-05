@@ -2,7 +2,6 @@ package fr.cotedazur.univ.polytech.startingpoint;
 
 import fr.cotedazur.univ.polytech.startingpoint.character.Bishop;
 import fr.cotedazur.univ.polytech.startingpoint.character.King;
-import fr.cotedazur.univ.polytech.startingpoint.character.Merchant;
 import fr.cotedazur.univ.polytech.startingpoint.character.Warlord;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.city.DistrictColor;
@@ -49,7 +48,7 @@ class SpecialCardsTest {
         secondPlayer.setGameCharacter(king);
         fourthPlayer.setGameCharacter(king);
 
-        firstBuilder.buildDistrict(new District("Donjon", 3, DistrictColor.special), gameState);
+        firstBuilder.buildDistrict(new District("Donjon", 3, DistrictColor.SPECIAL), gameState);
 
         assertEquals(1, firstBuilder.getCity().getDistrictsBuilt().size());
         secondPlayer.botAlgo.warlordAlgorithm(game); //La seule carte construite est le donjon, qui ne peut être détruit, cet algo ne détruit alors rien
@@ -60,9 +59,6 @@ class SpecialCardsTest {
     void huntedQuarterTest() {
         Bot firstPlayer = new Bot("Player 1");
         Bot secondPlayer = new Bot("Player 2");
-        King king = new King();
-        Merchant merchant = new Merchant();
-        Game newGame = new Game();
 
         firstPlayer.botAlgo = new EinsteinAlgo();
         firstPlayer.botAlgo.setPlayer(firstPlayer);
@@ -70,28 +66,28 @@ class SpecialCardsTest {
         secondPlayer.botAlgo.setPlayer(secondPlayer);
 
         // Create list of players
-        newGame.setPlayers(firstPlayer, secondPlayer);
+        game.setPlayers(firstPlayer, secondPlayer);
         firstPlayer.setGold(0);
         secondPlayer.setGold(0);
 
         assertEquals(1, gameState.getTurn());
-        for (Player player : newGame.getPlayers()) {
-            player.getCity().addDistrict(new District("Marchand", 0, DistrictColor.marchand), gameState);
-            player.getCity().addDistrict(new District("Militaire", 0, DistrictColor.militaire), gameState);
-            player.getCity().addDistrict(new District("Religieux", 0, DistrictColor.religieux), gameState);
-            player.getCity().addDistrict(new District("Special", 0, DistrictColor.special), gameState);
+        for (Player player : game.getPlayers()) {
+            player.getCity().addDistrict(new District("Marchand", 0, DistrictColor.TRADE), gameState);
+            player.getCity().addDistrict(new District("Militaire", 0, DistrictColor.MILITARY), gameState);
+            player.getCity().addDistrict(new District("Religieux", 0, DistrictColor.RELIGIOUS), gameState);
+            player.getCity().addDistrict(new District("Special", 0, DistrictColor.SPECIAL), gameState);
         }
-        firstPlayer.getCity().addDistrict(new District("Cour des miracles", 0, DistrictColor.special), gameState);
+        firstPlayer.getCity().addDistrict(new District("Cour des miracles", 0, DistrictColor.SPECIAL), gameState);
         assertEquals(5, firstPlayer.getCity().getDistrictsBuilt().size());
 
         gameState.nextTurn();
         assertEquals(2, gameState.getTurn());
-        secondPlayer.getCity().addDistrict(new District("Cour des miracles", 0, DistrictColor.special), gameState);
+        secondPlayer.getCity().addDistrict(new District("Cour des miracles", 0, DistrictColor.SPECIAL), gameState);
         District huntedQuarter = secondPlayer.getCity().getDistrictsBuilt().get(4);
         assertTrue(huntedQuarter.getTurnBuilt().isPresent());
         assertEquals(2, huntedQuarter.getTurnBuilt().get());
 
-        finalChoice(newGame.getPlayers(), gameState);
+        finalChoice(game.getPlayers(), gameState);
         assertEquals(3, firstPlayer.calculateScore()); // +3 HuntedQuarter goes from special to noble
         assertEquals(0, secondPlayer.calculateScore()); // HuntedQuarter's effect can't be used (built at the last turn)
     }

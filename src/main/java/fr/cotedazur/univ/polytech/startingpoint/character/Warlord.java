@@ -1,13 +1,13 @@
 package fr.cotedazur.univ.polytech.startingpoint.character;
 
-import fr.cotedazur.univ.polytech.startingpoint.city.DistrictColor;
 import fr.cotedazur.univ.polytech.startingpoint.Game;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
-import fr.cotedazur.univ.polytech.startingpoint.player.*;
+import fr.cotedazur.univ.polytech.startingpoint.city.DistrictColor;
+import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 
 public class Warlord extends GameCharacter {
     public Warlord() {
-        super("Condottiere", 8, DistrictColor.militaire);
+        super(GameCharacterRole.WARLORD, 8, DistrictColor.MILITARY);
     }
     @Override
     public void specialEffect(Player player,Game game, Object... optionalArgs) {
@@ -17,5 +17,4 @@ public class Warlord extends GameCharacter {
         player.removeGold(destroyedDistrict.getPrice() - 1);
         System.out.println("Le Condottiere à détruit le quartier " + destroyedDistrict.getName() + " qui appartient au joueur " + targetedPlayer.getName() + " au prix de " + (destroyedDistrict.getPrice() - 1) + " or");
     }
-
 }
