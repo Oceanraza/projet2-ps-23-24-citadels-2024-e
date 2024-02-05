@@ -7,6 +7,8 @@ import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.player.Bot;
 import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 
+import java.util.Optional;
+
 import static fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole.*;
 
 public class ActionManager {
@@ -59,5 +61,29 @@ public class ActionManager {
 
     public static void applySpecialEffect(Player player, Game game) {
         player.getGameCharacter().specialEffect(player, game);
+    }
+
+    public static void applySpecialCardsEffect(Game game, Player player) {
+        boolean hasManufacture = player.getCity().containsDistrict("Manufacture");
+        boolean hasLaboratory = player.getCity().containsDistrict("Laboratoire");
+        Bot bot = (Bot) player;
+        if(hasManufacture && bot.getGold() >= 3) {
+            boolean useManufactureEffect = bot.botAlgo.manufactureChoice();
+            if(useManufactureEffect) {
+                System.out.println(player.getName() + " utilise la Manufacture pour piocher 3 cartes et paye 3 pièces.");
+                bot.removeGold(3);
+                for(int i=0; i<3; i++) {
+                    game.drawCard(bot);
+                }
+            }
+        }
+        if(hasLaboratory) {
+            Optional<District> districtToDiscard = bot.botAlgo.laboratoryChoice();
+            if(districtToDiscard.isPresent()) {
+                System.out.println(player.getName() + " utilise le Laboratoire pour défausser sa carte " + districtToDiscard.get().getName() + " contre 1 pièce d'or.");
+                bot.getDistrictsInHand().remove(districtToDiscard.get());
+                bot.addGold(1);
+            }
+        }
     }
 }

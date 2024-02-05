@@ -9,10 +9,7 @@ import fr.cotedazur.univ.polytech.startingpoint.city.DistrictColor;
 import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 import fr.cotedazur.univ.polytech.startingpoint.Utils;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import static fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole.*;
 
@@ -43,8 +40,8 @@ public class EinsteinAlgo extends BaseAlgo {
         // If the bot can build its 8th quarter next turn, it will choose the assassin
         // So he won't be killed
         if ((bot.getCity().getDistrictsBuilt().size() >= 7) && (bot.canBuildDistrictThisTurn())) {
-            if (bot.isCharInList(availableChars, GameCharacterRole.ASSASSIN)) {
-                bot.chooseChar(game, GameCharacterRole.ASSASSIN);
+            if (bot.isCharInList(availableChars, ASSASSIN)) {
+                bot.chooseChar(game, ASSASSIN);
                 return;
             }
         }
@@ -170,4 +167,29 @@ public class EinsteinAlgo extends BaseAlgo {
             }
         }
     }
+
+    public boolean manufactureChoice() { // Use manufacture effect if the player has less than 7 built + buildable districts
+        Set<District> builtAndBuildableDistricts = new HashSet<>(bot.getCity().getDistrictsBuilt());
+        builtAndBuildableDistricts.addAll(bot.getDistrictsInHand());
+        return builtAndBuildableDistricts.size() < 8 - 1; // If player has 7 built + buildable districts he can just draw without paying 3 gold coins
+    }
+
+    public Optional<District> laboratoryChoice() {
+        List<District> districtsBuilt = bot.getCity().getDistrictsBuilt();
+        List<District> districtsInHand = bot.getDistrictsInHand();
+        for(District district: districtsInHand) {
+            if(districtsBuilt.contains(district)) {
+                return Optional.ofNullable(district); // Discard districts already built
+            }
+            int count = Collections.frequency(districtsInHand, district);
+            if(count > 1) {
+                return Optional.ofNullable(district); // Discard duplicates
+            }
+        }
+        if(districtsBuilt.size() + districtsInHand.size() > 8) {
+            return Optional.ofNullable(districtsInHand.remove(districtsInHand.size()-1)); // Discard last district drawn
+        }
+        return Optional.empty();
+    }
 }
+

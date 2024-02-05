@@ -60,9 +60,6 @@ class SpecialCardsTest {
     void huntedQuarterTest() {
         Bot firstPlayer = new Bot("Player 1");
         Bot secondPlayer = new Bot("Player 2");
-        King king = new King();
-        Merchant merchant = new Merchant();
-        Game newGame = new Game();
 
         firstPlayer.botAlgo = new EinsteinAlgo();
         firstPlayer.botAlgo.setPlayer(firstPlayer);
@@ -70,12 +67,12 @@ class SpecialCardsTest {
         secondPlayer.botAlgo.setPlayer(secondPlayer);
 
         // Create list of players
-        newGame.setPlayers(firstPlayer, secondPlayer);
+        game.setPlayers(firstPlayer, secondPlayer);
         firstPlayer.setGold(0);
         secondPlayer.setGold(0);
 
         assertEquals(1, gameState.getTurn());
-        for (Player player : newGame.getPlayers()) {
+        for (Player player : game.getPlayers()) {
             player.getCity().addDistrict(new District("Marchand", 0, DistrictColor.TRADE), gameState);
             player.getCity().addDistrict(new District("Militaire", 0, DistrictColor.MILITARY), gameState);
             player.getCity().addDistrict(new District("Religieux", 0, DistrictColor.RELIGIOUS), gameState);
@@ -91,7 +88,7 @@ class SpecialCardsTest {
         assertTrue(huntedQuarter.getTurnBuilt().isPresent());
         assertEquals(2, huntedQuarter.getTurnBuilt().get());
 
-        finalChoice(newGame.getPlayers(), gameState);
+        finalChoice(game.getPlayers(), gameState);
         assertEquals(3, firstPlayer.calculateScore()); // +3 HuntedQuarter goes from special to noble
         assertEquals(0, secondPlayer.calculateScore()); // HuntedQuarter's effect can't be used (built at the last turn)
     }
