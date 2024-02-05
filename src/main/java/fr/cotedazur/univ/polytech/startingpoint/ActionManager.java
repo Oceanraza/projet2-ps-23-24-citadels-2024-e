@@ -48,7 +48,7 @@ public class ActionManager {
             architectLogic(game, bot); //draws 2 cards
         }
         if (bot.getCity().containsDistrict("Bibliothèque")) {
-            lybraryLogic(game, bot); //draws 2 cards
+            libraryLogic(game, bot); //draws 2 cards
         } else if (bot.getCity().containsDistrict("Observatoire")) {
             observatoryLogic(game, bot); //draws 3 cards and keeps one
         } else {
@@ -63,7 +63,7 @@ public class ActionManager {
         }
     }
 
-    public static void lybraryLogic(Game game, Player player) { //draws 2 cards
+    public static void libraryLogic(Game game, Player player) { //draws 2 cards
         Bot bot = (Bot) player;
         for (int i = 0; i < 2; i++) {
             game.drawCard(bot);
