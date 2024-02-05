@@ -33,18 +33,15 @@ public class District {
     public DistrictColor getColor() {
         return color;
     }
-
     public void setColor(DistrictColor districtColor) {
         color = districtColor;
     }
     public int getBonusPoints() {
         return bonusPoints;
     }
-
     public Optional<Integer> getTurnBuilt() {
         return builtAtTurn;
     }
-
     public void setTurnBuilt(int turn) {
         this.builtAtTurn = Optional.of(turn);
     }

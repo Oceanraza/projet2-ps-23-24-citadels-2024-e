@@ -75,7 +75,6 @@ public abstract class Player {
     public void addDistrictInHand(District district) {
         this.districtsInHand.add(district);
     }
-
     public void addDistrictBuilt(District district, GameState gameState) {
         numberOfDistrictsByColor.replace(
                 district.getColor(),

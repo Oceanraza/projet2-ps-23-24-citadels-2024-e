@@ -10,6 +10,8 @@ import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
+
 /**
  * This class represents the random algorithm
  * It contains the random algorithm for the bot
@@ -84,6 +86,24 @@ public class RandomAlgo extends BaseAlgo {
 
     public void huntedQuarterAlgorithm(District huntedQuarter) {
         huntedQuarter.setColor(DistrictColor.values()[utils.generateRandomNumber(DistrictColor.values().length)]);
+    }
+
+    public boolean manufactureChoice() {
+        return utils.generateRandomNumber(2) == 0;
+    }
+
+    public Optional<District> laboratoryChoice() {
+        if (utils.generateRandomNumber(2) == 0) {
+            List<District> districtsInHand = bot.getDistrictsInHand();
+            return Optional.ofNullable(districtsInHand.get(utils.generateRandomNumber(districtsInHand.size())));
+        }
+        return Optional.empty();
+    }
+
+    @Override
+    public void botChoosesCard(Game game, List<District> threeCards) {
+        District chosenCard = threeCards.get(utils.generateRandomNumber(threeCards.size()));
+        bot.getDistrictsInHand().add(chosenCard);
     }
 
     public District chooseCard(List<District> cards){

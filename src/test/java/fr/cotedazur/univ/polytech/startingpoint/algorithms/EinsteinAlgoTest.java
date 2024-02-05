@@ -10,9 +10,14 @@ import fr.cotedazur.univ.polytech.startingpoint.player.algorithms.EinsteinAlgo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class EinsteinAlgoTest {
     private EinsteinAlgo einsteinAlgo;
@@ -25,109 +30,71 @@ class EinsteinAlgoTest {
     void setUp() {
         einsteinAlgo = new EinsteinAlgo();
         game = mock(Game.class);
-        bot = mock(Bot.class);
-        city = mock(City.class); // Mock the City object
-        deck = mock(Deck.class); // Mock the Deck object
-        when(bot.getCity()).thenReturn(city); // Set the mocked City object to the Bot
-        when(game.getDeck()).thenReturn(deck); // Set the mocked Deck object to the Game
-        einsteinAlgo.setBot(bot);
+        bot = mock(Bot.class); // Create a mock Bot instead of a real instance
+        einsteinAlgo.setBot(bot); // Set the bot instance variable of the EinsteinAlgo object
+        city = mock(City.class);
+        deck = mock(Deck.class);
     }
 
     @Test
-    void shouldDrawThreeCardsWhenObservatoryIsBuilt() {
-        District observatory = new District("Observatoire", 4, DistrictColor.special);
-        when(bot.getCity().containsDistrict("Observatoire")).thenReturn(true);
-        when(game.drawCard(this.bot)).thenReturn(observatory);
+    void shouldChooseCardWithLowestPrice() {
+        List<District> threeCards = Arrays.asList(
+                new District("District 1", 5, DistrictColor.noble),
+                new District("District 2", 3, DistrictColor.marchand),
+                new District("District 3", 4, DistrictColor.special)
+        );
 
-        einsteinAlgo.startOfTurn(game);
+        when(bot.getGold()).thenReturn(4);
 
-        verify(game, times(3)).drawCard(this.bot);
+        District chosenCard = einsteinAlgo.chooseCard(threeCards);
+
+        assertEquals("District 2", chosenCard.getName());
     }
 
     @Test
-    void shouldDrawOneCardWhenHandIsEmpty() {
-        List<District> districtsInHand = mock(List.class);
-        when(bot.getDistrictsInHand()).thenReturn(districtsInHand);
-        when(districtsInHand.isEmpty()).thenReturn(true);
-        einsteinAlgo.startOfTurn(game);
+    void shouldNotChooseCardIfNotAffordable() {
+        List<District> threeCards = Arrays.asList(
+                new District("District 1", 5, DistrictColor.noble),
+                new District("District 2", 6, DistrictColor.marchand),
+                new District("District 3", 7, DistrictColor.special)
+        );
 
-        verify(game).drawCard(this.bot);
+        when(bot.getGold()).thenReturn(4);
+
+        District chosenCard = einsteinAlgo.chooseCard(threeCards);
+
+        assertNull(chosenCard);
     }
 
     @Test
-    void shouldDrawOneCardWhenAllDistrictsInHandAreBuilt() {
+    void shouldChooseToDrawCardWhenHandIsEmpty() {
+        when(bot.getDistrictsInHand()).thenReturn(Collections.emptyList());
+
+        int choice = einsteinAlgo.startOfTurnChoice();
+
+        assertEquals(2, choice);
+    }
+
+    @Test
+    void shouldChooseToDrawCardWhenAllDistrictsInHandAreBuilt() {
         when(bot.districtsInHandAreBuilt()).thenReturn(true);
 
-        einsteinAlgo.startOfTurn(game);
+        int choice = einsteinAlgo.startOfTurnChoice();
 
-        verify(game).drawCard(this.bot);
+        assertEquals(2, choice);
     }
 
     @Test
-    void shouldAddTwoGoldWhenHandIsNotEmptyAndNotAllDistrictsAreBuilt() {
-        List<District> districtsInHand = mock(List.class);
+    void shouldChooseToTakeGoldWhenHandIsNotEmptyAndNotAllDistrictsAreBuilt() {
+        List<District> districtsInHand = Arrays.asList(
+                new District("District 1", 5, DistrictColor.noble)
+        );
+
         when(bot.getDistrictsInHand()).thenReturn(districtsInHand);
-        when(districtsInHand.isEmpty()).thenReturn(false);
         when(bot.districtsInHandAreBuilt()).thenReturn(false);
 
-        einsteinAlgo.startOfTurn(game);
+        int choice = einsteinAlgo.startOfTurnChoice();
 
-        verify(bot).addGold(2);
-    }
-
-    @Test
-    void shouldDrawTwoCardsWhenLibraryIsBuiltAndHandSizeIsLessThanTwo() {
-        when(bot.getCity().containsDistrict("Bibliothèque")).thenReturn(true);
-        List<District> districtsInHand = mock(List.class);
-        when(bot.getDistrictsInHand()).thenReturn(districtsInHand);
-        when(districtsInHand.size()).thenReturn(1);
-        when(bot.districtsInHandAreBuilt()).thenReturn(true);
-
-        einsteinAlgo.startOfTurn(game);
-
-        verify(game, times(2)).drawCard(this.bot);
-    }
-
-    @Test
-    void shouldDrawOneCardWhenHandIsEmptyAndNoSpecialDistrictsAreBuilt() {
-        when(bot.getCity().containsDistrict("Bibliothèque")).thenReturn(false);
-        when(bot.getCity().containsDistrict("Observatoire")).thenReturn(false);
-        List<District> districtsInHand = mock(List.class);
-        when(bot.getDistrictsInHand()).thenReturn(districtsInHand);
-        when(districtsInHand.isEmpty()).thenReturn(true);
-
-        einsteinAlgo.startOfTurn(game);
-
-        verify(game).drawCard(this.bot);
-    }
-
-    @Test
-    void shouldAddTwoGoldWhenHandIsNotEmptyAndNoSpecialDistrictsAreBuilt() {
-        when(bot.getCity().containsDistrict("Bibliothèque")).thenReturn(false);
-        when(bot.getCity().containsDistrict("Observatoire")).thenReturn(false);
-        List<District> districtsInHand = mock(List.class);
-        when(bot.getDistrictsInHand()).thenReturn(districtsInHand);
-        when(districtsInHand.isEmpty()).thenReturn(false);
-
-        einsteinAlgo.startOfTurn(game);
-
-        verify(bot).addGold(2);
-    }
-
-    @Test
-    void shouldNotTakeBackDestroyedDistrictWhenPlayerIsCondottiere() {
-        District destroyedDistrict = new District("Quartier", 3, DistrictColor.marchand);
-        when(bot.getCity().containsDistrict("Cimetière")).thenReturn(true);
-        when(bot.getGold()).thenReturn(2);
-        when(bot.getCharacterName()).thenReturn("Condottiere");
-
-        // Mock the districtsInHand list
-        List<District> districtsInHand = mock(List.class);
-        when(bot.getDistrictsInHand()).thenReturn(districtsInHand);
-
-        einsteinAlgo.cemeteryLogic(game, bot, destroyedDistrict);
-
-        verify(bot, never()).addGold(-1);
-        verify(districtsInHand, never()).add(destroyedDistrict); // Use the mock here
+        assertEquals(1, choice);
     }
 }

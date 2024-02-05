@@ -36,7 +36,6 @@ class WarlordTest {
         bot = new Bot("Bot") {
         };
     }
-
     @Test
     void getLowestDistrictTest() {
         District district1 = new District("Quartier 1", 3, DistrictColor.noble);
@@ -48,12 +47,10 @@ class WarlordTest {
         assertTrue(bot.getLowestDistrict().isPresent());
         assertEquals(district2, bot.getLowestDistrict().get());
     }
-
     @Test
     void getWrongDistrictTest() {
         assertEquals(Optional.empty(), bot.getLowestDistrict());
     }
-
     @Test
     void getSortedPlayersByScoreTest() {
 
@@ -81,7 +78,6 @@ class WarlordTest {
         //third player is missing because he is the bishop, therefore he can't be an option
         assertEquals(expectedOutput, game.getSortedPlayersByScoreForWarlord());
     }
-
     @Test
     void WarlordGameCanDestroyFirstTest() {
         Player firstBuilder = new Bot("Player 1");

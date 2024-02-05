@@ -9,10 +9,7 @@ import fr.cotedazur.univ.polytech.startingpoint.city.DistrictColor;
 import fr.cotedazur.univ.polytech.startingpoint.player.Bot;
 import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 /**
  * This class represents the algorithm of the bot Einstein
  * It contains the logic of the bot's actions
@@ -22,28 +19,6 @@ public class EinsteinAlgo extends BaseAlgo {
     boolean lowestDistrictFound = false;
     public EinsteinAlgo(){
         super();
-    }
-
-    public void lybraryLogic(Game game) { //draws 2 cards
-        District library = new District("Bibliothèque", 6, DistrictColor.special);
-        if (bot.getCity().containsDistrict("Bibliothèque")) {
-            for (int i = 0; i < 2; i++) {
-                drawOneCard(game);
-            }
-        }
-    }
-
-    public void observatoryLogic(Game game) {
-        List<District> threeCards = drawThreeCards(game);
-        botChoosesCard(game, threeCards);
-    }
-
-    public List<District> drawThreeCards(Game game) {
-        List<District> threeCards = new ArrayList<>();
-        for (int i = 0; i < 3; i++) {
-            threeCards.add(game.drawCard(this.bot));
-        }
-        return threeCards;
     }
 
     public void botChoosesCard(Game game, List<District> threeCards) {
@@ -56,19 +31,17 @@ public class EinsteinAlgo extends BaseAlgo {
         bot.getDistrictsInHand().add(chosenCard);
     }
 
-    private void drawCardLogic(Game game) {
+
+    public int startOfTurnChoice() { // Always draws if needed
         if (bot.getDistrictsInHand().isEmpty() || bot.districtsInHandAreBuilt()) {
-            if (bot.getCity().containsDistrict("Bibliothèque") && bot.getDistrictsInHand().size() < 2) {
-                lybraryLogic(game); //draws 2 cards
-            } else if (bot.getCity().containsDistrict("Observatoire")) {
-                observatoryLogic(game); //draws 3 cards and keeps one
-            } else {
-                drawOneCard(game); //draws one card
-            }
+            return 2; // Draw a card
+        } else {
+            return 1; // Take 2 gold coins
         }
     }
+
+
     public void cemeteryLogic(Game game, Player targetedPlayer, District destroyedDistrict) {
-        District cemetery = new District("Cimetière", 5, DistrictColor.special);
         if (bot.getCity().containsDistrict("Cimetière") && bot.getGold() >= 1 && !bot.getCharacterName().equals("Condottiere")) {
             System.out.println(bot.getName() + " utilise le Cimetière pour reprendre le " + destroyedDistrict + " dans sa main.");
             bot.getDistrictsInHand().add(destroyedDistrict);
@@ -82,19 +55,6 @@ public class EinsteinAlgo extends BaseAlgo {
         bot.addGold(2);
     }
 
-    public int startOfTurnChoice() { //Always draws if needed
-        if (bot.getDistrictsInHand().isEmpty() || bot.districtsInHandAreBuilt()) {
-            if (bot.getCity().containsDistrict("Bibliothèque") && bot.getDistrictsInHand().size() < 2) {
-                lybraryLogic(game); //draws 2 cards
-            } else if (bot.getCity().containsDistrict("Observatoire")) {
-                observatoryLogic(game); //draws 3 cards and keeps one
-            } else {
-                ; //draws one card 2
-            }
-        } else {
-            addTwoGold(); // 1
-        }
-    }
 
     public void charAlgorithmsManager(Game game){
         switch (bot.getCharacterName()){
@@ -196,6 +156,29 @@ public class EinsteinAlgo extends BaseAlgo {
         }
     }
 
+    public boolean manufactureChoice() { // Use manufacture effect if the player has less than 7 built + buildable districts
+        Set<District> builtAndBuildableDistricts = new HashSet<>(bot.getCity().getDistrictsBuilt());
+        builtAndBuildableDistricts.addAll(bot.getDistrictsInHand());
+        return builtAndBuildableDistricts.size() < 8 - 1; // If player has 7 built + buildable districts he can just draw without paying 3 gold coins
+    }
+
+    public Optional<District> laboratoryChoice() {
+        List<District> districtsBuilt = bot.getCity().getDistrictsBuilt();
+        List<District> districtsInHand = bot.getDistrictsInHand();
+        for (District district : districtsInHand) {
+            if (districtsBuilt.contains(district)) {
+                return Optional.ofNullable(district); // Discard districts already built
+            }
+            int count = Collections.frequency(districtsInHand, district);
+            if (count > 1) {
+                return Optional.ofNullable(district); // Discard duplicates
+            }
+        }
+        if (districtsBuilt.size() + districtsInHand.size() > 8) {
+            return Optional.ofNullable(districtsInHand.remove(districtsInHand.size() - 1)); // Discard last district drawn
+        }
+        return Optional.empty();
+    }
     public void setBot(Bot bot) {
         this.bot = bot;
     }
@@ -211,5 +194,6 @@ public class EinsteinAlgo extends BaseAlgo {
         }
         return chosenCard;
     }
+
 }
 
