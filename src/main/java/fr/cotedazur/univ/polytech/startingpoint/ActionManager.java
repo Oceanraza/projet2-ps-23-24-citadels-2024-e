@@ -48,7 +48,7 @@ public class ActionManager {
         if (bot.getGameCharacter().getRole().equals(ARCHITECT)) {
             architectLogic(game, bot); //draws 2 cards
         }
-        if (bot.getCity().containsDistrict("Bibliothèque")) {
+        if (bot.getCity().containsDistrict("Bibliotheque")) {
             libraryLogic(game, bot); //draws 2 cards
         } else if (bot.getCity().containsDistrict("Observatoire")) {
             observatoryLogic(game, bot); //draws 3 cards and keeps one

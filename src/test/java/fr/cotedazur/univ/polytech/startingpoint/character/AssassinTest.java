@@ -67,7 +67,7 @@ public class AssassinTest {
             assassin.specialEffect(assassinPlayer, game, GameCharacterRole.ASSASSIN);
         }
         catch (CannotAttackException exception) {
-            assertEquals("L'assassin ne peut pas se tuer lui-même", exception.getMessage());
+            assertEquals("L'assassin ne peut pas se tuer lui-meme", exception.getMessage());
             assertTrue(assassin.getIsAlive());
             assertNull(assassin.getAttacker());
         }

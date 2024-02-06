@@ -80,7 +80,7 @@ public class ThiefTest {
             thief.specialEffect(thiefPlayer, game, GameCharacterRole.THIEF);
         }
         catch (CannotAttackException exception) {
-            assertEquals("Le voleur ne peut pas se voler lui-même", exception.getMessage());
+            assertEquals("Le voleur ne peut pas se voler lui-meme", exception.getMessage());
             assertNull(thief.getAttacker());
             assertEquals(2, thiefPlayer.getGold());
         }
@@ -127,7 +127,7 @@ public class ThiefTest {
             thief.specialEffect(thiefPlayer, game, GameCharacterRole.WARLORD);
         }
         catch (CannotAttackException exception) {
-            assertEquals("Le voleur ne peut pas voler le personnage assassiné", exception.getMessage());
+            assertEquals("Le voleur ne peut pas voler le personnage assassine", exception.getMessage());
             assertEquals(2, thiefPlayer.getGold());
             assertEquals(3, targetPlayer.getGold());
         }

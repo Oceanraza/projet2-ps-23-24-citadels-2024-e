@@ -77,7 +77,6 @@ public class Main {
 
         Game newGame = new Game();
         GameState gameState = new GameState();
-        // System.out.println(newGame);
 
         // Adding players to the game
         newGame.setPlayers(

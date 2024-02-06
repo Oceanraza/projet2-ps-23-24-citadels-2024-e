@@ -34,7 +34,7 @@ public class City {
         if (isNotBuilt(district)) {
             districtsBuilt.add(district);
             district.setTurnBuilt(gameState.getTurn());
-        } else throw new DistrictAlreadyBuiltException("Ce district a déjà été construit");
+        } else throw new DistrictAlreadyBuiltException("Ce district a deja ete construit");
     }
 
     public void destroyDistrict(District districtToDestroy) {

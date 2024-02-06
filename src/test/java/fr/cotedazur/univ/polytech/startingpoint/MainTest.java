@@ -13,6 +13,7 @@ import java.io.PrintStream;
 import java.util.Arrays;
 import java.util.List;
 
+import static fr.cotedazur.univ.polytech.startingpoint.CitadelsLogger.LOGGER;
 import static fr.cotedazur.univ.polytech.startingpoint.Main.calculateScores;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -178,7 +179,7 @@ class MainTest {
         calculateScores(players, firstBuilder, new GameState());
 
         for (Player p : players) {
-            System.out.println(p.getName() + ", score : " + p.getScore());
+            LOGGER.info(p.getName() + ", score : " + p.getScore());
         }
         String expectedOutput = "Player 1, score : 34" + LINE_SEPARATOR
                 + "Player 4, score : 32" + LINE_SEPARATOR
