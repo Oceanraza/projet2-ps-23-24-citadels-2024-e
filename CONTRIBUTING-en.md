@@ -1,6 +1,9 @@
 # Contributing to Citadels
 
-Welcome to Citadels! To ensure a smooth and collaborative experience, please take a moment to review the contributing guidelines outlined below.
+Welcome to Citadels!
+[French Version](README.md)
+
+To ensure a smooth and collaborative experience, please take a moment to review the contributing guidelines outlined below.
 
 ---
 
