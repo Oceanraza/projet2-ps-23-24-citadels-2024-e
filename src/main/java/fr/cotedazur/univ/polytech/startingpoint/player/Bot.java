@@ -14,7 +14,12 @@ import java.util.List;
 import static fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger.*;
 
 public class Bot extends Player {
-    public BaseAlgo botAlgo;
+
+    private BaseAlgo botAlgo;
+
+    public BaseAlgo getBotAlgo() {
+        return botAlgo;
+    }
 
     public Bot(String name, BaseAlgo algo) {
         super(name);
@@ -71,5 +76,13 @@ public class Bot extends Player {
         botAlgo.buildOrNot(gameState);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        return super.equals(o);
+    }
 
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
 }

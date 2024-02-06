@@ -2,7 +2,6 @@ package fr.cotedazur.univ.polytech.startingpoint;
 
 import com.beust.jcommander.JCommander;
 import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacter;
-import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.player.Bot;
 import fr.cotedazur.univ.polytech.startingpoint.player.Player;
@@ -63,7 +62,7 @@ public class Main {
                     Optional<Integer> turnBuilt = district.getTurnBuilt();
                     if (turnBuilt.isPresent() && gameState.getTurn() > turnBuilt.get()) {
                         Bot bot = (Bot) player;
-                        bot.botAlgo.huntedQuarterAlgorithm(district);
+                        bot.getBotAlgo().huntedQuarterAlgorithm(district);
                         LOGGER.info(COLOR_BLUE + "\n[ Choix de fin de partie ]" + COLOR_RESET);
                         String useHuntedQuarterMessage = player.getName() + " utilise la Cour des miracles en tant que quartier " + district.getColor() + ".";
                         LOGGER.info(useHuntedQuarterMessage);
@@ -74,7 +73,7 @@ public class Main {
 
     }
 
-    public static void main(String... args) {
+    public static void jCommander(String... args) {
         Args commandLineArgs = new Args();
         JCommander.newBuilder()
                 .addObject(commandLineArgs)
@@ -83,20 +82,21 @@ public class Main {
 
         // Determining the value of numberOfTurns according to the options
         int numberOfTurns;
-        Level level;
         // 2 x 1000 games
         if (commandLineArgs.is2Thousands()) {
             numberOfTurns = 1000;
-            level = Level.OFF; // Change level to OFF to disable logs
+            CitadelsLogger.setGlobalLogLevel(Level.OFF);
         }
         // One game
         else {
             numberOfTurns = 1;
-            level = Level.ALL;
+            CitadelsLogger.setGlobalLogLevel(Level.ALL);
         }
+    }
 
+    public static void main(String... args) {
         CitadelsLogger.setup();
-        CitadelsLogger.setGlobalLogLevel(level);
+        jCommander(args);
 
         Game newGame = new Game();
         GameState gameState = new GameState();
@@ -117,11 +117,11 @@ public class Main {
         Player firstBuilder = null;
         while (!gameState.isGameFinished(players)) {
             gameState.nextTurn();
-            Bot crownOwner = (Bot) newGame.getCrown().getOwner();
+
             String turnNumberMessage = COLOR_BLUE + "\n\n----- Tour " + gameState.getTurn() + " -----" + COLOR_RESET;
             LOGGER.info(turnNumberMessage);
-            String crownOwnerMessage = "La couronne appartient a " + (crownOwner != null ? crownOwner.getName() : "personne");
-            LOGGER.info(crownOwnerMessage);
+
+            Bot crownOwner = newGame.getCrownOwner();
 
             // Reset characters, their states and shuffle cards
             newGame.resetChars();
@@ -131,12 +131,7 @@ public class Main {
             // Character selection phase
             LOGGER.info("\n" + COLOR_BLUE + "[ Phase 1 ] Choix des personnages" + COLOR_RESET);
 
-            if (crownOwner != null){
-                String crownOwnerInfos = crownOwner.toString();
-                LOGGER.info(crownOwnerInfos);
-                crownOwner.botAlgo.chooseCharacterAlgorithm(newGame);
-            }
-            newGame.charSelectionFiller();
+            newGame.characterSelection(crownOwner);
 
             // Character reveal phase
             LOGGER.info("\n" + COLOR_BLUE + "[ Phase 2 ] Tour des joueurs" + COLOR_RESET);
@@ -155,15 +150,7 @@ public class Main {
                 }
                 // If the player has been killed, he cannot play
                 else {
-                    String isKilledMessage = "\n" + cha.getRole().toStringLeOrLUpperCase() + " a ete tue par " + cha.getAttacker().getName();
-                    String cannotPlayMessage = player.getName() + " ne pourra pas jouer ce tour !";
-                    LOGGER.info(isKilledMessage);
-                    LOGGER.info(cannotPlayMessage);
-                    // If the king is killed, he gets the crown at the end of this turn
-                    if (cha.getRole() == GameCharacterRole.KING) {
-                        newGame.getCrown().setOwner(player);
-                        LOGGER.info("Il recuperera la couronne a la fin de ce tour");
-                    }
+                    newGame.playerKilled(cha, player);
                 }
             }
         }

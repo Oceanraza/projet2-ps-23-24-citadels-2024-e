@@ -1,7 +1,6 @@
 package fr.cotedazur.univ.polytech.startingpoint.character;
 
 import fr.cotedazur.univ.polytech.startingpoint.ActionManager;
-import fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger;
 import fr.cotedazur.univ.polytech.startingpoint.Game;
 import fr.cotedazur.univ.polytech.startingpoint.GameState;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
@@ -9,6 +8,7 @@ import fr.cotedazur.univ.polytech.startingpoint.city.DistrictColor;
 import fr.cotedazur.univ.polytech.startingpoint.player.Bot;
 import fr.cotedazur.univ.polytech.startingpoint.player.algorithms.BaseAlgo;
 import fr.cotedazur.univ.polytech.startingpoint.player.algorithms.EinsteinAlgo;
+import fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -51,7 +51,7 @@ class ArchitectTest {
         firstBuilder.setGold(5);
         firstBuilder.setGameCharacter(architect);
         assertEquals(0, firstBuilder.getDistrictsInHand().size());
-        assertEquals(botAlgo.startOfTurnChoice(), 2); //draws card because doesn't have any/has architect
+        assertEquals(2, botAlgo.startOfTurnChoice()); //draws card because doesn't have any/has architect
         ActionManager.startOfTurn(game, firstBuilder);
         assertEquals(3, firstBuilder.getDistrictsInHand().size());
     }
