@@ -12,7 +12,7 @@ import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 
 import java.util.*;
 
-import static fr.cotedazur.univ.polytech.startingpoint.CitadelsLogger.*;
+import static fr.cotedazur.univ.polytech.startingpoint.CitadelsLogger.LOGGER;
 import static fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole.*;
 /**
  * This class represents the algorithm of the bot Einstein
@@ -67,7 +67,7 @@ public class EinsteinAlgo extends BaseAlgo {
 
     public void graveyardLogic(District destroyedDistrict) {
         if (bot.getCity().containsDistrict("Cimetiere") && bot.getGold() >= 1 && !bot.getCharacterName().equals("Condottiere")) {
-            String graveyardMessage = bot.getName() + " utilise le Cimetière pour reprendre le " + destroyedDistrict + " dans sa main.";
+            String graveyardMessage = bot.getName() + " utilise le Cimetiere pour reprendre le " + destroyedDistrict + " dans sa main.";
             LOGGER.info(graveyardMessage);
             bot.getDistrictsInHand().add(destroyedDistrict);
             bot.removeGold(1);

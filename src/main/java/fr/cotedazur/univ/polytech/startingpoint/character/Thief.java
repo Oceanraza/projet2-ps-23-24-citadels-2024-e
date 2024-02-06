@@ -3,7 +3,7 @@ package fr.cotedazur.univ.polytech.startingpoint.character;
 import fr.cotedazur.univ.polytech.startingpoint.Game;
 import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 
-import static fr.cotedazur.univ.polytech.startingpoint.CitadelsLogger.LOGGER;
+import static fr.cotedazur.univ.polytech.startingpoint.CitadelsLogger.*;
 
 public class Thief extends GameCharacter {
     public Thief() {
@@ -35,7 +35,7 @@ public class Thief extends GameCharacter {
                 target.setGold(0);
                 stolenCharacter.setAttacker(player);
 
-                String stolenMessage = targetedCharacter.toStringLeOrLUpperCase() + " s'est fait vole " + stolenGold + " or(s)";
+                String stolenMessage = COLOR_RED + targetedCharacter.toStringLeOrLUpperCase() + " s'est fait vole " + stolenGold + " or(s)" + COLOR_RESET;
                 LOGGER.info(stolenMessage);
                 return;
             }
