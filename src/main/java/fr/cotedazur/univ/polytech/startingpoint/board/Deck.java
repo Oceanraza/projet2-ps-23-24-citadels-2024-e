@@ -29,6 +29,7 @@ public class Deck {
         for (District district : this.cards) {
             str.append(district).append('\n');
         }
+        str.append("\n");
         return str.toString();
     }
 
@@ -37,7 +38,6 @@ public class Deck {
      *
      * @param district the district to be added
      */
-
     public void addDistrict(District district) {
         if (district != null) {
             this.cards.add(district);
@@ -47,7 +47,6 @@ public class Deck {
     /**
      * Shuffles the deck.
      */
-
     public void shuffle() {
         Collections.shuffle(this.cards);
     }
@@ -70,7 +69,6 @@ public class Deck {
      *
      * @return true if the deck is empty, false otherwise
      */
-
     public boolean isEmpty() {
         return this.cards.isEmpty();
     }
@@ -80,7 +78,6 @@ public class Deck {
      *
      * @return the number of cards in the deck
      */
-
     public int size() {
         return this.cards.size();
     }

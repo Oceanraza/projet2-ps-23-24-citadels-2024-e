@@ -12,5 +12,4 @@ public class Architect extends GameCharacter {
     public void specialEffect(Player player, Game game, Object... optionalArgs) {
         // The architect has no special effect
     }
-
 }

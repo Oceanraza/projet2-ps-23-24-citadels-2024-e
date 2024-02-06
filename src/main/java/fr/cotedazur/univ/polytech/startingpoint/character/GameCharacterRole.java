@@ -37,11 +37,18 @@ public enum GameCharacterRole {
     Le... or
     L' ...
      */
-    public String toStringLeOrL() {
+    public String toStringLeOrLUpperCase() {
         if (this.equals(GameCharacterRole.BISHOP) || this.equals(GameCharacterRole.ASSASSIN) || (this.equals(GameCharacterRole.ARCHITECT))) {
             return "L'" + this;
         }
         return "Le " + this;
+    }
+
+    public String toStringLeOrLLowerCase() {
+        if (this.equals(GameCharacterRole.BISHOP) || this.equals(GameCharacterRole.ASSASSIN) || (this.equals(GameCharacterRole.ARCHITECT))) {
+            return "l'" + this;
+        }
+        return "le " + this;
     }
 
     @Override

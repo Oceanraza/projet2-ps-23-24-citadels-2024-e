@@ -1,7 +1,10 @@
 package fr.cotedazur.univ.polytech.startingpoint.player;
 
+import fr.cotedazur.univ.polytech.startingpoint.CitadelsLogger;
 import fr.cotedazur.univ.polytech.startingpoint.Game;
 import org.junit.jupiter.api.BeforeEach;
+
+import java.util.logging.Level;
 
 class BotTest {
     private static final String LINE_SEPARATOR = System.lineSeparator();
@@ -10,6 +13,9 @@ class BotTest {
 
     @BeforeEach
     void setUp() {
+        CitadelsLogger.setup();
+        CitadelsLogger.setGlobalLogLevel(Level.OFF);
+
         game = new Game();
         bot = new Bot("Bot");
     }

@@ -55,12 +55,15 @@ public class City {
         return false;
     }
 
-    @Override
     public String toString() {
         StringBuilder city = new StringBuilder();
-        for (District d : districtsBuilt) {
-            city.append(d.getName()).append(" ");
+        for (int i = 0; i < districtsBuilt.size(); i++) {
+            city.append(districtsBuilt.get(i).getName());
+            if (i < districtsBuilt.size() - 1) {
+                city.append(", ");
+            }
         }
+        city.append(".");
         return city.toString();
     }
 }

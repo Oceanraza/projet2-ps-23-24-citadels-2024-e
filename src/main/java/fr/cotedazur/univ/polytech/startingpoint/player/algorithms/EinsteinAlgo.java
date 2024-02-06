@@ -12,7 +12,7 @@ import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 
 import java.util.*;
 
-import static fr.cotedazur.univ.polytech.startingpoint.CitadelsLogger.LOGGER;
+import static fr.cotedazur.univ.polytech.startingpoint.CitadelsLogger.*;
 import static fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole.*;
 /**
  * This class represents the algorithm of the bot Einstein
@@ -31,7 +31,8 @@ public class EinsteinAlgo extends BaseAlgo {
         for (District card : threeCards) {
             this.bot.moveCardInDeck(card, game.getDeck());
         }
-        LOGGER.info(bot.getName() + " pioche le " + chosenCard);
+        String drawMessage = bot.getName() + " pioche le " + chosenCard;
+        LOGGER.info(drawMessage);
         bot.getDistrictsInHand().add(chosenCard);
     }
 
@@ -66,14 +67,16 @@ public class EinsteinAlgo extends BaseAlgo {
 
     public void graveyardLogic(District destroyedDistrict) {
         if (bot.getCity().containsDistrict("Cimetiere") && bot.getGold() >= 1 && !bot.getCharacterName().equals("Condottiere")) {
-            LOGGER.info(bot.getName() + " utilise le Cimetiere pour reprendre le " + destroyedDistrict + " dans sa main.");
+            String graveyardMessage = bot.getName() + " utilise le Cimetière pour reprendre le " + destroyedDistrict + " dans sa main.";
+            LOGGER.info(graveyardMessage);
             bot.getDistrictsInHand().add(destroyedDistrict);
             bot.removeGold(1);
         }
     }
 
     private void addTwoGold() {
-        LOGGER.info(bot.getName() + " prend deux pieces d'or.");
+        String take2GoldMessage = bot.getName() + " prend deux pieces d'or.";
+        LOGGER.info(take2GoldMessage);
         bot.addGold(2);
     }
 

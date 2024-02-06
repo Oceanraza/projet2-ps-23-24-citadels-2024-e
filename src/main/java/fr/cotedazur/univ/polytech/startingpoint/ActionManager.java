@@ -22,7 +22,8 @@ public class ActionManager {
     public static int printGold(Player player, int addedGold) {
         player.addGold(addedGold);
         if (addedGold != 0) {
-            LOGGER.info((player.getGameCharacter().getRole().toStringLeOrL()) + " a donne " + addedGold + " or a " + player.getName());
+            String collectGoldMessage = (player.getGameCharacter().getRole().toStringLeOrLUpperCase()) + " a donne " + addedGold + " or a " + player.getName();
+            LOGGER.info(collectGoldMessage);
         }
         return addedGold;
     }
@@ -36,7 +37,8 @@ public class ActionManager {
         Bot bot = (Bot) player;
         int choice = bot.botAlgo.startOfTurnChoice();
         if (choice == 1) { // Take 2 gold coins
-            LOGGER.info(bot.getName() + " prend deux pieces d'or.");
+            String take2GoldMessage = bot.getName() + " prend deux pieces d'or.";
+            LOGGER.info(take2GoldMessage);
             bot.addGold(2);
         } else { // Draw a card
             drawChoice(game, bot);
@@ -104,8 +106,9 @@ public class ActionManager {
         Bot bot = (Bot) player;
         if (hasManufacture && bot.getGold() >= 3) {
             boolean useManufactureEffect = bot.botAlgo.manufactureChoice();
-            if (useManufactureEffect) {
-                LOGGER.info(player.getName() + " utilise la Manufacture pour piocher 3 cartes et paye 3 pieces.");
+            if(useManufactureEffect) {
+                String manufactureMessage = player.getName() + " utilise la Manufacture pour piocher 3 cartes et paye 3 pieces.";
+                LOGGER.info(manufactureMessage);
                 bot.removeGold(3);
                 for (int i = 0; i < 3; i++) {
                     game.drawCard(bot);
@@ -114,8 +117,9 @@ public class ActionManager {
         }
         if (hasLaboratory) {
             Optional<District> districtToDiscard = bot.botAlgo.laboratoryChoice();
-            if (districtToDiscard.isPresent()) {
-                LOGGER.info(player.getName() + " utilise le Laboratoire pour defausser sa carte " + districtToDiscard.get().getName() + " contre 1 piece d'or.");
+            if(districtToDiscard.isPresent()) {
+                String laboratoryMessage = player.getName() + " utilise le Laboratoire pour defausser sa carte " + districtToDiscard.get().getName() + " contre 1 piece d'or.";
+                LOGGER.info(laboratoryMessage);
                 bot.moveCardInDeck(districtToDiscard.get(), game.getDeck());
                 bot.addGold(1);
             }
