@@ -60,6 +60,7 @@ public class EinsteinAlgo extends BaseAlgo {
                 thiefAlgorithm(game);
                 break;
         }
+    }
 
     public void graveyardLogic(Game game, Player targetedPlayer, District destroyedDistrict) {
         if (bot.getCity().containsDistrict("Cimetière") && bot.getGold() >= 1 && !bot.getCharacterName().equals("Condottiere")) {
