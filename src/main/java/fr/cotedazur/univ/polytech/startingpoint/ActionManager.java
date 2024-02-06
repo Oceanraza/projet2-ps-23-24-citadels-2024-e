@@ -115,8 +115,7 @@ public class ActionManager {
             Optional<District> districtToDiscard = bot.botAlgo.laboratoryChoice();
             if (districtToDiscard.isPresent()) {
                 System.out.println(player.getName() + " utilise le Laboratoire pour défausser sa carte " + districtToDiscard.get().getName() + " contre 1 pièce d'or.");
-                bot.getDistrictsInHand().remove(districtToDiscard.get());
-                game.getDeck().addDistrict(districtToDiscard.get());
+                bot.moveCardInDeck(districtToDiscard.get(), game.getDeck());
                 bot.addGold(1);
             }
         }

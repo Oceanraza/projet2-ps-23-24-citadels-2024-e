@@ -26,12 +26,12 @@ public class EinsteinAlgo extends BaseAlgo {
 
     public void botChoosesCard(Game game, List<District> threeCards) {
         District chosenCard = chooseCard(threeCards);
-        threeCards.remove(chosenCard);
+        threeCards.remove(chosenCard); // Remove the chosen card from the list of three cards
         for (District card : threeCards) {
-            game.getDeck().discard(card);
+            this.bot.moveCardInDeck(card, game.getDeck());
         }
         System.out.println(bot.getName() + " pioche le " + chosenCard);
-        bot.getDistrictsInHand().add(chosenCard);
+        bot.getDistrictsInHand().add(chosenCard); // Add the chosen card to the bot's hand
     }
 
 

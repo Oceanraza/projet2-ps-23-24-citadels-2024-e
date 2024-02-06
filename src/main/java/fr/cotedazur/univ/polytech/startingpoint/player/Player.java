@@ -2,6 +2,7 @@ package fr.cotedazur.univ.polytech.startingpoint.player;
 
 import fr.cotedazur.univ.polytech.startingpoint.Game;
 import fr.cotedazur.univ.polytech.startingpoint.GameState;
+import fr.cotedazur.univ.polytech.startingpoint.board.Deck;
 import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacter;
 import fr.cotedazur.univ.polytech.startingpoint.city.City;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
@@ -17,6 +18,7 @@ public abstract class Player {
     private int score;
     private GameCharacter gameCharacter;
     private final Map<DistrictColor, Integer> numberOfDistrictsByColor;
+    private Deck deck;
 
     protected Player(String name) {
         this.name = name;
@@ -166,5 +168,14 @@ public abstract class Player {
         return "\nC'est au tour " + gameCharacter.getRole().toStringDuOrDeL() + " : " + name + "\n" + (!districtsInHand.isEmpty() ? "Et sa main est composée de: "
                 + districtsInHand : "Sa main est vide. ") + "\n" + "Il a " + gold + " d'or(s)\n" +
                 (!city.getDistrictsBuilt().isEmpty() ? "Et il a déjà posé: " + city : "Il n'a pas posé de quartiers.");
+    }
+
+    public void moveCardInDeck(District card, Deck deck) {
+        if (this.getDistrictsInHand().contains(card)) {
+            this.getDistrictsInHand().remove(card);
+            deck.addDistrict(card);
+        } else {
+            System.out.println("La carte n'est pas dans la main du joueur");
+        }
     }
 }

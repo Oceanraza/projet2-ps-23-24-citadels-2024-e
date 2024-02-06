@@ -1,6 +1,5 @@
 package fr.cotedazur.univ.polytech.startingpoint.board;
 
-import fr.cotedazur.univ.polytech.startingpoint.Game;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
 
 import java.util.ArrayList;
@@ -13,10 +12,10 @@ import java.util.List;
 
 public class Deck {
     private List<District> cards;
-    private List<District> discardPile;
-    private Game game;
+    private ArrayList<District> discardPile;
 
     public Deck() {
+        this.discardPile = new ArrayList<>();
         this.cards = new ArrayList<>();
     }
 
@@ -91,17 +90,10 @@ public class Deck {
      *
      * @param district the district to be discarded
      */
-    public void discardDistrict(District district) {
+
+    public void discard(District district) {
         this.cards.remove(district);
         this.discardPile.add(district);
     }
 
-    public List<District> getCards() {
-        return this.cards;
-    }
-
-    public void discard(District card) {
-        this.cards.remove(card);
-        this.discardPile.add(card);
-    }
 }
