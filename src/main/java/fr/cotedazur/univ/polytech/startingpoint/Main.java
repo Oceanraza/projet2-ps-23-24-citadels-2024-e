@@ -87,7 +87,7 @@ public class Main {
         // Determining the value of numberOfTurns according to the options
         int numberOfTurns;
         if (commandLineArgs.is2Thousands()) {
-            numberOfTurns = 2 * 1000; // 2 x 1000 games
+            numberOfTurns = 1000; // 2 x 1000 games
         } else {
             numberOfTurns = 1; // One game
         }
