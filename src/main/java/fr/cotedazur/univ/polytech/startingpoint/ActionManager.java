@@ -70,10 +70,6 @@ public class ActionManager {
         Bot bot = (Bot) player;
         for (int i = 0; i < 2; i++) {
             game.drawCard(bot);
-            if (bot.getGameCharacter().getRole().equals(ARCHITECT)) {
-                game.drawCard(bot);
-                game.drawCard(bot);
-            }
         }
     }
 
