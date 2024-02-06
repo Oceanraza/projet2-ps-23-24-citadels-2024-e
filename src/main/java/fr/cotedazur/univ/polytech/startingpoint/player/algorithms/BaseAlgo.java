@@ -51,7 +51,7 @@ public abstract class BaseAlgo {
                 thiefAlgorithm(game);
                 break;
             default:
-                throw new CharacterNotFoundException("Character not found in the list of available characters.");
+                break;
         }
     }
 
