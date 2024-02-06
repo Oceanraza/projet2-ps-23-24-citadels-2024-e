@@ -132,7 +132,7 @@ class MainTest {
         assertEquals(calculateScores(players, firstBuilder, new GameState()).get(0), firstBuilder);
     }
 
-    /*
+
     @Test
     void testAnnounceWinner() { //We can test with two players since adding more players doesn't change the ending message
         Player firstBuilder = new Bot("Player 1");
@@ -145,17 +145,11 @@ class MainTest {
             secondPlayer.getCity().addDistrict(new District(name, i, DistrictColor.TRADE), gameState); // 32 points
         }
 
-        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(outContent));
-
         Main.announceWinner(players, firstBuilder, new GameState());
-
-        String expectedOutput = LINE_SEPARATOR + "Player 1 : 34 points" + LINE_SEPARATOR + "Player 2 : 32 points" + LINE_SEPARATOR + "Player 1 gagne la partie avec 34 points !" + LINE_SEPARATOR;
-        assertEquals(expectedOutput, outContent.toString());
+        assertEquals(34, firstBuilder.getScore());
+        assertEquals(32, secondPlayer.getScore());
     }
 
-     */
-    /*
     @Test
     void testSortEvenPlayers(){
         Player firstBuilder = new Bot("Player 1");
@@ -164,8 +158,6 @@ class MainTest {
         Player fourthPlayer = new Bot("Player 4");
         List<Player> players = Arrays.asList(firstBuilder,thirdPlayer,fourthPlayer,secondPlayer);
 
-        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(outContent));
         for (int i = 0; i < 8; i++) {
             String name = "District" + i;
             firstBuilder.getCity().addDistrict(new District(name, i, DistrictColor.TRADE), gameState); // 34 points
@@ -181,15 +173,10 @@ class MainTest {
         firstBuilder.setScore(firstBuilder.getScore()-2); //il passe a 32 points, égalité avec les autres
         calculateScores(players, firstBuilder, new GameState());
 
-        for (Player p : players) {
-            LOGGER.info(p.getName() + ", score : " + p.getScore());
-        }
-        String expectedOutput = "Player 1, score : 34" + LINE_SEPARATOR
-                + "Player 4, score : 32" + LINE_SEPARATOR
-                + "Player 3, score : 32" + LINE_SEPARATOR
-                + "Player 2, score : 32" + LINE_SEPARATOR;
-        assertEquals(expectedOutput, outContent.toString());
+        assertEquals(34, firstBuilder.getScore());
+        assertEquals(32, secondPlayer.getScore());
+        assertEquals(32, thirdPlayer.getScore());
+        assertEquals(32, fourthPlayer.getScore());
     }
 
-     */
 }

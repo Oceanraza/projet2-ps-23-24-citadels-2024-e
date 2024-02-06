@@ -35,7 +35,8 @@ public class Thief extends GameCharacter {
                 target.setGold(0);
                 stolenCharacter.setAttacker(player);
 
-                LOGGER.info(targetedCharacter.toStringLeOrL() + " s'est fait vole " + stolenGold + " or(s)");
+                String stolenMessage = targetedCharacter.toStringLeOrLUpperCase() + " s'est fait vole " + stolenGold + " or(s)";
+                LOGGER.info(stolenMessage);
                 return;
             }
         }

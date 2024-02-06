@@ -249,7 +249,8 @@ public class Game {
             }
             // Thief can't steal from a dead character
             else if (!cha.getIsAlive()) {
-                LOGGER.info(cha.getRole().toStringLeOrL() + " a ete assassine. Il ne peut pas etre vole");
+                String deadCharacterMessage = cha.getRole().toStringLeOrLUpperCase() + " est mort. Il ne peut pas etre vole";
+                LOGGER.info(deadCharacterMessage);
                 charactersThatCanBeStolen.remove(cha);
             }
         }
