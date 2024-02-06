@@ -5,7 +5,6 @@ import java.util.logging.*;
 public class CitadelsLogger {
     public static final Logger LOGGER = Logger.getLogger("CitadelsLogger");
 
-    public static final String COLOR_SHINNING_BLUE = "\033[0;94m";
     public static final String COLOR_BLUE = "\033[0;34m";
     public static final String COLOR_RED = "\033[0;31m";
     public static final String COLOR_GREEN = "\033[0;32m";

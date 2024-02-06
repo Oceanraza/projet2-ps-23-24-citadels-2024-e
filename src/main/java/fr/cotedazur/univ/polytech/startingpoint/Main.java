@@ -61,7 +61,7 @@ public class Main {
                     if (turnBuilt.isPresent() && gameState.getTurn() > turnBuilt.get()) {
                         Bot bot = (Bot) player;
                         bot.botAlgo.huntedQuarterAlgorithm(district);
-                        LOGGER.info(COLOR_SHINNING_BLUE + "\n[ Choix de fin de partie ]" + COLOR_RESET);
+                        LOGGER.info(COLOR_BLUE + "\n[ Choix de fin de partie ]" + COLOR_RESET);
                         String useHuntedQuarterMessage = player.getName() + " utilise la Cour des miracles en tant que quartier " + district.getColor() + ".";
                         LOGGER.info(useHuntedQuarterMessage);
                     }
@@ -95,7 +95,7 @@ public class Main {
         while (!gameState.isGameFinished(players)) {
             gameState.nextTurn();
             Bot crownOwner = (Bot) newGame.getCrown().getOwner();
-            String turnNumberMessage = COLOR_SHINNING_BLUE + "\n\n----- Tour " + gameState.getTurn() + " -----" + COLOR_RESET;
+            String turnNumberMessage = COLOR_BLUE + "\n\n----- Tour " + gameState.getTurn() + " -----" + COLOR_RESET;
             LOGGER.info(turnNumberMessage);
             String crownOwnerMessage = "La couronne appartient a " + (crownOwner != null ? crownOwner.getName() : "personne");
             LOGGER.info(crownOwnerMessage);
@@ -106,7 +106,7 @@ public class Main {
             newGame.shuffleCharacters();
 
             // Character selection phase
-            LOGGER.info("\n" + COLOR_SHINNING_BLUE + "[ Phase 1 ] Choix des personnages" + COLOR_RESET);
+            LOGGER.info("\n" + COLOR_BLUE + "[ Phase 1 ] Choix des personnages" + COLOR_RESET);
 
             if (crownOwner != null){
                 String crownOwnerInfos = crownOwner.toString();
@@ -116,7 +116,7 @@ public class Main {
             newGame.charSelectionFiller();
 
             // Character reveal phase
-            LOGGER.info("\n" + COLOR_SHINNING_BLUE + "[ Phase 2 ] Tour des joueurs" + COLOR_RESET);
+            LOGGER.info("\n" + COLOR_BLUE + "[ Phase 2 ] Tour des joueurs" + COLOR_RESET);
             List<Player> runningOrder = newGame.setRunningOrder();
 
             for (Player player: runningOrder) {
@@ -145,7 +145,7 @@ public class Main {
             }
         }
         finalChoice(players, gameState);
-        LOGGER.info("\n" + COLOR_SHINNING_BLUE + "[ Decompte des points ]" + COLOR_RESET);
+        LOGGER.info("\n" + COLOR_BLUE + "[ Decompte des points ]" + COLOR_RESET);
         announceWinner(players, firstBuilder, gameState);
     }
 }
