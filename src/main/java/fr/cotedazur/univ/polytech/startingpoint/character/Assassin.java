@@ -13,24 +13,21 @@ public class Assassin extends GameCharacter {
     @Override
     public void specialEffect(Player player, Game game, Object... optionalArgs) {
         GameCharacterRole targetedCharacter = (GameCharacterRole) optionalArgs[0];
-        killCharacter(player, game, targetedCharacter);
-    }
 
-    protected void killCharacter(Player assassin, Game game, GameCharacterRole killedCharacter) {
-        GameCharacter targetCharacter;
-        if (killedCharacter.equals(GameCharacterRole.ASSASSIN)) { // Ne dois jamais arriver : à supprimer
-            LOGGER.info("Vous ne pouvez pas vous assassiner vous-meme !");
-            return;
+        if (targetedCharacter.equals(GameCharacterRole.ASSASSIN)) {
+            throw new CannotAttackException("L'assassin ne peut pas se tuer lui-meme");
         }
+
+        LOGGER.info("L'assassin a tue " + targetedCharacter.toStringLeOrL());
+
+        GameCharacter targetCharacter;
         for (Player target : game.getPlayers()) {
             targetCharacter = target.getGameCharacter();
-            if (targetCharacter.getRole().equals(killedCharacter)) {
+            if (targetCharacter.getRole().equals(targetedCharacter)) {
                 targetCharacter.setIsAlive(false);
-                targetCharacter.setAttacker(assassin);
-                LOGGER.info("L'assassin a tue le " + killedCharacter);
+                targetCharacter.setAttacker(player);
                 return;
             }
         }
-        LOGGER.info("Le personnage tue n'est pas en jeu !");
     }
 }

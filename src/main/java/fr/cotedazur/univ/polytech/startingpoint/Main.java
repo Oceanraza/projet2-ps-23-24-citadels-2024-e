@@ -121,9 +121,9 @@ public class Main {
 
             for (Player player: runningOrder) {
                 GameCharacter cha = player.getGameCharacter();
+                LOGGER.info(player.toString());
                 // If the character is alive
                 if (cha.getIsAlive()) {
-                    LOGGER.info(player.toString());
                     player.play(newGame, gameState);
                     if (gameState.isFinished(player)) {
                         firstBuilder = player;

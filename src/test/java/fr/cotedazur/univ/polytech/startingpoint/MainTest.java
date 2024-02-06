@@ -13,6 +13,7 @@ import java.io.PrintStream;
 import java.util.Arrays;
 import java.util.List;
 
+import static fr.cotedazur.univ.polytech.startingpoint.CitadelsLogger.LOGGER;
 import static fr.cotedazur.univ.polytech.startingpoint.Main.calculateScores;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

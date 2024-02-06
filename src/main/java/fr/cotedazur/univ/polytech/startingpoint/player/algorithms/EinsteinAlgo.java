@@ -12,6 +12,7 @@ import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 
 import java.util.*;
 
+import static fr.cotedazur.univ.polytech.startingpoint.CitadelsLogger.LOGGER;
 import static fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole.*;
 /**
  * This class represents the algorithm of the bot Einstein
@@ -30,7 +31,7 @@ public class EinsteinAlgo extends BaseAlgo {
         for (District card : threeCards) {
             game.getDeck().discard(card);
         }
-        System.out.println(bot.getName() + " pioche le " + chosenCard);
+        LOGGER.info(bot.getName() + " pioche le " + chosenCard);
         bot.getDistrictsInHand().add(chosenCard);
     }
 
@@ -42,29 +43,37 @@ public class EinsteinAlgo extends BaseAlgo {
             return 1; // Take 2 gold coins
         }
     }
-
+    public void charAlgorithmsManager(Game game) {
+        switch (bot.getCharacterName()) {
+            case ("Condottiere"):
+                warlordAlgorithm(game);
+                break;
+            case ("Roi"):
+                kingAlgorithm(game);
+                break;
+            case ("Assassin"):
+                assassinAlgorithm(game);
+                break;
+            case ("Magicien"):
+                magicianAlgorithm(game);
+                break;
+            case ("Voleur"):
+                thiefAlgorithm(game);
+                break;
+        }
+    }
 
     public void graveyardLogic(Game game, Player targetedPlayer, District destroyedDistrict) {
-        if (bot.getCity().containsDistrict("Cimetière") && bot.getGold() >= 1 && !bot.getCharacterName().equals("Condottiere")) {
-            System.out.println(bot.getName() + " utilise le Cimetière pour reprendre le " + destroyedDistrict + " dans sa main.");
+        if (bot.getCity().containsDistrict("Cimetiere") && bot.getGold() >= 1 && !bot.getCharacterName().equals("Condottiere")) {
+            LOGGER.info(bot.getName() + " utilise le Cimetiere pour reprendre le " + destroyedDistrict + " dans sa main.");
             bot.getDistrictsInHand().add(destroyedDistrict);
             bot.addGold(-1);
         }
     }
 
-
     private void addTwoGold() {
-        System.out.println(bot.getName() + " prend deux pièces d'or.");
+        LOGGER.info(bot.getName() + " prend deux pieces d'or.");
         bot.addGold(2);
-    }
-
-
-    public void charAlgorithmsManager(Game game){
-        GameCharacterRole role = bot.getGameCharacter().getRole();
-        if (role == WARLORD) warlordAlgorithm(game);
-        else if (role == KING) kingAlgorithm(game);
-        else if (role == ASSASSIN) assassinAlgorithm(game);
-        else if (role == MAGICIAN) magicianAlgorithm(game);
     }
 
     public void chooseCharacterAlgorithm(Game game) {
@@ -164,6 +173,19 @@ public class EinsteinAlgo extends BaseAlgo {
         }
 
         targetedCharacter = game.getKillableCharacters().get(indexKilledCharacter).getRole();
+        bot.getGameCharacter().specialEffect(bot, game, targetedCharacter);
+    }
+
+    public void thiefAlgorithm(Game game) {
+        int numberOfTargets;
+        int indexPlayerStolen;
+        GameCharacterRole targetedCharacter;
+
+        // Choose a random character and steal him
+        numberOfTargets = game.getCharactersThatCanBeStolen().size();
+        indexPlayerStolen = Utils.generateRandomNumber(numberOfTargets);
+        targetedCharacter = game.getCharactersThatCanBeStolen().get(indexPlayerStolen).getRole();
+
         bot.getGameCharacter().specialEffect(bot, game, targetedCharacter);
     }
 
