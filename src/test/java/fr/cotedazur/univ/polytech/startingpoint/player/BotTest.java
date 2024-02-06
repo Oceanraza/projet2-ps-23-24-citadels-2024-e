@@ -1,6 +1,6 @@
 package fr.cotedazur.univ.polytech.startingpoint.player;
 
-import fr.cotedazur.univ.polytech.startingpoint.CitadelsLogger;
+import fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger;
 import fr.cotedazur.univ.polytech.startingpoint.Game;
 import fr.cotedazur.univ.polytech.startingpoint.GameState;
 import org.junit.jupiter.api.BeforeEach;

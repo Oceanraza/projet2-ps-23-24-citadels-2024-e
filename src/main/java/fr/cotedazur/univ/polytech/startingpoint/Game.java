@@ -6,6 +6,7 @@ import fr.cotedazur.univ.polytech.startingpoint.character.*;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.player.Bot;
 import fr.cotedazur.univ.polytech.startingpoint.player.Player;
+import fr.cotedazur.univ.polytech.startingpoint.utils.Utils;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -14,7 +15,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static fr.cotedazur.univ.polytech.startingpoint.CitadelsLogger.*;
+import static fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger.*;
 
 /**
  * The Game class is the main class of the game. It contains the deck, the crown, the players and the characters.

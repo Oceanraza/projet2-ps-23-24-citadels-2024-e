@@ -2,7 +2,7 @@ package fr.cotedazur.univ.polytech.startingpoint.player.algorithms;
 
 import fr.cotedazur.univ.polytech.startingpoint.Game;
 import fr.cotedazur.univ.polytech.startingpoint.GameState;
-import fr.cotedazur.univ.polytech.startingpoint.Utils;
+import fr.cotedazur.univ.polytech.startingpoint.utils.Utils;
 import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacter;
 import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
@@ -12,7 +12,7 @@ import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 
 import java.util.*;
 
-import static fr.cotedazur.univ.polytech.startingpoint.CitadelsLogger.LOGGER;
+import static fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger.LOGGER;
 import static fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole.*;
 /**
  * This class represents the algorithm of the bot Einstein

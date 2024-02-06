@@ -11,7 +11,7 @@ import fr.cotedazur.univ.polytech.startingpoint.player.algorithms.BaseAlgo;
 
 import java.util.List;
 
-import static fr.cotedazur.univ.polytech.startingpoint.CitadelsLogger.*;
+import static fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger.*;
 
 public class Bot extends Player {
     public BaseAlgo botAlgo;
