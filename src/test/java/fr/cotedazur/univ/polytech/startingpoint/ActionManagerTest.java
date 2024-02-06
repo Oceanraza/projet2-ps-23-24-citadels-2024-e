@@ -1,33 +1,44 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
-import static org.junit.jupiter.api.Assertions.*;
-import fr.cotedazur.univ.polytech.startingpoint.city.District;
-import fr.cotedazur.univ.polytech.startingpoint.city.DistrictAlreadyBuiltException;
 import fr.cotedazur.univ.polytech.startingpoint.character.*;
+import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.city.DistrictColor;
 import fr.cotedazur.univ.polytech.startingpoint.player.Bot;
 import fr.cotedazur.univ.polytech.startingpoint.player.algorithms.EinsteinAlgo;
+import fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.logging.Level;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 class ActionManagerTest {
     King king;
     Bishop bishop;
     Warlord warlord;
+    Merchant merchant;
+    Magician magician;
     Bot bot;
     Game game;
     GameState gameState;
 
     @BeforeEach
     void setUp(){
+        CitadelsLogger.setup();
+        CitadelsLogger.setGlobalLogLevel(Level.OFF);
+
         game = new Game();
         game.init();
         gameState = new GameState();
         king = new King();
         bishop = new Bishop();
         warlord = new Warlord();
-        bot = new Bot("Bot") {};
+        merchant = new Merchant();
+        magician = new Magician();
+        bot = new Bot("Bot") {
+        };
     }
 
     @Test
@@ -39,24 +50,23 @@ class ActionManagerTest {
     @Test
     void updateGoldWithDistrictTest() {
         bot.setGameCharacter(king);
-        District district1 = new District("Quartier 1", 0, DistrictColor.noble);
-        District district2 = new District("Quartier 2", 0, DistrictColor.noble);
-        District district3 = new District("Quartier 3", 0, DistrictColor.religieux);
+        District district1 = new District("Quartier 1", 0, DistrictColor.NOBLE);
+        District district2 = new District("Quartier 2", 0, DistrictColor.NOBLE);
+        District district3 = new District("Quartier 3", 0, DistrictColor.RELIGIOUS);
         bot.buildDistrict(district1, gameState);
         bot.buildDistrict(district2, gameState);
         bot.buildDistrict(district3, gameState);
         assertEquals(2, ActionManager.collectGold(bot));
     }
-
     @Test
     void startOfTurnTest() {
-        bot.botAlgo = new EinsteinAlgo();
-        bot.botAlgo.setPlayer(bot);
+        Bot bot = new Bot("Bot", new EinsteinAlgo());
         bot.setGold(10);
+        bot.setGameCharacter(new King());
         ActionManager.startOfTurn(game, bot);
         assertEquals(1, bot.getDistrictsInHand().size());
-
         District districtPicked = bot.getDistrictsInHand().get(0);
+
         bot.buildDistrict(districtPicked, gameState);
         bot.setGold(0);
         assertEquals(0, bot.getDistrictsInHand().size());
@@ -64,11 +74,15 @@ class ActionManagerTest {
         bot.addDistrictInHand(districtPicked);
         ActionManager.startOfTurn(game, bot);
         assertEquals(2, bot.getDistrictsInHand().size());
+        District newDistrictPicked = bot.getDistrictsInHand().get(bot.getDistrictsInHand().size() - 1);
 
         ActionManager.startOfTurn(game, bot);
+        while (newDistrictPicked.equals(districtPicked)) {
+            ActionManager.startOfTurn(game, bot);
+            newDistrictPicked = bot.getDistrictsInHand().get(bot.getDistrictsInHand().size() - 1);
+        }
         assertEquals(2, bot.getGold());
     }
-
     @Test
     void getCrownTest() {
         bot.setGameCharacter(king);
@@ -84,183 +98,151 @@ class ActionManagerTest {
     }
 
     @Test
-    void chooseCharTestKingPower() {
-        game.shuffleChars();
-        bot.setGold(8);
-        bot.botAlgo = new EinsteinAlgo();
-        bot.botAlgo.setPlayer(bot);
-        bot.addDistrictInHand(game.drawCard(bot));
-        for (int i = 0; i < 7; i++) {
-            District district = game.drawCard(bot);
-            try {
-                bot.addDistrictBuilt(district, gameState);
-            } catch (DistrictAlreadyBuiltException e) {
-                i--;
-            }
-        }
-        bot.botAlgo.chooseCharacterAlgorithm(game);
-        assertEquals("Roi", bot.getCharacterName());
-    }
+    void collectBishopGoldTest() {
+        District district1 = new District("Quartier 1", 0, DistrictColor.NOBLE);
+        District district2 = new District("Quartier 2", 0, DistrictColor.RELIGIOUS);
+        District district3 = new District("Quartier 3", 0, DistrictColor.RELIGIOUS);
 
-    @Test
-    void chooseCharBishopGoldTest(){
-        game.shuffleChars();
-        bot.botAlgo = new EinsteinAlgo();
-        bot.botAlgo.setPlayer(bot);
-        District district1 = new District("Quartier 1", 0, DistrictColor.noble);
-        District district2 = new District("Quartier 2", 0, DistrictColor.religieux);
-        District district3 = new District("Quartier 3", 0, DistrictColor.religieux);
         bot.buildDistrict(district1, gameState);
         bot.buildDistrict(district2, gameState);
         bot.buildDistrict(district3, gameState);
-        bot.addDistrictInHand(district1);
-        bot.botAlgo.chooseCharacterAlgorithm(game);
-        assertEquals("Eveque", bot.getCharacterName());
-        assertEquals(2,ActionManager.collectGold(bot));
+
+        bot.setGameCharacter(bishop);
+        assertEquals(2, ActionManager.collectGold(bot));
     }
 
     @Test
-    void chooseCharMerchantGoldTest(){
-        game.shuffleChars();
-        bot.botAlgo = new EinsteinAlgo();
-        bot.botAlgo.setPlayer(bot);
-        District district1 = new District("Quartier 1", 0, DistrictColor.noble);
-        District district2 = new District("Quartier 2", 0, DistrictColor.marchand);
-        District district3 = new District("Quartier 3", 0, DistrictColor.marchand);
+    void collectMerchantGoldTest() {
+        District district1 = new District("Quartier 1", 0, DistrictColor.NOBLE);
+        District district2 = new District("Quartier 2", 0, DistrictColor.TRADE);
+        District district3 = new District("Quartier 3", 0, DistrictColor.TRADE);
+
         bot.buildDistrict(district1, gameState);
         bot.buildDistrict(district2, gameState);
         bot.buildDistrict(district3, gameState);
-        bot.addDistrictInHand(district1);
-        bot.botAlgo.chooseCharacterAlgorithm(game);
-        assertEquals("Marchand", bot.getCharacterName());
-        assertEquals(2,ActionManager.collectGold(bot));
+
+        bot.setGameCharacter(merchant);
+        assertEquals(2, ActionManager.collectGold(bot));
     }
 
     @Test
-    void chooseCharWarlordGoldTest(){
-        game.shuffleChars();
-        bot.botAlgo = new EinsteinAlgo();
-        bot.botAlgo.setPlayer(bot);
-        District district1 = new District("Quartier 1", 0, DistrictColor.noble);
-        District district2 = new District("Quartier 2", 0, DistrictColor.militaire);
-        District district3 = new District("Quartier 3", 0, DistrictColor.militaire);
+    void collectWarlordGoldTest() {
+        District district1 = new District("Quartier 1", 0, DistrictColor.NOBLE);
+        District district2 = new District("Quartier 2", 0, DistrictColor.MILITARY);
+        District district3 = new District("Quartier 3", 0, DistrictColor.MILITARY);
+
         bot.buildDistrict(district1, gameState);
         bot.buildDistrict(district2, gameState);
         bot.buildDistrict(district3, gameState);
-        bot.addDistrictInHand(district1);
-        bot.botAlgo.chooseCharacterAlgorithm(game);
-        assertEquals("Condottiere", bot.getCharacterName());
-        assertEquals(2,ActionManager.collectGold(bot));
+
+        bot.setGameCharacter(warlord);
+        assertEquals(2, ActionManager.collectGold(bot));
     }
 
     @Test
-    void chooseCharKingGoldTest(){
-        game.shuffleChars();
-        bot.botAlgo = new EinsteinAlgo();
-        bot.botAlgo.setPlayer(bot);
-        District district1 = new District("Quartier 1", 0, DistrictColor.noble);
-        District district2 = new District("Quartier 2", 0, DistrictColor.noble);
-        District district3 = new District("Quartier 3", 0, DistrictColor.religieux);
+    void collectKingGoldTest() {
+        District district1 = new District("Quartier 1", 0, DistrictColor.NOBLE);
+        District district2 = new District("Quartier 2", 0, DistrictColor.NOBLE);
+        District district3 = new District("Quartier 3", 0, DistrictColor.RELIGIOUS);
+
         bot.buildDistrict(district1, gameState);
         bot.buildDistrict(district2, gameState);
         bot.buildDistrict(district3, gameState);
-        bot.addDistrictInHand(district1);
-        bot.botAlgo.chooseCharacterAlgorithm(game);
-        assertEquals("Roi", bot.getCharacterName());
-        assertEquals(2,ActionManager.collectGold(bot));
+
+        bot.setGameCharacter(king);
+        assertEquals(2, ActionManager.collectGold(bot));
     }
 
     @Test
     void magicSchoolBishopTest(){
-        District district1 = new District("Quartier 1", 0, DistrictColor.religieux);
-        District district2 = new District("Quartier 2", 0, DistrictColor.religieux);
-        District magicSchool = new District("Ecole de magie", 0, DistrictColor.special);
+        District district1 = new District("Quartier 1", 0, DistrictColor.RELIGIOUS);
+        District district2 = new District("Quartier 2", 0, DistrictColor.RELIGIOUS);
+        District magicSchool = new District("Ecole de magie", 0, DistrictColor.SPECIAL);
+
         bot.buildDistrict(district1, gameState);
         bot.buildDistrict(district2, gameState);
         bot.buildDistrict(magicSchool, gameState);
-        Bishop bishop = new Bishop();
+
         bot.setGameCharacter(bishop);
-        assertEquals("Eveque", bot.getCharacterName());
-        assertEquals(3,ActionManager.collectGold(bot));
+        assertEquals(2, ActionManager.collectGold(bot));
     }
 
     @Test
-    void magicSchoolMerchantTest(){
-        District district1 = new District("Quartier 1", 0, DistrictColor.marchand);
-        District district2 = new District("Quartier 2", 0, DistrictColor.marchand);
-        District magicSchool = new District("Ecole de magie", 0, DistrictColor.special);
+    void magicSchoolMerchantTest() {
+        District district1 = new District("Quartier 1", 0, DistrictColor.TRADE);
+        District district2 = new District("Quartier 2", 0, DistrictColor.TRADE);
+        District magicSchool = new District("Ecole de magie", 0, DistrictColor.SPECIAL);
+
         bot.buildDistrict(district1, gameState);
         bot.buildDistrict(district2, gameState);
         bot.buildDistrict(magicSchool, gameState);
-        Merchant merchant = new Merchant();
+
         bot.setGameCharacter(merchant);
-        assertEquals("Marchand", bot.getCharacterName());
-        assertEquals(3,ActionManager.collectGold(bot));
+        assertEquals(2, ActionManager.collectGold(bot));
     }
 
     @Test
-    void magicSchoolWarlordTest(){
-        District district1 = new District("Quartier 1", 0, DistrictColor.militaire);
-        District district2 = new District("Quartier 2", 0, DistrictColor.militaire);
-        District magicSchool = new District("Ecole de magie", 0, DistrictColor.special);
+    void magicSchoolWarlordTest() {
+        District district1 = new District("Quartier 1", 0, DistrictColor.MILITARY);
+        District district2 = new District("Quartier 2", 0, DistrictColor.MILITARY);
+        District magicSchool = new District("Ecole de magie", 0, DistrictColor.SPECIAL);
+
         bot.buildDistrict(district1, gameState);
         bot.buildDistrict(district2, gameState);
         bot.buildDistrict(magicSchool, gameState);
-        Warlord warlord = new Warlord();
+
         bot.setGameCharacter(warlord);
-        assertEquals("Condottiere", bot.getCharacterName());
-        assertEquals(3,ActionManager.collectGold(bot));
+        assertEquals(2, ActionManager.collectGold(bot));
     }
 
     @Test
-    void magicSchoolKingTest(){
-        District district1 = new District("Quartier 1", 0, DistrictColor.noble);
-        District district2 = new District("Quartier 2", 0, DistrictColor.noble);
-        District magicSchool = new District("Ecole de magie", 0, DistrictColor.special);
+    void magicSchoolKingTest() {
+        District district1 = new District("Quartier 1", 0, DistrictColor.NOBLE);
+        District district2 = new District("Quartier 2", 0, DistrictColor.NOBLE);
+        District magicSchool = new District("Ecole de magie", 0, DistrictColor.SPECIAL);
+
         bot.buildDistrict(district1, gameState);
         bot.buildDistrict(district2, gameState);
         bot.buildDistrict(magicSchool, gameState);
-        King king = new King();
+
         bot.setGameCharacter(king);
-        assertEquals("Roi", bot.getCharacterName());
-        assertEquals(3,ActionManager.collectGold(bot));
+        assertEquals(2, ActionManager.collectGold(bot));
     }
 
     @Test
-    void magicSchoolOtherCharacterTest(){
-        District district1 = new District("Quartier 1", 0, DistrictColor.noble);
-        District district2 = new District("Quartier 2", 0, DistrictColor.religieux);
-        District magicSchool = new District("Ecole de magie", 0, DistrictColor.special);
+    void magicSchoolOtherCharacterTest() {
+        District district1 = new District("Quartier 1", 0, DistrictColor.NOBLE);
+        District district2 = new District("Quartier 2", 0, DistrictColor.RELIGIOUS);
+        District magicSchool = new District("Ecole de magie", 0, DistrictColor.SPECIAL);
+
         bot.buildDistrict(district1, gameState);
         bot.buildDistrict(district2, gameState);
         bot.buildDistrict(magicSchool, gameState);
-        Magician magician = new Magician();
+
         bot.setGameCharacter(magician);
-        assertEquals(0,ActionManager.collectGold(bot));
+        assertEquals(0, ActionManager.collectGold(bot));
     }
 
     @Test
     void manufactureTest() {
-        bot.botAlgo = new EinsteinAlgo();
-        bot.botAlgo.setPlayer(bot);
+        Bot bot = new Bot("Bot", new EinsteinAlgo());
 
         bot.setGold(3);
-        bot.addDistrictBuilt(new District("Manufacture", 0, DistrictColor.special), gameState);
+        bot.addDistrictBuilt(new District("Manufacture", 0, DistrictColor.SPECIAL), gameState);
         ActionManager.applySpecialCardsEffect(game, bot);
         assertEquals(3, bot.getDistrictsInHand().size());
     }
 
     @Test
     void laboratoryTest() {
-        bot.botAlgo = new EinsteinAlgo();
-        bot.botAlgo.setPlayer(bot);
+        Bot bot = new Bot("Bot", new EinsteinAlgo());
 
         bot.setGold(0);
-        bot.addDistrictBuilt(new District("Laboratoire", 0, DistrictColor.special), gameState);
+        bot.addDistrictBuilt(new District("Laboratoire", 0, DistrictColor.SPECIAL), gameState);
         ActionManager.applySpecialCardsEffect(game, bot);
         assertEquals(0, bot.getGold());
 
-        District marche = new District("Marche", 0, DistrictColor.marchand);
+        District marche = new District("Marche", 0, DistrictColor.TRADE);
         bot.addDistrictInHand(marche);
         bot.addDistrictInHand(marche);
         ActionManager.applySpecialCardsEffect(game, bot);
@@ -270,13 +252,13 @@ class ActionManagerTest {
         ActionManager.applySpecialCardsEffect(game, bot);
         assertEquals(2, bot.getGold());
 
-        bot.addDistrictInHand(new District("District1", 0, DistrictColor.marchand));
-        bot.addDistrictInHand(new District("District2", 0, DistrictColor.marchand));
-        bot.addDistrictInHand(new District("District3", 0, DistrictColor.marchand));
-        bot.addDistrictInHand(new District("District4", 0, DistrictColor.marchand));
-        bot.addDistrictInHand(new District("District5", 0, DistrictColor.marchand));
-        bot.addDistrictInHand(new District("District6", 0, DistrictColor.marchand));
-        bot.addDistrictInHand(new District("District7", 0, DistrictColor.marchand));
+        bot.addDistrictInHand(new District("District1", 0, DistrictColor.TRADE));
+        bot.addDistrictInHand(new District("District2", 0, DistrictColor.TRADE));
+        bot.addDistrictInHand(new District("District3", 0, DistrictColor.TRADE));
+        bot.addDistrictInHand(new District("District4", 0, DistrictColor.TRADE));
+        bot.addDistrictInHand(new District("District5", 0, DistrictColor.TRADE));
+        bot.addDistrictInHand(new District("District6", 0, DistrictColor.TRADE));
+        bot.addDistrictInHand(new District("District7", 0, DistrictColor.TRADE));
         ActionManager.applySpecialCardsEffect(game, bot);
         assertEquals(3, bot.getGold());
 

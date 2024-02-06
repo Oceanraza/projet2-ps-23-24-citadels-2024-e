@@ -1,26 +1,25 @@
 package fr.cotedazur.univ.polytech.startingpoint.board;
 
-import fr.cotedazur.univ.polytech.startingpoint.Game;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 /**
  * Deck
  */
 
 public class Deck {
-    private ArrayList<District> cards;
+    private List<District> cards;
     private ArrayList<District> discardPile;
 
-    private Game game;
-
     public Deck() {
+        this.discardPile = new ArrayList<>();
         this.cards = new ArrayList<>();
     }
 
-    public void setDeck(ArrayList<District> cards) {
+    public void setDeck(List<District> cards) {
         this.cards = cards;
     }
 
@@ -28,8 +27,9 @@ public class Deck {
     public String toString() {
         StringBuilder str = new StringBuilder("Les cartes dans le deck sont : \n");
         for (District district : this.cards) {
-            str.append(district.toString()).append('\n');
+            str.append(district).append('\n');
         }
+        str.append("\n");
         return str.toString();
     }
 
@@ -38,7 +38,6 @@ public class Deck {
      *
      * @param district the district to be added
      */
-
     public void addDistrict(District district) {
         if (district != null) {
             this.cards.add(district);
@@ -48,7 +47,6 @@ public class Deck {
     /**
      * Shuffles the deck.
      */
-
     public void shuffle() {
         Collections.shuffle(this.cards);
     }
@@ -71,7 +69,6 @@ public class Deck {
      *
      * @return true if the deck is empty, false otherwise
      */
-
     public boolean isEmpty() {
         return this.cards.isEmpty();
     }
@@ -81,7 +78,6 @@ public class Deck {
      *
      * @return the number of cards in the deck
      */
-
     public int size() {
         return this.cards.size();
     }
@@ -91,12 +87,10 @@ public class Deck {
      *
      * @param district the district to be discarded
      */
-    public void discardDistrict(District district) {
+
+    public void discard(District district) {
         this.cards.remove(district);
         this.discardPile.add(district);
     }
 
-    public ArrayList<District> getCards() {
-        return this.cards;
-    }
 }

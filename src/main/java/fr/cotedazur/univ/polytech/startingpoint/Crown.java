@@ -4,7 +4,6 @@ import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 
 public class Crown {
     private Player owner;
-    public Crown() {}
     public Player getOwner() {
         return owner;
     }

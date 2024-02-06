@@ -1,13 +1,16 @@
 package fr.cotedazur.univ.polytech.startingpoint.player;
 
-import fr.cotedazur.univ.polytech.startingpoint.GameState;
-import fr.cotedazur.univ.polytech.startingpoint.city.DistrictColor;
 import fr.cotedazur.univ.polytech.startingpoint.Game;
+import fr.cotedazur.univ.polytech.startingpoint.GameState;
+import fr.cotedazur.univ.polytech.startingpoint.board.Deck;
 import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacter;
 import fr.cotedazur.univ.polytech.startingpoint.city.City;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
+import fr.cotedazur.univ.polytech.startingpoint.city.DistrictColor;
 
 import java.util.*;
+
+import static fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger.*;
 
 public abstract class Player {
     private final List<District> districtsInHand;
@@ -26,21 +29,17 @@ public abstract class Player {
         score = 0;
         gameCharacter = null;
         numberOfDistrictsByColor = new EnumMap<>(DistrictColor.class);
-        numberOfDistrictsByColor.put(DistrictColor.militaire,0);
-        numberOfDistrictsByColor.put(DistrictColor.noble,0);
-        numberOfDistrictsByColor.put(DistrictColor.special,0);
-        numberOfDistrictsByColor.put(DistrictColor.religieux,0);
-        numberOfDistrictsByColor.put(DistrictColor.marchand,0);
-    }
-    public void removeGold(int g){
-        gold -= g;
+        numberOfDistrictsByColor.put(DistrictColor.MILITARY, 0);
+        numberOfDistrictsByColor.put(DistrictColor.NOBLE, 0);
+        numberOfDistrictsByColor.put(DistrictColor.SPECIAL, 0);
+        numberOfDistrictsByColor.put(DistrictColor.RELIGIOUS, 0);
+        numberOfDistrictsByColor.put(DistrictColor.TRADE, 0);
     }
 
     // Getter
     public List<District> getDistrictsInHand() {
         return districtsInHand;
     }
-
     public City getCity() {
         return city;
     }
@@ -57,7 +56,7 @@ public abstract class Player {
         return gameCharacter;
     }
     public String getCharacterName() {
-        return gameCharacter.getName();
+        return gameCharacter.getRole().getRoleName();
     }
 
     // Setter
@@ -71,7 +70,7 @@ public abstract class Player {
         this.gameCharacter = gameCharacter;
     }
 
-    // Functions to add
+    // Functions to add or remove
     public void addDistrictInHand(District district) {
         this.districtsInHand.add(district);
     }
@@ -80,6 +79,10 @@ public abstract class Player {
                 district.getColor(),
                 numberOfDistrictsByColor.get(district.getColor()) + 1);
         this.city.addDistrict(district, gameState);
+    }
+
+    public void removeGold(int g) {
+        gold -= g;
     }
 
     public Map<DistrictColor, Integer> getNumberOfDistrictsByColor() {return numberOfDistrictsByColor;}
@@ -91,13 +94,13 @@ public abstract class Player {
     public abstract void play(Game game, GameState gameState);
     // Function to build a district
     public boolean buildDistrict(District district, GameState gameState) {
-        // Checks if the player has enough gold to build the district. If so it is
-        // built.
+        // Checks if the player has enough gold to build the district. If so it is built.
         if (gold >= district.getPrice() && this.city.isNotBuilt(district)) {
             addDistrictBuilt(district, gameState);
             gold -= district.getPrice();
             districtsInHand.remove(district);
-            System.out.println(getName() + " a construit le quartier " + district.getName());
+            String buildDistrictMessage = COLOR_GREEN + getName() + " a construit le quartier " + district.getName() + COLOR_RESET;
+            LOGGER.info(buildDistrictMessage);
             return true;
         }
         return false;
@@ -111,18 +114,7 @@ public abstract class Player {
         }
         return true;
     }
-    public String toString() {
-        if (gameCharacter == null) {
-            return "\nC'est au tour de : " + name + "\n" + (!districtsInHand.isEmpty() ? "Et sa main est composée de: "
-                    + districtsInHand : "Sa main est vide. ") + "\n" + "Il a " + gold + " d'or(s)\n" +
-                    (!districtsInHand.isEmpty() ? "Et il a déjà posé: " + city : "Il n'a pas posé de quartiers.");
-        }
 
-        // If a character is chosen, we specify the character
-        return "\nC'est au tour du " + gameCharacter.getName() + " : " + name + "\n" + (!districtsInHand.isEmpty() ? "Et sa main est composée de: "
-                + districtsInHand : "Sa main est vide. ") + "\n" + "Il a " + gold + " d'or(s)\n" +
-                (!districtsInHand.isEmpty() ? "Et il a déjà posé: " + city : "Il n'a pas posé de quartiers.");
-    }
     public int calculateScore(){
         int tempScore = getGold();
         City playerCity = this.getCity();
@@ -156,7 +148,6 @@ public abstract class Player {
         return Objects.hash(name);
     }
 
-
     public Optional<District> getLowestDistrict(){
         List<District> sortedDistrictByScore = getCity().getDistrictsBuilt();
         if (sortedDistrictByScore.isEmpty()){return Optional.empty();}
@@ -164,5 +155,28 @@ public abstract class Player {
                 .min(Comparator.comparingDouble(District::getPrice))
                 .orElse(null);
         return Optional.of(minPriceDistrict);
+    }
+
+    @Override
+    public String toString() {
+        if (gameCharacter == null) {
+            return "\nC'est au tour de " + name + "\n" + (!districtsInHand.isEmpty() ? "Et sa main est composee de: "
+                    + districtsInHand : "Sa main est vide. ") + "\n" + "Il a " + gold + " d'or(s)\n" +
+                    (!city.getDistrictsBuilt().isEmpty() ? "Et il a deja pose: " + city : "Il n'a pas pose de quartiers.");
+        }
+
+        // If a character is chosen, we specify the character
+        return "\nC'est au tour " + gameCharacter.getRole().toStringDuOrDeL() + " : " + name + "\n" + (!districtsInHand.isEmpty() ? "Et sa main est composee de: "
+                + districtsInHand : "Sa main est vide. ") + "\n" + "Il a " + gold + " d'or(s)\n" +
+                (!city.getDistrictsBuilt().isEmpty() ? "Et il a deja pose: " + city : "Il n'a pas pose de quartiers.");
+    }
+
+    public void moveCardInDeck(District card, Deck deck) {
+        if (this.getDistrictsInHand().contains(card)) {
+            this.getDistrictsInHand().remove(card);
+            deck.addDistrict(card);
+        } else {
+            LOGGER.info("La carte n'est pas dans la main du joueur");
+        }
     }
 }

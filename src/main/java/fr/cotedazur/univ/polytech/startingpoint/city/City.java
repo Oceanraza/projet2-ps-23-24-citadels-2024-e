@@ -34,7 +34,16 @@ public class City {
         if (isNotBuilt(district)) {
             districtsBuilt.add(district);
             district.setTurnBuilt(gameState.getTurn());
-        } else throw new DistrictAlreadyBuiltException("This district is already built");
+        } else throw new DistrictAlreadyBuiltException("Ce district a deja ete construit");
+    }
+
+    public void destroyDistrict(District districtToDestroy) {
+        for (District d : districtsBuilt) {
+            if (d.equals(districtToDestroy)) {
+                districtsBuilt.remove(d);
+                return;
+            }
+        }
     }
 
     public boolean containsDistrict(String districtName) {
@@ -46,20 +55,15 @@ public class City {
         return false;
     }
 
-    @Override
     public String toString() {
         StringBuilder city = new StringBuilder();
-        for (District d : districtsBuilt) {
-            city.append(d.getName()).append(" ");
-        }
-        return city.toString();
-    }
-    public void destroyDistrict(District districtToDestroy){
-        for (District d : districtsBuilt){
-            if (d.equals(districtToDestroy)){
-                districtsBuilt.remove(d);
-                return;
+        for (int i = 0; i < districtsBuilt.size(); i++) {
+            city.append(districtsBuilt.get(i).getName());
+            if (i < districtsBuilt.size() - 1) {
+                city.append(", ");
             }
         }
+        city.append(".");
+        return city.toString();
     }
 }

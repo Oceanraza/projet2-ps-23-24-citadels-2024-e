@@ -1,14 +1,12 @@
 package fr.cotedazur.univ.polytech.startingpoint.city;
 
+import fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger;
 import fr.cotedazur.univ.polytech.startingpoint.GameState;
-import fr.cotedazur.univ.polytech.startingpoint.city.City;
-import fr.cotedazur.univ.polytech.startingpoint.city.District;
-import fr.cotedazur.univ.polytech.startingpoint.city.DistrictAlreadyBuiltException;
-import fr.cotedazur.univ.polytech.startingpoint.city.DistrictColor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
+import java.util.logging.Level;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -19,9 +17,12 @@ class CityTest {
 
     @BeforeEach
     void setUp() {
+        CitadelsLogger.setup();
+        CitadelsLogger.setGlobalLogLevel(Level.OFF);
+
         gameState = new GameState();
         city = new City();
-        district = new District("Chateau", 5, DistrictColor.noble);
+        district = new District("Chateau", 5, DistrictColor.NOBLE);
     }
 
     @Test
@@ -45,7 +46,7 @@ class CityTest {
         try {
             city.addDistrict(district, gameState);
         } catch (DistrictAlreadyBuiltException e) {
-            assertEquals("This district is already built", e.getMessage());
+            assertEquals("Ce district a deja ete construit", e.getMessage());
             assertEquals(1, city.getDistrictsBuilt().size());
         }
     }
