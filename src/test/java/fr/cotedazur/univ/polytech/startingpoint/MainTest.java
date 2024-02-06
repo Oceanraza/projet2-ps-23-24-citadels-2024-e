@@ -179,7 +179,7 @@ class MainTest {
         calculateScores(players, firstBuilder, new GameState());
 
         for (Player p : players) {
-            LOGGER.info(p.getName() + ", score : " + p.getScore());
+            System.out.println(p.getName() + ", score : " + p.getScore());
         }
         String expectedOutput = "Player 1, score : 34" + LINE_SEPARATOR
                 + "Player 4, score : 32" + LINE_SEPARATOR
