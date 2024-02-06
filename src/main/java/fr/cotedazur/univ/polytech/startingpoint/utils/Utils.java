@@ -16,7 +16,14 @@ import java.util.List;
 public class Utils {
     private static final SecureRandom random = new SecureRandom();
 
+    private Utils() {
+        throw new IllegalStateException("Utils is a utility class");
+    }
+
     public static int generateRandomNumber(int bound) {
+        if(bound == 0){
+            return 0;
+        }
         return random.nextInt(bound);
     }
 

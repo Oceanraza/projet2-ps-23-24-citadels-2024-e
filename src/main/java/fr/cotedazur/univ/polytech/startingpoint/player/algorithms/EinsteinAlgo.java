@@ -2,18 +2,18 @@ package fr.cotedazur.univ.polytech.startingpoint.player.algorithms;
 
 import fr.cotedazur.univ.polytech.startingpoint.Game;
 import fr.cotedazur.univ.polytech.startingpoint.GameState;
-import fr.cotedazur.univ.polytech.startingpoint.utils.Utils;
 import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacter;
 import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.city.DistrictColor;
 import fr.cotedazur.univ.polytech.startingpoint.player.Bot;
 import fr.cotedazur.univ.polytech.startingpoint.player.Player;
+import fr.cotedazur.univ.polytech.startingpoint.utils.Utils;
 
 import java.util.*;
 
-import static fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger.LOGGER;
 import static fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole.*;
+import static fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger.LOGGER;
 /**
  * This class represents the algorithm of the bot Einstein
  * It contains the logic of the bot's actions
@@ -45,26 +45,6 @@ public class EinsteinAlgo extends BaseAlgo {
         }
     }
 
-    public void charAlgorithmsManager(Game game) {
-        switch (bot.getCharacterName()) {
-            case ("Condottiere"):
-                warlordAlgorithm(game);
-                break;
-            case ("Roi"):
-                kingAlgorithm(game);
-                break;
-            case ("Assassin"):
-                assassinAlgorithm(game);
-                break;
-            case ("Magicien"):
-                magicianAlgorithm(game);
-                break;
-            case ("Voleur"):
-                thiefAlgorithm(game);
-                break;
-        }
-    }
-
     public void graveyardLogic(District destroyedDistrict) {
         if (bot.getCity().containsDistrict("Cimetiere") && bot.getGold() >= 1 && !bot.getCharacterName().equals("Condottiere")) {
             String graveyardMessage = bot.getName() + " utilise le Cimetiere pour reprendre le " + destroyedDistrict + " dans sa main.";
@@ -74,21 +54,38 @@ public class EinsteinAlgo extends BaseAlgo {
         }
     }
 
-    private void addTwoGold() {
-        String take2GoldMessage = bot.getName() + " prend deux pieces d'or.";
-        LOGGER.info(take2GoldMessage);
-        bot.addGold(2);
+    public void chooseAssassinAlgorithm(Game game, List<GameCharacter> availableChars) {
+        if ((bot.getCity().getDistrictsBuilt().size() >= 7) && (bot.canBuildDistrictThisTurn()) && (bot.isCharInList(availableChars, ASSASSIN))) {
+            bot.chooseChar(game, ASSASSIN);
+        }
+    }
+
+    public void chooseMoneyCharacterAlgorithm(Game game, List<GameCharacter> availableChars) {
+        GameCharacter chosenChar = availableChars.get(1);
+        int numberOfDistrictByColor;
+        int goldCollectedWithDistrictColor = 0;
+
+        for (GameCharacter cha : availableChars) {
+            // We only compare character that collects gold according to his districts
+            if (cha.getColor() != null) {
+                numberOfDistrictByColor = bot.getNumberOfDistrictsByColor().get(cha.getColor());
+                if (numberOfDistrictByColor > goldCollectedWithDistrictColor) {
+                    goldCollectedWithDistrictColor = numberOfDistrictByColor;
+                    chosenChar = cha;
+                }
+            }
+        }
+        bot.chooseChar(game, chosenChar.getRole());
     }
 
     public void chooseCharacterAlgorithm(Game game) {
         List<GameCharacter> availableChars = game.getAvailableChars();
         // If the bot can build its 8th quarter next turn, it will choose the assassin
         // So he won't be killed
-        if ((bot.getCity().getDistrictsBuilt().size() >= 7) && (bot.canBuildDistrictThisTurn()) && (bot.isCharInList(availableChars, ASSASSIN))) {
-                bot.chooseChar(game, ASSASSIN);
-        }
+        chooseAssassinAlgorithm(game, availableChars);
+
         //If the bot's hand is empty, it chooses the magician if he gives him more cards than the architect would
-        else if ((bot.getDistrictsInHand().isEmpty()) && (((bot.isCharInList(availableChars, GameCharacterRole.MAGICIAN)) || (bot.isCharInList(availableChars, ARCHITECT))))) {
+        if ((bot.getDistrictsInHand().isEmpty()) && ((bot.isCharInList(availableChars, GameCharacterRole.MAGICIAN)) || (bot.isCharInList(availableChars, ARCHITECT)))) {
             if ((bot.isCharInList(availableChars, GameCharacterRole.MAGICIAN)) && (Utils.getHighestNumberOfCardsInHand(game.getPlayers(), this.bot) > 2)) {
                 bot.chooseChar(game, GameCharacterRole.MAGICIAN);
             } else if (bot.isCharInList(availableChars, GameCharacterRole.ARCHITECT)) {
@@ -96,21 +93,8 @@ public class EinsteinAlgo extends BaseAlgo {
             }
         } else {
             // If the bot doesn't have an immediate way to win, it will just pick the character who gives out the most gold for him
-            GameCharacter chosenChar = availableChars.get(1);
-            int numberOfDistrictByColor;
-            int goldCollectedWithDistrictColor = 0;
 
-            for (GameCharacter cha : availableChars) {
-                // We only compare character that collects gold according to his districts
-                if (cha.getColor() != null) {
-                    numberOfDistrictByColor = bot.getNumberOfDistrictsByColor().get(cha.getColor());
-                    if (numberOfDistrictByColor > goldCollectedWithDistrictColor) {
-                        goldCollectedWithDistrictColor = numberOfDistrictByColor;
-                        chosenChar = cha;
-                    }
-                }
-            }
-            bot.chooseChar(game, chosenChar.getRole());
+            chooseMoneyCharacterAlgorithm(game, availableChars);
         }
     }
 
@@ -180,19 +164,6 @@ public class EinsteinAlgo extends BaseAlgo {
         bot.getGameCharacter().specialEffect(bot, game, targetedCharacter);
     }
 
-    public void thiefAlgorithm(Game game) {
-        int numberOfTargets;
-        int indexPlayerStolen;
-        GameCharacterRole targetedCharacter;
-
-        // Choose a random character and steal him
-        numberOfTargets = game.getCharactersThatCanBeStolen().size();
-        indexPlayerStolen = Utils.generateRandomNumber(numberOfTargets);
-        targetedCharacter = game.getCharactersThatCanBeStolen().get(indexPlayerStolen).getRole();
-
-        bot.getGameCharacter().specialEffect(bot, game, targetedCharacter);
-    }
-
     // To know if the assassin can kill this character
     int isKillable(List<GameCharacter> killableCharacters, GameCharacterRole charEnum) {
         for (int i = 0; i < killableCharacters.size(); i++) {
@@ -210,10 +181,8 @@ public class EinsteinAlgo extends BaseAlgo {
 
     public void buildOrNot(GameState gameState) { //builds if he can
         int builtThisTurn = 0;
-        ArrayList<District> tempHand = new ArrayList<>(); //Need to create a deep copy to avoid concurrent modification
-        for (District district : bot.getDistrictsInHand()) {
-            tempHand.add(district);
-        }
+        //Need to create a deep copy to avoid concurrent modification
+        ArrayList<District> tempHand = new ArrayList<>(bot.getDistrictsInHand());
         for (District district : tempHand) {
 
             if (bot.buildDistrict(district, gameState)) {

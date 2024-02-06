@@ -60,8 +60,7 @@ class ActionManagerTest {
     }
     @Test
     void startOfTurnTest() {
-        bot.botAlgo = new EinsteinAlgo();
-        bot.botAlgo.setPlayer(bot);
+        Bot bot = new Bot("Bot", new EinsteinAlgo());
         bot.setGold(10);
         bot.setGameCharacter(new King());
         ActionManager.startOfTurn(game, bot);
@@ -226,8 +225,7 @@ class ActionManagerTest {
 
     @Test
     void manufactureTest() {
-        bot.botAlgo = new EinsteinAlgo();
-        bot.botAlgo.setPlayer(bot);
+        Bot bot = new Bot("Bot", new EinsteinAlgo());
 
         bot.setGold(3);
         bot.addDistrictBuilt(new District("Manufacture", 0, DistrictColor.SPECIAL), gameState);
@@ -237,8 +235,7 @@ class ActionManagerTest {
 
     @Test
     void laboratoryTest() {
-        bot.botAlgo = new EinsteinAlgo();
-        bot.botAlgo.setPlayer(bot);
+        Bot bot = new Bot("Bot", new EinsteinAlgo());
 
         bot.setGold(0);
         bot.addDistrictBuilt(new District("Laboratoire", 0, DistrictColor.SPECIAL), gameState);

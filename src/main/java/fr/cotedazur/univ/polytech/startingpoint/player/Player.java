@@ -20,7 +20,6 @@ public abstract class Player {
     private int score;
     private GameCharacter gameCharacter;
     private final Map<DistrictColor, Integer> numberOfDistrictsByColor;
-    private Deck deck;
 
     protected Player(String name) {
         this.name = name;

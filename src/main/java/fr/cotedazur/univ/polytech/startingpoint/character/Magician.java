@@ -42,9 +42,11 @@ public class Magician extends GameCharacter {
         }
         else {
             int nb = player.getDistrictsInHand().size();
-            for (int i  = 0 ; i < nb; i++){
+            int i = 0;
+            while (i < nb && !player.getDistrictsInHand().isEmpty()) {
                 player.getDistrictsInHand().remove(0);
                 game.drawCard(player);
+                i++;
             }
             String swapHandsMessage = COLOR_RED + player.getName() + " a echange sa main avec le deck" + COLOR_RESET;
             LOGGER.info(swapHandsMessage);

@@ -57,19 +57,14 @@ class SpecialCardsTest {
         firstBuilder.buildDistrict(new District("Donjon", 3, DistrictColor.SPECIAL), gameState);
 
         assertEquals(1, firstBuilder.getCity().getDistrictsBuilt().size());
-        secondPlayer.botAlgo.warlordAlgorithm(game); //La seule carte construite est le donjon, qui ne peut être détruit, cet algo ne détruit alors rien
+        secondPlayer.getBotAlgo().warlordAlgorithm(game); //La seule carte construite est le donjon, qui ne peut être détruit, cet algo ne détruit alors rien
         assertEquals(1, firstBuilder.getCity().getDistrictsBuilt().size());
     }
 
     @Test
     void huntedQuarterTest() {
-        Bot firstPlayer = new Bot("Player 1");
-        Bot secondPlayer = new Bot("Player 2");
-
-        firstPlayer.botAlgo = new EinsteinAlgo();
-        firstPlayer.botAlgo.setPlayer(firstPlayer);
-        secondPlayer.botAlgo = new EinsteinAlgo();
-        secondPlayer.botAlgo.setPlayer(secondPlayer);
+        Bot firstPlayer = new Bot("Player 1", new EinsteinAlgo());
+        Bot secondPlayer = new Bot("Player 2", new EinsteinAlgo());
 
         // Create list of players
         game.setPlayers(firstPlayer, secondPlayer);

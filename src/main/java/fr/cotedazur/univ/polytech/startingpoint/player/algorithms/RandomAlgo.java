@@ -2,12 +2,12 @@ package fr.cotedazur.univ.polytech.startingpoint.player.algorithms;
 
 import fr.cotedazur.univ.polytech.startingpoint.Game;
 import fr.cotedazur.univ.polytech.startingpoint.GameState;
-import fr.cotedazur.univ.polytech.startingpoint.utils.Utils;
 import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacter;
 import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.city.DistrictColor;
 import fr.cotedazur.univ.polytech.startingpoint.player.Player;
+import fr.cotedazur.univ.polytech.startingpoint.utils.Utils;
 
 import java.util.Collections;
 import java.util.List;
@@ -21,26 +21,6 @@ import java.util.Optional;
 public class RandomAlgo extends BaseAlgo {
     public RandomAlgo() {
         super();
-    }
-
-    public void charAlgorithmsManager(Game game) {
-        switch (bot.getCharacterName()) {
-            case ("Condottiere"):
-                warlordAlgorithm(game);
-                break;
-            case ("Roi"):
-                kingAlgorithm(game);
-                break;
-            case ("Assassin"):
-                assassinAlgorithm(game);
-                break;
-            case ("Magicien"):
-                magicianAlgorithm(game);
-                break;
-            case ("Voleur"):
-                thiefAlgorithm(game);
-                break;
-        }
     }
 
     public int startOfTurnChoice() {
@@ -83,19 +63,6 @@ public class RandomAlgo extends BaseAlgo {
         numberOfTargets = game.getKillableCharacters().size();
         indexPlayerKilled = Utils.generateRandomNumber(numberOfTargets);
         targetedCharacter = game.getKillableCharacters().get(indexPlayerKilled).getRole();
-
-        bot.getGameCharacter().specialEffect(bot, game, targetedCharacter);
-    }
-
-    public void thiefAlgorithm(Game game) {
-        int numberOfTargets;
-        int indexPlayerStolen;
-        GameCharacterRole targetedCharacter;
-
-        // Choose a random character and steal him
-        numberOfTargets = game.getCharactersThatCanBeStolen().size();
-        indexPlayerStolen = Utils.generateRandomNumber(numberOfTargets);
-        targetedCharacter = game.getCharactersThatCanBeStolen().get(indexPlayerStolen).getRole();
 
         bot.getGameCharacter().specialEffect(bot, game, targetedCharacter);
     }

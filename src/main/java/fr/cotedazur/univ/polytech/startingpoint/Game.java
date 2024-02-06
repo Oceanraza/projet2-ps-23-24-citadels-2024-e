@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger.*;
 
@@ -65,7 +64,7 @@ public class Game {
     public List<Player> setRunningOrder() { // Set running order depending on the running order of the characters
         return this.getPlayers().stream()
                 .sorted(Comparator.comparingInt(player -> player.getGameCharacter().getRunningOrder()))
-                .collect(Collectors.toList());
+                .toList();
     }
 
     // Add and remove
@@ -104,7 +103,7 @@ public class Game {
                     ("src/main/resources/init_database.json");
             deck = Utils.convertJsonNodeToDistrictList(tempNode.path("Game").path("Districts"));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new JsonFileReadException("Error reading JSON file", e);
         }
 
         // Create a crown
@@ -182,7 +181,35 @@ public class Game {
                 LOGGER.info(playerInfo);
                 //We create a new variable p2 to cast p to Bot each time
                 //Good to note that you can't just cast the whole List
-                p2.botAlgo.chooseCharacterAlgorithm(this);}
+                p2.getBotAlgo().chooseCharacterAlgorithm(this);}
+        }
+    }
+
+    public Bot getCrownOwner() {
+        Bot crownOwner = (Bot) this.getCrown().getOwner();
+        String crownOwnerMessage = "La couronne appartient a " + (crownOwner != null ? crownOwner.getName() : "personne");
+        LOGGER.info(crownOwnerMessage);
+        return crownOwner;
+    }
+
+    public void characterSelection(Bot crownOwner) {
+        if(crownOwner !=null) {
+            String crownOwnerInfos = crownOwner.toString();
+            LOGGER.info(crownOwnerInfos);
+            crownOwner.getBotAlgo().chooseCharacterAlgorithm(this);
+        }
+        charSelectionFiller();
+    }
+
+    public void playerKilled(GameCharacter characterKilled, Player playerKilled) {
+        String isKilledMessage = "\n" + characterKilled.getRole().toStringLeOrLUpperCase() + " a ete tue par " + characterKilled.getAttacker().getName();
+        String cannotPlayMessage = playerKilled.getName() + " ne pourra pas jouer ce tour !";
+        LOGGER.info(isKilledMessage);
+        LOGGER.info(cannotPlayMessage);
+        // If the king is killed, he gets the crown at the end of this turn
+        if (characterKilled.getRole() == GameCharacterRole.KING) {
+            this.getCrown().setOwner(playerKilled);
+            LOGGER.info("Il recuperera la couronne a la fin de ce tour");
         }
     }
 

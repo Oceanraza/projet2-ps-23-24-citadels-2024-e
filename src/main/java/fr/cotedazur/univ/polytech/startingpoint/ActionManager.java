@@ -11,8 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger.LOGGER;
 import static fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole.*;
+import static fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger.LOGGER;
 
 public class ActionManager {
     private ActionManager() {
@@ -35,7 +35,7 @@ public class ActionManager {
 
     public static void startOfTurn(Game game, Player player) {
         Bot bot = (Bot) player;
-        int choice = bot.botAlgo.startOfTurnChoice();
+        int choice = bot.getBotAlgo().startOfTurnChoice();
         if (choice == 1) { // Take 2 gold coins
             String take2GoldMessage = bot.getName() + " prend deux pieces d'or.";
             LOGGER.info(take2GoldMessage);
@@ -83,7 +83,7 @@ public class ActionManager {
         for (int i = 0; i < 3; i++) {
             threeCards.add(game.drawCard(bot));
         }
-        bot.botAlgo.botChoosesCard(game, threeCards);
+        bot.getBotAlgo().botChoosesCard(game, threeCards);
     }
 
 
@@ -105,7 +105,7 @@ public class ActionManager {
         boolean hasLaboratory = player.getCity().containsDistrict("Laboratoire");
         Bot bot = (Bot) player;
         if (hasManufacture && bot.getGold() >= 3) {
-            boolean useManufactureEffect = bot.botAlgo.manufactureChoice();
+            boolean useManufactureEffect = bot.getBotAlgo().manufactureChoice();
             if(useManufactureEffect) {
                 String manufactureMessage = player.getName() + " utilise la Manufacture pour piocher 3 cartes et paye 3 pieces.";
                 LOGGER.info(manufactureMessage);
@@ -116,7 +116,7 @@ public class ActionManager {
             }
         }
         if (hasLaboratory) {
-            Optional<District> districtToDiscard = bot.botAlgo.laboratoryChoice();
+            Optional<District> districtToDiscard = bot.getBotAlgo().laboratoryChoice();
             if(districtToDiscard.isPresent()) {
                 String laboratoryMessage = player.getName() + " utilise le Laboratoire pour defausser sa carte " + districtToDiscard.get().getName() + " contre 1 piece d'or.";
                 LOGGER.info(laboratoryMessage);

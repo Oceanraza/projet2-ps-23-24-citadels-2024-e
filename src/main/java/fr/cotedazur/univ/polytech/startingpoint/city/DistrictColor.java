@@ -27,8 +27,10 @@ public enum DistrictColor {
             case "militaire" -> {
                 return DistrictColor.MILITARY;
             }
+            default -> {
+                return DistrictColor.SPECIAL;
+            }
         }
-        return DistrictColor.SPECIAL;
     }
 
     @Override
