@@ -56,6 +56,11 @@ public class Game {
         return availableChars;
     }
 
+    public boolean containsAvailableRole(GameCharacterRole role) {
+        return availableChars.stream()
+                .anyMatch(gameCharacter -> gameCharacter.getRole().equals(role));
+    }
+
     public List<GameCharacter> getCharactersInGame() {
         return charactersInGame;
     }
@@ -305,4 +310,5 @@ public class Game {
     public String toString() {
         return deck.toString();
     }
+
 }
