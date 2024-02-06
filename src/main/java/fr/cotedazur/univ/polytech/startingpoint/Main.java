@@ -74,10 +74,7 @@ public class Main {
 
     }
 
-    public static void main(String... args){
-        CitadelsLogger.setup();
-        CitadelsLogger.setGlobalLogLevel(Level.ALL); // Change level to OFF to disable logs
-
+    public static void main(String... args) {
         Args commandLineArgs = new Args();
         JCommander.newBuilder()
                 .addObject(commandLineArgs)
@@ -86,11 +83,20 @@ public class Main {
 
         // Determining the value of numberOfTurns according to the options
         int numberOfTurns;
+        Level level;
+        // 2 x 1000 games
         if (commandLineArgs.is2Thousands()) {
-            numberOfTurns = 1000; // 2 x 1000 games
-        } else {
-            numberOfTurns = 1; // One game
+            numberOfTurns = 1000;
+            level = Level.OFF; // Change level to OFF to disable logs
         }
+        // One game
+        else {
+            numberOfTurns = 1;
+            level = Level.ALL;
+        }
+
+        CitadelsLogger.setup();
+        CitadelsLogger.setGlobalLogLevel(level);
 
         Game newGame = new Game();
         GameState gameState = new GameState();
