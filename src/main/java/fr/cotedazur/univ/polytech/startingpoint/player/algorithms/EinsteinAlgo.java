@@ -192,8 +192,7 @@ public class EinsteinAlgo extends BaseAlgo {
 
             if (bot.buildDistrict(district, gameState)) {
                 builtThisTurn++;
-                System.out.println(bot.getCharacterName());
-                if ((!bot.getCharacterName().equals("Architecte")) || (builtThisTurn == 3)) {
+              if ((!bot.getCharacterName().equals("Architecte")) || (builtThisTurn == 3)) {
                     break;
                 }
             }

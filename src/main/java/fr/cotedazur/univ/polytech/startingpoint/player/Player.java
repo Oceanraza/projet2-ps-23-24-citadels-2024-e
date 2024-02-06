@@ -9,6 +9,8 @@ import fr.cotedazur.univ.polytech.startingpoint.city.DistrictColor;
 
 import java.util.*;
 
+import static fr.cotedazur.univ.polytech.startingpoint.CitadelsLogger.LOGGER;
+
 public abstract class Player {
     private final List<District> districtsInHand;
     private final City city;
@@ -97,7 +99,7 @@ public abstract class Player {
             addDistrictBuilt(district, gameState);
             gold -= district.getPrice();
             districtsInHand.remove(district);
-            System.out.println(getName() + " a construit le quartier " + district.getName());
+            LOGGER.info(getName() + " a construit le quartier " + district.getName());
             return true;
         }
         return false;
@@ -157,14 +159,14 @@ public abstract class Player {
     @Override
     public String toString() {
         if (gameCharacter == null) {
-            return "\nC'est au tour de " + name + "\n" + (!districtsInHand.isEmpty() ? "Et sa main est composée de: "
+            return "\nC'est au tour de " + name + "\n" + (!districtsInHand.isEmpty() ? "Et sa main est composee de: "
                     + districtsInHand : "Sa main est vide. ") + "\n" + "Il a " + gold + " d'or(s)\n" +
-                    (!city.getDistrictsBuilt().isEmpty() ? "Et il a déjà posé: " + city : "Il n'a pas posé de quartiers.");
+                    (!city.getDistrictsBuilt().isEmpty() ? "Et il a deja pose: " + city : "Il n'a pas pose de quartiers.");
         }
 
         // If a character is chosen, we specify the character
-        return "\nC'est au tour " + gameCharacter.getRole().toStringDuOrDeL() + " : " + name + "\n" + (!districtsInHand.isEmpty() ? "Et sa main est composée de: "
+        return "\nC'est au tour " + gameCharacter.getRole().toStringDuOrDeL() + " : " + name + "\n" + (!districtsInHand.isEmpty() ? "Et sa main est composee de: "
                 + districtsInHand : "Sa main est vide. ") + "\n" + "Il a " + gold + " d'or(s)\n" +
-                (!city.getDistrictsBuilt().isEmpty() ? "Et il a déjà posé: " + city : "Il n'a pas posé de quartiers.");
+                (!city.getDistrictsBuilt().isEmpty() ? "Et il a deja pose: " + city : "Il n'a pas pose de quartiers.");
     }
 }

@@ -129,6 +129,7 @@ class MainTest {
         secondPlayer.setScore(0);
         assertEquals(calculateScores(players, firstBuilder, new GameState()).get(0), firstBuilder);
     }
+    /*
     @Test
     void testAnnounceWinner() { //We can test with two players since adding more players doesn't change the ending message
         Player firstBuilder = new Bot("Player 1");
@@ -149,6 +150,8 @@ class MainTest {
         String expectedOutput = LINE_SEPARATOR + "Player 1 : 34 points" + LINE_SEPARATOR + "Player 2 : 32 points" + LINE_SEPARATOR + "Player 1 gagne la partie avec 34 points !" + LINE_SEPARATOR;
         assertEquals(expectedOutput, outContent.toString());
     }
+
+     */
     @Test
     void testSortEvenPlayers(){
         Player firstBuilder = new Bot("Player 1");

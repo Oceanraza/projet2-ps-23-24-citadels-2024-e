@@ -12,6 +12,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
+import static fr.cotedazur.univ.polytech.startingpoint.CitadelsLogger.LOGGER;
+
 public class Main {
 
     protected static final String Shinning_blue = "\033[0;94m";
@@ -44,12 +46,12 @@ public class Main {
 
     public static void announceWinner(List<Player> players, Player firstBuilder, GameState gameState) {
         List<Player> playersScores = calculateScores(players, firstBuilder, gameState);
-        System.out.println();
+        LOGGER.info("");
         for (Player player : playersScores) {
-            System.out.println(player.getName() + " : " + player.getScore() + " points");
+            LOGGER.info(player.getName() + " : " + player.getScore() + " points");
         }
         Player winner = playersScores.get(0);
-        System.out.println(winner.getName() + " gagne la partie avec " + winner.getScore() + " points !");
+        LOGGER.info("\n" + winner.getName() + " gagne la partie avec " + winner.getScore() + " points !\n");
     }
 
     public static void finalChoice(List<Player> players, GameState gameState) {
@@ -60,8 +62,8 @@ public class Main {
                     if (turnBuilt.isPresent() && gameState.getTurn() > turnBuilt.get()) {
                         Bot bot = (Bot) player;
                         bot.botAlgo.huntedQuarterAlgorithm(district);
-                        System.out.println("\n[ Choix de fin de partie ]");
-                        System.out.println(player.getName() + " utilise la Cour des miracles en tant que quartier " + district.getColor() + ".");
+                        LOGGER.info("\n[ Choix de fin de partie ]");
+                        LOGGER.info(player.getName() + " utilise la Cour des miracles en tant que quartier " + district.getColor() + ".");
                     }
                 }
             }
@@ -70,10 +72,11 @@ public class Main {
     }
 
     public static void main(String... args){
+        CitadelsLogger.setup();
+        //CitadelsLogger.setGlobalLogLevel(Level.OFF); // Uncomment this line to disable logs
+
         Game newGame = new Game();
         GameState gameState = new GameState();
-        gameState.nextTurn();
-        // System.out.println(newGame);
 
         // Adding players to the game
         newGame.setPlayers(
@@ -92,9 +95,11 @@ public class Main {
         while (!gameState.isGameFinished(players)) {
             gameState.nextTurn();
             Bot crownOwner = (Bot) newGame.getCrown().getOwner();
-
-            System.out.println(Shinning_blue + "\n\n----- Tour numero " + gameState.getTurn() + " -----" + Reset + "\nLa couronne appartient à "
-                    + (crownOwner != null ? crownOwner.getName() : "personne"));
+            // "\033[0;94m" : Shinning blue
+            // "\033[0;34m" : Blue
+            // "\033[0m" : Reset
+            LOGGER.info("\n\n----- Tour " + gameState.getTurn() + " -----" +
+                    "\nLa couronne n'appartient a " + (crownOwner != null ? crownOwner.getName() : "personne"));
 
             // Reset characters, their states and shuffle cards
             newGame.resetChars();
@@ -102,24 +107,23 @@ public class Main {
             newGame.shuffleCharacters();
 
             // Character selection phase
-            System.out.println(Blue + "\n[ Phase 1 ] Choix des personnages" + Reset);
+            LOGGER.info("\n[ Phase 1 ] Choix des personnages");
 
             if (crownOwner != null){
-                System.out.println(crownOwner);
+                LOGGER.info(crownOwner.toString());
                 crownOwner.botAlgo.chooseCharacterAlgorithm(newGame);
             }
             newGame.charSelectionFiller();
 
             // Character reveal phase
-            System.out.println(Blue + "\n[ Phase 2 ] Tour des joueurs" + Reset);
+            LOGGER.info("\n[ Phase 2 ] Tour des joueurs");
             List<Player> runningOrder = newGame.setRunningOrder();
 
             for (Player player: runningOrder) {
                 GameCharacter cha = player.getGameCharacter();
-                System.out.println(player);
                 // If the character is alive
                 if (cha.getIsAlive()) {
-                    System.out.println(player);
+                    LOGGER.info(player.toString());
                     player.play(newGame, gameState);
                     if (gameState.isFinished(player)) {
                         firstBuilder = player;
@@ -127,12 +131,12 @@ public class Main {
                 }
                 // If the player has been killed, he cannot play
                 else {
-                    System.out.println(cha.getRole().toStringLeOrL() + " a été tué par " + cha.getAttacker().getName());
-                    System.out.println(player.getName() + " ne pourra pas jouer ce tour !");
+                    LOGGER.info("\n" + cha.getRole().toStringLeOrL() + " a ete tue par " + cha.getAttacker().getName());
+                    LOGGER.info(player.getName() + " ne pourra pas jouer ce tour !");
                     // If the king is killed, he gets the crown at the end of this turn
                     if (cha.getRole() == GameCharacterRole.KING) {
                         newGame.getCrown().setOwner(player);
-                        System.out.println("Il récupèrera la couronne à la fin de ce tour");
+                        LOGGER.info("Il recuperera la couronne a la fin de ce tour");
                     }
                 }
             }

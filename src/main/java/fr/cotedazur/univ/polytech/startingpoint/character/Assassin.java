@@ -3,6 +3,8 @@ package fr.cotedazur.univ.polytech.startingpoint.character;
 import fr.cotedazur.univ.polytech.startingpoint.Game;
 import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 
+import static fr.cotedazur.univ.polytech.startingpoint.CitadelsLogger.LOGGER;
+
 public class Assassin extends GameCharacter {
     public Assassin() {
         super(GameCharacterRole.ASSASSIN, 1);
@@ -16,8 +18,8 @@ public class Assassin extends GameCharacter {
 
     protected void killCharacter(Player assassin, Game game, GameCharacterRole killedCharacter) {
         GameCharacter targetCharacter;
-        if (killedCharacter.equals(GameCharacterRole.ASSASSIN)) {
-            System.out.println("Vous ne pouvez pas vous assassinez vous-même !");
+        if (killedCharacter.equals(GameCharacterRole.ASSASSIN)) { // Ne dois jamais arriver : à supprimer
+            LOGGER.info("Vous ne pouvez pas vous assassiner vous-meme !");
             return;
         }
         for (Player target : game.getPlayers()) {
@@ -25,10 +27,10 @@ public class Assassin extends GameCharacter {
             if (targetCharacter.getRole().equals(killedCharacter)) {
                 targetCharacter.setIsAlive(false);
                 targetCharacter.setAttacker(assassin);
-                System.out.println("L'assassin a tué le " + killedCharacter);
+                LOGGER.info("L'assassin a tue le " + killedCharacter);
                 return;
             }
         }
-        System.out.println("Le personnage tué n'est pas en jeu !");
+        LOGGER.info("Le personnage tue n'est pas en jeu !");
     }
 }

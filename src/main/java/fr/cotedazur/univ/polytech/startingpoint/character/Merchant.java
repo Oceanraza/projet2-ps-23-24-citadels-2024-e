@@ -11,6 +11,6 @@ public class Merchant extends GameCharacter {
 
     @Override
     public void specialEffect(Player player,Game game,Object... optionalArgs) {
-        //System.out.println("Le Marchand n'a pas de compétences programmée");
+        // The merchant has no special effect
     }
 }

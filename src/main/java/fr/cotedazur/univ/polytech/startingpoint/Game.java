@@ -14,6 +14,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static fr.cotedazur.univ.polytech.startingpoint.CitadelsLogger.LOGGER;
+
 /**
  * The Game class is the main class of the game. It contains the deck, the crown, the players and the characters.
  * It also contains the methods to start the game, to shuffle the characters and to give the cards to the players.
@@ -83,7 +85,7 @@ public class Game {
                 cha = charactersInGame.get(indexCharacter);
             }
             charactersInGame.remove(cha);
-            System.out.println(cha.getRole().toStringLeOrL() + " ne sera pas joué ce tour");
+            LOGGER.info(cha.getRole().toStringLeOrL() + " ne sera pas joue ce tour");
         }
     }
 
@@ -158,18 +160,17 @@ public class Game {
     }
 
     public void printAvailableCharacters() {
-        System.out.println("Les personnages disponibles sont : ");
+        LOGGER.info("Les personnages disponibles sont : ");
         for (GameCharacter temp : availableChars) {
-            System.out.print(temp.getRole() + " ");
+            LOGGER.info(temp.getRole() + " ");
         }
-        System.out.println(" ");
     }
 
     public void charSelectionFiller(){
         for (Player p: players){
             if (p.getGameCharacter() == null){
                 Bot p2 = (Bot) p;
-                System.out.println(p2);
+                LOGGER.info(p2.toString());
                 //We create a new variable p2 to cast p to Bot each time
                 //Good to note that you can't just cast the whole List
                 p2.botAlgo.chooseCharacterAlgorithm(this);}
@@ -229,7 +230,7 @@ public class Game {
 
     public District drawCard(Player player) {
         District drawnDistrict = deck.drawCard();
-        System.out.println(player.getName() + " pioche le " + drawnDistrict);
+        LOGGER.info(player.getName() + " pioche la carte " + drawnDistrict + ".");
         player.getDistrictsInHand().add(drawnDistrict);
         return drawnDistrict;
     }
