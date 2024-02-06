@@ -18,7 +18,7 @@ public class Assassin extends GameCharacter {
             throw new CannotAttackException("L'assassin ne peut pas se tuer lui-meme");
         }
 
-        LOGGER.info("L'assassin a tue le " + targetedCharacter.toStringLeOrL());
+        LOGGER.info("L'assassin a tue " + targetedCharacter.toStringLeOrL());
 
         GameCharacter targetCharacter;
         for (Player target : game.getPlayers()) {
