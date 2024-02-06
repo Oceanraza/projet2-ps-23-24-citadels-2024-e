@@ -27,9 +27,9 @@ public class EinsteinAlgo extends BaseAlgo {
 
     public void botChoosesCard(Game game, List<District> threeCards) {
         District chosenCard = chooseCard(threeCards);
-        threeCards.remove(chosenCard);
+        threeCards.remove(chosenCard); // Remove the chosen card from the list of three cards
         for (District card : threeCards) {
-            game.getDeck().discard(card);
+            this.bot.moveCardInDeck(card, game.getDeck());
         }
         LOGGER.info(bot.getName() + " pioche le " + chosenCard);
         bot.getDistrictsInHand().add(chosenCard);
@@ -43,6 +43,7 @@ public class EinsteinAlgo extends BaseAlgo {
             return 1; // Take 2 gold coins
         }
     }
+
     public void charAlgorithmsManager(Game game) {
         switch (bot.getCharacterName()) {
             case ("Condottiere"):
@@ -63,11 +64,11 @@ public class EinsteinAlgo extends BaseAlgo {
         }
     }
 
-    public void graveyardLogic(Game game, Player targetedPlayer, District destroyedDistrict) {
+    public void graveyardLogic(District destroyedDistrict) {
         if (bot.getCity().containsDistrict("Cimetiere") && bot.getGold() >= 1 && !bot.getCharacterName().equals("Condottiere")) {
             LOGGER.info(bot.getName() + " utilise le Cimetiere pour reprendre le " + destroyedDistrict + " dans sa main.");
             bot.getDistrictsInHand().add(destroyedDistrict);
-            bot.addGold(-1);
+            bot.removeGold(1);
         }
     }
 
@@ -118,7 +119,7 @@ public class EinsteinAlgo extends BaseAlgo {
                 targetedPlayer.getLowestDistrict().ifPresent(value -> {
                     if (Utils.canDestroyDistrict(value, bot)) {
                         bot.getGameCharacter().specialEffect(bot, game, targetedPlayer, value);
-                        graveyardLogic(game, targetedPlayer, value); // Call the graveyard logic here
+                        graveyardLogic(value); // Call the graveyard logic here
                         lowestDistrictHasBeenFound();
                     }
                 });
@@ -214,7 +215,7 @@ public class EinsteinAlgo extends BaseAlgo {
 
             if (bot.buildDistrict(district, gameState)) {
                 builtThisTurn++;
-              if ((!bot.getCharacterName().equals("Architecte")) || (builtThisTurn == 3)) {
+                if ((!bot.getCharacterName().equals("Architecte")) || (builtThisTurn == 3)) {
                     break;
                 }
             }

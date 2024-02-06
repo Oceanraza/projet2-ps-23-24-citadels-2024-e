@@ -238,7 +238,7 @@ public class Game {
         List<GameCharacter> charactersThatCanBeStolen = new ArrayList<>(getKillableCharacters());
         List<GameCharacter> temp = new ArrayList<>(getKillableCharacters());
 
-        for (GameCharacter cha: temp) {
+        for (GameCharacter cha : temp) {
             // Thief can't steal from himself
             if (cha.getRole().equals(GameCharacterRole.THIEF)) {
                 charactersThatCanBeStolen.remove(cha);

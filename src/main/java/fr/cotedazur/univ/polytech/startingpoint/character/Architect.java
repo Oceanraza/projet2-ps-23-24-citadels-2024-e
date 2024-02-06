@@ -9,7 +9,7 @@ public class Architect extends GameCharacter {
     }
 
     @Override
-    public void specialEffect(Player player, Game game,Object... optionalArgs) {
+    public void specialEffect(Player player, Game game, Object... optionalArgs) {
         // The architect has no special effect
     }
 

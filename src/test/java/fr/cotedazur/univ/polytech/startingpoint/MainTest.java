@@ -13,7 +13,6 @@ import java.io.PrintStream;
 import java.util.Arrays;
 import java.util.List;
 
-import static fr.cotedazur.univ.polytech.startingpoint.CitadelsLogger.LOGGER;
 import static fr.cotedazur.univ.polytech.startingpoint.Main.calculateScores;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -130,6 +129,7 @@ class MainTest {
         secondPlayer.setScore(0);
         assertEquals(calculateScores(players, firstBuilder, new GameState()).get(0), firstBuilder);
     }
+
     /*
     @Test
     void testAnnounceWinner() { //We can test with two players since adding more players doesn't change the ending message

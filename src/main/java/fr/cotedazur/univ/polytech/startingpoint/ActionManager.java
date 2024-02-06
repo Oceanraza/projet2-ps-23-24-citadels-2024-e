@@ -104,7 +104,7 @@ public class ActionManager {
         Bot bot = (Bot) player;
         if (hasManufacture && bot.getGold() >= 3) {
             boolean useManufactureEffect = bot.botAlgo.manufactureChoice();
-            if(useManufactureEffect) {
+            if (useManufactureEffect) {
                 LOGGER.info(player.getName() + " utilise la Manufacture pour piocher 3 cartes et paye 3 pieces.");
                 bot.removeGold(3);
                 for (int i = 0; i < 3; i++) {
@@ -114,10 +114,9 @@ public class ActionManager {
         }
         if (hasLaboratory) {
             Optional<District> districtToDiscard = bot.botAlgo.laboratoryChoice();
-            if(districtToDiscard.isPresent()) {
+            if (districtToDiscard.isPresent()) {
                 LOGGER.info(player.getName() + " utilise le Laboratoire pour defausser sa carte " + districtToDiscard.get().getName() + " contre 1 piece d'or.");
-                bot.getDistrictsInHand().remove(districtToDiscard.get());
-                game.getDeck().addDistrict(districtToDiscard.get());
+                bot.moveCardInDeck(districtToDiscard.get(), game.getDeck());
                 bot.addGold(1);
             }
         }

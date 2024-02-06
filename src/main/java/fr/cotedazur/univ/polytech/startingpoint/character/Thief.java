@@ -6,7 +6,7 @@ import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 import static fr.cotedazur.univ.polytech.startingpoint.CitadelsLogger.LOGGER;
 
 public class Thief extends GameCharacter {
-    public Thief () {
+    public Thief() {
         super(GameCharacterRole.THIEF, 2);
     }
 
@@ -18,12 +18,11 @@ public class Thief extends GameCharacter {
 
         if (targetedCharacter.equals(GameCharacterRole.THIEF)) {
             throw new CannotAttackException("Le voleur ne peut pas se voler lui-meme");
-        }
-        else if (targetedCharacter.equals(GameCharacterRole.ASSASSIN)) {
+        } else if (targetedCharacter.equals(GameCharacterRole.ASSASSIN)) {
             throw new CannotAttackException("Le voleur ne peut pas voler l'assassin");
         }
 
-        for (Player target: game.getPlayers()) {
+        for (Player target : game.getPlayers()) {
             stolenCharacter = target.getGameCharacter();
 
             if (stolenCharacter.getRole().equals(targetedCharacter)) {

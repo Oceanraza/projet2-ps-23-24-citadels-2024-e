@@ -1,7 +1,6 @@
 package fr.cotedazur.univ.polytech.startingpoint.character;
 
 import fr.cotedazur.univ.polytech.startingpoint.Game;
-import fr.cotedazur.univ.polytech.startingpoint.city.DistrictAlreadyBuiltException;
 import fr.cotedazur.univ.polytech.startingpoint.player.Bot;
 import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 import org.junit.jupiter.api.BeforeEach;
@@ -65,8 +64,7 @@ public class AssassinTest {
 
         try {
             assassin.specialEffect(assassinPlayer, game, GameCharacterRole.ASSASSIN);
-        }
-        catch (CannotAttackException exception) {
+        } catch (CannotAttackException exception) {
             assertEquals("L'assassin ne peut pas se tuer lui-meme", exception.getMessage());
             assertTrue(assassin.getIsAlive());
             assertNull(assassin.getAttacker());

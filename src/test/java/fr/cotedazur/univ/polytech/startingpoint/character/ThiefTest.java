@@ -6,7 +6,8 @@ import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class ThiefTest {
     Game game;
@@ -19,7 +20,7 @@ public class ThiefTest {
     Player targetPlayer;
 
     @BeforeEach
-    void setUp(){
+    void setUp() {
         game = new Game();
         thief = new Thief();
         assassin = new Assassin();
@@ -78,8 +79,7 @@ public class ThiefTest {
 
         try {
             thief.specialEffect(thiefPlayer, game, GameCharacterRole.THIEF);
-        }
-        catch (CannotAttackException exception) {
+        } catch (CannotAttackException exception) {
             assertEquals("Le voleur ne peut pas se voler lui-meme", exception.getMessage());
             assertNull(thief.getAttacker());
             assertEquals(2, thiefPlayer.getGold());
@@ -100,8 +100,7 @@ public class ThiefTest {
 
         try {
             thief.specialEffect(thiefPlayer, game, GameCharacterRole.ASSASSIN);
-        }
-        catch (CannotAttackException exception) {
+        } catch (CannotAttackException exception) {
             assertEquals("Le voleur ne peut pas voler l'assassin", exception.getMessage());
             assertNull(assassin.getAttacker());
             assertEquals(2, thiefPlayer.getGold());
@@ -125,8 +124,7 @@ public class ThiefTest {
 
         try {
             thief.specialEffect(thiefPlayer, game, GameCharacterRole.WARLORD);
-        }
-        catch (CannotAttackException exception) {
+        } catch (CannotAttackException exception) {
             assertEquals("Le voleur ne peut pas voler le personnage assassine", exception.getMessage());
             assertEquals(2, thiefPlayer.getGold());
             assertEquals(3, targetPlayer.getGold());

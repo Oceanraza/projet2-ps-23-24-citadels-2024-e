@@ -13,8 +13,7 @@ public class CitadelsLogger {
         LOGGER.setLevel(Level.INFO);
 
         // Remove all parent handlers
-        for(Handler iHandler:LOGGER.getParent().getHandlers())
-        {
+        for (Handler iHandler : LOGGER.getParent().getHandlers()) {
             LOGGER.getParent().removeHandler(iHandler);
         }
 
