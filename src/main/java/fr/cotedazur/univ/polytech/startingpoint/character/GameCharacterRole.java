@@ -2,6 +2,7 @@ package fr.cotedazur.univ.polytech.startingpoint.character;
 
 public enum GameCharacterRole {
     ASSASSIN("Assassin"),
+    THIEF("Voleur"),
     MAGICIAN("Magicien"),
     BISHOP("Eveque"),
     KING("Roi"),

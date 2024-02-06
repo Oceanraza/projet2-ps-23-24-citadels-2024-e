@@ -11,6 +11,7 @@ import fr.cotedazur.univ.polytech.startingpoint.player.algorithms.BaseAlgo;
 
 import java.util.List;
 
+import static fr.cotedazur.univ.polytech.startingpoint.CitadelsLogger.LOGGER;
 
 public class Bot extends Player {
     public BaseAlgo botAlgo;
@@ -58,7 +59,7 @@ public class Bot extends Player {
         game.printAvailableCharacters();
         setGameCharacter(chosenCharacter);
         game.removeAvailableChar(chosenCharacter);
-        System.out.println(this.getName() + " a choisi " + chosenCharacter.getRole().toStringLeOrL());
+        LOGGER.info(this.getName() + " a choisi " + chosenCharacter.getRole().toStringLeOrL());
     }
     @Override
     public void play(Game game, GameState gameState) {

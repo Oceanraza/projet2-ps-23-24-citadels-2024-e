@@ -14,6 +14,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static fr.cotedazur.univ.polytech.startingpoint.CitadelsLogger.LOGGER;
+
 /**
  * The Game class is the main class of the game. It contains the deck, the crown, the players and the characters.
  * It also contains the methods to start the game, to shuffle the characters and to give the cards to the players.
@@ -28,6 +30,7 @@ public class Game {
     private List<GameCharacter> availableChars;
 
     Assassin assassin;
+    Thief thief;
     King king;
     Bishop bishop;
     Merchant merchant;
@@ -83,7 +86,7 @@ public class Game {
                 cha = charactersInGame.get(indexCharacter);
             }
             charactersInGame.remove(cha);
-            System.out.println(cha.getRole().toStringLeOrL() + " ne sera pas joué ce tour");
+            LOGGER.info(cha.getRole().toStringLeOrL() + " ne sera pas joue ce tour");
         }
     }
 
@@ -111,6 +114,7 @@ public class Game {
         // Creates the characters
 
         assassin = new Assassin();
+        thief = new Thief();
         king = new King();
         bishop = new Bishop();
         merchant = new Merchant();
@@ -120,12 +124,14 @@ public class Game {
 
         // Create the list of characters
         allCharacters.add(assassin);
+        allCharacters.add(thief);
         allCharacters.add(king);
         allCharacters.add(bishop);
         allCharacters.add(merchant);
         allCharacters.add(warlord);
         allCharacters.add(magician);
         allCharacters.add(architect);
+
         // Give the cards to the players
         startCardGame();
     }
@@ -158,18 +164,17 @@ public class Game {
     }
 
     public void printAvailableCharacters() {
-        System.out.println("Les personnages disponibles sont : ");
+        LOGGER.info("Les personnages disponibles sont : ");
         for (GameCharacter temp : availableChars) {
-            System.out.print(temp.getRole() + " ");
+            LOGGER.info(temp.getRole() + " ");
         }
-        System.out.println(" ");
     }
 
     public void charSelectionFiller(){
         for (Player p: players){
             if (p.getGameCharacter() == null){
                 Bot p2 = (Bot) p;
-                System.out.println(p2);
+                LOGGER.info(p2.toString());
                 //We create a new variable p2 to cast p to Bot each time
                 //Good to note that you can't just cast the whole List
                 p2.botAlgo.chooseCharacterAlgorithm(this);}
@@ -217,8 +222,9 @@ public class Game {
     }
 
     public List<GameCharacter> getKillableCharacters() {
-        List<GameCharacter> killableCharacters = getCharactersInGame();
+        List<GameCharacter> killableCharacters = new ArrayList<>(getCharactersInGame());
         for (GameCharacter cha : killableCharacters) {
+            // Assassin can't kill himself
             if (cha.getRole().equals(GameCharacterRole.ASSASSIN)) {
                 killableCharacters.remove(cha);
                 break;
@@ -227,9 +233,29 @@ public class Game {
         return killableCharacters;
     }
 
+    public List<GameCharacter> getCharactersThatCanBeStolen() {
+        // Thief can't steal from the Assassin
+        List<GameCharacter> charactersThatCanBeStolen = new ArrayList<>(getKillableCharacters());
+        List<GameCharacter> temp = new ArrayList<>(getKillableCharacters());
+
+        for (GameCharacter cha : temp) {
+            // Thief can't steal from himself
+            if (cha.getRole().equals(GameCharacterRole.THIEF)) {
+                charactersThatCanBeStolen.remove(cha);
+            }
+            // Thief can't steal from a dead character
+            else if (!cha.getIsAlive()) {
+                LOGGER.info(cha.getRole().toStringLeOrL() + " a ete assassine. Il ne peut pas etre vole");
+                charactersThatCanBeStolen.remove(cha);
+            }
+        }
+
+        return charactersThatCanBeStolen;
+    }
+
     public District drawCard(Player player) {
         District drawnDistrict = deck.drawCard();
-        System.out.println(player.getName() + " pioche le " + drawnDistrict);
+        LOGGER.info(player.getName() + " pioche la carte " + drawnDistrict + ".");
         player.getDistrictsInHand().add(drawnDistrict);
         return drawnDistrict;
     }

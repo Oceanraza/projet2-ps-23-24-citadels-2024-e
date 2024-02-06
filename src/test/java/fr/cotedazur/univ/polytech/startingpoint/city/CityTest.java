@@ -41,7 +41,7 @@ class CityTest {
         try {
             city.addDistrict(district, gameState);
         } catch (DistrictAlreadyBuiltException e) {
-            assertEquals("This district is already built", e.getMessage());
+            assertEquals("Ce district a deja ete construit", e.getMessage());
             assertEquals(1, city.getDistrictsBuilt().size());
         }
     }

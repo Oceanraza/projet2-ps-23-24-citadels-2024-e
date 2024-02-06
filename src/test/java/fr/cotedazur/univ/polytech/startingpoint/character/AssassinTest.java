@@ -12,7 +12,6 @@ public class AssassinTest {
     Game game;
     Assassin assassin;
     Warlord warlord;
-    King king;
 
     Player assassinPlayer;
     Player targetPlayer;
@@ -22,7 +21,6 @@ public class AssassinTest {
         game = new Game();
         assassin = new Assassin();
         warlord = new Warlord();
-        king = new King();
 
         // Create players
         assassinPlayer = new Bot("assassinPlayer");
@@ -38,7 +36,7 @@ public class AssassinTest {
         assassinPlayer.setGameCharacter(assassin);
         targetPlayer.setGameCharacter(warlord);
 
-        assassin.killCharacter(assassinPlayer, game, GameCharacterRole.WARLORD);
+        assassin.specialEffect(assassinPlayer, game, GameCharacterRole.WARLORD);
         assertFalse(warlord.getIsAlive());
         assertEquals(assassinPlayer, warlord.getAttacker());
     }
@@ -51,22 +49,25 @@ public class AssassinTest {
         // Set characters to players
         assassinPlayer.setGameCharacter(assassin);
 
-        assassin.killCharacter(assassinPlayer, game, GameCharacterRole.WARLORD);
+        assassin.specialEffect(assassinPlayer, game, GameCharacterRole.WARLORD);
         assertTrue(warlord.getIsAlive());
         assertNull(warlord.getAttacker());
     }
 
-    // Kill a character
+    // Assassin should not be able to kill himself
     @Test
-    void killSelectedCharacterTest() {
+    void shouldNotKillHimself() {
         // Add players to the game
-        game.setPlayers(assassinPlayer, targetPlayer);
+        game.setPlayers(assassinPlayer);
         // Set characters to players
         assassinPlayer.setGameCharacter(assassin);
-        targetPlayer.setGameCharacter(king);
 
-        assassin.killCharacter(assassinPlayer, game, GameCharacterRole.KING);
-        assertFalse(king.getIsAlive());
-        assertEquals(assassinPlayer, king.getAttacker());
+        try {
+            assassin.specialEffect(assassinPlayer, game, GameCharacterRole.ASSASSIN);
+        } catch (CannotAttackException exception) {
+            assertEquals("L'assassin ne peut pas se tuer lui-meme", exception.getMessage());
+            assertTrue(assassin.getIsAlive());
+            assertNull(assassin.getAttacker());
+        }
     }
 }
