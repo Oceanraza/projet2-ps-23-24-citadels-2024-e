@@ -2,6 +2,7 @@ package fr.cotedazur.univ.polytech.startingpoint.board;
 
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.city.DistrictColor;
+import fr.cotedazur.univ.polytech.startingpoint.exception.EmptyDeckException;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

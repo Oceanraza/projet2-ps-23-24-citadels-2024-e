@@ -1,8 +1,8 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
-import fr.cotedazur.univ.polytech.startingpoint.character.Bishop;
-import fr.cotedazur.univ.polytech.startingpoint.character.King;
-import fr.cotedazur.univ.polytech.startingpoint.character.Warlord;
+import fr.cotedazur.univ.polytech.startingpoint.character.card.Bishop;
+import fr.cotedazur.univ.polytech.startingpoint.character.card.King;
+import fr.cotedazur.univ.polytech.startingpoint.character.card.Warlord;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.city.DistrictColor;
 import fr.cotedazur.univ.polytech.startingpoint.player.Bot;

@@ -1,6 +1,7 @@
 package fr.cotedazur.univ.polytech.startingpoint.board;
 
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
+import fr.cotedazur.univ.polytech.startingpoint.exception.EmptyDeckException;
 
 import java.util.ArrayList;
 import java.util.Collections;

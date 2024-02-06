@@ -2,7 +2,9 @@ package fr.cotedazur.univ.polytech.startingpoint;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import fr.cotedazur.univ.polytech.startingpoint.board.Deck;
-import fr.cotedazur.univ.polytech.startingpoint.character.*;
+import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacter;
+import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole;
+import fr.cotedazur.univ.polytech.startingpoint.character.card.*;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.player.Bot;
 import fr.cotedazur.univ.polytech.startingpoint.player.Player;

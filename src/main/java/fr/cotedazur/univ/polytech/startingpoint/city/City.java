@@ -1,6 +1,7 @@
 package fr.cotedazur.univ.polytech.startingpoint.city;
 
 import fr.cotedazur.univ.polytech.startingpoint.GameState;
+import fr.cotedazur.univ.polytech.startingpoint.exception.DistrictAlreadyBuiltException;
 
 import java.util.ArrayList;
 import java.util.List;
