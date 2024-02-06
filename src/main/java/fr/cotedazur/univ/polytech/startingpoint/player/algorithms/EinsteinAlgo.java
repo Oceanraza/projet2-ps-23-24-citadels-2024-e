@@ -64,11 +64,11 @@ public class EinsteinAlgo extends BaseAlgo {
         }
     }
 
-    public void graveyardLogic(Game game, Player targetedPlayer, District destroyedDistrict) {
+    public void graveyardLogic(District destroyedDistrict) {
         if (bot.getCity().containsDistrict("Cimetiere") && bot.getGold() >= 1 && !bot.getCharacterName().equals("Condottiere")) {
             LOGGER.info(bot.getName() + " utilise le Cimetiere pour reprendre le " + destroyedDistrict + " dans sa main.");
             bot.getDistrictsInHand().add(destroyedDistrict);
-            bot.addGold(-1);
+            bot.removeGold(1);
         }
     }
 
@@ -119,7 +119,7 @@ public class EinsteinAlgo extends BaseAlgo {
                 targetedPlayer.getLowestDistrict().ifPresent(value -> {
                     if (Utils.canDestroyDistrict(value, bot)) {
                         bot.getGameCharacter().specialEffect(bot, game, targetedPlayer, value);
-                        graveyardLogic(game, targetedPlayer, value); // Call the graveyard logic here
+                        graveyardLogic(value); // Call the graveyard logic here
                         lowestDistrictHasBeenFound();
                     }
                 });
