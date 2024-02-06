@@ -1,5 +1,6 @@
 package fr.cotedazur.univ.polytech.startingpoint.character;
 
+import fr.cotedazur.univ.polytech.startingpoint.CitadelsLogger;
 import fr.cotedazur.univ.polytech.startingpoint.Game;
 import fr.cotedazur.univ.polytech.startingpoint.GameState;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
@@ -12,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Level;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -26,6 +28,9 @@ class WarlordTest {
 
     @BeforeEach
     void setUp() {
+        CitadelsLogger.setup();
+        CitadelsLogger.setGlobalLogLevel(Level.OFF);
+
         game = new Game();
         game.init();
         gameState = new GameState();

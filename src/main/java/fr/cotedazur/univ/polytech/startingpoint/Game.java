@@ -14,7 +14,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static fr.cotedazur.univ.polytech.startingpoint.CitadelsLogger.LOGGER;
+import static fr.cotedazur.univ.polytech.startingpoint.CitadelsLogger.*;
 
 /**
  * The Game class is the main class of the game. It contains the deck, the crown, the players and the characters.
@@ -86,7 +86,8 @@ public class Game {
                 cha = charactersInGame.get(indexCharacter);
             }
             charactersInGame.remove(cha);
-            LOGGER.info(cha.getRole().toStringLeOrL() + " ne sera pas joue ce tour");
+            String wontBePlayedMessage = cha.getRole().toStringLeOrLUpperCase() + " ne sera pas joue ce tour";
+            LOGGER.info(wontBePlayedMessage);
         }
     }
 
@@ -164,9 +165,11 @@ public class Game {
     }
 
     public void printAvailableCharacters() {
-        LOGGER.info("Les personnages disponibles sont : ");
+        LOGGER.info(COLOR_GREEN + "Les personnages disponibles sont : " + COLOR_RESET);
+        String availableCharsMessage;
         for (GameCharacter temp : availableChars) {
-            LOGGER.info(temp.getRole() + " ");
+            availableCharsMessage = COLOR_GREEN + temp.getRole() + COLOR_RESET;
+            LOGGER.info(availableCharsMessage);
         }
     }
 
@@ -174,7 +177,8 @@ public class Game {
         for (Player p: players){
             if (p.getGameCharacter() == null){
                 Bot p2 = (Bot) p;
-                LOGGER.info(p2.toString());
+                String playerInfo = p2.toString();
+                LOGGER.info(playerInfo);
                 //We create a new variable p2 to cast p to Bot each time
                 //Good to note that you can't just cast the whole List
                 p2.botAlgo.chooseCharacterAlgorithm(this);}
@@ -245,7 +249,8 @@ public class Game {
             }
             // Thief can't steal from a dead character
             else if (!cha.getIsAlive()) {
-                LOGGER.info(cha.getRole().toStringLeOrL() + " a ete assassine. Il ne peut pas etre vole");
+                String deadCharacterMessage = cha.getRole().toStringLeOrLUpperCase() + " est mort. Il ne peut pas etre vole";
+                LOGGER.info(deadCharacterMessage);
                 charactersThatCanBeStolen.remove(cha);
             }
         }
@@ -255,7 +260,8 @@ public class Game {
 
     public District drawCard(Player player) {
         District drawnDistrict = deck.drawCard();
-        LOGGER.info(player.getName() + " pioche la carte " + drawnDistrict + ".");
+        String drawCardMessage = player.getName() + " pioche la carte " + drawnDistrict + ".";
+        LOGGER.info(drawCardMessage);
         player.getDistrictsInHand().add(drawnDistrict);
         return drawnDistrict;
     }

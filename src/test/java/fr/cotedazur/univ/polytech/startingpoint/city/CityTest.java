@@ -1,10 +1,12 @@
 package fr.cotedazur.univ.polytech.startingpoint.city;
 
+import fr.cotedazur.univ.polytech.startingpoint.CitadelsLogger;
 import fr.cotedazur.univ.polytech.startingpoint.GameState;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
+import java.util.logging.Level;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -15,6 +17,9 @@ class CityTest {
 
     @BeforeEach
     void setUp() {
+        CitadelsLogger.setup();
+        CitadelsLogger.setGlobalLogLevel(Level.OFF);
+
         gameState = new GameState();
         city = new City();
         district = new District("Chateau", 5, DistrictColor.NOBLE);

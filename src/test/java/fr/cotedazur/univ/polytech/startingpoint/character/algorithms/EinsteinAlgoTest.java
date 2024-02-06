@@ -1,11 +1,14 @@
 package fr.cotedazur.univ.polytech.startingpoint.character.algorithms;
 
+import fr.cotedazur.univ.polytech.startingpoint.CitadelsLogger;
 import fr.cotedazur.univ.polytech.startingpoint.Game;
 import fr.cotedazur.univ.polytech.startingpoint.character.Bishop;
 import fr.cotedazur.univ.polytech.startingpoint.character.King;
 import fr.cotedazur.univ.polytech.startingpoint.character.Warlord;
 import fr.cotedazur.univ.polytech.startingpoint.player.Bot;
 import org.junit.jupiter.api.BeforeEach;
+
+import java.util.logging.Level;
 
 public class EinsteinAlgoTest {
     King king;
@@ -16,6 +19,9 @@ public class EinsteinAlgoTest {
 
     @BeforeEach
     void setUp() {
+        CitadelsLogger.setup();
+        CitadelsLogger.setGlobalLogLevel(Level.OFF);
+
         king = new King();
         bishop = new Bishop();
         warlord = new Warlord();

@@ -10,7 +10,7 @@ import fr.cotedazur.univ.polytech.startingpoint.city.DistrictColor;
 
 import java.util.*;
 
-import static fr.cotedazur.univ.polytech.startingpoint.CitadelsLogger.LOGGER;
+import static fr.cotedazur.univ.polytech.startingpoint.CitadelsLogger.*;
 
 public abstract class Player {
     private final List<District> districtsInHand;
@@ -95,13 +95,13 @@ public abstract class Player {
     public abstract void play(Game game, GameState gameState);
     // Function to build a district
     public boolean buildDistrict(District district, GameState gameState) {
-        // Checks if the player has enough gold to build the district. If so it is
-        // built.
+        // Checks if the player has enough gold to build the district. If so it is built.
         if (gold >= district.getPrice() && this.city.isNotBuilt(district)) {
             addDistrictBuilt(district, gameState);
             gold -= district.getPrice();
             districtsInHand.remove(district);
-            LOGGER.info(getName() + " a construit le quartier " + district.getName());
+            String buildDistrictMessage = COLOR_GREEN + getName() + " a construit le quartier " + district.getName() + COLOR_RESET;
+            LOGGER.info(buildDistrictMessage);
             return true;
         }
         return false;

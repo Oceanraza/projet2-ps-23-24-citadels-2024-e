@@ -11,14 +11,11 @@ import fr.cotedazur.univ.polytech.startingpoint.player.algorithms.RandomAlgo;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Level;
 
-import static fr.cotedazur.univ.polytech.startingpoint.CitadelsLogger.LOGGER;
+import static fr.cotedazur.univ.polytech.startingpoint.CitadelsLogger.*;
 
 public class Main {
-
-    protected static final String Shinning_blue = "\033[0;94m";
-    protected static final String Blue = "\033[0;34m";
-    protected static final String Reset = "\033[0m";
 
     public static void sortPlayers(List<Player> players) {
         // Use a custom Comparator to compare Players based on their score and running order
@@ -46,12 +43,14 @@ public class Main {
 
     public static void announceWinner(List<Player> players, Player firstBuilder, GameState gameState) {
         List<Player> playersScores = calculateScores(players, firstBuilder, gameState);
-        LOGGER.info("");
+        String playerScoreMessage;
         for (Player player : playersScores) {
-            LOGGER.info(player.getName() + " : " + player.getScore() + " points");
+            playerScoreMessage = player.getName() + " : " + player.getScore() + " points";
+            LOGGER.info(playerScoreMessage);
         }
         Player winner = playersScores.get(0);
-        LOGGER.info("\n" + winner.getName() + " gagne la partie avec " + winner.getScore() + " points !\n");
+        String winnerMessage = "\n" + winner.getName() + " gagne la partie avec " + winner.getScore() + " points !\n";
+        LOGGER.info(winnerMessage);
     }
 
     public static void finalChoice(List<Player> players, GameState gameState) {
@@ -62,8 +61,9 @@ public class Main {
                     if (turnBuilt.isPresent() && gameState.getTurn() > turnBuilt.get()) {
                         Bot bot = (Bot) player;
                         bot.botAlgo.huntedQuarterAlgorithm(district);
-                        LOGGER.info("\n[ Choix de fin de partie ]");
-                        LOGGER.info(player.getName() + " utilise la Cour des miracles en tant que quartier " + district.getColor() + ".");
+                        LOGGER.info(COLOR_BLUE + "\n[ Choix de fin de partie ]" + COLOR_RESET);
+                        String useHuntedQuarterMessage = player.getName() + " utilise la Cour des miracles en tant que quartier " + district.getColor() + ".";
+                        LOGGER.info(useHuntedQuarterMessage);
                     }
                 }
             }
@@ -73,7 +73,7 @@ public class Main {
 
     public static void main(String... args){
         CitadelsLogger.setup();
-        //CitadelsLogger.setGlobalLogLevel(Level.OFF); // Uncomment this line to disable logs
+        CitadelsLogger.setGlobalLogLevel(Level.ALL); // Change level to OFF to disable logs
 
         Game newGame = new Game();
         GameState gameState = new GameState();
@@ -95,11 +95,10 @@ public class Main {
         while (!gameState.isGameFinished(players)) {
             gameState.nextTurn();
             Bot crownOwner = (Bot) newGame.getCrown().getOwner();
-            // "\033[0;94m" : Shinning blue
-            // "\033[0;34m" : Blue
-            // "\033[0m" : Reset
-            LOGGER.info("\n\n----- Tour " + gameState.getTurn() + " -----" +
-                    "\nLa couronne n'appartient a " + (crownOwner != null ? crownOwner.getName() : "personne"));
+            String turnNumberMessage = COLOR_BLUE + "\n\n----- Tour " + gameState.getTurn() + " -----" + COLOR_RESET;
+            LOGGER.info(turnNumberMessage);
+            String crownOwnerMessage = "La couronne appartient a " + (crownOwner != null ? crownOwner.getName() : "personne");
+            LOGGER.info(crownOwnerMessage);
 
             // Reset characters, their states and shuffle cards
             newGame.resetChars();
@@ -107,23 +106,25 @@ public class Main {
             newGame.shuffleCharacters();
 
             // Character selection phase
-            LOGGER.info("\n[ Phase 1 ] Choix des personnages");
+            LOGGER.info("\n" + COLOR_BLUE + "[ Phase 1 ] Choix des personnages" + COLOR_RESET);
 
             if (crownOwner != null){
-                LOGGER.info(crownOwner.toString());
+                String crownOwnerInfos = crownOwner.toString();
+                LOGGER.info(crownOwnerInfos);
                 crownOwner.botAlgo.chooseCharacterAlgorithm(newGame);
             }
             newGame.charSelectionFiller();
 
             // Character reveal phase
-            LOGGER.info("\n[ Phase 2 ] Tour des joueurs");
+            LOGGER.info("\n" + COLOR_BLUE + "[ Phase 2 ] Tour des joueurs" + COLOR_RESET);
             List<Player> runningOrder = newGame.setRunningOrder();
 
             for (Player player: runningOrder) {
                 GameCharacter cha = player.getGameCharacter();
-                LOGGER.info(player.toString());
                 // If the character is alive
                 if (cha.getIsAlive()) {
+                    String playerInfos = player.toString();
+                    LOGGER.info(playerInfos);
                     player.play(newGame, gameState);
                     if (gameState.isFinished(player)) {
                         firstBuilder = player;
@@ -131,8 +132,10 @@ public class Main {
                 }
                 // If the player has been killed, he cannot play
                 else {
-                    LOGGER.info("\n" + cha.getRole().toStringLeOrL() + " a ete tue par " + cha.getAttacker().getName());
-                    LOGGER.info(player.getName() + " ne pourra pas jouer ce tour !");
+                    String isKilledMessage = "\n" + cha.getRole().toStringLeOrLUpperCase() + " a ete tue par " + cha.getAttacker().getName();
+                    String cannotPlayMessage = player.getName() + " ne pourra pas jouer ce tour !";
+                    LOGGER.info(isKilledMessage);
+                    LOGGER.info(cannotPlayMessage);
                     // If the king is killed, he gets the crown at the end of this turn
                     if (cha.getRole() == GameCharacterRole.KING) {
                         newGame.getCrown().setOwner(player);
@@ -142,6 +145,7 @@ public class Main {
             }
         }
         finalChoice(players, gameState);
+        LOGGER.info("\n" + COLOR_BLUE + "[ Decompte des points ]" + COLOR_RESET);
         announceWinner(players, firstBuilder, gameState);
     }
 }

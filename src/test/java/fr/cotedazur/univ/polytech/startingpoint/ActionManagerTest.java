@@ -8,6 +8,8 @@ import fr.cotedazur.univ.polytech.startingpoint.player.algorithms.EinsteinAlgo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.logging.Level;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
@@ -23,6 +25,9 @@ class ActionManagerTest {
 
     @BeforeEach
     void setUp(){
+        CitadelsLogger.setup();
+        CitadelsLogger.setGlobalLogLevel(Level.OFF);
+
         game = new Game();
         game.init();
         gameState = new GameState();

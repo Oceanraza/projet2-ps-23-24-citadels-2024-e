@@ -11,7 +11,7 @@ import fr.cotedazur.univ.polytech.startingpoint.player.algorithms.BaseAlgo;
 
 import java.util.List;
 
-import static fr.cotedazur.univ.polytech.startingpoint.CitadelsLogger.LOGGER;
+import static fr.cotedazur.univ.polytech.startingpoint.CitadelsLogger.*;
 
 public class Bot extends Player {
     public BaseAlgo botAlgo;
@@ -59,20 +59,15 @@ public class Bot extends Player {
         game.printAvailableCharacters();
         setGameCharacter(chosenCharacter);
         game.removeAvailableChar(chosenCharacter);
-        LOGGER.info(this.getName() + " a choisi " + chosenCharacter.getRole().toStringLeOrL());
+        String chosenCharMessage = COLOR_BLUE + this.getName() + " a choisi " + chosenCharacter.getRole().toStringLeOrLLowerCase() + COLOR_RESET;
+        LOGGER.info(chosenCharMessage);
     }
     @Override
     public void play(Game game, GameState gameState) {
-        /* Apply special effect, no need for now
-        ActionManager.applySpecialEffect(this, game);
-        Collect gold
-         */
-        // The bot draws a card if it has no district in its hand.
         ActionManager.startOfTurn(game, this);
         addGold(ActionManager.collectGold(this));
         ActionManager.applySpecialCardsEffect(game, this);
         botAlgo.charAlgorithmsManager(game);
-        // The bot builds one district if it has enough money
         botAlgo.buildOrNot(gameState);
     }
 

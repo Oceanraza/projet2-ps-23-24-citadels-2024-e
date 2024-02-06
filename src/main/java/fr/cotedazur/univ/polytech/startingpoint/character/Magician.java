@@ -7,7 +7,7 @@ import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 import java.util.ArrayList;
 import java.util.List;
 
-import static fr.cotedazur.univ.polytech.startingpoint.CitadelsLogger.LOGGER;
+import static fr.cotedazur.univ.polytech.startingpoint.CitadelsLogger.*;
 
 public class Magician extends GameCharacter {
     public Magician() {
@@ -38,7 +38,7 @@ public class Magician extends GameCharacter {
             for (District d : tempD){
                 victim.addDistrictInHand(d);
             }
-            LOGGER.info(player.getName() + " a echange sa main avec " + victim.getName() + " !");
+            LOGGER.info(COLOR_RED + player.getName() + " a echange sa main avec " + victim.getName() + " !" + COLOR_RESET);
         }
         else {
             int nb = player.getDistrictsInHand().size();
@@ -46,8 +46,10 @@ public class Magician extends GameCharacter {
                 player.getDistrictsInHand().remove(0);
                 game.drawCard(player);
             }
-            LOGGER.info(player.getName() + " a echange sa main avec le deck");
+            String swapHandsMessage = COLOR_RED + player.getName() + " a echange sa main avec le deck" + COLOR_RESET;
+            LOGGER.info(swapHandsMessage);
         }
-        LOGGER.info("Sa nouvelle main est : " + player.getDistrictsInHand());
+        String newHandMessage = COLOR_RED + "Sa nouvelle main est : " + player.getDistrictsInHand() + COLOR_RESET;
+        LOGGER.info(newHandMessage);
     }
 }
