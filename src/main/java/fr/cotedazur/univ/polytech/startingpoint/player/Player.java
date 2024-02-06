@@ -177,7 +177,7 @@ public abstract class Player {
             this.getDistrictsInHand().remove(card);
             deck.addDistrict(card);
         } else {
-            System.out.println("La carte n'est pas dans la main du joueur");
+            LOGGER.info("La carte n'est pas dans la main du joueur");
         }
     }
 }
