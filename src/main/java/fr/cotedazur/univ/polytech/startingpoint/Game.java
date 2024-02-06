@@ -53,6 +53,11 @@ public class Game {
         return availableChars;
     }
 
+    public boolean containsAvailableRole(GameCharacterRole role) {
+        return availableChars.stream()
+                .anyMatch(gameCharacter -> gameCharacter.getRole().equals(role));
+    }
+
     public List<GameCharacter> getCharactersInGame() {
         return charactersInGame;
     }
@@ -93,7 +98,7 @@ public class Game {
 
     // Init starts off the game by creating the deck, the crown, the players and the characters
     public void init() {
-        deck.resetDeck();
+        deck = new Deck();
         allCharacters = new ArrayList<>();
         availableChars = new ArrayList<>();
 
