@@ -1,6 +1,6 @@
 package fr.cotedazur.univ.polytech.startingpoint.character.algorithms;
 
-import fr.cotedazur.univ.polytech.startingpoint.CitadelsLogger;
+import fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger;
 import fr.cotedazur.univ.polytech.startingpoint.Game;
 import fr.cotedazur.univ.polytech.startingpoint.character.Bishop;
 import fr.cotedazur.univ.polytech.startingpoint.character.King;

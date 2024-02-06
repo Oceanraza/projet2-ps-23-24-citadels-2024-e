@@ -3,7 +3,7 @@ package fr.cotedazur.univ.polytech.startingpoint.character;
 import fr.cotedazur.univ.polytech.startingpoint.Game;
 import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 
-import static fr.cotedazur.univ.polytech.startingpoint.CitadelsLogger.*;
+import static fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger.*;
 
 public class Assassin extends GameCharacter {
     public Assassin() {

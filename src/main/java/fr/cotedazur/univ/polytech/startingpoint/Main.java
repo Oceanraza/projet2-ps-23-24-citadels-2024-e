@@ -1,5 +1,6 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
+import com.beust.jcommander.JCommander;
 import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacter;
 import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
@@ -7,13 +8,15 @@ import fr.cotedazur.univ.polytech.startingpoint.player.Bot;
 import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 import fr.cotedazur.univ.polytech.startingpoint.player.algorithms.EinsteinAlgo;
 import fr.cotedazur.univ.polytech.startingpoint.player.algorithms.RandomAlgo;
+import fr.cotedazur.univ.polytech.startingpoint.utils.Args;
+import fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger;
 
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Level;
 
-import static fr.cotedazur.univ.polytech.startingpoint.CitadelsLogger.*;
+import static fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger.*;
 
 public class Main {
 
@@ -71,9 +74,29 @@ public class Main {
 
     }
 
-    public static void main(String... args){
+    public static void main(String... args) {
+        Args commandLineArgs = new Args();
+        JCommander.newBuilder()
+                .addObject(commandLineArgs)
+                .build()
+                .parse(args);
+
+        // Determining the value of numberOfTurns according to the options
+        int numberOfTurns;
+        Level level;
+        // 2 x 1000 games
+        if (commandLineArgs.is2Thousands()) {
+            numberOfTurns = 1000;
+            level = Level.OFF; // Change level to OFF to disable logs
+        }
+        // One game
+        else {
+            numberOfTurns = 1;
+            level = Level.ALL;
+        }
+
         CitadelsLogger.setup();
-        CitadelsLogger.setGlobalLogLevel(Level.ALL); // Change level to OFF to disable logs
+        CitadelsLogger.setGlobalLogLevel(level);
 
         Game newGame = new Game();
         GameState gameState = new GameState();
