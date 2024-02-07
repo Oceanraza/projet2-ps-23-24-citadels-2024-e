@@ -2,7 +2,6 @@ package fr.cotedazur.univ.polytech.startingpoint.player.algorithms;
 
 import fr.cotedazur.univ.polytech.startingpoint.Game;
 import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacter;
-import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.city.DistrictColor;
 import fr.cotedazur.univ.polytech.startingpoint.player.Player;
@@ -54,16 +53,7 @@ public class RandomAlgo extends BaseAlgo {
     }
 
     public void assassinAlgorithm(Game game) {
-        int numberOfTargets;
-        int indexPlayerKilled;
-        GameCharacterRole targetedCharacter;
-
-        // Choose a random character and kill him
-        numberOfTargets = game.getKillableCharacters().size();
-        indexPlayerKilled = Utils.generateRandomNumber(numberOfTargets);
-        targetedCharacter = game.getKillableCharacters().get(indexPlayerKilled).getRole();
-
-        bot.getGameCharacter().specialEffect(bot, game, targetedCharacter);
+        bot.getGameCharacter().specialEffect(bot, game, selectRandomKillableCharacter(game));
     }
 
     public void magicianAlgorithm(Game game) {

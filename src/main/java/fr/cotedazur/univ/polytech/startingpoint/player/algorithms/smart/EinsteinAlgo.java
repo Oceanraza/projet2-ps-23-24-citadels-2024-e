@@ -135,8 +135,7 @@ public class EinsteinAlgo extends SmartAlgo {
         }
         // Kill a random character if neither the warlord nor the king can be killed
         else {
-            int numberOfTargets = game.getKillableCharacters().size();
-            indexKilledCharacter = Utils.generateRandomNumber(numberOfTargets);
+            indexKilledCharacter = selectRandomKillableCharacter(game);
         }
 
         targetedCharacter = game.getKillableCharacters().get(indexKilledCharacter).getRole();

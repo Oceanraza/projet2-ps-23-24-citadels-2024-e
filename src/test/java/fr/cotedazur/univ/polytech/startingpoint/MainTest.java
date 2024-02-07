@@ -57,7 +57,7 @@ class MainTest {
         fourthPlayer.setGameCharacter(warlord);
 
         // Set running order
-        List<Player> runningOrder = newGame.setRunningOrder();
+        List<Player> runningOrder = newGame.getRunningOrder();
         assertEquals(firstPlayer.getName(), runningOrder.get(1).getName());
         assertEquals(secondPlayer.getName(), runningOrder.get(0).getName());
         assertEquals(thirdPlayer.getName(), runningOrder.get(2).getName());
@@ -85,7 +85,7 @@ class MainTest {
         fourthPlayer.setGameCharacter(warlord);
 
         // Set running order
-        List<Player> runningOrder = newGame.setRunningOrder();
+        List<Player> runningOrder = newGame.getRunningOrder();
         assertEquals(secondPlayer.getName(), runningOrder.get(0).getName()); //has crown
         assertEquals(firstPlayer.getName(), runningOrder.get(1).getName());
         assertEquals(thirdPlayer.getName(), runningOrder.get(2).getName());
@@ -98,7 +98,7 @@ class MainTest {
         thirdPlayer.setGameCharacter(merchant);
         fourthPlayer.setGameCharacter(warlord);
         // Set running order
-        runningOrder = newGame.setRunningOrder();
+        runningOrder = newGame.getRunningOrder();
         assertEquals(firstPlayer.getName(), runningOrder.get(0).getName()); // has crown
         assertEquals(secondPlayer.getName(), runningOrder.get(1).getName());
         assertEquals(thirdPlayer.getName(), runningOrder.get(2).getName());

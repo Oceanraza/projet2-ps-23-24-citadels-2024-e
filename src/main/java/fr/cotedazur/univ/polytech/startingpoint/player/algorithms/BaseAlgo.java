@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 public abstract class BaseAlgo {
-    protected final boolean oneChanceOutOfTwo = Utils.generateRandomNumber(2) == 0;
+    protected boolean oneChanceOutOfTwo = Utils.generateRandomNumber(2) == 0;
 
     protected Bot bot;
     protected BaseAlgo(){}
@@ -37,8 +37,6 @@ public abstract class BaseAlgo {
     public abstract boolean graveyardChoice();
 
     public abstract Optional<District> laboratoryChoice();
-
-    public abstract void botChoosesCard(Game game, List<District> threeCards);
 
     public void charAlgorithmsManager(Game game) {
         switch (bot.getCharacterName()) {
@@ -92,5 +90,10 @@ public abstract class BaseAlgo {
                 }
             }
         }
+    }
+    public int selectRandomKillableCharacter(Game game) {
+        int numberOfTargets = game.getKillableCharacters().size();
+        int indexKilledCharacter = Utils.generateRandomNumber(numberOfTargets);
+        return indexKilledCharacter;
     }
 }

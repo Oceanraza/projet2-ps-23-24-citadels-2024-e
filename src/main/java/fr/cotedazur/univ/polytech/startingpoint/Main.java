@@ -135,7 +135,7 @@ public class Main {
 
             // Character reveal phase
             LOGGER.info("\n" + COLOR_BLUE + "[ Phase 2 ] Tour des joueurs" + COLOR_RESET);
-            List<Player> runningOrder = newGame.setRunningOrder();
+            List<Player> runningOrder = newGame.getRunningOrder();
 
             for (Player player: runningOrder) {
                 GameCharacter cha = player.getGameCharacter();

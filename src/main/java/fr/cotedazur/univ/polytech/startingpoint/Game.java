@@ -56,6 +56,15 @@ public class Game {
         return availableChars;
     }
 
+    public int getCurrentPlayerIndexInRunningOrder(Player currentPlayer) {
+        List<Player> runningOrder = getRunningOrder();
+        for (int i = 0; i < runningOrder.size(); i++) {
+            if (runningOrder.get(i).equals(currentPlayer)) {
+                return i;
+            }
+        }
+        return -1;
+    }
     public boolean containsAvailableRole(GameCharacterRole role) {
         return availableChars.stream()
                 .anyMatch(gameCharacter -> gameCharacter.getRole().equals(role));
@@ -69,7 +78,8 @@ public class Game {
     public void setPlayers(Player... bots) { // Add players to the list of players
         players.addAll(Arrays.asList(bots));
     }
-    public List<Player> setRunningOrder() { // Set running order depending on the running order of the characters
+
+    public List<Player> getRunningOrder() { // Set running order depending on the running order of the characters
         return this.getPlayers().stream()
                 .sorted(Comparator.comparingInt(player -> player.getGameCharacter().getRunningOrder()))
                 .toList();
