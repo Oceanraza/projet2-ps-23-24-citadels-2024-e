@@ -1,6 +1,5 @@
 package fr.cotedazur.univ.polytech.startingpoint.algorithms;
 
-import fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger;
 import fr.cotedazur.univ.polytech.startingpoint.Game;
 import fr.cotedazur.univ.polytech.startingpoint.board.Deck;
 import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacter;
@@ -9,7 +8,8 @@ import fr.cotedazur.univ.polytech.startingpoint.city.City;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.city.DistrictColor;
 import fr.cotedazur.univ.polytech.startingpoint.player.Bot;
-import fr.cotedazur.univ.polytech.startingpoint.player.algorithms.EinsteinAlgo;
+import fr.cotedazur.univ.polytech.startingpoint.player.algorithms.smart.EinsteinAlgo;
+import fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -38,7 +38,7 @@ class EinsteinAlgoTest {
         einsteinAlgo = new EinsteinAlgo();
         game = mock(Game.class);
         bot = mock(Bot.class); // Create a mock Bot instead of a real instance
-        einsteinAlgo.setBot(bot); // Set the bot instance variable of the EinsteinAlgo object
+        einsteinAlgo.setPlayer(bot); // Set the bot instance variable of the EinsteinAlgo object
         city = mock(City.class);
         deck = mock(Deck.class);
     }
@@ -106,4 +106,5 @@ class EinsteinAlgoTest {
 
         assertEquals(1, choice);
     }
+
 }

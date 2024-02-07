@@ -41,43 +41,39 @@ public class ActionManager {
             LOGGER.info(take2GoldMessage);
             bot.addGold(2);
         } else { // Draw a card
-            drawChoice(game, bot);
+            executeSpecificCardDraw(game, bot);
         }
     }
 
-    public static void drawChoice(Game game, Player player) {
+    public static void executeSpecificCardDraw(Game game, Player player) {
         Bot bot = (Bot) player;
         if (bot.getGameCharacter().getRole().equals(ARCHITECT)) {
-            architectLogic(game, bot); //draws 2 cards
+            applyArchitectEffect(game, bot); //draws 2 cards
         }
         if (bot.getCity().containsDistrict("Bibliotheque")) {
-            libraryLogic(game, bot); //draws 2 cards
+            applyLibraryEffect(game, bot); //draws 2 cards
         } else if (bot.getCity().containsDistrict("Observatoire")) {
-            observatoryLogic(game, bot); //draws 3 cards and keeps one
+            applyObservatoryEffect(game, bot); //draws 3 cards and keeps one
         } else {
             game.drawCard(bot); //draws one card
         }
     }
 
-    public static void architectLogic(Game game, Player player) {
+    public static void applyArchitectEffect(Game game, Player player) {
         Bot bot = (Bot) player;
         for (int i = 0; i < 2; i++) {
             game.drawCard(bot);
         }
     }
 
-    public static void libraryLogic(Game game, Player player) { //draws 2 cards
+    public static void applyLibraryEffect(Game game, Player player) { //draws 2 cards
         Bot bot = (Bot) player;
         for (int i = 0; i < 2; i++) {
             game.drawCard(bot);
-            if (bot.getGameCharacter().getRole().equals(ARCHITECT)) {
-                game.drawCard(bot);
-                game.drawCard(bot);
-            }
         }
     }
 
-    public static void observatoryLogic(Game game, Player player) {
+    public static void applyObservatoryEffect(Game game, Player player) {
         Bot bot = (Bot) player;
         List<District> threeCards = new ArrayList<>();
         for (int i = 0; i < 3; i++) {
@@ -96,7 +92,7 @@ public class ActionManager {
         return 0;
     }
 
-    public static void applySpecialEffect(Player player, Game game) {
+    public static void applyCharacterSpecialEffect(Player player, Game game) {
         player.getGameCharacter().specialEffect(player, game);
     }
 
@@ -105,24 +101,32 @@ public class ActionManager {
         boolean hasLaboratory = player.getCity().containsDistrict("Laboratoire");
         Bot bot = (Bot) player;
         if (hasManufacture && bot.getGold() >= 3) {
-            boolean useManufactureEffect = bot.getBotAlgo().manufactureChoice();
-            if(useManufactureEffect) {
-                String manufactureMessage = player.getName() + " utilise la Manufacture pour piocher 3 cartes et paye 3 pieces.";
-                LOGGER.info(manufactureMessage);
-                bot.removeGold(3);
-                for (int i = 0; i < 3; i++) {
-                    game.drawCard(bot);
-                }
+            boolean canUseManufacture = bot.getBotAlgo().manufactureChoice();
+            if (canUseManufacture) {
+                applyManufactureEffect(game, player, bot);
             }
         }
         if (hasLaboratory) {
-            Optional<District> districtToDiscard = bot.getBotAlgo().laboratoryChoice();
+            Optional<District> districtToDiscard = bot.getBotAlgo().laboratoryChoice(); // Optional.empty() if the bot doesn't want to use the laboratory
             if(districtToDiscard.isPresent()) {
-                String laboratoryMessage = player.getName() + " utilise le Laboratoire pour defausser sa carte " + districtToDiscard.get().getName() + " contre 1 piece d'or.";
-                LOGGER.info(laboratoryMessage);
-                bot.moveCardInDeck(districtToDiscard.get(), game.getDeck());
-                bot.addGold(1);
+                applyLaboratoryEffect(game, player, districtToDiscard, bot);
             }
+        }
+    }
+
+    private static void applyLaboratoryEffect(Game game, Player player, Optional<District> districtToDiscard, Bot bot) {
+        String laboratoryMessage = player.getName() + " utilise le Laboratoire pour defausser sa carte " + districtToDiscard.get().getName() + " contre 1 piece d'or.";
+        LOGGER.info(laboratoryMessage);
+        bot.moveCardInDeck(districtToDiscard.get(), game.getDeck());
+        bot.addGold(1);
+    }
+
+    private static void applyManufactureEffect(Game game, Player player, Bot bot) {
+        String manufactureMessage = player.getName() + " utilise la Manufacture pour piocher 3 cartes et paye 3 pieces.";
+        LOGGER.info(manufactureMessage);
+        bot.removeGold(3);
+        for (int i = 0; i < 3; i++) {
+            game.drawCard(bot);
         }
     }
 }

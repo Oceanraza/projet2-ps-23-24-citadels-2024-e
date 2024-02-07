@@ -2,6 +2,7 @@ package fr.cotedazur.univ.polytech.startingpoint.city;
 
 import fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger;
 import fr.cotedazur.univ.polytech.startingpoint.GameState;
+import fr.cotedazur.univ.polytech.startingpoint.exception.DistrictAlreadyBuiltException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

@@ -1,10 +1,10 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
-import fr.cotedazur.univ.polytech.startingpoint.character.*;
+import fr.cotedazur.univ.polytech.startingpoint.character.card.*;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.city.DistrictColor;
 import fr.cotedazur.univ.polytech.startingpoint.player.Bot;
-import fr.cotedazur.univ.polytech.startingpoint.player.algorithms.EinsteinAlgo;
+import fr.cotedazur.univ.polytech.startingpoint.player.algorithms.smart.EinsteinAlgo;
 import fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -86,14 +86,14 @@ class ActionManagerTest {
     @Test
     void getCrownTest() {
         bot.setGameCharacter(king);
-        ActionManager.applySpecialEffect(bot, game);
+        ActionManager.applyCharacterSpecialEffect(bot, game);
         assertEquals("Bot", game.getCrown().getOwner().getName());
     }
 
     @Test
     void getGoldTest() {
         bot.setGameCharacter(bishop);
-        ActionManager.applySpecialEffect(bot, game);
+        ActionManager.applyCharacterSpecialEffect(bot, game);
         assertEquals(2, bot.getGold());
     }
 
