@@ -74,8 +74,7 @@ public abstract class BaseAlgo {
     }
     public int selectRandomKillableCharacter(Game game) {
         int numberOfTargets = game.getKillableCharacters().size();
-        int indexKilledCharacter = Utils.generateRandomNumber(numberOfTargets);
-        return indexKilledCharacter;
+        return Utils.generateRandomNumber(numberOfTargets);
     }
 
     public abstract int startOfTurnChoice();

@@ -67,8 +67,10 @@ public class RichardAlgo extends SmartAlgo {
                 break;
             case 2:
                 bot.getGameCharacter().specialEffect(bot, game, GameCharacterRole.WARLORD);
+                break;
             case 3:
                 bot.getGameCharacter().specialEffect(bot, game, ARCHITECT);
+                break;
             default:
             bot.getGameCharacter().specialEffect(bot, game, selectRandomKillableCharacter(game));
         }
@@ -80,22 +82,16 @@ public class RichardAlgo extends SmartAlgo {
     }
 
     private static boolean architectIsOverpoweredFor(Player player) { // If the richest player has at least 4 gold, at least one district in hand and at least 5 districts in his city, the architect should be picked
-        return player.getGold() >= 4 && player.getDistrictsInHand().size() >= 1 && player.getCity().size() >= 5;
+        return player.getGold() >= 4 && player.getDistrictsInHand().isEmpty() && player.getCity().size() >= 5;
     }
 
     private boolean architectIsOverpoweredIn(List<Player> players) {
         for (Player player : players) {
-            if (player.getGold() >= 4 && player.getDistrictsInHand().size() >= 1 && player.getCity().size() >= 5) {
+            if (player.getGold() >= 4 && player.getDistrictsInHand().isEmpty() && player.getCity().size() >= 5) {
                 return true;
             }
         }
         return false;
-    }
-
-    private static boolean CanTookThiefToWin(Game game, Player bot) {
-        return bot != null
-                && bot.getCity().size() == 7
-                && game.containsAvailableRole(GameCharacterRole.THIEF);
     }
 
 
