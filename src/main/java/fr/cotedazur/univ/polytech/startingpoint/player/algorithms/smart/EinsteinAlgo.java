@@ -3,7 +3,6 @@ package fr.cotedazur.univ.polytech.startingpoint.player.algorithms.smart;
 import fr.cotedazur.univ.polytech.startingpoint.Game;
 import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacter;
 import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole;
-import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 import fr.cotedazur.univ.polytech.startingpoint.utils.Utils;
 
@@ -152,23 +151,6 @@ public class EinsteinAlgo extends SmartAlgo {
 
         targetedCharacter = game.getKillableCharacters().get(indexKilledCharacter).getRole();
         bot.getGameCharacter().specialEffect(bot, game, targetedCharacter);
-    }
-
-    @Override
-    public boolean graveyardChoice() {
-        return true;
-    }
-
-    public District chooseCard(List<District> cards) {
-        District chosenCard = null;
-        int minCost = Integer.MAX_VALUE;
-        for (District card : cards) {
-            if (card.getPrice() <= bot.getGold() && card.getPrice() < minCost) {
-                chosenCard = card;
-                minCost = card.getPrice();
-            }
-        }
-        return chosenCard;
     }
 }
 

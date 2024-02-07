@@ -9,7 +9,7 @@ import java.util.List;
 public class ArchitectAlgo {
     public boolean shouldPickArchitect(Game game) {
         List<Player> players = game.getPlayers();
-        Player richestPlayer = players.stream()
+        Player richestPlayer = players.stream()// If the richest player has at least 4 gold, at least one district in hand and at least 5 districts in his city, the architect should be picked
                 .max((p1, p2) -> Integer.compare(p1.getGold(), p2.getGold()))
                 .orElse(null);
 

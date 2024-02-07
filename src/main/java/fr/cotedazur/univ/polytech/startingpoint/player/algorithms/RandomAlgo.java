@@ -68,37 +68,17 @@ public class RandomAlgo extends BaseAlgo {
 
     @Override
     public void assassinAlgorithm(Game game) {
-        if (getRandomBoolean()) { // have 50% chance to decide to assassinate a character
-            int numberOfTargets;
-            int indexPlayerKilled;
-            GameCharacterRole targetedCharacter;
-
-            // Choose a random character and kill him
-            numberOfTargets = game.getKillableCharacters().size();
-            indexPlayerKilled = Utils.generateRandomNumber(numberOfTargets);
-            targetedCharacter = game.getKillableCharacters().get(indexPlayerKilled).getRole();
-
-            bot.getGameCharacter().specialEffect(bot, game, targetedCharacter);
-        } else {
-            LOGGER.info(COLOR_RED + "Il n'assassine personne" + COLOR_RESET);
-        }
+        bot.getGameCharacter().specialEffect(bot, game, selectRandomKillableCharacter(game));
     }
 
     @Override
     public void magicianAlgorithm(Game game) {
-        if (getRandomBoolean()) {
-            // have 25% chance to decide to change his hand with another player
-            if (getRandomBoolean()) {
-                List<Player> playerList = game.getSortedPlayersByScore();
-                playerList.remove(bot);
-                bot.getGameCharacter().specialEffect(bot, game, true, playerList.get(Utils.generateRandomNumber(playerList.size())));
-            }
-            // have 25% chance to decide to change his hand with the deck
-            else {
-                bot.getGameCharacter().specialEffect(bot, game, false);
-            }
+        if (oneChanceOutOfTwo) { // have 50% chance to decide to destroy a building of a random player or not
+            List<Player> playerList = game.getSortedPlayersByScore();
+            playerList.remove(bot);
+            bot.getGameCharacter().specialEffect(bot, game, true, playerList.get(Utils.generateRandomNumber(playerList.size())));
         } else {
-            LOGGER.info(COLOR_RED + "Il n'echange ses cartes avec personne" + COLOR_RESET);
+            bot.getGameCharacter().specialEffect(bot, game, false);
         }
     }
 
@@ -123,12 +103,12 @@ public class RandomAlgo extends BaseAlgo {
 
     @Override
     public boolean manufactureChoice() {
-        return getRandomBoolean();
+        return oneChanceOutOfTwo;
     }
 
     @Override
     public Optional<District> laboratoryChoice() {
-        if (getRandomBoolean()) {
+        if (oneChanceOutOfTwo) {
             List<District> districtsInHand = bot.getDistrictsInHand();
             return !districtsInHand.isEmpty() ? Optional.ofNullable(districtsInHand.get(Utils.generateRandomNumber(districtsInHand.size()))) : Optional.empty();
         }
@@ -137,13 +117,7 @@ public class RandomAlgo extends BaseAlgo {
 
     @Override
     public boolean graveyardChoice() {
-        return getRandomBoolean();
-    }
-
-    @Override
-    public void botChoosesCard(Game game, List<District> threeCards) {
-        District chosenCard = chooseCard(threeCards);
-        bot.addDistrictInHand(chosenCard);
+        return oneChanceOutOfTwo;
     }
 
     public District chooseCard(List<District> cards){
