@@ -201,7 +201,11 @@ public class Game {
     }
 
     public Bot getCrownOwner() {
-        Bot crownOwner = (Bot) this.getCrown().getOwner();
+        return (Bot) this.getCrown().getOwner();
+    }
+
+    public Bot printCrownOwner() {
+        Bot crownOwner = getCrownOwner();
         String crownOwnerMessage = "La couronne appartient a " + (crownOwner != null ? crownOwner.getName() : "personne");
         LOGGER.info(crownOwnerMessage);
         return crownOwner;
@@ -316,6 +320,19 @@ public class Game {
         return drawnDistrict;
     }
 
+    public Deck getDeck() {
+        return deck;
+    }
+
+    @Override
+    public String toString() {
+        return deck.toString();
+    }
+
+    public void resetGame() {
+        init();
+    }
+
     public int getCitySizeToWin() {
         return CITY_SIZE_TO_WIN;
     }
@@ -336,16 +353,10 @@ public class Game {
         return getPlayers().stream().mapToInt(player -> player.getCity().size()).average().getAsDouble();
     }
 
-    public Deck getDeck() {
-        return deck;
-    }
-
-    @Override
-    public String toString() {
-        return deck.toString();
-    }
-
-    public void resetGame() {
-        init();
+    public Player getPlayerWith6Districts() {
+        return players.stream()
+                .filter(player -> player.getCity().size() == 6)
+                .findFirst()
+                .orElse(null);
     }
 }
