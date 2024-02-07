@@ -3,14 +3,12 @@ package fr.cotedazur.univ.polytech.startingpoint.player.algorithms.smart;
 import fr.cotedazur.univ.polytech.startingpoint.Game;
 import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacter;
 import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole;
-import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 import fr.cotedazur.univ.polytech.startingpoint.utils.Utils;
 
 import java.util.List;
 
 import static fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole.*;
-import static fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger.LOGGER;
 /**
  * This class represents the algorithm of the bot Einstein
  * It contains the logic of the bot's actions
@@ -21,17 +19,6 @@ public class EinsteinAlgo extends SmartAlgo {
         super();
     }
 
-    @Override
-    public void botChoosesCard(Game game, List<District> threeCards) {
-        District chosenCard = chooseCard(threeCards);
-        threeCards.remove(chosenCard); // Remove the chosen card from the list of three cards
-        for (District card : threeCards) {
-            this.bot.removeFromHandAndPutInDeck(game.getDeck(), card);
-        }
-        String drawMessage = bot.getName() + " pioche le " + chosenCard;
-        LOGGER.info(drawMessage);
-        bot.getDistrictsInHand().add(chosenCard);
-    }
 
     public boolean chooseAssassinAlgorithm(Game game, List<GameCharacter> availableChars) {
         if ((bot.getCity().getDistrictsBuilt().size() >= 7) && (bot.canBuildDistrictThisTurn()) && (bot.isCharInList(availableChars, ASSASSIN))) {
@@ -140,23 +127,6 @@ public class EinsteinAlgo extends SmartAlgo {
 
         targetedCharacter = game.getKillableCharacters().get(indexKilledCharacter).getRole();
         bot.getGameCharacter().specialEffect(bot, game, targetedCharacter);
-    }
-
-    @Override
-    public boolean graveyardChoice() {
-        return true;
-    }
-
-    public District chooseCard(List<District> cards) {
-        District chosenCard = null;
-        int minCost = Integer.MAX_VALUE;
-        for (District card : cards) {
-            if (card.getPrice() <= bot.getGold() && card.getPrice() < minCost) {
-                chosenCard = card;
-                minCost = card.getPrice();
-            }
-        }
-        return chosenCard;
     }
 }
 

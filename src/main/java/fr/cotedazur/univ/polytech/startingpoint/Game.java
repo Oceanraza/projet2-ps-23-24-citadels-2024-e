@@ -24,6 +24,7 @@ import static fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger.*;
  * It also contains the methods to start the game, to shuffle the characters and to give the cards to the players.
  */
 public class Game {
+    private static final int CITY_SIZE_TO_WIN = 8;
     private static final int START_CARDS_NUMBER = 4;
     private Deck deck;
     private Crown crown;
@@ -321,4 +322,23 @@ public class Game {
         return deck.toString();
     }
 
+    public int getCitySizeToWin() {
+        return CITY_SIZE_TO_WIN;
+    }
+
+    public Player getPlayerWithMostDistricts() {
+        return players.stream()
+                .max((p1, p2) -> Integer.compare(p1.getCity().size(), p2.getCity().size()))
+                .orElse(null);
+    }
+
+    public Player getRichestPlayer() {
+        return players.stream().
+                max((p1, p2) -> Integer.compare(p1.getGold(), p2.getGold()))
+                .orElse(null);
+    }
+
+    public double averageCitySize() {
+        return getPlayers().stream().mapToInt(player -> player.getCity().size()).average().getAsDouble();
+    }
 }

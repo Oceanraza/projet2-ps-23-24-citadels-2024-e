@@ -86,12 +86,6 @@ public class RandomAlgo extends BaseAlgo {
         return oneChanceOutOfTwo;
     }
 
-    @Override
-    public void botChoosesCard(Game game, List<District> threeCards) {
-        District chosenCard = chooseCard(threeCards);
-        bot.getDistrictsInHand().add(chosenCard);
-    }
-
     public District chooseCard(List<District> cards){
         return cards.get(Utils.generateRandomNumber(cards.size()));
     }
