@@ -12,7 +12,7 @@ import java.util.logging.Level;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class KingTest {
+class KingTest {
     Game game;
     King king;
     Player kingPlayer;

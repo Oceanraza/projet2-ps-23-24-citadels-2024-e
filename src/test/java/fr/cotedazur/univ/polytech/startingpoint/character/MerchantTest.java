@@ -10,7 +10,7 @@ import java.util.logging.Level;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class MerchantTest {
+class MerchantTest {
     Game game;
     Merchant merchant;
 
