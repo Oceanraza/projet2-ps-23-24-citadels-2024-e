@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 public abstract class BaseAlgo {
+    protected boolean oneChanceOutOfTwo = Utils.generateRandomNumber(2) == 0;
 
     protected Bot bot;
     protected String algoName;
@@ -21,7 +22,6 @@ public abstract class BaseAlgo {
     }
     public String getAlgoName(){return algoName;}
     public abstract int startOfTurnChoice();
-    public abstract boolean collectGoldBeforeBuildChoice();
     public abstract void chooseCharacterAlgorithm(Game game);
     public abstract void warlordAlgorithm(Game game);
     public abstract void magicianAlgorithm(Game game);
@@ -30,8 +30,6 @@ public abstract class BaseAlgo {
     public abstract boolean manufactureChoice();
     public abstract boolean graveyardChoice();
     public abstract Optional<District> laboratoryChoice();
-    public abstract void botChoosesCard(Game game, List<District> threeCards);
-
     public void charAlgorithmsManager(Game game) {
         switch (bot.getCharacterName()) {
             case ("Condottiere"):
@@ -90,4 +88,9 @@ public abstract class BaseAlgo {
         return Utils.generateRandomNumber(2) == 0;
     }
 
+    public int selectRandomKillableCharacter(Game game) {
+        int numberOfTargets = game.getKillableCharacters().size();
+        int indexKilledCharacter = Utils.generateRandomNumber(numberOfTargets);
+        return indexKilledCharacter;
+    }
 }
