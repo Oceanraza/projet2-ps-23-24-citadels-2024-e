@@ -1,4 +1,4 @@
-package fr.cotedazur.univ.polytech.startingpoint.algorithms;
+package fr.cotedazur.univ.polytech.startingpoint.player.algorithms;
 
 import fr.cotedazur.univ.polytech.startingpoint.Game;
 import fr.cotedazur.univ.polytech.startingpoint.board.Deck;
@@ -106,5 +106,4 @@ class EinsteinAlgoTest {
 
         assertEquals(1, choice);
     }
-
 }

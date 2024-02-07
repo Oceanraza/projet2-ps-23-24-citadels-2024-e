@@ -12,8 +12,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.logging.Level;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 class MagicianTest {
     Assassin assassin;
@@ -39,6 +38,12 @@ class MagicianTest {
         };
         game = new Game();
         game.init();
+    }
+
+    @Test
+    void magicianInformationsTest() {
+        assertEquals(3, magician.getRunningOrder());
+        assertNull(magician.getColor());
     }
 
     @Test

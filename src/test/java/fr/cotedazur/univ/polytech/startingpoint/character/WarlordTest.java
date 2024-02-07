@@ -45,6 +45,13 @@ class WarlordTest {
         bot = new Bot("Bot") {
         };
     }
+
+    @Test
+    void warlordInformationsTest() {
+        assertEquals(8, warlord.getRunningOrder());
+        assertEquals(DistrictColor.MILITARY, warlord.getColor());
+    }
+
     @Test
     void getLowestDistrictTest() {
         District district1 = new District("Quartier 1", 3, DistrictColor.NOBLE);
