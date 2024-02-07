@@ -5,8 +5,8 @@ import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacter;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.player.Bot;
 import fr.cotedazur.univ.polytech.startingpoint.player.Player;
-import fr.cotedazur.univ.polytech.startingpoint.player.algorithms.EinsteinAlgo;
 import fr.cotedazur.univ.polytech.startingpoint.player.algorithms.RandomAlgo;
+import fr.cotedazur.univ.polytech.startingpoint.player.algorithms.smart.EinsteinAlgo;
 import fr.cotedazur.univ.polytech.startingpoint.utils.Args;
 import fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger;
 

@@ -1,11 +1,11 @@
 package fr.cotedazur.univ.polytech.startingpoint.character.algorithms;
 
-import fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger;
 import fr.cotedazur.univ.polytech.startingpoint.Game;
-import fr.cotedazur.univ.polytech.startingpoint.character.Bishop;
-import fr.cotedazur.univ.polytech.startingpoint.character.King;
-import fr.cotedazur.univ.polytech.startingpoint.character.Warlord;
+import fr.cotedazur.univ.polytech.startingpoint.character.card.Bishop;
+import fr.cotedazur.univ.polytech.startingpoint.character.card.King;
+import fr.cotedazur.univ.polytech.startingpoint.character.card.Warlord;
 import fr.cotedazur.univ.polytech.startingpoint.player.Bot;
+import fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger;
 import org.junit.jupiter.api.BeforeEach;
 
 import java.util.logging.Level;

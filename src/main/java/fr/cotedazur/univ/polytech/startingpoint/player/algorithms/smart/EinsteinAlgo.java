@@ -1,16 +1,13 @@
-package fr.cotedazur.univ.polytech.startingpoint.player.algorithms;
+package fr.cotedazur.univ.polytech.startingpoint.player.algorithms.smart;
 
 import fr.cotedazur.univ.polytech.startingpoint.Game;
-import fr.cotedazur.univ.polytech.startingpoint.GameState;
 import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacter;
 import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
-import fr.cotedazur.univ.polytech.startingpoint.city.DistrictColor;
-import fr.cotedazur.univ.polytech.startingpoint.player.Bot;
 import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 import fr.cotedazur.univ.polytech.startingpoint.utils.Utils;
 
-import java.util.*;
+import java.util.List;
 
 import static fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole.*;
 import static fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger.LOGGER;
@@ -19,12 +16,12 @@ import static fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger.LOGG
  * It contains the logic of the bot's actions
  */
 
-public class EinsteinAlgo extends BaseAlgo {
-    boolean lowestDistrictFound = false;
+public class EinsteinAlgo extends SmartAlgo {
     public EinsteinAlgo(){
         super();
     }
 
+    @Override
     public void botChoosesCard(Game game, List<District> threeCards) {
         District chosenCard = chooseCard(threeCards);
         threeCards.remove(chosenCard); // Remove the chosen card from the list of three cards
@@ -78,6 +75,7 @@ public class EinsteinAlgo extends BaseAlgo {
         bot.chooseChar(game, chosenChar.getRole());
     }
 
+    @Override
     public void chooseCharacterAlgorithm(Game game) {
         List<GameCharacter> availableChars = game.getAvailableChars();
         // If the bot can build its 8th quarter next turn, it will choose the assassin
@@ -98,6 +96,7 @@ public class EinsteinAlgo extends BaseAlgo {
         }
     }
 
+    @Override
     public void warlordAlgorithm(Game game) {
         List<Player> playerList = game.getSortedPlayersByScoreForWarlord();
         playerList.remove(bot);
@@ -117,6 +116,7 @@ public class EinsteinAlgo extends BaseAlgo {
         }
     }
     // Note that this algorithm doesn't use the second part of the magician, finding it useless compared to other cards
+    @Override
     public void magicianAlgorithm (Game game){
         List<Player> playerList = game.getSortedPlayersByScore();
         playerList.remove(bot);
@@ -130,10 +130,7 @@ public class EinsteinAlgo extends BaseAlgo {
         bot.getGameCharacter().specialEffect(bot, game, switching, chosenPlayer);
     }
 
-    public void kingAlgorithm(Game game) {
-        bot.getGameCharacter().specialEffect(bot, game);
-    }
-
+    @Override
     public void assassinAlgorithm(Game game) {
         List<GameCharacter> killableCharacters;
         int indexKilledCharacter;
@@ -164,78 +161,6 @@ public class EinsteinAlgo extends BaseAlgo {
         bot.getGameCharacter().specialEffect(bot, game, targetedCharacter);
     }
 
-    // To know if the assassin can kill this character
-    int isKillable(List<GameCharacter> killableCharacters, GameCharacterRole charEnum) {
-        for (int i = 0; i < killableCharacters.size(); i++) {
-            // If the character can be killed, this functions returns the index of this character
-            if (killableCharacters.get(i).getRole() == charEnum) {
-                return i;
-            }
-        }
-        return -1;
-    }
-
-    public void lowestDistrictHasBeenFound() {
-        lowestDistrictFound = true;
-    }
-
-    public void buildOrNot(GameState gameState) { //builds if he can
-        int builtThisTurn = 0;
-        //Need to create a deep copy to avoid concurrent modification
-        ArrayList<District> tempHand = new ArrayList<>(bot.getDistrictsInHand());
-        for (District district : tempHand) {
-
-            if (bot.buildDistrict(district, gameState)) {
-                builtThisTurn++;
-                if ((!bot.getCharacterName().equals("Architecte")) || (builtThisTurn == 3)) {
-                    break;
-                }
-            }
-        }
-    }
-
-    public void huntedQuarterAlgorithm(District huntedQuarter) {
-        Set<DistrictColor> colorList = new HashSet<>();
-        List<District> districtsBuilt = bot.getCity().getDistrictsBuilt();
-        for (District district : districtsBuilt) {
-            colorList.add(district.getColor());
-        }
-        DistrictColor[] districtColors = DistrictColor.values();
-        if (colorList.size() == districtColors.length - 1) {
-            for (DistrictColor districtColor : districtColors) {
-                if (!colorList.contains(districtColor)) {
-                    huntedQuarter.setColor(districtColor);
-                }
-            }
-        }
-    }
-
-    public boolean manufactureChoice() { // Use manufacture effect if the player has less than 7 built + buildable districts
-        Set<District> builtAndBuildableDistricts = new HashSet<>(bot.getCity().getDistrictsBuilt());
-        builtAndBuildableDistricts.addAll(bot.getDistrictsInHand());
-        return builtAndBuildableDistricts.size() < 8 - 1; // If player has 7 built + buildable districts he can just draw without paying 3 gold coins
-    }
-
-    public Optional<District> laboratoryChoice() {
-        List<District> districtsBuilt = bot.getCity().getDistrictsBuilt();
-        List<District> districtsInHand = bot.getDistrictsInHand();
-        for (District district : districtsInHand) {
-            if (districtsBuilt.contains(district)) {
-                return Optional.ofNullable(district); // Discard districts already built
-            }
-            int count = Collections.frequency(districtsInHand, district);
-            if (count > 1) {
-                return Optional.ofNullable(district); // Discard duplicates
-            }
-        }
-        if (districtsBuilt.size() + districtsInHand.size() > 8) {
-            return Optional.ofNullable(districtsInHand.remove(districtsInHand.size() - 1)); // Discard last district drawn
-        }
-        return Optional.empty();
-    }
-    public void setBot(Bot bot) {
-        this.bot = bot;
-    }
 
     public District chooseCard(List<District> cards) {
         District chosenCard = null;
