@@ -3,6 +3,9 @@ package fr.cotedazur.univ.polytech.startingpoint;
 import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 
 import java.util.List;
+
+import static fr.cotedazur.univ.polytech.startingpoint.Game.CITY_SIZE_TO_WIN;
+
 /**
  * This class represents the state of the game
  * It contains the current turn
@@ -31,6 +34,6 @@ public class GameState {
     }
 
     public boolean isFinished(Player player) {
-        return (player.getCity().getDistrictsBuilt().size() >= 8);
+        return (player.getCity().getDistrictsBuilt().size() >= CITY_SIZE_TO_WIN);
     }
 }

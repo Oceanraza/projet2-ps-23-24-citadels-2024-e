@@ -1,6 +1,5 @@
 package fr.cotedazur.univ.polytech.startingpoint.character;
 
-import fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger;
 import fr.cotedazur.univ.polytech.startingpoint.Game;
 import fr.cotedazur.univ.polytech.startingpoint.GameState;
 import fr.cotedazur.univ.polytech.startingpoint.character.card.Bishop;
@@ -10,6 +9,7 @@ import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.city.DistrictColor;
 import fr.cotedazur.univ.polytech.startingpoint.player.Bot;
 import fr.cotedazur.univ.polytech.startingpoint.player.Player;
+import fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.logging.Level;
 
+import static fr.cotedazur.univ.polytech.startingpoint.Game.CITY_SIZE_TO_WIN;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -73,7 +74,7 @@ class WarlordTest {
         secondPlayer.setGameCharacter(king);
         fourthPlayer.setGameCharacter(king);
 
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < CITY_SIZE_TO_WIN; i++) {
             firstBuilder.getCity().getDistrictsBuilt().add(new District("test", 4, DistrictColor.TRADE));
             secondPlayer.getCity().getDistrictsBuilt().add(new District("test", 5, DistrictColor.TRADE));
             thirdPlayer.getCity().getDistrictsBuilt().add(new District("test", 2, DistrictColor.TRADE));
