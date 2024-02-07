@@ -13,15 +13,17 @@ import java.util.List;
 
 public class Deck {
     private List<District> cards;
-    private ArrayList<District> discardPile;
 
     public Deck() {
-        this.discardPile = new ArrayList<>();
         this.cards = new ArrayList<>();
     }
 
     public void setDeck(List<District> cards) {
         this.cards = cards;
+    }
+
+    public List<District> getCards() {
+        return cards;
     }
 
     @Override
@@ -83,15 +85,7 @@ public class Deck {
         return this.cards.size();
     }
 
-    /**
-     * Discards a district.
-     *
-     * @param district the district to be discarded
-     */
-
-    public void discard(District district) {
-        this.cards.remove(district);
-        this.discardPile.add(district);
+    public void putCardAtBottom(District card) {
+        this.cards.add(0, card);
     }
-
 }

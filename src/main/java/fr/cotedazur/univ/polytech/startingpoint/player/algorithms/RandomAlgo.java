@@ -66,14 +66,6 @@ public class RandomAlgo extends BaseAlgo {
         bot.getGameCharacter().specialEffect(bot, game, targetedCharacter);
     }
 
-    @Override
-    public void graveyardLogic(District district) {
-        if (oneChanceOutOfTwo && bot.getGold() >= 1) {
-
-        }
-    }
-
-
     public void magicianAlgorithm(Game game) {
         if (oneChanceOutOfTwo) { // have 50% chance to decide to destroy a building of a random player or not
             List<Player> playerList = game.getSortedPlayersByScore();
@@ -98,6 +90,10 @@ public class RandomAlgo extends BaseAlgo {
             return Optional.ofNullable(districtsInHand.get(Utils.generateRandomNumber(districtsInHand.size())));
         }
         return Optional.empty();
+    }
+
+    public boolean graveyardChoice() {
+        return oneChanceOutOfTwo;
     }
 
     @Override

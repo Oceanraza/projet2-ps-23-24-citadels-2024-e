@@ -26,35 +26,19 @@ public class EinsteinAlgo extends SmartAlgo {
         District chosenCard = chooseCard(threeCards);
         threeCards.remove(chosenCard); // Remove the chosen card from the list of three cards
         for (District card : threeCards) {
-            this.bot.moveCardInDeck(card, game.getDeck());
+            this.bot.removeFromHandAndPutInDeck(game.getDeck(), card);
         }
         String drawMessage = bot.getName() + " pioche le " + chosenCard;
         LOGGER.info(drawMessage);
         bot.getDistrictsInHand().add(chosenCard);
     }
 
-
-    public int startOfTurnChoice() { // Always draws if needed
-        if (bot.getDistrictsInHand().isEmpty() || bot.districtsInHandAreBuilt() || bot.getGameCharacter().getRole().equals(ARCHITECT)) {
-            return 2; // Draw a card
-        } else {
-            return 1; // Take 2 gold coins
-        }
-    }
-
-    public void graveyardLogic(District destroyedDistrict) {
-        if (bot.getCity().containsDistrict("Cimetiere") && bot.getGold() >= 1 && !bot.getCharacterName().equals("Condottiere")) {
-            String graveyardMessage = bot.getName() + " utilise le Cimetiere pour reprendre le " + destroyedDistrict + " dans sa main.";
-            LOGGER.info(graveyardMessage);
-            bot.getDistrictsInHand().add(destroyedDistrict);
-            bot.removeGold(1);
-        }
-    }
-
-    public void chooseAssassinAlgorithm(Game game, List<GameCharacter> availableChars) {
+    public boolean chooseAssassinAlgorithm(Game game, List<GameCharacter> availableChars) {
         if ((bot.getCity().getDistrictsBuilt().size() >= 7) && (bot.canBuildDistrictThisTurn()) && (bot.isCharInList(availableChars, ASSASSIN))) {
             bot.chooseChar(game, ASSASSIN);
+            return true;
         }
+        return false;
     }
 
     public void chooseMoneyCharacterAlgorithm(Game game, List<GameCharacter> availableChars) {
@@ -80,19 +64,18 @@ public class EinsteinAlgo extends SmartAlgo {
         List<GameCharacter> availableChars = game.getAvailableChars();
         // If the bot can build its 8th quarter next turn, it will choose the assassin
         // So he won't be killed
-        chooseAssassinAlgorithm(game, availableChars);
-
-        //If the bot's hand is empty, it chooses the magician if he gives him more cards than the architect would
-        if ((bot.getDistrictsInHand().isEmpty()) && ((bot.isCharInList(availableChars, GameCharacterRole.MAGICIAN)) || (bot.isCharInList(availableChars, ARCHITECT)))) {
-            if ((bot.isCharInList(availableChars, GameCharacterRole.MAGICIAN)) && (Utils.getHighestNumberOfCardsInHand(game.getPlayers(), this.bot) > 2)) {
-                bot.chooseChar(game, GameCharacterRole.MAGICIAN);
-            } else if (bot.isCharInList(availableChars, GameCharacterRole.ARCHITECT)) {
-                bot.chooseChar(game, GameCharacterRole.ARCHITECT);
+        if (!chooseAssassinAlgorithm(game, availableChars)) {
+            //If the bot's hand is empty, it chooses the magician if he gives him more cards than the architect would
+            if ((bot.getDistrictsInHand().isEmpty()) && ((bot.isCharInList(availableChars, GameCharacterRole.MAGICIAN)) || (bot.isCharInList(availableChars, ARCHITECT)))) {
+                if ((bot.isCharInList(availableChars, GameCharacterRole.MAGICIAN)) && (Utils.getHighestNumberOfCardsInHand(game.getPlayers(), this.bot) > 2)) {
+                    bot.chooseChar(game, GameCharacterRole.MAGICIAN);
+                } else if (bot.isCharInList(availableChars, GameCharacterRole.ARCHITECT)) {
+                    bot.chooseChar(game, GameCharacterRole.ARCHITECT);
+                }
+            } else {
+                // If the bot doesn't have an immediate way to win, it will just pick the character who gives out the most gold for him
+                chooseMoneyCharacterAlgorithm(game, availableChars);
             }
-        } else {
-            // If the bot doesn't have an immediate way to win, it will just pick the character who gives out the most gold for him
-
-            chooseMoneyCharacterAlgorithm(game, availableChars);
         }
     }
 
@@ -101,11 +84,10 @@ public class EinsteinAlgo extends SmartAlgo {
         List<Player> playerList = game.getSortedPlayersByScoreForWarlord();
         playerList.remove(bot);
         for (Player targetedPlayer : playerList) {
-            if (!targetedPlayer.getGameCharacter().getRole().equals(GameCharacterRole.BISHOP)) { //doesn't target the bishop because he's immune to the warlord
-                targetedPlayer.getLowestDistrict().ifPresent(value -> {
-                    if (Utils.canDestroyDistrict(value, bot)) {
-                        bot.getGameCharacter().specialEffect(bot, game, targetedPlayer, value);
-                        graveyardLogic(value); // Call the graveyard logic here
+            if (!targetedPlayer.getGameCharacter().getRole().equals(GameCharacterRole.BISHOP)) { // doesn't target the bishop because he's immune to the warlord
+                targetedPlayer.getLowestDistrict().ifPresent(district -> {
+                    if (Utils.canDestroyDistrict(district, bot)) {
+                        bot.getGameCharacter().specialEffect(bot, game, targetedPlayer, district);
                         lowestDistrictHasBeenFound();
                     }
                 });
@@ -161,6 +143,10 @@ public class EinsteinAlgo extends SmartAlgo {
         bot.getGameCharacter().specialEffect(bot, game, targetedCharacter);
     }
 
+    @Override
+    public boolean graveyardChoice() {
+        return true;
+    }
 
     public District chooseCard(List<District> cards) {
         District chosenCard = null;
@@ -173,6 +159,5 @@ public class EinsteinAlgo extends SmartAlgo {
         }
         return chosenCard;
     }
-
 }
 

@@ -42,4 +42,18 @@ class DeckTest {
         assertThrows(EmptyDeckException.class, deck::drawCard);
     }
 
+    @Test
+    void putCardAtBottomTest() {
+        Deck deck = new Deck();
+        District district1 = new District("District 1", 1, DistrictColor.TRADE);
+        District district2 = new District("District 2", 1, DistrictColor.TRADE);
+        District discardedDistrict = new District("Discarded District", 1, DistrictColor.NOBLE);
+        deck.addDistrict(district1);
+        deck.addDistrict(district2);
+        deck.putCardAtBottom(discardedDistrict);
+        assertEquals(district2, deck.drawCard());
+        assertEquals(district1, deck.drawCard());
+        assertEquals(discardedDistrict, deck.drawCard());
+    }
+
 }
