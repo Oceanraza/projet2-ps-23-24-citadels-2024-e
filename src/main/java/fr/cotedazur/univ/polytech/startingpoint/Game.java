@@ -21,7 +21,7 @@ import static fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger.*;
  * It also contains the methods to start the game, to shuffle the characters and to give the cards to the players.
  */
 public class Game {
-    private static final int CITY_SIZE_TO_WIN = 8;
+    public static final int CITY_SIZE_TO_WIN = 8;
     private static final int START_CARDS_NUMBER = 4;
     private Deck deck = new Deck();
     private Crown crown;
@@ -316,7 +316,7 @@ public class Game {
         District drawnDistrict = deck.drawCard();
         String drawCardMessage = player.getName() + " pioche la carte " + drawnDistrict + ".";
         LOGGER.info(drawCardMessage);
-        player.addDistrictInHand(drawnDistrict);
+        player.getDistrictsInHand().add(drawnDistrict);
         return drawnDistrict;
     }
 

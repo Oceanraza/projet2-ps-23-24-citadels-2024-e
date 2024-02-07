@@ -18,7 +18,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 
-import static fr.cotedazur.univ.polytech.startingpoint.Main.*;
+import static fr.cotedazur.univ.polytech.startingpoint.Game.CITY_SIZE_TO_WIN;
+import static fr.cotedazur.univ.polytech.startingpoint.Main.calculateScores;
+import static fr.cotedazur.univ.polytech.startingpoint.Main.jCommander;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class MainTest {
@@ -145,7 +147,7 @@ class MainTest {
         Player secondPlayer = new Bot("Player 2");
         List<Player> players = Arrays.asList(firstBuilder, secondPlayer);
 
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < CITY_SIZE_TO_WIN; i++) {
             String name = "District" + i;
             firstBuilder.getCity().addDistrict(new District(name, i, DistrictColor.TRADE), gameState); // 34 points
             secondPlayer.getCity().addDistrict(new District(name, i, DistrictColor.TRADE), gameState); // 32 points
@@ -164,7 +166,7 @@ class MainTest {
         Player fourthPlayer = new Bot("Player 4");
         List<Player> players = Arrays.asList(firstBuilder,thirdPlayer,fourthPlayer,secondPlayer);
 
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < CITY_SIZE_TO_WIN; i++) {
             String name = "District" + i;
             firstBuilder.getCity().addDistrict(new District(name, i, DistrictColor.TRADE), gameState); // 34 points
             secondPlayer.getCity().addDistrict(new District(name, i, DistrictColor.TRADE), gameState); // 32 points

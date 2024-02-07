@@ -8,6 +8,7 @@ import fr.cotedazur.univ.polytech.startingpoint.player.algorithms.BaseAlgo;
 
 import java.util.*;
 
+import static fr.cotedazur.univ.polytech.startingpoint.Game.CITY_SIZE_TO_WIN;
 import static fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole.ARCHITECT;
 
 public abstract class SmartAlgo extends BaseAlgo {
@@ -43,7 +44,7 @@ public abstract class SmartAlgo extends BaseAlgo {
     public boolean manufactureChoice() { // Use manufacture effect if the player has less than 7 built + buildable districts
         Set<District> builtAndBuildableDistricts = new HashSet<>(bot.getCity().getDistrictsBuilt());
         builtAndBuildableDistricts.addAll(bot.getDistrictsInHand());
-        return builtAndBuildableDistricts.size() < 8 - 1; // If player has 7 built + buildable districts he can just draw without paying 3 gold coins
+        return builtAndBuildableDistricts.size() < CITY_SIZE_TO_WIN - 1; // If player has 7+ built + buildable districts he doesn't need to use manufacture effect and can just draw normally
     }
 
 

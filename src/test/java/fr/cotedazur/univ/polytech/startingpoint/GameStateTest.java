@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 
+import static fr.cotedazur.univ.polytech.startingpoint.Game.CITY_SIZE_TO_WIN;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -38,7 +39,7 @@ class GameStateTest {
 
         assertFalse(gameState.isGameFinished(players));
 
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < CITY_SIZE_TO_WIN; i++) {
             String name = "District" + i;
             player1.getCity().addDistrict(new District(name, 0, DistrictColor.TRADE), gameState);
         }
