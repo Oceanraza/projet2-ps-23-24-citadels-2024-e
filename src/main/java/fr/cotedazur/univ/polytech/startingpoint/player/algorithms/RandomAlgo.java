@@ -96,14 +96,6 @@ public class RandomAlgo extends BaseAlgo {
         bot.getGameCharacter().specialEffect(bot, game);
     }
 
-    public void thiefAlgorithm(Game game) {
-        if (Utils.generateRandomNumber(2) == 0) { // have 50% chance to decide to steal a character
-            stealRandom(game);
-        } else {
-            LOGGER.info(COLOR_RED + "Il ne vole personne" + COLOR_RESET);
-        }
-    }
-
     public void buildOrNot(GameState gameState) { //builds if he can
         int builtThisTurn = 0;
 
