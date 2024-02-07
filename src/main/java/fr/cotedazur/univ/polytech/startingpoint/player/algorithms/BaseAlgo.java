@@ -15,8 +15,8 @@ public abstract class BaseAlgo {
     protected final boolean oneChanceOutOfTwo = Utils.generateRandomNumber(2) == 0;
 
     protected Bot bot;
-    protected BaseAlgo(){}
     protected String algoName;
+    protected BaseAlgo(){}
     public void setPlayer(Bot player){
         this.bot = player;
     }

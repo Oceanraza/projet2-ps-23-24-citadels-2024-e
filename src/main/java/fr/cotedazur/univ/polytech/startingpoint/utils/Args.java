@@ -9,11 +9,22 @@ public class Args {
     @Parameter(names = "--demo", description = "Demo mode (used for the presentation)")
     private boolean isDemo;
 
-    public boolean is2Thousands() {
-        return is2Thousands;
+    @Parameter(names = "--csv", description = "Saving data mode")
+    private boolean isCsv;
+    public ArgsEnum getCurrentMode(){
+        if (isCsv){
+            return ArgsEnum.CSV;
+        }
+        else if (is2Thousands){
+            return ArgsEnum.TWOTHOUSANDS;}
+        else{
+            return ArgsEnum.DEMO;
+        }
     }
+    public enum ArgsEnum {
+        TWOTHOUSANDS(),
+        CSV(),
+        DEMO();
 
-    public boolean isDemo() {
-        return isDemo;
     }
 }

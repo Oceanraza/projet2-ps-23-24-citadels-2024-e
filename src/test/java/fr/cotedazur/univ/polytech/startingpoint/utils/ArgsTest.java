@@ -27,8 +27,7 @@ class ArgsTest {
                 .build()
                 .parse(args2x1000games);
 
-        assertTrue(commandLineArgs.is2Thousands());
-        assertFalse(commandLineArgs.isDemo());
+        assertTrue(commandLineArgs.getCurrentMode().equals(Args.ArgsEnum.TWOTHOUSANDS));
     }
 
     // Launch 2000 tests with -Dexec.args="--demo"
@@ -39,7 +38,6 @@ class ArgsTest {
                 .build()
                 .parse(args1game);
 
-        assertTrue(commandLineArgs.isDemo());
-        assertFalse(commandLineArgs.is2Thousands());
+        assertTrue(commandLineArgs.getCurrentMode().equals(Args.ArgsEnum.DEMO));
     }
 }

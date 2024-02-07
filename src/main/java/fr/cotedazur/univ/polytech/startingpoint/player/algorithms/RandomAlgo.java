@@ -21,6 +21,7 @@ import java.util.Optional;
 public class RandomAlgo extends BaseAlgo {
     public RandomAlgo() {
         super();
+        algoName = "Random";
     }
 
     public int startOfTurnChoice() {

@@ -170,12 +170,11 @@ public class Game {
     public void charSelectionFiller(){
         for (Player p: players){
             if (p.getGameCharacter() == null){
-                Bot p2 = (Bot) p;
-                String playerInfo = p2.toString();
+                String playerInfo = ((Bot)p).toString();
                 LOGGER.info(playerInfo);
                 //We create a new variable p2 to cast p to Bot each time
                 //Good to note that you can't just cast the whole List
-                p2.getBotAlgo().chooseCharacterAlgorithm(this);}
+                ((Bot)p).getBotAlgo().chooseCharacterAlgorithm(this);}
         }
     }
 
