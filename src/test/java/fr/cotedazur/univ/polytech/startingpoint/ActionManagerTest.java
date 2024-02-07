@@ -1,5 +1,6 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
+import fr.cotedazur.univ.polytech.startingpoint.board.Deck;
 import fr.cotedazur.univ.polytech.startingpoint.character.card.*;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.city.DistrictColor;
@@ -264,5 +265,65 @@ class ActionManagerTest {
 
         ActionManager.applySpecialCardsEffect(game, bot);
         assertEquals(3, bot.getGold());
+    }
+
+    @Test
+    void graveyardTest() {
+        Bot condottiere = new Bot("Condottiere", new EinsteinAlgo());
+        Bot graveyardOwner = new Bot("Graveyard owner", new EinsteinAlgo());
+        condottiere.setGameCharacter(new Warlord());
+        graveyardOwner.setGameCharacter(new King());
+        Deck deck = new Deck();
+
+        District deckCard = new District("Deck card", 0, DistrictColor.TRADE);
+        deck.addDistrict(deckCard);
+
+        District builtDistrict = new District("District1", 0, DistrictColor.MILITARY);
+        graveyardOwner.buildDistrict(builtDistrict, gameState);
+        assertEquals(1, graveyardOwner.getCity().getDistrictsBuilt().size());
+
+        condottiere.getGameCharacter().specialEffect(condottiere, game, graveyardOwner, builtDistrict);
+        // District is destroyed because graveyardOwner has no graveyard yet
+        assertEquals(0, graveyardOwner.getCity().getDistrictsBuilt().size());
+
+        graveyardOwner.setGold(5);
+        District graveyard = new District("Cimetiere", 5, DistrictColor.SPECIAL);
+        graveyardOwner.buildDistrict(graveyard, gameState);
+        graveyardOwner.buildDistrict(builtDistrict, gameState);
+        assertEquals(2, graveyardOwner.getCity().getDistrictsBuilt().size());
+
+        assertEquals(0, graveyardOwner.getGold());
+        condottiere.getGameCharacter().specialEffect(condottiere, game, graveyardOwner, builtDistrict);
+        ActionManager.graveyardLogic(deck, graveyardOwner, builtDistrict);
+        // District is destroyed because graveyardOwner has no money to get it back, he still has the graveyard
+        assertEquals(1, graveyardOwner.getCity().getDistrictsBuilt().size());
+        assertEquals(0, graveyardOwner.getDistrictsInHand().size());
+
+        // Test if the destroyed district is put at the bottom of the deck
+        assertEquals(deckCard, deck.drawCard());
+        assertEquals(builtDistrict, deck.drawCard());
+
+        graveyardOwner.setGold(1);
+        graveyardOwner.buildDistrict(builtDistrict, gameState);
+        assertEquals(2, graveyardOwner.getCity().getDistrictsBuilt().size());
+
+        condottiere.getGameCharacter().specialEffect(condottiere, game, graveyardOwner, builtDistrict);
+        ActionManager.graveyardLogic(deck, graveyardOwner, builtDistrict);
+        // GraveyardOwner has enough money to get the district back in his hand
+        assertEquals(0, graveyardOwner.getGold());
+        assertEquals(1, graveyardOwner.getCity().getDistrictsBuilt().size());
+        assertEquals(1, graveyardOwner.getDistrictsInHand().size());
+
+        graveyardOwner.buildDistrict(builtDistrict, gameState);
+        graveyardOwner.getDistrictsInHand().clear();
+        graveyardOwner.setGameCharacter(new Warlord());
+
+        graveyardOwner.setGold(1);
+        condottiere.getGameCharacter().specialEffect(condottiere, game, graveyardOwner, builtDistrict);
+        ActionManager.graveyardLogic(deck, graveyardOwner, builtDistrict);
+        // GraveyardOwner is a Warlord, he can't use the graveyard and his district is destroyed by the other warlord
+        assertEquals(1, graveyardOwner.getGold());
+        assertEquals(1, graveyardOwner.getCity().getDistrictsBuilt().size());
+        assertEquals(0, graveyardOwner.getDistrictsInHand().size());
     }
 }

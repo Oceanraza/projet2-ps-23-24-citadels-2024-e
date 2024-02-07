@@ -100,6 +100,10 @@ public class RandomAlgo extends BaseAlgo {
         return Optional.empty();
     }
 
+    public boolean graveyardChoice() {
+        return Utils.generateRandomNumber(2) == 0;
+    }
+
     @Override
     public void botChoosesCard(Game game, List<District> threeCards) {
         District chosenCard = chooseCard(threeCards);

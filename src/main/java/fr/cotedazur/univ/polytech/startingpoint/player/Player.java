@@ -135,19 +135,6 @@ public abstract class Player {
         this.setScore(this.calculateScore());
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Player p = (Player) o;
-        return getName().equals(p.getName());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name);
-    }
-
     public Optional<District> getLowestDistrict(){
         List<District> sortedDistrictByScore = getCity().getDistrictsBuilt();
         if (sortedDistrictByScore.isEmpty()){return Optional.empty();}
@@ -155,6 +142,15 @@ public abstract class Player {
                 .min(Comparator.comparingDouble(District::getPrice))
                 .orElse(null);
         return Optional.of(minPriceDistrict);
+    }
+
+    public void removeFromHandAndPutInDeck(Deck deck, District cardToDiscard) {
+        if (this.getDistrictsInHand().contains(cardToDiscard)) {
+            this.getDistrictsInHand().remove(cardToDiscard);
+            deck.putCardAtBottom(cardToDiscard);
+        } else {
+            LOGGER.info("La carte n'est pas dans la main du joueur");
+        }
     }
 
     @Override
@@ -171,12 +167,16 @@ public abstract class Player {
                 (!city.getDistrictsBuilt().isEmpty() ? "Et il a deja pose: " + city : "Il n'a pas pose de quartiers.");
     }
 
-    public void moveCardInDeck(District card, Deck deck) {
-        if (this.getDistrictsInHand().contains(card)) {
-            this.getDistrictsInHand().remove(card);
-            deck.addDistrict(card);
-        } else {
-            LOGGER.info("La carte n'est pas dans la main du joueur");
-        }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Player p = (Player) o;
+        return getName().equals(p.getName());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 }

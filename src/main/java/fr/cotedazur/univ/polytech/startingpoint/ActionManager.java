@@ -1,6 +1,7 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
 
+import fr.cotedazur.univ.polytech.startingpoint.board.Deck;
 import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.city.DistrictColor;
@@ -82,6 +83,17 @@ public class ActionManager {
         bot.getBotAlgo().botChoosesCard(game, threeCards);
     }
 
+    public static void graveyardLogic(Deck deck, Player graveyardOwner, District destroyedDistrict) {
+        if (graveyardOwner.getGold() >= 1 && !graveyardOwner.getCharacterName().equals("Condottiere") && ((Bot) graveyardOwner).getBotAlgo().graveyardChoice()) {
+            String graveyardMessage = graveyardOwner.getName() + " utilise le Cimetiere pour reprendre le " + destroyedDistrict + " dans sa main.";
+            LOGGER.info(graveyardMessage);
+            graveyardOwner.getDistrictsInHand().add(destroyedDistrict);
+            graveyardOwner.removeGold(1);
+        } else {
+            deck.putCardAtBottom(destroyedDistrict);
+        }
+    }
+
 
     public static int collectGold(Player player) {
         GameCharacterRole role = player.getGameCharacter().getRole();
@@ -90,6 +102,15 @@ public class ActionManager {
         else if (role == BISHOP) return collectGoldUtil(player, DistrictColor.RELIGIOUS);
         else if (role == MERCHANT) return collectGoldUtil(player, DistrictColor.TRADE);
         return 0;
+    }
+
+    public static Optional<Player> playerHasSpecialDistrict(List<Player> players, String districtName) {
+        for (Player player : players) {
+            if (player.getCity().containsDistrict(districtName)) {
+                return Optional.of(player);
+            }
+        }
+        return Optional.empty();
     }
 
     public static void applyCharacterSpecialEffect(Player player, Game game) {
@@ -117,7 +138,7 @@ public class ActionManager {
     private static void applyLaboratoryEffect(Game game, Player player, Optional<District> districtToDiscard, Bot bot) {
         String laboratoryMessage = player.getName() + " utilise le Laboratoire pour defausser sa carte " + districtToDiscard.get().getName() + " contre 1 piece d'or.";
         LOGGER.info(laboratoryMessage);
-        bot.moveCardInDeck(districtToDiscard.get(), game.getDeck());
+        bot.removeFromHandAndPutInDeck(game.getDeck(), districtToDiscard.get());
         bot.addGold(1);
     }
 
