@@ -27,17 +27,13 @@ public abstract class BaseAlgo {
     public abstract void chooseCharacterAlgorithm(Game game);
 
     public abstract void warlordAlgorithm(Game game);
-
     public abstract void magicianAlgorithm(Game game);
-
     public abstract void assassinAlgorithm(Game game);
+    public abstract void thiefAlgorithm(Game game);
 
     public abstract void huntedQuarterAlgorithm(District huntedQuarter);
-
     public abstract boolean manufactureChoice();
-
     public abstract boolean graveyardChoice();
-
     public abstract Optional<District> laboratoryChoice();
 
     public abstract void botChoosesCard(Game game, List<District> threeCards);
@@ -64,7 +60,7 @@ public abstract class BaseAlgo {
         }
     }
 
-    public void thiefAlgorithm(Game game) {
+    public void stealRandom(Game game) {
         int numberOfTargets;
         int indexPlayerStolen;
         GameCharacterRole targetedCharacter;
