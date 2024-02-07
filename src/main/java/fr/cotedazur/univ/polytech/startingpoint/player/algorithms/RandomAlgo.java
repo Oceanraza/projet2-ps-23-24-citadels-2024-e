@@ -93,7 +93,7 @@ public class RandomAlgo extends BaseAlgo {
     }
 
     public boolean graveyardChoice() {
-        return Utils.generateRandomNumber(2) == 0;
+        return oneChanceOutOfTwo;
     }
 
     @Override
