@@ -86,14 +86,14 @@ class ActionManagerTest {
     @Test
     void getCrownTest() {
         bot.setGameCharacter(king);
-        ActionManager.applySpecialEffect(bot, game);
+        ActionManager.applyCharacterSpecialEffect(bot, game);
         assertEquals("Bot", game.getCrown().getOwner().getName());
     }
 
     @Test
     void getGoldTest() {
         bot.setGameCharacter(bishop);
-        ActionManager.applySpecialEffect(bot, game);
+        ActionManager.applyCharacterSpecialEffect(bot, game);
         assertEquals(2, bot.getGold());
     }
 
