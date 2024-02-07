@@ -9,7 +9,6 @@ import fr.cotedazur.univ.polytech.startingpoint.player.algorithms.BaseAlgo;
 import java.util.*;
 
 import static fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole.ARCHITECT;
-import static fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger.LOGGER;
 
 public abstract class SmartAlgo extends BaseAlgo {
     protected boolean lowestDistrictFound = false;
@@ -17,7 +16,6 @@ public abstract class SmartAlgo extends BaseAlgo {
     protected SmartAlgo() {
         super();
     }
-
 
     // To know if the assassin can kill this character
     int isKillable(List<GameCharacter> killableCharacters, GameCharacterRole charEnum) {
@@ -78,14 +76,4 @@ public abstract class SmartAlgo extends BaseAlgo {
             }
         }
     }
-
-    public void graveyardLogic(District destroyedDistrict) {
-        if (bot.getCity().containsDistrict("Cimetiere") && bot.getGold() >= 1 && !bot.getCharacterName().equals("Condottiere")) {
-            String graveyardMessage = bot.getName() + " utilise le Cimetiere pour reprendre le " + destroyedDistrict + " dans sa main.";
-            LOGGER.info(graveyardMessage);
-            bot.getDistrictsInHand().add(destroyedDistrict);
-            bot.removeGold(1);
-        }
-    }
-
 }

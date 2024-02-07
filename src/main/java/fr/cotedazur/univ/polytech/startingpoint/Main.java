@@ -64,7 +64,7 @@ public class Main {
                         Bot bot = (Bot) player;
                         bot.getBotAlgo().huntedQuarterAlgorithm(district);
                         LOGGER.info(COLOR_BLUE + "\n[ Choix de fin de partie ]" + COLOR_RESET);
-                        String useHuntedQuarterMessage = player.getName() + " utilise la Cour des miracles en tant que quartier " + district.getColor() + ".";
+                        String useHuntedQuarterMessage = COLOR_PURPLE + player.getName() + " utilise la Cour des miracles en tant que quartier " + district.getColor() + "." + COLOR_RESET;
                         LOGGER.info(useHuntedQuarterMessage);
                     }
                 }

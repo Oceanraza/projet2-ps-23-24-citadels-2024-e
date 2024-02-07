@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 public abstract class BaseAlgo {
-    private final boolean oneChanceOutOfTwo = Utils.generateRandomNumber(2) == 0;
+    protected final boolean oneChanceOutOfTwo = Utils.generateRandomNumber(2) == 0;
 
     protected Bot bot;
     protected BaseAlgo(){}

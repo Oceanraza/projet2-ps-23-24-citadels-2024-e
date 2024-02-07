@@ -37,4 +37,9 @@ public class RichardAlgo extends SmartAlgo {
     public void botChoosesCard(Game game, List<District> threeCards) {
         // TODO
     }
+
+    @Override
+    public boolean graveyardChoice() {
+        return true;
+    }
 }

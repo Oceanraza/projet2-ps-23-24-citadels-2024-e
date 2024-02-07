@@ -22,6 +22,10 @@ public class Deck {
         this.cards = cards;
     }
 
+    public List<District> getCards() {
+        return cards;
+    }
+
     @Override
     public String toString() {
         StringBuilder str = new StringBuilder("Les cartes dans le deck sont : \n");
