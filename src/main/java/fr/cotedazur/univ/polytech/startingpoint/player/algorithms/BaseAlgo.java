@@ -90,4 +90,5 @@ public abstract class BaseAlgo {
 
     public abstract void botChoosesCard(Game game, List<District> threeCards);
 
+
 }

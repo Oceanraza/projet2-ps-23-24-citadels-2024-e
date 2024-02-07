@@ -8,8 +8,8 @@ import fr.cotedazur.univ.polytech.startingpoint.player.algorithms.BaseAlgo;
 
 import java.util.*;
 
-import static fr.cotedazur.univ.polytech.startingpoint.CitadelsLogger.LOGGER;
 import static fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole.ARCHITECT;
+import static fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger.LOGGER;
 
 public abstract class SmartAlgo extends BaseAlgo {
     protected boolean lowestDistrictFound = false;
