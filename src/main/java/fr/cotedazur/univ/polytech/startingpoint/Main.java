@@ -2,6 +2,7 @@ package fr.cotedazur.univ.polytech.startingpoint;
 
 import com.beust.jcommander.JCommander;
 import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacter;
+import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.player.Bot;
 import fr.cotedazur.univ.polytech.startingpoint.player.Player;
@@ -10,9 +11,7 @@ import fr.cotedazur.univ.polytech.startingpoint.player.algorithms.smart.Einstein
 import fr.cotedazur.univ.polytech.startingpoint.utils.Args;
 import fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.logging.Level;
 
 import static fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger.*;
@@ -73,7 +72,7 @@ public class Main {
 
     }
 
-    public static void jCommander(String... args) {
+    public static int jCommander(String... args) {
         Args commandLineArgs = new Args();
         JCommander.newBuilder()
                 .addObject(commandLineArgs)
@@ -81,81 +80,126 @@ public class Main {
                 .parse(args);
 
         // Determining the value of numberOfTurns according to the options
-        int numberOfTurns;
+        int numberOfGames;
         // 2 x 1000 games
         if (commandLineArgs.is2Thousands()) {
-            numberOfTurns = 1000;
+            numberOfGames = 1000;
             CitadelsLogger.setGlobalLogLevel(Level.OFF);
         }
         // One game
         else {
-            numberOfTurns = 1;
+            numberOfGames = 1;
             CitadelsLogger.setGlobalLogLevel(Level.ALL);
         }
+        return numberOfGames;
     }
-
+    public static void resetAll(Game game, GameState gameState){
+         game.resetGame();
+         gameState.resetGameState();
+    }
+    public static int getPlacement(List<Player> players, Player wantedPlayer){
+        for (int i = 0; i < players.size(); i++){
+            if (players.get(i).equals(wantedPlayer)){
+                return i + 1;
+            }
+        }
+        return -1;
+    }
+    public static void printPlayerInfo( Map<String, Integer> totalScores, Map<String, List<Integer>> totalPlacements,Player wantedPlayer, int numberOfGames) {
+        int place = 1;
+        for (Integer temp : totalPlacements.get(wantedPlayer.getName())) {
+            System.out.println(wantedPlayer.getName() + " a décroché la " + place + "e place " + temp / 10 + "% de fois en moyenne");
+            place++;
+        }
+        System.out.println("et a également eu " + totalScores.get(wantedPlayer.getName())/1000 + " de score en moyenne.");
+    }
     public static void main(String... args) {
+        Map<String, Integer> totalScores = new HashMap<>();
+        Map<String, List<Integer>> totalPlacements = new HashMap<>(); //List of 4 placements
+        String name1 = "Donald";
+        String name2 = "Picsou";
+        String name3 = "Riri";
+        String name4 = "Fifi";
+        String[] names = {name1,name2,name3,name4};
+        List<Integer> initialPlacement = Arrays.asList(0, 0, 0, 0);
+
+        // Add the initial list to each key in the map
+        for (String key : names) {
+            totalPlacements.put(key, new ArrayList<>(initialPlacement));
+        }
         CitadelsLogger.setup();
-        jCommander(args);
 
         Game newGame = new Game();
         GameState gameState = new GameState();
+        int numberOfGames = jCommander(args);
+        for (int games = 0 ; games < numberOfGames; games++){
+            resetAll(newGame,gameState);
+            // Adding players to the game
+            newGame.setPlayers(
+                    new Bot(name1, new EinsteinAlgo()),
+                    new Bot(name2, new EinsteinAlgo()),
+                    new Bot(name3, new RandomAlgo()),
+                    new Bot(name4, new RandomAlgo())
+            );
 
-        // Adding players to the game
-        newGame.setPlayers(
-                new Bot("Donald", new EinsteinAlgo()),
-                new Bot("Picsou", new EinsteinAlgo()),
-                new Bot("Riri", new RandomAlgo()),
-                new Bot("Fifi", new RandomAlgo())
-        );
+            List<Player> players = newGame.getPlayers();
 
-        List<Player> players = newGame.getPlayers();
+            // Gives the startingCards to all the players.
+            newGame.startCardGame();
 
-        // Gives the startingCards to all the players.
-        newGame.startCardGame();
+            Player firstBuilder = null;
+            while (!gameState.isGameFinished(players)) {
+                gameState.nextTurn();
 
-        Player firstBuilder = null;
-        while (!gameState.isGameFinished(players)) {
-            gameState.nextTurn();
+                String turnNumberMessage = COLOR_BLUE + "\n\n----- Tour " + gameState.getTurn() + " -----" + COLOR_RESET;
+                LOGGER.info(turnNumberMessage);
 
-            String turnNumberMessage = COLOR_BLUE + "\n\n----- Tour " + gameState.getTurn() + " -----" + COLOR_RESET;
-            LOGGER.info(turnNumberMessage);
+                Bot crownOwner = newGame.getCrownOwner();
 
-            Bot crownOwner = newGame.getCrownOwner();
+                // Reset characters, their states and shuffle cards
+                newGame.resetChars();
+                newGame.resetCharsState();
+                newGame.shuffleCharacters();
 
-            // Reset characters, their states and shuffle cards
-            newGame.resetChars();
-            newGame.resetCharsState();
-            newGame.shuffleCharacters();
+                // Character selection phase
+                LOGGER.info("\n" + COLOR_BLUE + "[ Phase 1 ] Choix des personnages" + COLOR_RESET);
 
-            // Character selection phase
-            LOGGER.info("\n" + COLOR_BLUE + "[ Phase 1 ] Choix des personnages" + COLOR_RESET);
+                newGame.characterSelection(crownOwner);
 
-            newGame.characterSelection(crownOwner);
+                // Character reveal phase
+                LOGGER.info("\n" + COLOR_BLUE + "[ Phase 2 ] Tour des joueurs" + COLOR_RESET);
+                List<Player> runningOrder = newGame.setRunningOrder();
 
-            // Character reveal phase
-            LOGGER.info("\n" + COLOR_BLUE + "[ Phase 2 ] Tour des joueurs" + COLOR_RESET);
-            List<Player> runningOrder = newGame.setRunningOrder();
-
-            for (Player player: runningOrder) {
-                GameCharacter cha = player.getGameCharacter();
-                // If the character is alive
-                if (cha.getIsAlive()) {
-                    String playerInfos = player.toString();
-                    LOGGER.info(playerInfos);
-                    player.play(newGame, gameState);
-                    if (gameState.isFinished(player)) {
-                        firstBuilder = player;
+                for (Player player: runningOrder) {
+                    GameCharacter cha = player.getGameCharacter();
+                    // If the character is alive
+                    if (cha.getIsAlive()) {
+                        String playerInfos = player.toString();
+                        LOGGER.info(playerInfos);
+                        player.play(newGame, gameState);
+                        if (gameState.isFinished(player)) {
+                            firstBuilder = player;
+                        }
+                    }
+                    // If the player has been killed, he cannot play
+                    else {
+                        newGame.playerKilled(cha, player);
                     }
                 }
-                // If the player has been killed, he cannot play
-                else {
-                    newGame.playerKilled(cha, player);
-                }
+            }
+            finalChoice(players, gameState);
+            LOGGER.info("\n" + COLOR_BLUE + "[ Decompte des points ]" + COLOR_RESET);
+            announceWinner(players, firstBuilder, gameState);
+            for (Player p: players){
+                totalScores.compute(p.getName(), (k, v) -> (v == null) ? p.getScore() : v + p.getScore());
+                //totalPlacements.
+                totalPlacements.get(p.getName()).set(getPlacement(players, p) - 1, totalPlacements.get(p.getName()).get(getPlacement(players, p) - 1) + 1); //Adds one to the pos
             }
         }
-        finalChoice(players, gameState);
-        LOGGER.info("\n" + COLOR_BLUE + "[ Decompte des points ]" + COLOR_RESET);
-        announceWinner(players, firstBuilder, gameState);
+            System.out.println(totalScores);
+            System.out.println(totalPlacements);
+            for (Player p : newGame.getPlayers()){
+                printPlayerInfo(totalScores,totalPlacements,p,numberOfGames);
+            }
+        }
     }
-}

@@ -10,6 +10,7 @@ import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 import java.io.File;
 import java.io.IOException;
 import java.security.SecureRandom;
+import java.util.ArrayList;
 import java.util.List;
 
 // This class is used for basic methods that only have niche purposes and are generally just math
@@ -46,8 +47,8 @@ public class Utils {
         return objectMapper.readTree(new File(filePath));
     }
 
-    public static Deck convertJsonNodeToDistrictList(JsonNode districtsNode) {
-        Deck districtList = new Deck();
+    public static ArrayList<District> convertJsonNodeToDistrictList(JsonNode districtsNode) {
+        ArrayList<District> districtList = new ArrayList<>();
 
         // Iterate through each district in the array
         for (JsonNode districtNode : districtsNode) {
@@ -60,7 +61,7 @@ public class Utils {
             // Create a District object and add it to the list
             for (int i = 0; i < number; i++) {
                 District district = new District(name, price, DistrictColor.valueOfByString(color), bonusPoints);
-                districtList.addDistrict(district);
+                districtList.add(district);
             }
         }
         return districtList;

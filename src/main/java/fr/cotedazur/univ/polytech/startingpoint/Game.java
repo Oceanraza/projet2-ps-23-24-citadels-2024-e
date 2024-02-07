@@ -25,7 +25,7 @@ import static fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger.*;
  */
 public class Game {
     private static final int START_CARDS_NUMBER = 4;
-    private Deck deck;
+    private Deck deck = new Deck();
     private Crown crown;
     private List<Player> players;
     private List<GameCharacter> allCharacters;
@@ -96,18 +96,9 @@ public class Game {
 
     // Init starts off the game by creating the deck, the crown, the players and the characters
     public void init() {
-        deck = new Deck();
+        deck.resetDeck();
         allCharacters = new ArrayList<>();
         availableChars = new ArrayList<>();
-
-        // Specify the path to your JSON file
-        try {
-            JsonNode tempNode = Utils.parseJsonFromFile
-                    ("src/main/resources/init_database.json");
-            deck = Utils.convertJsonNodeToDistrictList(tempNode.path("Game").path("Districts"));
-        } catch (IOException e) {
-            throw new JsonFileReadException("Error reading JSON file", e);
-        }
 
         // Create a crown
         crown = new Crown();
@@ -162,7 +153,7 @@ public class Game {
     private void giveStartingCards() {
         for (Player player : players) {
             for (int i = 0; i < START_CARDS_NUMBER; i++) {
-                player.getDistrictsInHand().add(deck.drawCard());
+                player.addDistrictInHand(deck.drawCard());
             }
         }
     }
@@ -293,7 +284,7 @@ public class Game {
         District drawnDistrict = deck.drawCard();
         String drawCardMessage = player.getName() + " pioche la carte " + drawnDistrict + ".";
         LOGGER.info(drawCardMessage);
-        player.getDistrictsInHand().add(drawnDistrict);
+        player.addDistrictInHand(drawnDistrict);
         return drawnDistrict;
     }
 
@@ -304,5 +295,9 @@ public class Game {
     @Override
     public String toString() {
         return deck.toString();
+    }
+
+    public void resetGame() {
+        init();
     }
 }

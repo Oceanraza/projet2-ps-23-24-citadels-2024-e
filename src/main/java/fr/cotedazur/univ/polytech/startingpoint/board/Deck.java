@@ -1,8 +1,12 @@
 package fr.cotedazur.univ.polytech.startingpoint.board;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import fr.cotedazur.univ.polytech.startingpoint.exception.JsonFileReadException;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.exception.EmptyDeckException;
+import fr.cotedazur.univ.polytech.startingpoint.utils.Utils;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -16,6 +20,16 @@ public class Deck {
 
     public Deck() {
         this.cards = new ArrayList<>();
+    }
+    public void resetDeck(){
+        // Specify the path to your JSON file
+        try {
+            JsonNode tempNode = Utils.parseJsonFromFile
+                    ("src/main/resources/init_database.json");
+            cards.addAll(Utils.convertJsonNodeToDistrictList(tempNode.path("Game").path("Districts")));
+        } catch (IOException e) {
+            throw new JsonFileReadException("Error reading JSON file", e);
+        }
     }
 
     public void setDeck(List<District> cards) {

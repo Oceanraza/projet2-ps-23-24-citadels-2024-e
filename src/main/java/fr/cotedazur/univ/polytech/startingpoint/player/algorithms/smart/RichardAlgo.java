@@ -6,6 +6,10 @@ import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import java.util.List;
 
 public class RichardAlgo extends SmartAlgo {
+    public RichardAlgo(){
+        super();
+        algoName = "Richard";
+    }
 
     @Override
     public void chooseCharacterAlgorithm(Game game) {

@@ -16,9 +16,11 @@ public abstract class BaseAlgo {
 
     protected Bot bot;
     protected BaseAlgo(){}
+    protected String algoName;
     public void setPlayer(Bot player){
         this.bot = player;
     }
+    public String getAlgoName(){return algoName;}
 
     public abstract int startOfTurnChoice();
 

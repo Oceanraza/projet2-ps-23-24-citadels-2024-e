@@ -66,9 +66,9 @@ class ArchitectTest {
         game.setPlayers(firstBuilder);
         firstBuilder.setGold(10);
 
-        firstBuilder.getDistrictsInHand().add(new District("test", 2, DistrictColor.TRADE));
-        firstBuilder.getDistrictsInHand().add(new District("test2", 2, DistrictColor.TRADE));
-        firstBuilder.getDistrictsInHand().add(new District("test3", 2, DistrictColor.TRADE));
+        firstBuilder.addDistrictInHand(new District("test", 2, DistrictColor.TRADE));
+        firstBuilder.addDistrictInHand(new District("test2", 2, DistrictColor.TRADE));
+        firstBuilder.addDistrictInHand(new District("test3", 2, DistrictColor.TRADE));
 
         firstBuilder.setGameCharacter(architect);
         assertEquals(0, firstBuilder.getCity().getDistrictsBuilt().size());

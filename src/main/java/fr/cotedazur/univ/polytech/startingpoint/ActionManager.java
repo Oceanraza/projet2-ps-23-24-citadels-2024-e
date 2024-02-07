@@ -80,7 +80,7 @@ public class ActionManager {
         if (graveyardOwner.getGold() >= 1 && !graveyardOwner.getCharacterName().equals("Condottiere") && ((Bot) graveyardOwner).getBotAlgo().graveyardChoice()) {
             String graveyardMessage = COLOR_PURPLE + graveyardOwner.getName() + " utilise le Cimetiere pour reprendre le " + destroyedDistrict + " dans sa main." + COLOR_RESET;
             LOGGER.info(graveyardMessage);
-            graveyardOwner.getDistrictsInHand().add(destroyedDistrict);
+            graveyardOwner.addDistrictInHand(destroyedDistrict);
             graveyardOwner.removeGold(1);
         } else {
             deck.putCardAtBottom(destroyedDistrict);
