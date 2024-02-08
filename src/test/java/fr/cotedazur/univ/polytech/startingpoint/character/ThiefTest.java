@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.mockito.Mockito.mock;
 
 class ThiefTest {
     Game game;
@@ -34,6 +35,12 @@ class ThiefTest {
         thiefPlayer = new Bot("thiefPlayer");
         assassinPlayer = new Bot("assassinPlayer");
         targetPlayer = new Bot("targetPlayer");
+    }
+
+    @Test
+    void thiefInformationsTest() {
+        assertEquals(2, thief.getRunningOrder());
+        assertNull(thief.getColor());
     }
 
     // Steal a character

@@ -1,79 +1,123 @@
 package fr.cotedazur.univ.polytech.startingpoint.character;
 
-import fr.cotedazur.univ.polytech.startingpoint.utils.InGameLogger;
 import fr.cotedazur.univ.polytech.startingpoint.Game;
-import fr.cotedazur.univ.polytech.startingpoint.character.card.*;
+import fr.cotedazur.univ.polytech.startingpoint.character.card.Magician;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.city.DistrictColor;
 import fr.cotedazur.univ.polytech.startingpoint.player.Bot;
-import fr.cotedazur.univ.polytech.startingpoint.player.Player;
+import fr.cotedazur.univ.polytech.startingpoint.utils.InGameLogger;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.logging.Level;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 class MagicianTest {
-    Assassin assassin;
-    Magician magician;
-    King king;
-    Bishop bishop;
-    Warlord warlord;
-    Bot bot;
     Game game;
+    Magician magician;
+    Bot magicianPlayer;
+    Bot targetPlayer;
+    District district1;
+    District district2;
+    District district3;
 
     @BeforeEach
     void setUp() {
         InGameLogger.setup();
         InGameLogger.setGlobalLogLevel(Level.OFF);
 
-        assassin = new Assassin();
-        magician = new Magician();
-        king = new King();
-        bishop = new Bishop();
-        warlord = new Warlord();
-
-        bot = new Bot("Bot") {
-        };
         game = new Game();
-        game.init();
+        magician = new Magician();
+
+        // Create players
+        magicianPlayer = new Bot("magicianPlayer");
+        targetPlayer = new Bot("targetPlayer");
+
+        // Create districts
+        district1 = new District("Quartier 1", 1, DistrictColor.NOBLE);
+        district2 = new District("Quartier 2", 2, DistrictColor.MILITARY);
+        district3 = new District("Quartier 3", 3, DistrictColor.MILITARY);
     }
 
     @Test
-    void switchTest() { //Tests if the hands have been switched
-        Player firstBuilder = new Bot("Player 1");
-        Player secondPlayer = new Bot("Player 2");
-        Game game = new Game();
-        game.setPlayers(firstBuilder, secondPlayer);
-        firstBuilder.setGold(5);
-        firstBuilder.setGameCharacter(magician);
-        secondPlayer.setGameCharacter(king);
-
-        District distToSwitch = new District("test", 5, DistrictColor.TRADE);
-        secondPlayer.addDistrictInHand(distToSwitch);
-        secondPlayer.addDistrictInHand(distToSwitch);
-        secondPlayer.addDistrictInHand(distToSwitch);
-        firstBuilder.addDistrictInHand(distToSwitch);
-
-        assertEquals(3, secondPlayer.getDistrictsInHand().size());
-        assertEquals(1, firstBuilder.getDistrictsInHand().size());
-        firstBuilder.getGameCharacter().specialEffect(firstBuilder, game, true, secondPlayer);
-        assertEquals(1, secondPlayer.getDistrictsInHand().size());
-        assertEquals(3, firstBuilder.getDistrictsInHand().size());
+    void magicianInformationsTest() {
+        assertEquals(3, magician.getRunningOrder());
+        assertNull(magician.getColor());
     }
 
     @Test
-    void switchWithDeckTest() { //Tests if the card has been switched
-        Player firstBuilder = new Bot("Player 1");
-        Game game = new Game();
-        game.init();
-        game.setPlayers(firstBuilder);
-        firstBuilder.setGameCharacter(magician);
-        District distToSwitch = new District("ToSwitch", 0, DistrictColor.TRADE);
-        firstBuilder.addDistrictInHand(distToSwitch);
-        firstBuilder.getGameCharacter().specialEffect(firstBuilder, game, false);
-        assertNotEquals(distToSwitch, firstBuilder.getDistrictsInHand().get(0));
+    void switchCardsWithPlayerTest() { // Tests if the hands have been switched
+        // Add players to the game
+        game.setPlayers(magicianPlayer, targetPlayer);
+        // Set characters to players
+        magicianPlayer.setGameCharacter(magician);
+        // Add districts
+        magicianPlayer.addDistrictInHand(district1);
+        targetPlayer.addDistrictInHand(district2);
+        targetPlayer.addDistrictInHand(district3);
+
+        assertEquals(1, magicianPlayer.getDistrictsInHand().size());
+        assertEquals(2, targetPlayer.getDistrictsInHand().size());
+
+        // Switch cards in hand
+        magician.specialEffect(magicianPlayer, game, true, targetPlayer);
+        assertEquals(2, magicianPlayer.getDistrictsInHand().size());
+        assertEquals(1, targetPlayer.getDistrictsInHand().size());
+    }
+
+    @Test
+    void switchCardsWithPlayerEmptyHandTest() { // Tests if the hands have been switched
+        // Add players to the game
+        game.setPlayers(magicianPlayer, targetPlayer);
+        // Set characters to players
+        magicianPlayer.setGameCharacter(magician);
+        // Add districts
+        targetPlayer.addDistrictInHand(district1);
+        targetPlayer.addDistrictInHand(district2);
+        targetPlayer.addDistrictInHand(district3);
+
+        assertEquals(0, magicianPlayer.getDistrictsInHand().size());
+        assertEquals(3, targetPlayer.getDistrictsInHand().size());
+
+        // Switch cards in hand
+        magician.specialEffect(magicianPlayer, game, true, targetPlayer);
+        assertEquals(3, magicianPlayer.getDistrictsInHand().size());
+        assertEquals(0, targetPlayer.getDistrictsInHand().size());
+    }
+
+    @Test
+    void switchCardsWithDeckTest() { // Tests if the hands have been switched
+        // Add players to the game
+        game.setPlayers(magicianPlayer);
+        // Set characters to players
+        magicianPlayer.setGameCharacter(magician);
+        // Add districts
+        magicianPlayer.addDistrictInHand(district1);
+        magicianPlayer.addDistrictInHand(district2);
+        magicianPlayer.addDistrictInHand(district3);
+
+        assertEquals(3, magicianPlayer.getDistrictsInHand().size());
+
+        // Switch cards in hand
+        magician.specialEffect(magicianPlayer, game, false);
+        assertEquals(3, magicianPlayer.getDistrictsInHand().size());
+        assertFalse(magicianPlayer.getDistrictsInHand().contains(district1));
+        assertFalse(magicianPlayer.getDistrictsInHand().contains(district2));
+        assertFalse(magicianPlayer.getDistrictsInHand().contains(district3));
+    }
+
+    @Test
+    void switchCardsWithDeckEmptyHandTest() { // Tests if the hands have been switched
+        // Add players to the game
+        game.setPlayers(magicianPlayer);
+        // Set characters to players
+        magicianPlayer.setGameCharacter(magician);
+
+        assertEquals(0, magicianPlayer.getDistrictsInHand().size());
+
+        // Switch cards in hand
+        magician.specialEffect(magicianPlayer, game, false);
+        assertEquals(0, magicianPlayer.getDistrictsInHand().size());
     }
 }

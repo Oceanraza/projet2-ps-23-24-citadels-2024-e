@@ -1,15 +1,19 @@
 package fr.cotedazur.univ.polytech.startingpoint.player.algorithms;
 
 import fr.cotedazur.univ.polytech.startingpoint.Game;
+import fr.cotedazur.univ.polytech.startingpoint.GameState;
 import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacter;
 import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.city.DistrictColor;
 import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 import fr.cotedazur.univ.polytech.startingpoint.utils.Utils;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+
+import static fr.cotedazur.univ.polytech.startingpoint.utils.InGameLogger.*;
 
 /**
  * This class represents the random algorithm
@@ -23,7 +27,7 @@ public class RandomAlgo extends BaseAlgo {
     }
 
     public int startOfTurnChoice() {
-        if (oneChanceOutOfTwo) {
+        if (getRandomBoolean()) {
             return 1; // Take 2 gold coins
         }
         return 2; // Draw a card
@@ -36,7 +40,7 @@ public class RandomAlgo extends BaseAlgo {
     }
 
     public void warlordAlgorithm(Game game) {
-        if (oneChanceOutOfTwo) { // Have 50% chance to decide to destroy a building of a random player or not
+        if (getRandomBoolean()) { // Have 50% chance to decide to destroy a building of a random player or not
             List<Player> playerList = game.getSortedPlayersByScoreForWarlord();
             playerList.remove(bot);
             Collections.shuffle(playerList);
@@ -50,29 +54,55 @@ public class RandomAlgo extends BaseAlgo {
                     }
                 }
             }
+        } else {
+            LOGGER.info(COLOR_RED + "Il ne détruit aucun quartier" + COLOR_RESET);
         }
     }
 
     public void assassinAlgorithm(Game game) {
-        int numberOfTargets;
-        int indexPlayerKilled;
-        GameCharacterRole targetedCharacter;
+        if (getRandomBoolean()) { // have 50% chance to decide to assassinate a character
+            int numberOfTargets;
+            int indexPlayerKilled;
+            GameCharacterRole targetedCharacter;
 
-        // Choose a random character and kill him
-        numberOfTargets = game.getKillableCharacters().size();
-        indexPlayerKilled = Utils.generateRandomNumber(numberOfTargets);
-        targetedCharacter = game.getKillableCharacters().get(indexPlayerKilled).getRole();
+            // Choose a random character and kill him
+            numberOfTargets = game.getKillableCharacters().size();
+            indexPlayerKilled = Utils.generateRandomNumber(numberOfTargets);
+            targetedCharacter = game.getKillableCharacters().get(indexPlayerKilled).getRole();
 
-        bot.getGameCharacter().specialEffect(bot, game, targetedCharacter);
+            bot.getGameCharacter().specialEffect(bot, game, targetedCharacter);
+        } else {
+            LOGGER.info(COLOR_RED + "Il n'assassine personne" + COLOR_RESET);
+        }
     }
 
     public void magicianAlgorithm(Game game) {
-        if (oneChanceOutOfTwo) { // have 50% chance to decide to destroy a building of a random player or not
-            List<Player> playerList = game.getSortedPlayersByScore();
-            playerList.remove(bot);
-            bot.getGameCharacter().specialEffect(bot, game, true, playerList.get(Utils.generateRandomNumber(playerList.size())));
+        if (getRandomBoolean()) {
+            // have 25% chance to decide to change his hand with another player
+            if (getRandomBoolean()) {
+                List<Player> playerList = game.getSortedPlayersByScore();
+                playerList.remove(bot);
+                bot.getGameCharacter().specialEffect(bot, game, true, playerList.get(Utils.generateRandomNumber(playerList.size())));
+            }
+            // have 25% chance to decide to change his hand with the deck
+            else {
+                bot.getGameCharacter().specialEffect(bot, game, false);
+            }
         } else {
-            bot.getGameCharacter().specialEffect(bot, game, false);
+            LOGGER.info(COLOR_RED + "Il n'échange ses cartes avec personne" + COLOR_RESET);
+        }
+    }
+
+    public void buildOrNot(GameState gameState) { //builds if he can
+        int builtThisTurn = 0;
+
+        for (District district : bot.getDistrictsInHand()) {
+            if (bot.buildDistrict(district, gameState)) {
+                builtThisTurn++;
+                if ((!bot.getCharacterName().equals("Architect")) || (builtThisTurn == 3)) {
+                    break;
+                }
+            }
         }
     }
 
@@ -85,11 +115,11 @@ public class RandomAlgo extends BaseAlgo {
     }
 
     public boolean manufactureChoice() {
-        return oneChanceOutOfTwo;
+        return getRandomBoolean();
     }
 
     public Optional<District> laboratoryChoice() {
-        if (oneChanceOutOfTwo) {
+        if (getRandomBoolean()) {
             List<District> districtsInHand = bot.getDistrictsInHand();
             return !districtsInHand.isEmpty() ? Optional.ofNullable(districtsInHand.get(Utils.generateRandomNumber(districtsInHand.size()))) : Optional.empty();
         }
@@ -97,7 +127,7 @@ public class RandomAlgo extends BaseAlgo {
     }
 
     public boolean graveyardChoice() {
-        return oneChanceOutOfTwo;
+        return getRandomBoolean();
     }
 
     @Override

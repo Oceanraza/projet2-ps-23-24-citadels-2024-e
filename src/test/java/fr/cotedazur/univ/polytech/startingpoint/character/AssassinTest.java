@@ -36,6 +36,12 @@ class AssassinTest {
         targetPlayer = new Bot("targetPlayer");
     }
 
+    @Test
+    void assassinInformationsTest() {
+        assertEquals(1, assassin.getRunningOrder());
+        assertNull(assassin.getColor());
+    }
+
     // Kill a character
     @Test
     void killCharacterTest() {

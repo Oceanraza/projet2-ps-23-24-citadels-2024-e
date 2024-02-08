@@ -32,10 +32,6 @@ public class Deck {
         }
     }
 
-    public void setDeck(List<District> cards) {
-        this.cards = cards;
-    }
-
     public List<District> getCards() {
         return cards;
     }

@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.logging.Level;
 
 import static fr.cotedazur.univ.polytech.startingpoint.Main.calculateScores;
+import static fr.cotedazur.univ.polytech.startingpoint.Main.jCommander;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class MainTest {
@@ -185,4 +186,14 @@ class MainTest {
         assertEquals(32, fourthPlayer.getScore());
     }
 
+    @Test
+    void jCommanderTest() {
+        String[] args2x1000games;
+        String[] args1game;
+
+        args2x1000games = new String[]{"--2thousands"};
+        assertEquals(1000, jCommander(args2x1000games));
+        args1game = new String[]{"--demo"};
+        assertEquals(1, jCommander(args1game));
+    }
 }
