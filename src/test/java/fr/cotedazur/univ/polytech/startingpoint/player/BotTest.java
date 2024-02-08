@@ -1,6 +1,5 @@
 package fr.cotedazur.univ.polytech.startingpoint.player;
 
-import fr.cotedazur.univ.polytech.startingpoint.utils.InGameLogger;
 import fr.cotedazur.univ.polytech.startingpoint.Game;
 import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacter;
 import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole;
@@ -8,7 +7,7 @@ import fr.cotedazur.univ.polytech.startingpoint.character.card.King;
 import fr.cotedazur.univ.polytech.startingpoint.character.card.Warlord;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.city.DistrictColor;
-import fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger;
+import fr.cotedazur.univ.polytech.startingpoint.utils.InGameLogger;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

@@ -1,11 +1,11 @@
 package fr.cotedazur.univ.polytech.startingpoint.character;
 
-import fr.cotedazur.univ.polytech.startingpoint.utils.InGameLogger;
 import fr.cotedazur.univ.polytech.startingpoint.Game;
-import fr.cotedazur.univ.polytech.startingpoint.character.card.*;
+import fr.cotedazur.univ.polytech.startingpoint.character.card.Magician;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.city.DistrictColor;
 import fr.cotedazur.univ.polytech.startingpoint.player.Bot;
+import fr.cotedazur.univ.polytech.startingpoint.utils.InGameLogger;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -37,7 +37,7 @@ class MagicianTest {
         // Create districts
         district1 = new District("Quartier 1", 1, DistrictColor.NOBLE);
         district2 = new District("Quartier 2", 2, DistrictColor.MILITARY);
-        district2 = new District("Quartier 3", 3, DistrictColor.MILITARY);
+        district3 = new District("Quartier 3", 3, DistrictColor.MILITARY);
     }
 
     @Test
