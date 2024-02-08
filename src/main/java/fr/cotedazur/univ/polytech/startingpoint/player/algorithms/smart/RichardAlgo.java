@@ -61,7 +61,7 @@ public class RichardAlgo extends SmartAlgo {
             bot.chooseChar(game, BISHOP);
         } else if (game.containsAvailableRole(THIEF)) {
             bot.chooseChar(game, THIEF);
-        } else if (game.containsAvailableRole(MERCHANT)) {
+        } else {
             bot.chooseChar(game, MERCHANT);
         }
     }
