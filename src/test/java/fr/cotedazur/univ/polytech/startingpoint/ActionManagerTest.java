@@ -27,7 +27,7 @@ class ActionManagerTest {
     @BeforeEach
     void setUp(){
         InGameLogger.setup();
-        InGameLogger.setGlobalLogLevel(Level.ALL);
+        InGameLogger.setGlobalLogLevel(Level.OFF);
 
         game = new Game();
         game.init();
