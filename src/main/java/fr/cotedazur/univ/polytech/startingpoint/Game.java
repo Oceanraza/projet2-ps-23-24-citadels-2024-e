@@ -68,6 +68,13 @@ public class Game {
                 .anyMatch(gameCharacter -> gameCharacter.getRole().equals(role));
     }
 
+    public boolean containsAvailableRoles(GameCharacterRole... roles) { // Check if the available characters contain at least one of the roles
+        List<GameCharacterRole> rolesList = Arrays.asList(roles);
+        return availableChars.stream()
+                .anyMatch(gameCharacter -> rolesList.contains(gameCharacter.getRole()));
+    }
+
+
     public List<GameCharacter> getCharactersInGame() {
         return charactersInGame;
     }
@@ -358,5 +365,27 @@ public class Game {
                 .filter(player -> player.getCity().size() == 6)
                 .findFirst()
                 .orElse(null);
+    }
+
+    public Player getPlayerWithMostCardInHand() {
+        return players.stream()
+                .max((p1, p2) -> Integer.compare(p1.getDistrictsInHand().size(), p2.getDistrictsInHand().size()))
+                .orElse(null);
+    }
+
+    public Player getPlayerWithLowestDistrictPrice() {
+        Player playerWithLowestDistrictPrice = null;
+        int lowestPrice = Integer.MAX_VALUE;
+
+        for (Player player : players) {
+            for (District district : player.getDistrictsInHand()) {
+                if (district.getPrice() < lowestPrice) {
+                    lowestPrice = district.getPrice();
+                    playerWithLowestDistrictPrice = player;
+                }
+            }
+        }
+
+        return playerWithLowestDistrictPrice;
     }
 }

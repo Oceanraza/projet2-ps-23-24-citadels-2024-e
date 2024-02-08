@@ -90,6 +90,11 @@ public class EinsteinAlgo extends SmartAlgo {
         }
     }
 
+    /**
+     * This algorithm is used to destroy the lowest district of the player with the most points
+     *
+     * @param game
+     */
     @Override
     public void warlordAlgorithm(Game game) {
         List<Player> playerList = game.getSortedPlayersByScoreForWarlord();

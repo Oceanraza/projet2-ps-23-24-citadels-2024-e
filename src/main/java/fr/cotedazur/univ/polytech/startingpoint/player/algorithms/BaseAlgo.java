@@ -2,6 +2,7 @@ package fr.cotedazur.univ.polytech.startingpoint.player.algorithms;
 
 import fr.cotedazur.univ.polytech.startingpoint.Game;
 import fr.cotedazur.univ.polytech.startingpoint.GameState;
+import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacter;
 import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.player.Bot;
@@ -81,6 +82,18 @@ public abstract class BaseAlgo {
     public int selectRandomKillableCharacter(Game game) {
         int numberOfTargets = game.getKillableCharacters().size();
         return Utils.generateRandomNumber(numberOfTargets);
+    }
+
+    public GameCharacter selectRandomKillableCharacterExcept(GameCharacterRole gameCharacterRole, Game game) {
+        List<GameCharacter> killableCharacters = new ArrayList<>(game.getKillableCharacters());
+        killableCharacters.removeIf(character -> character.getRole().equals(gameCharacterRole));
+
+        if (killableCharacters.isEmpty()) {
+            return null; // or throw an exception, depending on your use case
+        }
+
+        int randomIndex = Utils.generateRandomNumber(killableCharacters.size());
+        return killableCharacters.get(randomIndex);
     }
 
     public abstract int startOfTurnChoice();
