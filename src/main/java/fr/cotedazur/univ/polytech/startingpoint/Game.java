@@ -23,18 +23,18 @@ public class Game {
     private Deck deck = new Deck();
     private Crown crown;
     private List<Player> players;
-    private List<GameCharacter> allCharacters;
-    private List<GameCharacter> charactersInGame;
-    private List<GameCharacter> availableChars;
+    protected List<GameCharacter> allCharacters;
+    protected List<GameCharacter> charactersInGame;
+    protected List<GameCharacter> availableChars;
 
-    Assassin assassin;
-    Thief thief;
-    King king;
-    Bishop bishop;
-    Merchant merchant;
-    Warlord warlord;
-    Magician magician;
-    Architect architect;
+    protected Assassin assassin;
+    protected Thief thief;
+    protected King king;
+    protected Bishop bishop;
+    protected Merchant merchant;
+    protected Warlord warlord;
+    protected Magician magician;
+    protected Architect architect;
 
     public Game() {
         init();
