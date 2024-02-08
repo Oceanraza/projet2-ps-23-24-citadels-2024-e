@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Optional;
 
 public abstract class BaseAlgo {
-    protected final boolean oneChanceOutOfTwo = Utils.generateRandomNumber(2) == 0;
 
     protected Bot bot;
     protected String algoName;
@@ -90,4 +89,9 @@ public abstract class BaseAlgo {
             }
         }
     }
+
+    protected boolean getRandomBoolean() {
+        return Utils.generateRandomNumber(2) == 0;
+    }
+
 }
