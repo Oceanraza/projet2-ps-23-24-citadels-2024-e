@@ -51,7 +51,7 @@ public class Utils {
         return objectMapper.readTree(new File(filePath));
     }
 
-    public static ArrayList<District> convertJsonNodeToDistrictList(JsonNode districtsNode) {
+    public static List<District> convertJsonNodeToDistrictList(JsonNode districtsNode) {
         ArrayList<District> districtList = new ArrayList<>();
 
         // Iterate through each district in the array

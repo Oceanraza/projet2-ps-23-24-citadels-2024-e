@@ -20,20 +20,16 @@ public abstract class BaseAlgo {
         this.bot = player;
     }
     public String getAlgoName(){return algoName;}
-
     public abstract int startOfTurnChoice();
-
+    public abstract boolean collectGoldBeforeBuildChoice();
     public abstract void chooseCharacterAlgorithm(Game game);
-
     public abstract void warlordAlgorithm(Game game);
     public abstract void magicianAlgorithm(Game game);
     public abstract void assassinAlgorithm(Game game);
-
     public abstract void huntedQuarterAlgorithm(District huntedQuarter);
     public abstract boolean manufactureChoice();
     public abstract boolean graveyardChoice();
     public abstract Optional<District> laboratoryChoice();
-
     public abstract void botChoosesCard(Game game, List<District> threeCards);
 
     public void charAlgorithmsManager(Game game) {

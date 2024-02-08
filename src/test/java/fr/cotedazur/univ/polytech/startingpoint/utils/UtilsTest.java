@@ -12,9 +12,8 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class UtilsTest {
+class UtilsTest {
     @Test
     void getHighestNumberOfCardsInHandTest(){
         Player p1 = new Bot("Picsou");
