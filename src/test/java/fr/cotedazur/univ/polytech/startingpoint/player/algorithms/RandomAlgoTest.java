@@ -5,7 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 
 class RandomAlgoTest {
@@ -32,6 +32,22 @@ class RandomAlgoTest {
         Mockito.when(randomAlgo.startOfTurnChoice()).thenCallRealMethod();
         int randomInt = randomAlgo.startOfTurnChoice();
         assertEquals(1, randomInt);
+    }
+
+    @Test
+    void manufactureChoiceTest() {
+        Mockito.when(randomAlgo.getRandomBoolean()).thenReturn(true);
+        Mockito.when(randomAlgo.manufactureChoice()).thenCallRealMethod();
+        boolean randomBoolean = randomAlgo.manufactureChoice();
+        assertTrue(randomBoolean);
+    }
+
+    @Test
+    void graveyardChoiceTest() {
+        Mockito.when(randomAlgo.getRandomBoolean()).thenReturn(false);
+        Mockito.when(randomAlgo.manufactureChoice()).thenCallRealMethod();
+        boolean randomBoolean = randomAlgo.manufactureChoice();
+        assertFalse(randomBoolean);
     }
 
     /* TODO
