@@ -9,7 +9,8 @@ import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.city.DistrictColor;
 import fr.cotedazur.univ.polytech.startingpoint.player.Bot;
 import fr.cotedazur.univ.polytech.startingpoint.player.Player;
-import fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger;
+import fr.cotedazur.univ.polytech.startingpoint.utils.InGameLogger;
+import fr.cotedazur.univ.polytech.startingpoint.utils.ConsoleLogFunctions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -28,8 +29,8 @@ class MainTest {
 
     @BeforeEach
     void setUp() {
-        CitadelsLogger.setup();
-        CitadelsLogger.setGlobalLogLevel(Level.OFF);
+        InGameLogger.setup();
+        InGameLogger.setGlobalLogLevel(Level.OFF);
 
         player = new Bot("Test");
         gameState = new GameState();
@@ -150,7 +151,7 @@ class MainTest {
             secondPlayer.getCity().addDistrict(new District(name, i, DistrictColor.TRADE), gameState); // 32 points
         }
 
-        Main.announceWinner(players, firstBuilder, new GameState());
+        ConsoleLogFunctions.announceWinner(players, firstBuilder, new GameState());
         assertEquals(34, firstBuilder.getScore());
         assertEquals(32, secondPlayer.getScore());
     }

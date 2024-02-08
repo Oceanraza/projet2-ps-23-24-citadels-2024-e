@@ -1,6 +1,6 @@
 package fr.cotedazur.univ.polytech.startingpoint.player;
 
-import fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger;
+import fr.cotedazur.univ.polytech.startingpoint.utils.InGameLogger;
 import fr.cotedazur.univ.polytech.startingpoint.GameState;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.city.DistrictColor;
@@ -17,8 +17,8 @@ class PlayerTest {
 
     @BeforeEach
     void setUp() {
-        CitadelsLogger.setup();
-        CitadelsLogger.setGlobalLogLevel(Level.OFF);
+        InGameLogger.setup();
+        InGameLogger.setGlobalLogLevel(Level.OFF);
 
         gameState = new GameState();
         player = new Bot("Picsou");

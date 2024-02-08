@@ -1,29 +1,27 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
 import com.beust.jcommander.JCommander;
-import com.fasterxml.jackson.databind.ser.Serializers;
 import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacter;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.player.Bot;
 import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 import fr.cotedazur.univ.polytech.startingpoint.player.algorithms.BaseAlgo;
-import fr.cotedazur.univ.polytech.startingpoint.player.algorithms.smart.EinsteinAlgo;
-import fr.cotedazur.univ.polytech.startingpoint.player.algorithms.RandomAlgo;
-import fr.cotedazur.univ.polytech.startingpoint.utils.Args;
-import fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger;
-import fr.cotedazur.univ.polytech.startingpoint.utils.Csv;
-
-import java.lang.reflect.Array;
+import fr.cotedazur.univ.polytech.startingpoint.utils.*;
 import java.util.*;
 import java.util.logging.Level;
-
-import static fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger.*;
+import static fr.cotedazur.univ.polytech.startingpoint.utils.InGameLogger.*;
 
 public class Main {
-    public static boolean enableCsv = false;
-    public static int nbOfEinstein;
-    public static int nbOfRandom;
-    public static Args.ArgsEnum currentMode;
+    private static boolean enableCsv = false;
+    private static Args.ArgsEnum currentMode;
+    public static int getPlacement(List<Player> players, Player wantedPlayer){
+        for (int i = 0; i < players.size(); i++){
+            if (players.get(i).equals(wantedPlayer)){
+                return i + 1;
+            }
+        }
+        return -1;
+    }
     public static void sortPlayers(List<Player> players) {
         // Use a custom Comparator to compare Players based on their score and running order
         Comparator<Player> playerComparator = Comparator
@@ -48,17 +46,7 @@ public class Main {
         return players;
     }
 
-    public static void announceWinner(List<Player> players, Player firstBuilder, GameState gameState) {
-        List<Player> playersScores = calculateScores(players, firstBuilder, gameState);
-        String playerScoreMessage;
-        for (Player player : playersScores) {
-            playerScoreMessage = player.getName() + " : " + player.getScore() + " points";
-            LOGGER.info(playerScoreMessage);
-        }
-        Player winner = playersScores.get(0);
-        String winnerMessage = "\n" + winner.getName() + " gagne la partie avec " + winner.getScore() + " points !\n";
-        LOGGER.info(winnerMessage);
-    }
+
 
     public static void finalChoice(List<Player> players, GameState gameState) {
         for (Player player : players) {
@@ -91,15 +79,17 @@ public class Main {
         // 2 x 1000 games
         if (currentMode.equals(Args.ArgsEnum.TWOTHOUSANDS)) {
             numberOfGames = 1000;
-            CitadelsLogger.setGlobalLogLevel(Level.OFF);
+            InGameLogger.setGlobalLogLevel(Level.OFF);
+
         }
         // One game
         else if (currentMode.equals(Args.ArgsEnum.DEMO)) {
-            CitadelsLogger.setGlobalLogLevel(Level.ALL);
+            InGameLogger.setup();
+            InGameLogger.setGlobalLogLevel(Level.ALL);
         }
         else if (currentMode.equals(Args.ArgsEnum.CSV)){
             numberOfGames = 20;
-            CitadelsLogger.setGlobalLogLevel(Level.OFF);
+            InGameLogger.setGlobalLogLevel(Level.OFF);
             enableCsv = true;
         }
         return numberOfGames;
@@ -108,45 +98,13 @@ public class Main {
          game.resetGame();
          gameState.resetGameState();
     }
-    public static int getPlacement(List<Player> players, Player wantedPlayer){
-        for (int i = 0; i < players.size(); i++){
-            if (players.get(i).equals(wantedPlayer)){
-                return i + 1;
-            }
-        }
-        return -1;
-    }
-    public static double printPlayerInfo( Map<String, Integer> totalScores, Map<String, List<Integer>> totalPlacements,Player wantedPlayer, int numberOfGames) {
-        double temp = (double) totalPlacements.get(wantedPlayer.getName()).get(0);
-        System.out.println(wantedPlayer.getName() + " a gagné un total de " + temp + " parties\nIl gagne donc " + (temp / (numberOfGames/100)) + "% du temps.");
-        System.out.println("Il a en moyenne " + totalScores.get(wantedPlayer.getName())/numberOfGames + " points");
-        return (temp / ((double) numberOfGames /100));
-    }
+
     public static List<String> getPlayerInfo(Map<String, List<Integer>> totalPlacements, Player wantedPlayer){
         List<String> res = new ArrayList<>();
         for (Integer temp : totalPlacements.get(wantedPlayer.getName())){
             res.add(temp.toString());
         }
         return res;
-    }
-    public static void resetScoresAndPlacements(Map<String, List<Integer>> totalPlacements, Map<String, Integer> totalScores){
-        List<Integer> initialPlacement = Arrays.asList(0, 0, 0, 0);
-        for (String key : totalPlacements.keySet()){
-            totalPlacements.put(key, new ArrayList<>(initialPlacement));
-        }
-        for (String key : totalScores.keySet()){
-            totalScores.put(key,0);
-        }
-    }
-    private static void setAlgorithms(ArrayList<BaseAlgo> algorithmsInGame, int nbOfEinstein, int nbOfRandom) {
-        while (nbOfEinstein > 0){
-            algorithmsInGame.add(new EinsteinAlgo());
-            nbOfEinstein--;
-        }
-        while (nbOfRandom > 0){
-            algorithmsInGame.add(new RandomAlgo());
-            nbOfRandom--;
-        }
     }
     public static void main(String... args) {
         Map<String, Integer> totalScores = new HashMap<>();
@@ -163,12 +121,13 @@ public class Main {
         for (String key : names) {
             totalPlacements.put(key, new ArrayList<>(initialPlacement));
         }
-        CitadelsLogger.setup();
-
         Game newGame = new Game();
         GameState gameState = new GameState();
         int numberOfGames = jCommander(args);
-        for (int numberOfRepetitions = 0; numberOfRepetitions < ((currentMode.equals(Args.ArgsEnum.TWOTHOUSANDS) ? 2 : 1)); numberOfRepetitions++) {
+
+        int nbOfEinstein;
+        int nbOfRandom;
+        for (int numberOfRepetitions = 0; numberOfRepetitions < (currentMode.equals(Args.ArgsEnum.TWOTHOUSANDS) ? 2 : 1); numberOfRepetitions++) {
             if (numberOfRepetitions == 0){
                 if (currentMode.equals(Args.ArgsEnum.TWOTHOUSANDS)){
                     System.out.println("\nAlgo le plus intelligent contre le second (2vs2)\n");
@@ -186,9 +145,9 @@ public class Main {
                 nbOfEinstein = 4;
                 nbOfRandom = 0;
             }
-            resetScoresAndPlacements(totalPlacements,totalScores);
+            Utils.resetScoresAndPlacements(totalPlacements,totalScores);
             ArrayList<BaseAlgo> algorithmsInGame = new ArrayList<>();
-            setAlgorithms(algorithmsInGame, nbOfEinstein, nbOfRandom);
+            Utils.setAlgorithms(algorithmsInGame, nbOfEinstein, nbOfRandom);
             for (int games = 0; games < numberOfGames; games++) {
                 resetAll(newGame, gameState);
                 // Adding players to the game
@@ -246,7 +205,7 @@ public class Main {
                 }
                 finalChoice(players, gameState);
                 LOGGER.info("\n" + COLOR_BLUE + "[ Decompte des points ]" + COLOR_RESET);
-                announceWinner(players, firstBuilder, gameState);
+                ConsoleLogFunctions.announceWinner(players, firstBuilder, gameState);
                 for (Player p : players) {
                     totalScores.compute(p.getName(), (k, v) -> (v == null) ? p.getScore() : v + p.getScore());
                     algoWinrate.compute(((Bot)p).getBotAlgo().getAlgoName(), (k, v) -> (v == null) ? 0 : v + ((getPlacement(players,p)==1)?1:0));
@@ -259,7 +218,7 @@ public class Main {
                     List<String> specificPlayerPlacement = getPlayerInfo(totalPlacements, p);
                     finalArgs.add(new String[]{p.getName(), ((Bot) p).getBotAlgo().getAlgoName(), ((Integer) (totalScores.get(p.getName()) / numberOfGames)).toString(), ((Integer) numberOfGames).toString(), specificPlayerPlacement.get(0), specificPlayerPlacement.get(1), specificPlayerPlacement.get(2), specificPlayerPlacement.get(3)});
                 } else if (currentMode.equals(Args.ArgsEnum.TWOTHOUSANDS)) {
-                    printPlayerInfo(totalScores, totalPlacements, p, numberOfGames);
+                    ConsoleLogFunctions.printPlayerInfo(totalScores, totalPlacements, p, numberOfGames);
                 }
             }
             if (enableCsv) {

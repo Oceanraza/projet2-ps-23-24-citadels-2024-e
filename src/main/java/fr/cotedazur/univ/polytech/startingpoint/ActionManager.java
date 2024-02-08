@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole.*;
-import static fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger.*;
+import static fr.cotedazur.univ.polytech.startingpoint.utils.InGameLogger.*;
 
 public class ActionManager {
     private ActionManager() {

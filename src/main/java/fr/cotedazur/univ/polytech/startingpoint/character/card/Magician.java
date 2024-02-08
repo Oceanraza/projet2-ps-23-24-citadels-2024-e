@@ -9,7 +9,7 @@ import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 import java.util.ArrayList;
 import java.util.List;
 
-import static fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger.*;
+import static fr.cotedazur.univ.polytech.startingpoint.utils.InGameLogger.*;
 
 public class Magician extends GameCharacter {
     public Magician() {

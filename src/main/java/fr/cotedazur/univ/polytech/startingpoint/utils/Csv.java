@@ -8,6 +8,11 @@ import com.opencsv.CSVWriter;
 import com.opencsv.exceptions.CsvValidationException;
 
 public class Csv {
+    private Csv() {
+        throw new IllegalStateException("Csv is a utility class");
+    }
+
+
     public static void writeStats(List<String[]> args) {
         // Define the data for the CSV file
         // Specify the file path
@@ -23,17 +28,19 @@ public class Csv {
                     if (nextLine.length > 0 && nextLine[0].equals(argList[0])) {
                         // Replace the second and third columns with "7" and "8"
                         for (int i = 2; i < 8; i++){
-                            Integer newVal = Integer.valueOf(argList[i]) + Integer.valueOf(nextLine[i]);
+                            int newVal = Integer.parseInt(argList[i]) + Integer.parseInt(nextLine[i]);
                             if (i == 2){
                                 newVal = newVal / 2;
                             }
-                            argList[i] = newVal.toString();
+                            argList[i] = Integer.toString(newVal);
                         }
                     }
                 }
 
             }
-        } catch (IOException | CsvValidationException e){}
+        } catch (IOException | CsvValidationException e){
+            System.out.println(e.toString());
+         }
         }
         try (CSVWriter writer = new CSVWriter(new FileWriter(csvFilePath,true))) {
             resetStats();
@@ -43,7 +50,7 @@ public class Csv {
             }
             System.out.println("Values added to CSV file successfully!");
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println(e);
         }
     }
     public static void resetStats(){
@@ -55,7 +62,7 @@ public class Csv {
         try (CSVWriter writer = new CSVWriter(new FileWriter(csvFilePath))) {
             writer.writeNext(data);
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println(e);
         }
 
     }

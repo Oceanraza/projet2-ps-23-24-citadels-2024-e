@@ -1,6 +1,6 @@
 package fr.cotedazur.univ.polytech.startingpoint.player;
 
-import fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger;
+import fr.cotedazur.univ.polytech.startingpoint.utils.InGameLogger;
 import fr.cotedazur.univ.polytech.startingpoint.Game;
 import fr.cotedazur.univ.polytech.startingpoint.GameState;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,8 +15,8 @@ class BotTest {
 
     @BeforeEach
     void setUp() {
-        CitadelsLogger.setup();
-        CitadelsLogger.setGlobalLogLevel(Level.OFF);
+        InGameLogger.setup();
+        InGameLogger.setGlobalLogLevel(Level.OFF);
 
         game = new Game();
         gameState = new GameState();
