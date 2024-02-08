@@ -14,6 +14,15 @@ import fr.cotedazur.univ.polytech.startingpoint.utils.Csv;
 import fr.cotedazur.univ.polytech.startingpoint.utils.Utils;
 
 import java.util.*;
+import fr.cotedazur.univ.polytech.startingpoint.player.algorithms.RandomAlgo;
+import fr.cotedazur.univ.polytech.startingpoint.player.algorithms.smart.EinsteinAlgo;
+import fr.cotedazur.univ.polytech.startingpoint.player.algorithms.smart.RichardAlgo;
+import fr.cotedazur.univ.polytech.startingpoint.utils.Args;
+import fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger;
+
+import java.util.Comparator;
+import java.util.List;
+import java.util.Optional;
 import java.util.logging.Level;
 
 import static fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger.*;
