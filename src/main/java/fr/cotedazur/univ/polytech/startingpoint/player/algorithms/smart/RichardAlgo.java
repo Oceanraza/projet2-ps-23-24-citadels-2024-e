@@ -22,7 +22,8 @@ public class RichardAlgo extends SmartAlgo {
     private boolean shouldKillBishop = false;
     private boolean shouldKillExceptWarlord = false;
     private boolean shouldKillMagician = false;
-    private BotStyle getRandomBotStyle() { // Randomly choose a bot style
+
+    BotStyle getRandomBotStyle() { // Randomly choose a bot style
         BotStyle[] styles = BotStyle.values();
         return styles[new Random().nextInt(styles.length)];
     }

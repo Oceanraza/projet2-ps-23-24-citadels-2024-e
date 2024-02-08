@@ -1,105 +1,110 @@
 package fr.cotedazur.univ.polytech.startingpoint.character.algorithms;
 
 import fr.cotedazur.univ.polytech.startingpoint.Game;
-import fr.cotedazur.univ.polytech.startingpoint.character.card.Bishop;
-import fr.cotedazur.univ.polytech.startingpoint.character.card.King;
-import fr.cotedazur.univ.polytech.startingpoint.character.card.Warlord;
+import fr.cotedazur.univ.polytech.startingpoint.board.Deck;
+import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacter;
+import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole;
+import fr.cotedazur.univ.polytech.startingpoint.city.City;
+import fr.cotedazur.univ.polytech.startingpoint.city.District;
+import fr.cotedazur.univ.polytech.startingpoint.city.DistrictColor;
 import fr.cotedazur.univ.polytech.startingpoint.player.Bot;
+import fr.cotedazur.univ.polytech.startingpoint.player.algorithms.smart.EinsteinAlgo;
 import fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.logging.Level;
 
-public class EinsteinAlgoTest {
-    King king;
-    Bishop bishop;
-    Bot bot;
-    Warlord warlord;
-    Game game;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
+class EinsteinAlgoTest {
+    private EinsteinAlgo einsteinAlgo;
+    private Game game;
+    private Bot bot;
+    private City city;
+    private Deck deck;
 
     @BeforeEach
     void setUp() {
         CitadelsLogger.setup();
         CitadelsLogger.setGlobalLogLevel(Level.OFF);
 
-        king = new King();
-        bishop = new Bishop();
-        warlord = new Warlord();
-        bot = new Bot("Bot") {
-        };
-        game = new Game();
-        game.init();
-    }
-
-    /* Algorithm is not stable yet so it's not relevant to carry out tests
-    Plus, we mustn't shuffle cards because two characters can't be played so tests can go wrong
-    @Test
-    void chooseCharTestEvequeGold(){
-        game.shuffleCharacters();
-        bot.botAlgo = new EinsteinAlgo();
-        bot.botAlgo.setPlayer(bot);
-        District district1 = new District("Quartier 1", 0, DistrictColor.NOBLE);
-        District district2 = new District("Quartier 2", 0, DistrictColor.RELIGIOUS);
-        District district3 = new District("Quartier 3", 0, DistrictColor.RELIGIOUS);
-        bot.buildDistrict(district1);
-        bot.buildDistrict(district2);
-        bot.buildDistrict(district3);
-        bot.addDistrictInHand(district1);
-        bot.botAlgo.chooseCharacterAlgorithm(game);
-        assertEquals("Eveque", bot.getCharacterName());
-        assertEquals(2, ActionManager.collectGold(bot));
+        einsteinAlgo = new EinsteinAlgo();
+        game = mock(Game.class);
+        bot = mock(Bot.class); // Create a mock Bot instead of a real instance
+        einsteinAlgo.setBot(bot); // Set the bot instance variable of the EinsteinAlgo object
+        city = mock(City.class);
+        deck = mock(Deck.class);
     }
 
     @Test
-    void chooseCharTestMarchandGold(){
-        game.shuffleCharacters();
-        bot.botAlgo = new EinsteinAlgo();
-        bot.botAlgo.setPlayer(bot);
-        District district1 = new District("Quartier 1", 0, DistrictColor.NOBLE);
-        District district2 = new District("Quartier 2", 0, DistrictColor.TRADE);
-        District district3 = new District("Quartier 3", 0, DistrictColor.TRADE);
-        bot.buildDistrict(district1);
-        bot.buildDistrict(district2);
-        bot.buildDistrict(district3);
-        bot.addDistrictInHand(district1);
-        bot.botAlgo.chooseCharacterAlgorithm(game);
-        assertEquals("Marchand", bot.getCharacterName());
-        assertEquals(2,ActionManager.collectGold(bot));
+    void shouldChooseCardWithLowestPrice() {
+        List<District> threeCards = Arrays.asList(
+                new District("District 1", 5, DistrictColor.NOBLE),
+                new District("District 2", 3, DistrictColor.TRADE),
+                new District("District 3", 4, DistrictColor.SPECIAL)
+        );
+
+        when(bot.getGold()).thenReturn(4);
+
+        District chosenCard = einsteinAlgo.chooseCard(threeCards);
+
+        assertEquals("District 2", chosenCard.getName());
     }
 
     @Test
-    void chooseCharTestCondottiereGold(){
-        game.shuffleCharacters();
-        bot.botAlgo = new EinsteinAlgo();
-        bot.botAlgo.setPlayer(bot);
-        District district1 = new District("Quartier 1", 0, DistrictColor.NOBLE);
-        District district2 = new District("Quartier 2", 0, DistrictColor.MILITARY);
-        District district3 = new District("Quartier 3", 0, DistrictColor.MILITARY);
-        bot.addDistrictInHand(district1);
-        bot.addDistrictInHand(district2);
-        bot.buildDistrict(district1);
-        bot.buildDistrict(district2);
-        bot.buildDistrict(district3);
-        bot.setGameCharacter(warlord);
-        assertEquals("Condottiere", bot.getCharacterName());
-        assertEquals(2,ActionManager.collectGold(bot));
+    void shouldNotChooseCardIfNotAffordable() {
+        List<District> threeCards = Arrays.asList(
+                new District("District 1", 5, DistrictColor.NOBLE),
+                new District("District 2", 6, DistrictColor.TRADE),
+                new District("District 3", 7, DistrictColor.SPECIAL)
+        );
+
+        when(bot.getGold()).thenReturn(4);
+
+        District chosenCard = einsteinAlgo.chooseCard(threeCards);
+
+        assertNull(chosenCard);
     }
 
     @Test
-    void chooseCharTestKingGold(){
-        game.shuffleCharacters();
-        bot.botAlgo = new EinsteinAlgo();
-        bot.botAlgo.setPlayer(bot);
-        District district1 = new District("Quartier 1", 0, DistrictColor.NOBLE);
-        District district2 = new District("Quartier 2", 0, DistrictColor.NOBLE);
-        District district3 = new District("Quartier 3", 0, DistrictColor.RELIGIOUS);
-        bot.buildDistrict(district1);
-        bot.buildDistrict(district2);
-        bot.buildDistrict(district3);
-        bot.addDistrictInHand(district1);
-        bot.botAlgo.chooseCharacterAlgorithm(game);
-        assertEquals("Roi", bot.getCharacterName());
-        assertEquals(2,ActionManager.collectGold(bot));
+    void shouldChooseToDrawCardWhenHandIsEmpty() {
+        when(bot.getDistrictsInHand()).thenReturn(Collections.emptyList());
+
+        int choice = einsteinAlgo.startOfTurnChoice();
+
+        assertEquals(2, choice);
     }
-    */
+
+    @Test
+    void shouldChooseToDrawCardWhenAllDistrictsInHandAreBuilt() {
+        when(bot.districtsInHandAreBuilt()).thenReturn(true);
+
+        int choice = einsteinAlgo.startOfTurnChoice();
+
+        assertEquals(2, choice);
+    }
+
+    @Test
+    void shouldChooseToTakeGoldWhenHandIsNotEmptyAndNotAllDistrictsAreBuilt() {
+        List<District> districtsInHand = Arrays.asList(
+                new District("District 1", 5, DistrictColor.NOBLE)
+        );
+
+        when(bot.getDistrictsInHand()).thenReturn(districtsInHand);
+        when(bot.districtsInHandAreBuilt()).thenReturn(false);
+        GameCharacter gameCharacter = mock(GameCharacter.class); // Create a mock GameCharacter
+        when(bot.getGameCharacter()).thenReturn(gameCharacter); // Set the GameCharacter of the bot
+        when(gameCharacter.getRole()).thenReturn(GameCharacterRole.ASSASSIN); // Set the role of the GameCharacter
+        int choice = einsteinAlgo.startOfTurnChoice();
+
+        assertEquals(1, choice);
+    }
+
 }
