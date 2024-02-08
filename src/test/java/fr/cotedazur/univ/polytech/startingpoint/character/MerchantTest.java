@@ -1,7 +1,8 @@
 package fr.cotedazur.univ.polytech.startingpoint.character;
 
 import fr.cotedazur.univ.polytech.startingpoint.Game;
-import fr.cotedazur.univ.polytech.startingpoint.character.card.Architect;
+import fr.cotedazur.univ.polytech.startingpoint.character.card.Merchant;
+import fr.cotedazur.univ.polytech.startingpoint.city.DistrictColor;
 import fr.cotedazur.univ.polytech.startingpoint.utils.InGameLogger;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -9,11 +10,10 @@ import org.junit.jupiter.api.Test;
 import java.util.logging.Level;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
 
-class ArchitectTest {
+class MerchantTest {
     Game game;
-    Architect architect;
+    Merchant merchant;
 
     @BeforeEach
     void setUp() {
@@ -21,12 +21,12 @@ class ArchitectTest {
         InGameLogger.setGlobalLogLevel(Level.OFF);
 
         game = new Game();
-        architect = new Architect();
+        merchant = new Merchant();
     }
 
     @Test
     void merchantInformationsTest() {
-        assertEquals(7, architect.getRunningOrder());
-        assertNull(architect.getColor());
+        assertEquals(6, merchant.getRunningOrder());
+        assertEquals(DistrictColor.TRADE, merchant.getColor());
     }
 }

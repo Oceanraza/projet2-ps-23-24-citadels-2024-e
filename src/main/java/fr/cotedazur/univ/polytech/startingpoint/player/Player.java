@@ -10,7 +10,7 @@ import fr.cotedazur.univ.polytech.startingpoint.city.DistrictColor;
 
 import java.util.*;
 
-import static fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger.*;
+import static fr.cotedazur.univ.polytech.startingpoint.utils.InGameLogger.*;
 
 public abstract class Player {
     private final List<District> districtsInHand;
@@ -72,7 +72,9 @@ public abstract class Player {
 
     // Functions to add or remove
     public void addDistrictInHand(District district) {
-        this.districtsInHand.add(district);
+        if (district != null) {
+            this.districtsInHand.add(district);
+        }
     }
     public void addDistrictBuilt(District district, GameState gameState) {
         numberOfDistrictsByColor.replace(

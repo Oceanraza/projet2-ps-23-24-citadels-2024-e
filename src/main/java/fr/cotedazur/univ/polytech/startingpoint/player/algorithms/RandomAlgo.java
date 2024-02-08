@@ -11,6 +11,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+import static fr.cotedazur.univ.polytech.startingpoint.utils.InGameLogger.*;
+
 /**
  * This class represents the random algorithm
  * It contains the random algorithm for the bot
@@ -19,10 +21,11 @@ import java.util.Optional;
 public class RandomAlgo extends BaseAlgo {
     public RandomAlgo() {
         super();
+        algoName = "Random";
     }
 
     public int startOfTurnChoice() {
-        if (oneChanceOutOfTwo) {
+        if (flipCoin()) {
             return 1; // Take 2 gold coins
         }
         return 2; // Draw a card
@@ -35,7 +38,7 @@ public class RandomAlgo extends BaseAlgo {
     }
 
     public void warlordAlgorithm(Game game) {
-        if (oneChanceOutOfTwo) { // Have 50% chance to decide to destroy a building of a random player or not
+        if (flipCoin()) { // Have 50% chance to decide to destroy a building of a random player or not
             List<Player> playerList = game.getSortedPlayersByScoreForWarlord();
             playerList.remove(bot);
             Collections.shuffle(playerList);
@@ -49,17 +52,26 @@ public class RandomAlgo extends BaseAlgo {
                     }
                 }
             }
+        } else {
+            LOGGER.info(COLOR_RED + "Il ne détruit aucun quartier" + COLOR_RESET);
         }
     }
 
 
     public void magicianAlgorithm(Game game) {
-        if (oneChanceOutOfTwo) { // have 50% chance to decide to destroy a building of a random player or not
-            List<Player> playerList = game.getSortedPlayersByScore();
-            playerList.remove(bot);
-            bot.getGameCharacter().specialEffect(bot, game, true, playerList.get(Utils.generateRandomNumber(playerList.size())));
+        if (flipCoin()) {
+            // have 25% chance to decide to change his hand with another player
+            if (flipCoin()) {
+                List<Player> playerList = game.getSortedPlayersByScore();
+                playerList.remove(bot);
+                bot.getGameCharacter().specialEffect(bot, game, true, playerList.get(Utils.generateRandomNumber(playerList.size())));
+            }
+            // have 25% chance to decide to change his hand with the deck
+            else {
+                bot.getGameCharacter().specialEffect(bot, game, false);
+            }
         } else {
-            bot.getGameCharacter().specialEffect(bot, game, false);
+            LOGGER.info(COLOR_RED + "Il n'échange ses cartes avec personne" + COLOR_RESET);
         }
     }
 
@@ -68,19 +80,25 @@ public class RandomAlgo extends BaseAlgo {
     }
 
     public boolean manufactureChoice() {
-        return oneChanceOutOfTwo;
+        return flipCoin();
     }
 
     public Optional<District> laboratoryChoice() {
-        if (oneChanceOutOfTwo) {
+        if (flipCoin()) {
             List<District> districtsInHand = bot.getDistrictsInHand();
-            return Optional.ofNullable(districtsInHand.get(Utils.generateRandomNumber(districtsInHand.size())));
+            return !districtsInHand.isEmpty() ? Optional.ofNullable(districtsInHand.get(Utils.generateRandomNumber(districtsInHand.size()))) : Optional.empty();
         }
         return Optional.empty();
     }
 
     public boolean graveyardChoice() {
-        return oneChanceOutOfTwo;
+        return flipCoin();
+    }
+
+    @Override
+    public void botChoosesCard(Game game, List<District> threeCards) {
+        District chosenCard = chooseCard(threeCards);
+        bot.addDistrictInHand(chosenCard);
     }
 
     public District chooseCard(List<District> cards){

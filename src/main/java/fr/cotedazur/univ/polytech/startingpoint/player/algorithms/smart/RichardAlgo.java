@@ -12,6 +12,10 @@ import java.util.Random;
 import static fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole.*;
 
 public class RichardAlgo extends SmartAlgo {
+    public RichardAlgo() {
+        super();
+        algoName = "Richard";
+    }
 
     public enum BotStyle {
         WISE,
@@ -112,7 +116,7 @@ public class RichardAlgo extends SmartAlgo {
     public void warlordAlgorithm(Game game) {
         Player playerWith6Districts = game.getPlayerWith6Districts();
         Player playerWithLowestDistrictPrice = game.getPlayerWithLowestDistrictPrice();
-        if (oneChanceOutOfTwo) { // Have 50% chance to decide to destroy a building of a random player or not
+        if (flipCoin()) { // Have 50% chance to decide to destroy a building of a random player or not
             if (playerWith6Districts == bot) { // If the bot has 6 districts, he will destroy a building of a random player
                 List<Player> playerList = game.getSortedPlayersByScoreForWarlord();
                 playerList.remove(bot);
@@ -183,7 +187,6 @@ public class RichardAlgo extends SmartAlgo {
             }
         }
     }
-
 
     public int shouldPickArchitect(Game game) {
 

@@ -36,6 +36,12 @@ class ThiefTest {
         targetPlayer = new Bot("targetPlayer");
     }
 
+    @Test
+    void thiefInformationsTest() {
+        assertEquals(2, thief.getRunningOrder());
+        assertNull(thief.getColor());
+    }
+
     // Steal a character
     @Test
     void stealCharacterTest() {

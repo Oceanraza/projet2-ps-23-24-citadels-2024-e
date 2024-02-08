@@ -1,5 +1,6 @@
 package fr.cotedazur.univ.polytech.startingpoint.player.algorithms.smart;
 
+import fr.cotedazur.univ.polytech.startingpoint.Game;
 import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacter;
 import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
@@ -10,6 +11,7 @@ import java.util.*;
 
 import static fr.cotedazur.univ.polytech.startingpoint.Game.CITY_SIZE_TO_WIN;
 import static fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole.ARCHITECT;
+import static fr.cotedazur.univ.polytech.startingpoint.utils.InGameLogger.LOGGER;
 
 public abstract class SmartAlgo extends BaseAlgo {
     protected boolean lowestDistrictFound = false;
@@ -88,6 +90,18 @@ public abstract class SmartAlgo extends BaseAlgo {
             }
         }
         return chosenCard;
+    }
+
+    @Override
+    public void botChoosesCard(Game game, List<District> threeCards) {
+        District chosenCard = chooseCard(threeCards);
+        threeCards.remove(chosenCard); // Remove the chosen card from the list of three cards
+        for (District card : threeCards) {
+            this.bot.removeFromHandAndPutInDeck(game.getDeck(), card);
+        }
+        String drawMessage = bot.getName() + " pioche le " + chosenCard;
+        LOGGER.info(drawMessage);
+        bot.addDistrictInHand(chosenCard);
     }
 
     public boolean graveyardChoice() {

@@ -17,7 +17,9 @@ import static fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRo
 public class EinsteinAlgo extends SmartAlgo {
     public EinsteinAlgo(){
         super();
+        algoName = "Einstein";
     }
+
 
 
     public boolean chooseAssassinAlgorithm(Game game, List<GameCharacter> availableChars) {
@@ -63,6 +65,9 @@ public class EinsteinAlgo extends SmartAlgo {
                 // If the bot doesn't have an immediate way to win, it will just pick the character who gives out the most gold for him
                 chooseMoneyCharacterAlgorithm(game, availableChars);
             }
+        }
+        if (bot.getGameCharacter() == null) { //FailProof method
+            bot.chooseChar(game, availableChars.get(Utils.generateRandomNumber(availableChars.size())).getRole());
         }
     }
 

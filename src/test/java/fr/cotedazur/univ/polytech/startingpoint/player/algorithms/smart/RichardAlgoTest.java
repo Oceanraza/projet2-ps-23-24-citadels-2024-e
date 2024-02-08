@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -112,7 +113,7 @@ class RichardAlgoTest {
         int result = richardAlgo.shouldPickArchitect(game);
 
         // Assert
-        assertTrue(result == 0);
+        assertEquals(0, result);
     }
 
     @Test
@@ -148,6 +149,6 @@ class RichardAlgoTest {
         int result = richardAlgo.shouldPickAssassin(game);
 
         // Assert
-        assertTrue(result == 0);
+        assertEquals(0, result);
     }
 }

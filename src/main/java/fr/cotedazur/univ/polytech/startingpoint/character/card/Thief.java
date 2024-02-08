@@ -6,7 +6,7 @@ import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole;
 import fr.cotedazur.univ.polytech.startingpoint.exception.CannotAttackException;
 import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 
-import static fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger.*;
+import static fr.cotedazur.univ.polytech.startingpoint.utils.InGameLogger.*;
 
 public class Thief extends GameCharacter {
     public Thief() {
