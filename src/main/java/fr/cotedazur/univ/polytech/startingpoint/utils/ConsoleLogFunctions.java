@@ -25,9 +25,9 @@ public class ConsoleLogFunctions {
         LOGGER.info(winnerMessage);
     }
     public static void printPlayerInfo(Map<String, Integer> totalScores, Map<String, List<Integer>> totalPlacements, Player wantedPlayer, int numberOfGames) {
-        double placementJoueur = totalPlacements.get(wantedPlayer.getName()).get(0);
-        LOGGER.info(wantedPlayer.getName() + " a gagné un total de " + placementJoueur + " parties\nIl gagne donc " + (placementJoueur / (numberOfGames/100.0)) + "% du temps.");
-        LOGGER.info("Il a en moyenne " + totalScores.get(wantedPlayer.getName())/numberOfGames + " points");
+        double scoreJoueur = totalPlacements.get(wantedPlayer.getName()).get(0);
+        System.out.println(wantedPlayer.getName() + " a gagné un total de " + scoreJoueur + " parties\nIl gagne donc " + (scoreJoueur / (numberOfGames/100.0)) + "% du temps.");
+        System.out.println("Il a en moyenne " + totalScores.get(wantedPlayer.getName())/numberOfGames + " points");
     }
 
 }

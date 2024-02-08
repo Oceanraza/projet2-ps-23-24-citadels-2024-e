@@ -180,7 +180,7 @@ public class Main {
                     // Character selection phase
                     LOGGER.info("\n" + COLOR_BLUE + "[ Phase 1 ] Choix des personnages" + COLOR_RESET);
 
-                    newGame.characterSelection(crownOwner);
+                    newGame.characterSelection(crownOwner,getPlacement(players,crownOwner) - 1);
 
                     // Character reveal phase
                     LOGGER.info("\n" + COLOR_BLUE + "[ Phase 2 ] Tour des joueurs" + COLOR_RESET);
