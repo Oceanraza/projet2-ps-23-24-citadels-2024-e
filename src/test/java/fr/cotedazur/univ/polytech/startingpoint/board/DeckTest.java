@@ -3,8 +3,11 @@ package fr.cotedazur.univ.polytech.startingpoint.board;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.city.DistrictColor;
 import fr.cotedazur.univ.polytech.startingpoint.exception.EmptyDeckException;
+import fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.logging.Level;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -16,6 +19,9 @@ class DeckTest {
 
     @BeforeEach
     void setUp() {
+        CitadelsLogger.setupDemo();
+        CitadelsLogger.setGlobalLogLevel(Level.OFF);
+
         deck = new Deck();
         district1 = new District("District 1", 1, DistrictColor.TRADE);
         district2 = new District("District 2", 2, DistrictColor.MILITARY);

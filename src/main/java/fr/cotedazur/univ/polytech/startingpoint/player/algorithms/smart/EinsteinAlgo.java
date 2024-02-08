@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole.*;
-import static fr.cotedazur.univ.polytech.startingpoint.utils.InGameLogger.LOGGER;
+import static fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger.LOGGER;
 /**
  * This class represents the algorithm of the bot Einstein
  * It contains the logic of the bot's actions
