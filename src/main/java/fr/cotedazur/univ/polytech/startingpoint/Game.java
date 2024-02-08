@@ -1,23 +1,18 @@
 package fr.cotedazur.univ.polytech.startingpoint;
-
-import com.fasterxml.jackson.databind.JsonNode;
 import fr.cotedazur.univ.polytech.startingpoint.board.Deck;
 import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacter;
 import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole;
 import fr.cotedazur.univ.polytech.startingpoint.character.card.*;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
-import fr.cotedazur.univ.polytech.startingpoint.exception.JsonFileReadException;
 import fr.cotedazur.univ.polytech.startingpoint.player.Bot;
 import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 import fr.cotedazur.univ.polytech.startingpoint.utils.Utils;
-
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
-import static fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger.*;
+import static fr.cotedazur.univ.polytech.startingpoint.utils.InGameLogger.*;
 
 /**
  * The Game class is the main class of the game. It contains the deck, the crown, the players and the characters.
@@ -25,7 +20,7 @@ import static fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger.*;
  */
 public class Game {
     private static final int START_CARDS_NUMBER = 4;
-    private Deck deck;
+    private Deck deck = new Deck();
     private Crown crown;
     private List<Player> players;
     private List<GameCharacter> allCharacters;
@@ -96,18 +91,9 @@ public class Game {
 
     // Init starts off the game by creating the deck, the crown, the players and the characters
     public void init() {
-        deck = new Deck();
+        deck.resetDeck();
         allCharacters = new ArrayList<>();
         availableChars = new ArrayList<>();
-
-        // Specify the path to your JSON file
-        try {
-            JsonNode tempNode = Utils.parseJsonFromFile
-                    ("src/main/resources/init_database.json");
-            deck = Utils.convertJsonNodeToDistrictList(tempNode.path("Game").path("Districts"));
-        } catch (IOException e) {
-            throw new JsonFileReadException("Error reading JSON file", e);
-        }
 
         // Create a crown
         crown = new Crown();
@@ -162,7 +148,7 @@ public class Game {
     private void giveStartingCards() {
         for (Player player : players) {
             for (int i = 0; i < START_CARDS_NUMBER; i++) {
-                player.getDistrictsInHand().add(deck.drawCard());
+                player.addDistrictInHand(deck.drawCard());
             }
         }
     }
@@ -179,12 +165,11 @@ public class Game {
     public void charSelectionFiller(){
         for (Player p: players){
             if (p.getGameCharacter() == null){
-                Bot p2 = (Bot) p;
-                String playerInfo = p2.toString();
+                String playerInfo = ((Bot)p).toString();
                 LOGGER.info(playerInfo);
                 //We create a new variable p2 to cast p to Bot each time
                 //Good to note that you can't just cast the whole List
-                p2.getBotAlgo().chooseCharacterAlgorithm(this);}
+                ((Bot)p).getBotAlgo().chooseCharacterAlgorithm(this);}
         }
     }
 
@@ -293,7 +278,7 @@ public class Game {
         District drawnDistrict = deck.drawCard();
         String drawCardMessage = player.getName() + " pioche la carte " + drawnDistrict + ".";
         LOGGER.info(drawCardMessage);
-        player.getDistrictsInHand().add(drawnDistrict);
+        player.addDistrictInHand(drawnDistrict);
         return drawnDistrict;
     }
 
@@ -304,5 +289,9 @@ public class Game {
     @Override
     public String toString() {
         return deck.toString();
+    }
+
+    public void resetGame() {
+        init();
     }
 }

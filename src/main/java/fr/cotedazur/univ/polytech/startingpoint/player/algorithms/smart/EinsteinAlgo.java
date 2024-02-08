@@ -10,7 +10,7 @@ import fr.cotedazur.univ.polytech.startingpoint.utils.Utils;
 import java.util.List;
 
 import static fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole.*;
-import static fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger.LOGGER;
+import static fr.cotedazur.univ.polytech.startingpoint.utils.InGameLogger.LOGGER;
 /**
  * This class represents the algorithm of the bot Einstein
  * It contains the logic of the bot's actions
@@ -19,6 +19,7 @@ import static fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger.LOGG
 public class EinsteinAlgo extends SmartAlgo {
     public EinsteinAlgo(){
         super();
+        algoName = "Einstein";
     }
 
     @Override
@@ -30,7 +31,7 @@ public class EinsteinAlgo extends SmartAlgo {
         }
         String drawMessage = bot.getName() + " pioche le " + chosenCard;
         LOGGER.info(drawMessage);
-        bot.getDistrictsInHand().add(chosenCard);
+        bot.addDistrictInHand(chosenCard);
     }
 
     public boolean chooseAssassinAlgorithm(Game game, List<GameCharacter> availableChars) {
@@ -76,6 +77,9 @@ public class EinsteinAlgo extends SmartAlgo {
                 // If the bot doesn't have an immediate way to win, it will just pick the character who gives out the most gold for him
                 chooseMoneyCharacterAlgorithm(game, availableChars);
             }
+        }
+        if (bot.getGameCharacter() == null){ //FailProof method
+            bot.chooseChar(game,availableChars.get(Utils.generateRandomNumber(availableChars.size())).getRole());
         }
     }
 

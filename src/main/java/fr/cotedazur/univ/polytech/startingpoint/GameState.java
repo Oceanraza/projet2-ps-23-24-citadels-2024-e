@@ -33,4 +33,5 @@ public class GameState {
     public boolean isFinished(Player player) {
         return (player.getCity().getDistrictsBuilt().size() >= 8);
     }
+    public void resetGameState(){turn = 0;}
 }

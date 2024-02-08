@@ -2,8 +2,8 @@ package fr.cotedazur.univ.polytech.startingpoint.utils;
 
 import java.util.logging.*;
 
-public class CitadelsLogger {
-    public static final Logger LOGGER = Logger.getLogger("CitadelsLogger");
+public class InGameLogger {
+    public static final Logger LOGGER = Logger.getLogger("InGameLogger");
 
     public static final String COLOR_BLUE = "\033[0;34m";
     public static final String COLOR_RED = "\033[0;31m";
@@ -11,10 +11,9 @@ public class CitadelsLogger {
     public static final String COLOR_PURPLE = "\033[0;35m";
     public static final String COLOR_RESET = "\033[0m";
 
-    private CitadelsLogger() {
-        throw new IllegalStateException("CitadelsLogger is a utility class");
+    private InGameLogger() {
+        throw new IllegalStateException("This logger is a utility class");
     }
-
     public static void setup() {
         LOGGER.setLevel(Level.INFO);
 

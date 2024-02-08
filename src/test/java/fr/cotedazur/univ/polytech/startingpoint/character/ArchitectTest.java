@@ -9,7 +9,7 @@ import fr.cotedazur.univ.polytech.startingpoint.city.DistrictColor;
 import fr.cotedazur.univ.polytech.startingpoint.player.Bot;
 import fr.cotedazur.univ.polytech.startingpoint.player.algorithms.BaseAlgo;
 import fr.cotedazur.univ.polytech.startingpoint.player.algorithms.smart.EinsteinAlgo;
-import fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger;
+import fr.cotedazur.univ.polytech.startingpoint.utils.InGameLogger;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -28,8 +28,8 @@ class ArchitectTest {
 
     @BeforeEach
     void setUp() {
-        CitadelsLogger.setup();
-        CitadelsLogger.setGlobalLogLevel(Level.OFF);
+        InGameLogger.setup();
+        InGameLogger.setGlobalLogLevel(Level.OFF);
 
         king = new King();
         bishop = new Bishop();
@@ -66,9 +66,9 @@ class ArchitectTest {
         game.setPlayers(firstBuilder);
         firstBuilder.setGold(10);
 
-        firstBuilder.getDistrictsInHand().add(new District("test", 2, DistrictColor.TRADE));
-        firstBuilder.getDistrictsInHand().add(new District("test2", 2, DistrictColor.TRADE));
-        firstBuilder.getDistrictsInHand().add(new District("test3", 2, DistrictColor.TRADE));
+        firstBuilder.addDistrictInHand(new District("test", 2, DistrictColor.TRADE));
+        firstBuilder.addDistrictInHand(new District("test2", 2, DistrictColor.TRADE));
+        firstBuilder.addDistrictInHand(new District("test3", 2, DistrictColor.TRADE));
 
         firstBuilder.setGameCharacter(architect);
         assertEquals(0, firstBuilder.getCity().getDistrictsBuilt().size());

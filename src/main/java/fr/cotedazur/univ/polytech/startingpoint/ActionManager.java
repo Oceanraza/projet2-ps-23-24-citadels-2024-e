@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole.*;
-import static fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger.*;
+import static fr.cotedazur.univ.polytech.startingpoint.utils.InGameLogger.*;
 
 public class ActionManager {
     private ActionManager() {
@@ -80,7 +80,7 @@ public class ActionManager {
         if (graveyardOwner.getGold() >= 1 && !graveyardOwner.getCharacterName().equals("Condottiere") && ((Bot) graveyardOwner).getBotAlgo().graveyardChoice()) {
             String graveyardMessage = COLOR_PURPLE + graveyardOwner.getName() + " utilise le Cimetiere pour reprendre le " + destroyedDistrict + " dans sa main." + COLOR_RESET;
             LOGGER.info(graveyardMessage);
-            graveyardOwner.getDistrictsInHand().add(destroyedDistrict);
+            graveyardOwner.addDistrictInHand(destroyedDistrict);
             graveyardOwner.removeGold(1);
         } else {
             deck.putCardAtBottom(destroyedDistrict);

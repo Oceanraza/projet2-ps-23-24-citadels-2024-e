@@ -7,7 +7,6 @@ import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.city.DistrictColor;
 import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 import fr.cotedazur.univ.polytech.startingpoint.utils.Utils;
-
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -20,6 +19,7 @@ import java.util.Optional;
 public class RandomAlgo extends BaseAlgo {
     public RandomAlgo() {
         super();
+        algoName = "Random";
     }
 
     public int startOfTurnChoice() {
@@ -76,6 +76,10 @@ public class RandomAlgo extends BaseAlgo {
         }
     }
 
+    public void kingAlgorithm(Game game) {
+        bot.getGameCharacter().specialEffect(bot, game);
+    }
+    
     public void huntedQuarterAlgorithm(District huntedQuarter) {
         huntedQuarter.setColor(DistrictColor.values()[Utils.generateRandomNumber(DistrictColor.values().length)]);
     }
@@ -87,7 +91,7 @@ public class RandomAlgo extends BaseAlgo {
     public Optional<District> laboratoryChoice() {
         if (oneChanceOutOfTwo) {
             List<District> districtsInHand = bot.getDistrictsInHand();
-            return Optional.ofNullable(districtsInHand.get(Utils.generateRandomNumber(districtsInHand.size())));
+            return !districtsInHand.isEmpty() ? Optional.ofNullable(districtsInHand.get(Utils.generateRandomNumber(districtsInHand.size()))) : Optional.empty();
         }
         return Optional.empty();
     }
@@ -99,7 +103,7 @@ public class RandomAlgo extends BaseAlgo {
     @Override
     public void botChoosesCard(Game game, List<District> threeCards) {
         District chosenCard = chooseCard(threeCards);
-        bot.getDistrictsInHand().add(chosenCard);
+        bot.addDistrictInHand(chosenCard);
     }
 
     public District chooseCard(List<District> cards){
