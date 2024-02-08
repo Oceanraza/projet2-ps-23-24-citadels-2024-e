@@ -21,14 +21,31 @@ import static fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger.*;
 public class Main {
     private static boolean enableCsv = false;
     private static Args.ArgsEnum currentMode;
-    public static int getPlacement(List<Player> players, Player wantedPlayer){
-        for (int i = 0; i < players.size(); i++){
-            if (players.get(i).equals(wantedPlayer)){
+
+    /**
+     * Cette méthode retourne la position du joueur souhaité dans la liste des joueurs.
+     *
+     * @param players      La liste des joueurs.
+     * @param wantedPlayer Le joueur dont on veut connaître la position.
+     * @return La position du joueur souhaité dans la liste des joueurs, ou -1 si le joueur n'est pas trouvé.
+     */
+    public static int getPlacement(List<Player> players, Player wantedPlayer) {
+        for (int i = 0; i < players.size(); i++) {
+            if (players.get(i).equals(wantedPlayer)) {
                 return i + 1;
             }
         }
         return -1;
     }
+
+    /**
+     * Cette méthode trie les joueurs en fonction de leur score et de leur ordre de passage.
+     * Elle utilise un comparateur personnalisé pour comparer les joueurs en fonction de leur score et de leur ordre de passage.
+     * Les joueurs ayant des scores plus élevés sont placés en premier. Si deux joueurs ont le même score,
+     * le joueur ayant le plus petit ordre de passage est placé en premier.
+     *
+     * @param players La liste des joueurs à trier.
+     */
     public static void sortPlayers(List<Player> players) {
         // Use a custom Comparator to compare Players based on their score and running order
         Comparator<Player> playerComparator = Comparator
@@ -39,6 +56,17 @@ public class Main {
         // Sort the players list using the custom comparator
         players.sort(playerComparator);
     }
+
+    /**
+     * Cette méthode calcule les scores pour chaque joueur et trie la liste des joueurs en fonction de leurs scores.
+     * Si un joueur a été le premier à construire ses 8 quartiers, il reçoit un bonus de 4 points.
+     * Si les autres joueurs ont également terminé la construction de leurs 8 quartiers, ils reçoivent un bonus de 2 points.
+     *
+     * @param players La liste des joueurs pour lesquels calculer les scores.
+     * @param firstBuilder Le joueur qui a été le premier à construire ses 8 quartiers.
+     * @param gameState L'état actuel du jeu.
+     * @return La liste des joueurs triée en fonction de leurs scores.
+     */
 
     public static List<Player> calculateScores(List<Player> players, Player firstBuilder, GameState gameState) {
         for (Player player : players) {
@@ -52,6 +80,15 @@ public class Main {
         sortPlayers(players);
         return players;
     }
+
+    /**
+     * Cette méthode permet aux joueurs de faire un choix final à la fin du jeu.
+     * Si un joueur a construit le quartier "Cour des miracles" et que le tour actuel est supérieur au tour de construction de ce quartier,
+     * le joueur peut utiliser l'algorithme "huntedQuarterAlgorithm" pour choisir un quartier à utiliser comme quartier de couleur différente.
+     *
+     * @param players La liste des joueurs qui vont faire leur choix final.
+     * @param gameState L'état actuel du jeu.
+     */
 
     public static void finalChoice(List<Player> players, GameState gameState) {
         for (Player player : players) {
@@ -71,6 +108,14 @@ public class Main {
 
     }
 
+    /**
+     * Cette méthode annonce le gagnant de la partie et affiche les scores de chaque joueur.
+     *
+     * @param players La liste des joueurs.
+     * @param firstBuilder Le joueur qui a été le premier à construire ses 8 quartiers.
+     * @param gameState L'état actuel du jeu.
+     */
+
     public static void announceWinner(List<Player> players, Player firstBuilder, GameState gameState) {
         List<Player> playersScores = calculateScores(players, firstBuilder, gameState);
         String playerScoreMessage;
@@ -82,6 +127,14 @@ public class Main {
         String winnerMessage = "\n" + winner.getName() + " gagne la partie avec " + winner.getScore() + " points !";
         LOGGER.info(winnerMessage);
     }
+
+
+    /**
+     * Cette méthode permet de choisir le nombre de parties à jouer en fonction des options passées en paramètre.
+     *
+     * @param args Les options passées en paramètre.
+     * @return Le nombre de parties à jouer.
+     */
 
     public static int jCommander(String... args) {
         Args commandLineArgs = new Args();
@@ -114,27 +167,50 @@ public class Main {
         }
         return numberOfGames;
     }
-    public static void resetAll(Game game, GameState gameState){
-         game.resetGame();
-         gameState.resetGameState();
+
+    /**
+     * Cette méthode réinitialise le jeu et l'état du jeu.
+     *
+     * @param game      Le jeu à réinitialiser.
+     * @param gameState L'état du jeu à réinitialiser.
+     */
+
+    public static void resetAll(Game game, GameState gameState) {
+        game.resetGame();
+        gameState.resetGameState();
     }
 
-    public static List<String> getPlayerInfo(Map<String, List<Integer>> totalPlacements, Player wantedPlayer){
+    /**
+     * Cette méthode retourne les informations d'un joueur sous forme de liste de chaînes de caractères.
+     *
+     * @param totalPlacements La liste des placements de chaque joueur.
+     * @param wantedPlayer    Le joueur dont on veut connaître les informations.
+     * @return Les informations du joueur sous forme de liste de chaînes de caractères.
+     */
+
+    public static List<String> getPlayerInfo(Map<String, List<Integer>> totalPlacements, Player wantedPlayer) {
         List<String> res = new ArrayList<>();
         for (Integer temp : totalPlacements.get(wantedPlayer.getName())){
             res.add(temp.toString());
         }
         return res;
     }
+
+    /**
+     * Cette méthode est la méthode principale du programme.
+     * Elle permet de jouer un certain nombre de parties en fonction des options passées en paramètre.
+     *
+     * @param args Les options passées en paramètre.
+     */
     public static void main(String... args) throws CSVWriteException, CSVFileProcessingException {
         Map<String, Integer> totalScores = new HashMap<>();
         Map<String, List<Integer>> totalPlacements = new HashMap<>(); //List of 4 placements
         Map<String, Integer> algoWinrate = new HashMap<>();
-        String name1 = "Donald";
-        String name2 = "Picsou";
-        String name3 = "Riri";
-        String name4 = "Fifi";
-        String[] names = {name1, name2, name3, name4};
+        String Donald = "Donald";
+        String Picsou = "Picsou";
+        String Riri = "Riri";
+        String Fifi = "Fifi";
+        String[] names = {Donald, Picsou, Riri, Fifi};
         List<Integer> initialPlacement = Arrays.asList(0, 0, 0, 0);
 
         // Add the initial list to each key in the map
@@ -174,10 +250,10 @@ public class Main {
                 resetAll(newGame, gameState);
                 // Adding players to the game
                 newGame.setPlayers(
-                        new Bot(name1, algorithmsInGame.get(0)),
-                        new Bot(name2, algorithmsInGame.get(1)),
-                        new Bot(name3, algorithmsInGame.get(2)),
-                        new Bot(name4, algorithmsInGame.get(3))
+                        new Bot(Donald, algorithmsInGame.get(0)),
+                        new Bot(Picsou, algorithmsInGame.get(1)),
+                        new Bot(Riri, algorithmsInGame.get(2)),
+                        new Bot(Fifi, algorithmsInGame.get(3))
                 );
 
                 List<Player> players = newGame.getPlayers();
@@ -229,8 +305,9 @@ public class Main {
                 LOGGER.info("\n" + COLOR_BLUE + "[ Decompte des points ]" + COLOR_RESET);
                 announceWinner(players, firstBuilder, gameState);
                 for (Player p : players) {
+                    int placementScore = getPlacement(players, p) == 1 ? 1 : 0;
                     totalScores.compute(p.getName(), (k, v) -> (v == null) ? p.getScore() : v + p.getScore());
-                    algoWinrate.compute(((Bot)p).getBotAlgo().getAlgoName(), (k, v) -> (v == null) ? 0 : v + ((getPlacement(players,p)==1)?1:0));
+                    algoWinrate.compute(((Bot) p).getBotAlgo().getAlgoName(), (k, v) -> (v == null) ? 0 : v + placementScore);
                     totalPlacements.get(p.getName()).set(getPlacement(players, p) - 1, totalPlacements.get(p.getName()).get(getPlacement(players, p) - 1) + 1); //Adds one to the pos
                 }
             }
