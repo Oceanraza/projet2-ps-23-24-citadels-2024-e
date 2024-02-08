@@ -22,10 +22,10 @@ public class RichardAlgo extends SmartAlgo {
     private boolean shouldKillBishop = false;
     private boolean shouldKillExceptWarlord = false;
     private boolean shouldKillMagician = false;
-
+    private Random random = new Random();
     BotStyle getRandomBotStyle() { // Randomly choose a bot style
         BotStyle[] styles = BotStyle.values();
-        return styles[new Random().nextInt(styles.length)];
+        return styles[this.random.nextInt(styles.length)];
     }
 
     public void chooseCharacterAlgorithm(Game game) {
@@ -49,21 +49,26 @@ public class RichardAlgo extends SmartAlgo {
             bot.chooseChar(game, ARCHITECT);
         } else if (shouldPickKing(game) > 0) {
             bot.chooseChar(game, KING);
+        } else {
+            bot.chooseChar(game, MAGICIAN);
         }
     }
 
     private void finalTurn(Game game) {
-        if (game.containsAvailableRoles(BISHOP, ASSASSIN, WARLORD) && bot == game.getPlayers().get(0)) {
+        if (isFirstBotAndRolesAvailable(game, BISHOP, ASSASSIN, WARLORD)) {
             bot.chooseChar(game, WARLORD);
+            return;
         } else if (game.containsAvailableRoles(BISHOP, ASSASSIN) && !game.containsAvailableRole(WARLORD) && bot == game.getPlayers().get(1)) {
             bot.chooseChar(game, ASSASSIN);
             shouldKillBishop = true;
+            return;
         }
-        if (game.containsAvailableRoles(ASSASSIN, WARLORD) && !game.containsAvailableRole(BISHOP) && bot == game.getPlayers().get(0)) {
+        if (isSecondBotAndRolesAvailable(game, ASSASSIN, WARLORD) && !game.containsAvailableRole(BISHOP)) {
             bot.chooseChar(game, ASSASSIN);
             shouldKillExceptWarlord = true;
+            return;
         }
-        if (game.containsAvailableRoles(ASSASSIN, BISHOP) && !game.containsAvailableRole(WARLORD) && bot == game.getPlayers().get(0)) {
+        if (isFirstBotAndRolesAvailable(game, ASSASSIN, BISHOP) && !game.containsAvailableRole(WARLORD)) {
             bot.chooseChar(game, ASSASSIN);
             if (game.getPlayers().get(1).getDistrictsInHand().size() > 4 && game.getPlayers().get(2).getDistrictsInHand().isEmpty()) {
                 shouldKillMagician = true; //kill magician
@@ -78,6 +83,14 @@ public class RichardAlgo extends SmartAlgo {
         } else if (game.containsAvailableRole(BISHOP) && !game.containsAvailableRole(ASSASSIN) && !game.containsAvailableRole(WARLORD) && bot == game.getPlayers().get(1)) {
             bot.chooseChar(game, BISHOP);
         }
+    }
+
+    private boolean isFirstBotAndRolesAvailable(Game game, GameCharacterRole... roles) {
+        return game.containsAvailableRoles(roles) && bot == game.getPlayers().get(0);
+    }
+
+    private boolean isSecondBotAndRolesAvailable(Game game, GameCharacterRole... roles) {
+        return game.containsAvailableRoles(roles) && bot == game.getPlayers().get(1);
     }
 
     private void finishOrCounter(Game game) {
@@ -114,13 +127,16 @@ public class RichardAlgo extends SmartAlgo {
                 }
             }
             if (playerWith6Districts != null) {
-                bot.getGameCharacter().specialEffect(bot, game, playerWith6Districts, playerWith6Districts.getLowestDistrict().get());
+                playerWith6Districts.getLowestDistrict().ifPresent(district -> bot.getGameCharacter().specialEffect(bot, game, playerWith6Districts, district));
                 return;
             }
             if (game.getPlayerWithMostDistricts().getCity().getDistrictsBuilt().size() < 7) {
-                bot.getGameCharacter().specialEffect(bot, game, game.getPlayerWithMostDistricts(), game.getPlayerWithMostDistricts().getLowestDistrict().get());
+                Player playerWithMostDistricts = game.getPlayerWithMostDistricts();
+                playerWithMostDistricts.getLowestDistrict().ifPresent(district -> bot.getGameCharacter().specialEffect(bot, game, playerWithMostDistricts, district));
             }
-            bot.getGameCharacter().specialEffect(bot, game, playerWithLowestDistrictPrice, playerWithLowestDistrictPrice.getLowestDistrict().get());
+            playerWithLowestDistrictPrice
+                    .getLowestDistrict()
+                    .ifPresent(district -> bot.getGameCharacter().specialEffect(bot, game, playerWithLowestDistrictPrice, district));
         }
     }
 
@@ -128,10 +144,13 @@ public class RichardAlgo extends SmartAlgo {
     public void magicianAlgorithm(Game game) {
         if (bot.getDistrictsInHand().size() < 4) {
             if (game.getPlayerWithMostDistricts() != bot && couldWinThisTurn(game.getPlayerWithMostDistricts())) {
-                bot.getGameCharacter().specialEffect(bot, game, game.getPlayerWithMostDistricts());
+                bot.getGameCharacter().specialEffect(bot, game, true, game.getPlayerWithMostDistricts()); // If the bot has less than 4 cards in hand, he will swap his hand with the player with the most districts
+                return;
             }
-            bot.getGameCharacter().specialEffect(game.getPlayerWithMostCardInHand(), game);
+            bot.getGameCharacter().specialEffect(bot, game, true, game.getPlayerWithMostCardInHand());
+            return;
         }
+        bot.getGameCharacter().specialEffect(bot, game, false);// If the bot has less than 4 cards in hand, he will swap his hand with the deck
     }
 
     @Override
@@ -160,7 +179,7 @@ public class RichardAlgo extends SmartAlgo {
                     bot.getGameCharacter().specialEffect(bot, game, ARCHITECT);
                     break;
                 default:
-                    bot.getGameCharacter().specialEffect(bot, game, selectRandomKillableCharacter(game));
+                    super.assassinAlgorithm(game);
             }
         }
     }

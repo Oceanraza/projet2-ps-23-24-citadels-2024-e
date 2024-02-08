@@ -46,7 +46,7 @@ class ArchitectTest {
     void DrawsTwoTest() { //Tests if the player drew two additionnal cards
         BaseAlgo botAlgo = new EinsteinAlgo();
         Bot firstBuilder = new Bot("Player 1", botAlgo);
-        botAlgo.setPlayer(firstBuilder);
+        botAlgo.setBot(firstBuilder);
         Game game = new Game();
         game.setPlayers(firstBuilder);
         firstBuilder.setGold(5);
@@ -61,7 +61,7 @@ class ArchitectTest {
     void CanBuildMoreThanOneDistrictTest() { //Tests if the player builds more than one district if he can
         BaseAlgo botAlgo = new EinsteinAlgo();
         Bot firstBuilder = new Bot("Player 1", botAlgo);
-        botAlgo.setPlayer(firstBuilder);
+        botAlgo.setBot(firstBuilder);
         Game game = new Game();
         game.setPlayers(firstBuilder);
         firstBuilder.setGold(10);
@@ -80,7 +80,7 @@ class ArchitectTest {
     void EinsteinAlgoChoosesArchitectTest() { //Tests if the player builds more than one district if he can
         BaseAlgo botAlgo = new EinsteinAlgo();
         Bot firstBuilder = new Bot("Player 1", botAlgo);
-        botAlgo.setPlayer(firstBuilder);
+        botAlgo.setBot(firstBuilder);
         Game game = new Game();
         //game.shuffleCharacters();
         game.getAvailableChars().add(new Architect());

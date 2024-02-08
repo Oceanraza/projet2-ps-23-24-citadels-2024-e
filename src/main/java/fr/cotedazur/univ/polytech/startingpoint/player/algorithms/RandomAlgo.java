@@ -52,9 +52,6 @@ public class RandomAlgo extends BaseAlgo {
         }
     }
 
-    public void assassinAlgorithm(Game game) {
-        bot.getGameCharacter().specialEffect(bot, game, selectRandomKillableCharacter(game));
-    }
 
     public void magicianAlgorithm(Game game) {
         if (oneChanceOutOfTwo) { // have 50% chance to decide to destroy a building of a random player or not

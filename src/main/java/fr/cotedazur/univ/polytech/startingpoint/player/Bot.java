@@ -24,7 +24,7 @@ public class Bot extends Player {
     public Bot(String name, BaseAlgo algo) {
         super(name);
         this.botAlgo = algo;
-        botAlgo.setPlayer(this);
+        botAlgo.setBot(this);
     }
     public Bot(String name){ //for tests
         super(name);

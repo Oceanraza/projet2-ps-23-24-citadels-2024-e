@@ -7,6 +7,7 @@ import fr.cotedazur.univ.polytech.startingpoint.player.Bot;
 import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 import fr.cotedazur.univ.polytech.startingpoint.player.algorithms.RandomAlgo;
 import fr.cotedazur.univ.polytech.startingpoint.player.algorithms.smart.EinsteinAlgo;
+import fr.cotedazur.univ.polytech.startingpoint.player.algorithms.smart.RichardAlgo;
 import fr.cotedazur.univ.polytech.startingpoint.utils.Args;
 import fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger;
 
@@ -104,7 +105,7 @@ public class Main {
         // Adding players to the game
         newGame.setPlayers(
                 new Bot("Donald", new EinsteinAlgo()),
-                new Bot("Picsou", new EinsteinAlgo()),
+                new Bot("Picsou", new RichardAlgo()),
                 new Bot("Riri", new RandomAlgo()),
                 new Bot("Fifi", new RandomAlgo())
         );
