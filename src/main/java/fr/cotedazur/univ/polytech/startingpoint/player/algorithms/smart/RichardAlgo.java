@@ -61,8 +61,16 @@ public class RichardAlgo extends SmartAlgo {
             bot.chooseChar(game, ARCHITECT);
         } else if (shouldPickKing(game) > 0) {
             bot.chooseChar(game, KING);
-        } else {
+        } else if (game.containsAvailableRole(MAGICIAN)) {
             bot.chooseChar(game, MAGICIAN);
+        } else if (game.containsAvailableRole(WARLORD)) {
+            bot.chooseChar(game, WARLORD);
+        } else if (game.containsAvailableRole(BISHOP)) {
+            bot.chooseChar(game, BISHOP);
+        } else if (game.containsAvailableRole(THIEF)) {
+            bot.chooseChar(game, THIEF);
+        } else if (game.containsAvailableRole(MERCHANT)) {
+            bot.chooseChar(game, MERCHANT);
         }
     }
 
@@ -243,6 +251,7 @@ public class RichardAlgo extends SmartAlgo {
         if (architectIsOverpoweredIn(game.getPlayers()) && getRandomBotStyle() == BotStyle.SUSPICIOUS || firstPlayer == bot && getRandomBotStyle() == BotStyle.WISE) { // Aggressive play (bot soupçonneux)
             return 4; // Kill the architect
         }
+
         return 0;
     }
 
