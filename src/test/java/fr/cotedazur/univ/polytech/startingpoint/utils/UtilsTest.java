@@ -7,6 +7,7 @@ import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 import fr.cotedazur.univ.polytech.startingpoint.player.algorithms.BaseAlgo;
 import fr.cotedazur.univ.polytech.startingpoint.player.algorithms.RandomAlgo;
 import fr.cotedazur.univ.polytech.startingpoint.player.algorithms.smart.EinsteinAlgo;
+import fr.cotedazur.univ.polytech.startingpoint.player.algorithms.smart.RichardAlgo;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -38,18 +39,23 @@ class UtilsTest {
         ArrayList<BaseAlgo> algorithmsInGame = new ArrayList<>();
         int nbOfEinstein = 2;
         int nbOfRandom = 3;
-        Utils.setAlgorithms(algorithmsInGame, nbOfEinstein, nbOfRandom);
-        assertEquals(nbOfEinstein + nbOfRandom, algorithmsInGame.size());
+        int nbOfRichard = 4; // Ajout du nombre de RichardAlgo
+        Utils.setAlgorithms(algorithmsInGame, nbOfEinstein, nbOfRichard, nbOfRandom); // Ajout du paramètre nbOfRichard
+        assertEquals(nbOfEinstein + nbOfRichard + nbOfRandom, algorithmsInGame.size()); // Ajout de nbOfRichard à la somme
         int einsteinCount = 0;
         int randomCount = 0;
+        int richardCount = 0; // Ajout du compteur pour RichardAlgo
         for (BaseAlgo algo : algorithmsInGame) {
             if (algo instanceof EinsteinAlgo) {
                 einsteinCount++;
             } else if (algo instanceof RandomAlgo) {
                 randomCount++;
+            } else if (algo instanceof RichardAlgo) { // Ajout de la condition pour RichardAlgo
+                richardCount++;
             }
         }
         assertEquals(nbOfEinstein, einsteinCount);
         assertEquals(nbOfRandom, randomCount);
+        assertEquals(nbOfRichard, richardCount); // Vérification du nombre correct de RichardAlgo
     }
 }
