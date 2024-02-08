@@ -26,6 +26,7 @@ import static fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger.*;
 public class Game {
     public static final int CITY_SIZE_TO_WIN = 8;
     private static final int START_CARDS_NUMBER = 4;
+
     private Deck deck;
     private Crown crown;
     private List<Player> players;
@@ -56,20 +57,17 @@ public class Game {
     public List<GameCharacter> getAvailableChars() {
         return availableChars;
     }
-
-    public int getCurrentPlayerIndexInRunningOrder(Player currentPlayer) {
-        List<Player> runningOrder = getRunningOrder();
-        for (int i = 0; i < runningOrder.size(); i++) {
-            if (runningOrder.get(i).equals(currentPlayer)) {
-                return i;
-            }
-        }
-        return -1;
-    }
     public boolean containsAvailableRole(GameCharacterRole role) {
         return availableChars.stream()
                 .anyMatch(gameCharacter -> gameCharacter.getRole().equals(role));
     }
+
+    public boolean containsAvailableRoles(GameCharacterRole... roles) { // Check if the available characters contain at least one of the roles
+        List<GameCharacterRole> rolesList = Arrays.asList(roles);
+        return availableChars.stream()
+                .anyMatch(gameCharacter -> rolesList.contains(gameCharacter.getRole()));
+    }
+
 
     public List<GameCharacter> getCharactersInGame() {
         return charactersInGame;
@@ -347,5 +345,27 @@ public class Game {
                 .filter(player -> player.getCity().size() == 6)
                 .findFirst()
                 .orElse(null);
+    }
+
+    public Player getPlayerWithMostCardInHand() {
+        return players.stream()
+                .max((p1, p2) -> Integer.compare(p1.getDistrictsInHand().size(), p2.getDistrictsInHand().size()))
+                .orElse(null);
+    }
+
+    public Player getPlayerWithLowestDistrictPrice() {
+        Player playerWithLowestDistrictPrice = null;
+        int lowestPrice = Integer.MAX_VALUE;
+
+        for (Player player : players) {
+            for (District district : player.getDistrictsInHand()) {
+                if (district.getPrice() < lowestPrice) {
+                    lowestPrice = district.getPrice();
+                    playerWithLowestDistrictPrice = player;
+                }
+            }
+        }
+
+        return playerWithLowestDistrictPrice;
     }
 }
