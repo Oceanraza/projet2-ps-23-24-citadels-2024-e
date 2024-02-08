@@ -5,7 +5,7 @@ import fr.cotedazur.univ.polytech.startingpoint.character.card.King;
 import fr.cotedazur.univ.polytech.startingpoint.city.DistrictColor;
 import fr.cotedazur.univ.polytech.startingpoint.player.Bot;
 import fr.cotedazur.univ.polytech.startingpoint.player.Player;
-import fr.cotedazur.univ.polytech.startingpoint.utils.InGameLogger;
+import fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -20,8 +20,8 @@ class KingTest {
 
     @BeforeEach
     void setUp() {
-        InGameLogger.setup();
-        InGameLogger.setGlobalLogLevel(Level.OFF);
+        CitadelsLogger.setupDemo();
+        CitadelsLogger.setGlobalLogLevel(Level.OFF);
 
         game = new Game();
         king = new King();

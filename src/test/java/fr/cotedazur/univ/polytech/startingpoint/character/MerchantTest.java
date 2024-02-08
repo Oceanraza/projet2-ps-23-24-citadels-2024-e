@@ -3,7 +3,7 @@ package fr.cotedazur.univ.polytech.startingpoint.character;
 import fr.cotedazur.univ.polytech.startingpoint.Game;
 import fr.cotedazur.univ.polytech.startingpoint.character.card.Merchant;
 import fr.cotedazur.univ.polytech.startingpoint.city.DistrictColor;
-import fr.cotedazur.univ.polytech.startingpoint.utils.InGameLogger;
+import fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -17,8 +17,8 @@ class MerchantTest {
 
     @BeforeEach
     void setUp() {
-        InGameLogger.setup();
-        InGameLogger.setGlobalLogLevel(Level.OFF);
+        CitadelsLogger.setupDemo();
+        CitadelsLogger.setGlobalLogLevel(Level.OFF);
 
         game = new Game();
         merchant = new Merchant();

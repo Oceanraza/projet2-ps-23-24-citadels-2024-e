@@ -1,8 +1,8 @@
 package fr.cotedazur.univ.polytech.startingpoint.city;
 
-import fr.cotedazur.univ.polytech.startingpoint.utils.InGameLogger;
 import fr.cotedazur.univ.polytech.startingpoint.GameState;
 import fr.cotedazur.univ.polytech.startingpoint.exception.DistrictAlreadyBuiltException;
+import fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -18,8 +18,8 @@ class CityTest {
 
     @BeforeEach
     void setUp() {
-        InGameLogger.setup();
-        InGameLogger.setGlobalLogLevel(Level.OFF);
+        CitadelsLogger.setupDemo();
+        CitadelsLogger.setGlobalLogLevel(Level.OFF);
 
         gameState = new GameState();
         city = new City();

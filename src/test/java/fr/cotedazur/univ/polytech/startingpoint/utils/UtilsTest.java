@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class UtilsTest {
+class UtilsTest {
     @Test
     void getHighestNumberOfCardsInHandTest(){
         Player p1 = new Bot("Picsou");

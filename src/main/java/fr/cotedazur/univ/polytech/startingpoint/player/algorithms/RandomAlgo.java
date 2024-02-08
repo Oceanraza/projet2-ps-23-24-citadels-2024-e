@@ -13,7 +13,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import static fr.cotedazur.univ.polytech.startingpoint.utils.InGameLogger.*;
+import static fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger.*;
 
 /**
  * This class represents the random algorithm
@@ -89,7 +89,7 @@ public class RandomAlgo extends BaseAlgo {
                 bot.getGameCharacter().specialEffect(bot, game, false);
             }
         } else {
-            LOGGER.info(COLOR_RED + "Il n'échange ses cartes avec personne" + COLOR_RESET);
+            LOGGER.info(COLOR_RED + "Il n'echange ses cartes avec personne" + COLOR_RESET);
         }
     }
 
