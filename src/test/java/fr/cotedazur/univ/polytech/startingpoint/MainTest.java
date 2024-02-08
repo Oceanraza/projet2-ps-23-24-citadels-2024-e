@@ -14,6 +14,7 @@ import fr.cotedazur.univ.polytech.startingpoint.utils.ConsoleLogFunctions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
@@ -183,6 +184,27 @@ class MainTest {
         assertEquals(32, secondPlayer.getScore());
         assertEquals(32, thirdPlayer.getScore());
         assertEquals(32, fourthPlayer.getScore());
+    }
+    @Test
+    public void testGetPlacement() {
+        List<Player> players = new ArrayList<>();
+        players.add(new Bot("Alice"));
+        Player p2 = new Bot("Bob");
+        players.add(p2);
+        players.add(new Bot("Charlie"));
+        players.add(new Bot("David"));
+
+        int placement = Main.getPlacement(players, p2);
+
+        // Verify if the correct placement is returned
+        assertEquals(2, placement);
+
+        // Test with a player not in the list
+        Player notInList = new Bot("Eve");
+        int nonExistentPlacement = Main.getPlacement(players, notInList);
+
+        // Verify if -1 is returned for a player not in the list
+        assertEquals(-1, nonExistentPlacement);
     }
 
 }

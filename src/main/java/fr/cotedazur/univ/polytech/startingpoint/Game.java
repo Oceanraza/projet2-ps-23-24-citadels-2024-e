@@ -162,14 +162,23 @@ public class Game {
         }
     }
 
-    public void charSelectionFiller(){
-        for (Player p: players){
-            if (p.getGameCharacter() == null){
-                String playerInfo = ((Bot)p).toString();
+    public void charSelectionFiller(int startingPos) {
+        int i = startingPos + 1;
+        while (i != (startingPos)) {
+            if (i == players.size()) {
+                i = 0;
+                if (startingPos == 0 ){
+                    return;
+                }
+            }
+            Bot p = (Bot)players.get(i);
+            if (p.getGameCharacter() == null) {
+                String playerInfo = p.toString();
                 LOGGER.info(playerInfo);
-                //We create a new variable p2 to cast p to Bot each time
-                //Good to note that you can't just cast the whole List
-                ((Bot)p).getBotAlgo().chooseCharacterAlgorithm(this);}
+                p.getBotAlgo().chooseCharacterAlgorithm(this);
+            }
+            i++;
+
         }
     }
 
@@ -180,13 +189,20 @@ public class Game {
         return crownOwner;
     }
 
-    public void characterSelection(Bot crownOwner) {
-        if(crownOwner !=null) {
+    public void characterSelection(Bot crownOwner, int cOpos) { //cO = crownOwner
+        if(crownOwner != null) {
             String crownOwnerInfos = crownOwner.toString();
             LOGGER.info(crownOwnerInfos);
             crownOwner.getBotAlgo().chooseCharacterAlgorithm(this);
         }
-        charSelectionFiller();
+        else{
+            cOpos = 0; //There's no crownOwner, therefore the first player starts
+            Bot p1 = (Bot) players.get(0);
+            LOGGER.info(p1.toString());
+            p1.getBotAlgo().chooseCharacterAlgorithm(this);
+            //The first player is treated here to keep charSelectionFiller logic
+        }
+        charSelectionFiller(cOpos);
     }
 
     public void playerKilled(GameCharacter characterKilled, Player playerKilled) {
