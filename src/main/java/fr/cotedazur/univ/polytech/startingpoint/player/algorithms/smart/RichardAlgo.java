@@ -12,6 +12,13 @@ public class RichardAlgo extends SmartAlgo {
     }
 
     @Override
+    public boolean collectGoldBeforeBuildChoice() {
+        // Since Richard didn't specify any logic for this, he will always choose to collect gold after
+        // building to get the money from the districts he built (if he has a money character)
+        return false;
+    }
+
+    @Override
     public void chooseCharacterAlgorithm(Game game) {
         // TODO
     }

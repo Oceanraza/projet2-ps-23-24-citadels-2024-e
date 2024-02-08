@@ -26,6 +26,7 @@ public class RandomAlgo extends BaseAlgo {
         algoName = "Random";
     }
 
+    @Override
     public int startOfTurnChoice() {
         if (getRandomBoolean()) {
             return 1; // Take 2 gold coins
@@ -33,12 +34,19 @@ public class RandomAlgo extends BaseAlgo {
         return 2; // Draw a card
     }
 
+    @Override
+    public boolean collectGoldBeforeBuildChoice() {
+        return getRandomBoolean();
+    }
+
+    @Override
     public void chooseCharacterAlgorithm(Game game) {
         List<GameCharacter> availableChars = game.getAvailableChars();
         GameCharacter chosenChar = game.getAvailableChars().get(Utils.generateRandomNumber(availableChars.size()));
         bot.chooseChar(game, chosenChar.getRole());
     }
 
+    @Override
     public void warlordAlgorithm(Game game) {
         if (getRandomBoolean()) { // Have 50% chance to decide to destroy a building of a random player or not
             List<Player> playerList = game.getSortedPlayersByScoreForWarlord();
@@ -59,6 +67,7 @@ public class RandomAlgo extends BaseAlgo {
         }
     }
 
+    @Override
     public void assassinAlgorithm(Game game) {
         if (getRandomBoolean()) { // have 50% chance to decide to assassinate a character
             int numberOfTargets;
@@ -76,6 +85,7 @@ public class RandomAlgo extends BaseAlgo {
         }
     }
 
+    @Override
     public void magicianAlgorithm(Game game) {
         if (getRandomBoolean()) {
             // have 25% chance to decide to change his hand with another player
@@ -93,6 +103,7 @@ public class RandomAlgo extends BaseAlgo {
         }
     }
 
+    @Override
     public void buildOrNot(GameState gameState) { //builds if he can
         int builtThisTurn = 0;
 
@@ -106,18 +117,22 @@ public class RandomAlgo extends BaseAlgo {
         }
     }
 
+    @Override
     public void kingAlgorithm(Game game) {
         bot.getGameCharacter().specialEffect(bot, game);
     }
     
+    @Override
     public void huntedQuarterAlgorithm(District huntedQuarter) {
         huntedQuarter.setColor(DistrictColor.values()[Utils.generateRandomNumber(DistrictColor.values().length)]);
     }
 
+    @Override
     public boolean manufactureChoice() {
         return getRandomBoolean();
     }
 
+    @Override
     public Optional<District> laboratoryChoice() {
         if (getRandomBoolean()) {
             List<District> districtsInHand = bot.getDistrictsInHand();
@@ -126,6 +141,7 @@ public class RandomAlgo extends BaseAlgo {
         return Optional.empty();
     }
 
+    @Override
     public boolean graveyardChoice() {
         return getRandomBoolean();
     }

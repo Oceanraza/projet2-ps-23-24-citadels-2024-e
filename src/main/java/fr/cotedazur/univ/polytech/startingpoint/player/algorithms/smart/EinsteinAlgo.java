@@ -8,6 +8,7 @@ import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 import fr.cotedazur.univ.polytech.startingpoint.utils.Utils;
 
 import java.util.List;
+import java.util.Optional;
 
 import static fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole.*;
 import static fr.cotedazur.univ.polytech.startingpoint.utils.InGameLogger.LOGGER;
@@ -20,6 +21,13 @@ public class EinsteinAlgo extends SmartAlgo {
     public EinsteinAlgo(){
         super();
         algoName = "Einstein";
+    }
+
+    @Override
+    public boolean collectGoldBeforeBuildChoice() {
+        // The bot will collect gold before building if it doesn't have enough gold to build its lowest district
+        Optional<District> lowestDistrict = bot.getLowestDistrictInHand();
+        return lowestDistrict.isPresent() && (bot.getGold() < lowestDistrict.get().getPrice());
     }
 
     @Override
@@ -89,7 +97,7 @@ public class EinsteinAlgo extends SmartAlgo {
         playerList.remove(bot);
         for (Player targetedPlayer : playerList) {
             if (!targetedPlayer.getGameCharacter().getRole().equals(GameCharacterRole.BISHOP)) { // doesn't target the bishop because he's immune to the warlord
-                targetedPlayer.getLowestDistrict().ifPresent(district -> {
+                targetedPlayer.getLowestDistrictBuilt().ifPresent(district -> {
                     if (Utils.canDestroyDistrict(district, bot)) {
                         bot.getGameCharacter().specialEffect(bot, game, targetedPlayer, district);
                         lowestDistrictHasBeenFound();
