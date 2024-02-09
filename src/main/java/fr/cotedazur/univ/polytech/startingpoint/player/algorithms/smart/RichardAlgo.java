@@ -60,7 +60,7 @@ public class RichardAlgo extends SmartAlgo {
             bot.chooseChar(game, ARCHITECT);
         } else if (shouldPickKing(game) > 0) {
             bot.chooseChar(game, KING);
-        } else if (shouldPickMagician(game) > 0) {
+        } else if (game.containsAvailableRole(MAGICIAN)) {
             bot.chooseChar(game, MAGICIAN);
         } else if (game.containsAvailableRole(WARLORD)) {
             bot.chooseChar(game, WARLORD);
@@ -279,13 +279,6 @@ public class RichardAlgo extends SmartAlgo {
         return 0;
     }
 
-    private int shouldPickMagician(Game game) {
-        if (game.containsAvailableRole(MAGICIAN) && bot.getDistrictsInHand().isEmpty()) {
-            return 1;
-        }
-        return 0;
-    }
-
     @Override
     public boolean graveyardChoice() {
         return true;
@@ -306,14 +299,11 @@ public class RichardAlgo extends SmartAlgo {
         }
     }
 
-    private void chooseAggressiveChar(Game game) {
-        // Strat :assassin, condottiere, magicien, voleur.
-        if (game.containsAvailableRole(ASSASSIN)) {
-            bot.chooseChar(game, ASSASSIN);
-        } else if (game.containsAvailableRole(WARLORD)) {
-            bot.chooseChar(game, WARLORD);
-        } else if (game.containsAvailableRole(MAGICIAN)) {
-            bot.chooseChar(game, MAGICIAN);
+    private void test(Game game, GameCharacterRole gameCharacterRole, GameCharacterRole gameCharacterRole2) {
+        if (game.containsAvailableRole(gameCharacterRole)) {
+            bot.chooseChar(game, gameCharacterRole);
+        } else if (game.containsAvailableRole(gameCharacterRole2)) {
+            bot.chooseChar(game, gameCharacterRole2);
         } else if (game.containsAvailableRole(THIEF)) {
             bot.chooseChar(game, THIEF);
         } else {
@@ -321,17 +311,18 @@ public class RichardAlgo extends SmartAlgo {
         }
     }
 
+    private void chooseAggressiveChar(Game game) {
+        // Strat :assassin, condottiere, magicien, voleur.
+        if (game.containsAvailableRole(ASSASSIN)) {
+            bot.chooseChar(game, ASSASSIN);
+        } else {
+            test(game, WARLORD, MAGICIAN);
+        }
+    }
+
     private void chooseOpportunistChar(Game game) {
         // Srat : évêque, condottiere, voleur
-        if (game.containsAvailableRole(BISHOP)) {
-            bot.chooseChar(game, BISHOP);
-        } else if (game.containsAvailableRole(WARLORD)) {
-            bot.chooseChar(game, WARLORD);
-        } else if (game.containsAvailableRole(THIEF)) {
-            bot.chooseChar(game, THIEF);
-        } else {
-            bot.chooseChar(game, game.getAvailableChars().get(0).getRole()); // If none of the characters are available, the bot will choose the first character
-        }
+        test(game, BISHOP, WARLORD);
     }
 
     private boolean isAhead(Game game, Player bot) {

@@ -123,6 +123,8 @@ class RichardAlgoTest {
         // Arrange
         RichardAlgo richardAlgo = new RichardAlgo();
         Game game = mock(Game.class);
+        Bot bot = mock(Bot.class);
+        richardAlgo.setBot(bot);  // Set the mock Bot
         when(game.containsAvailableRole(GameCharacterRole.ARCHITECT)).thenReturn(false);
 
         // Act
