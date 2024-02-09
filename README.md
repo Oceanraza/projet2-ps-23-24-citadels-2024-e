@@ -123,7 +123,40 @@ Assurez-vous que tous les tests passent sans erreurs, confirmant ainsi la solidi
       `Enfin` le fichier est reinitialisé, nous rajoutons les en-têtes et les nouvelles données.
 
 ## Bot Richard
-//Océan-Mathis
+
+Le bot RichardAlgo implémente une stratégie nuancée visant à optimiser chaque mouvement en fonction des positions des
+joueurs et de la phase du jeu. Voici un résumé des stratégies clés employées par RichardAlgo pour guider les joueurs
+novices et expérimentés :
+
+### Stratégie de base
+
+#### Assassin
+
+- **Usage sélectif contre le Voleur :** L'Assassin ne cible le Voleur que pour empêcher un joueur de s'enrichir de
+  manière excessive ou si le Voleur est choisi par un concurrent direct pour la victoire. Cela car le Voleur ne peut pas
+  voler l'Assassin, éliminant un risque direct tout en neutralisant une menace pour les adversaires.
+- **Prudence avec le Condottiere :** L'Assassin évite de cibler le Condottiere à moins d'être en tête ou de soupçonner
+  le Condottiere d'être choisi par un joueur proche de la victoire. Cela minimise les risques pour l'Assassin, sauf dans
+  des circonstances très spécifiques.
+
+#### Architecte
+
+- **Contrôle du leader :** L'Architecte est évité par les joueurs bien placés pour prévenir une avance décisive. Si un
+  joueur peut potentiellement faire un bond significatif dans sa construction, les autres joueurs doivent intervenir
+  pour empêcher cette situation, idéalement en choisissant l'Assassin pour éliminer l'Architecte du tour.
+
+#### Roi
+
+- **Interruption de séquences gagnantes :** Le Roi est une cible prioritaire pour empêcher un joueur en position de
+  gagner de jouer en premier dans le prochain tour et de choisir des personnages clés comme l'Assassin. Les joueurs
+  doivent ajuster leur sélection de personnages pour contrer stratégiquement ce joueur.
+
+### Dernier tour
+
+- **Blocage du joueur en tête :** Si un joueur est sur le point de construire son dernier quartier, les adversaires
+  doivent utiliser une combinaison de personnages pour bloquer ou ralentir sa progression. Cela peut inclure
+  l'utilisation de l'Assassin pour éliminer des personnages clés ou du Condottiere pour détruire un quartier crucial.
+
 
 ## Pourquoi Einstein bat-il Richard ?
 
