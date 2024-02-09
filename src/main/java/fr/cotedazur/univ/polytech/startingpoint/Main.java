@@ -259,7 +259,7 @@ public class Main {
                     String turnNumberMessage = COLOR_BLUE + "\n\n----- Tour " + gameState.getTurn() + " -----" + COLOR_RESET;
                     LOGGER.info(turnNumberMessage);
 
-                    Bot crownOwner = newGame.getCrownOwner();
+                    Bot crownOwner = newGame.printCrownOwner();
 
                     // Reset characters, their states and shuffle cards
                     newGame.resetChars();
