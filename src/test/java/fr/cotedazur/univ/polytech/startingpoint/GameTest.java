@@ -10,6 +10,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.logging.Level;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -240,7 +241,7 @@ class GameTest {
         player2.addDistrictBuilt(d4, gameState);
         player2.addDistrictBuilt(d5, gameState);
 
-        assertEquals(player, game.getPlayerWithLowestDistrictPrice());
+        assertEquals(Optional.of(player), game.getPlayerWithLowestDistrictPrice());
     }
 
 }
