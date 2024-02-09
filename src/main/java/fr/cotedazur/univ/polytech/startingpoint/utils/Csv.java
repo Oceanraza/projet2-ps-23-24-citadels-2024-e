@@ -23,7 +23,7 @@ public class Csv {
     }
 
 
-    public static void writeStats(List<String[]> args) throws CSVWriteException, CSVFileProcessingException {
+    public static void writeStats(List<String[]> args)  {
         // Define the data for the CSV file
         // Specify the file path
         String csvFilePath = "src/main/resources/stats/gamestats.csv";
@@ -49,7 +49,7 @@ public class Csv {
 
                 }
             } catch (IOException | CsvValidationException e){
-                throw new CSVFileProcessingException("An error occurred while processing the file: " + e.getMessage());
+                //throw new CSVFileProcessingException("An error occurred while processing the file: " + e.getMessage());
             }
         }
         try (CSVWriter writer = new CSVWriter(new FileWriter(csvFilePath,true))) {
@@ -59,11 +59,11 @@ public class Csv {
                 writer.writeNext(tempList);
             }
             LOGGER.log(CSV_OR_THOUSAND, COLOR_GREEN + "\nValeurs ajoutees au fichier CSV avec succes !" + COLOR_RESET);
-        } catch (IOException | StatsResetException e) {
-            throw new CSVWriteException("Error while writing csv file : " + e.getMessage());
+        } catch (IOException e) {
+            //throw new CSVWriteException("Error while writing csv file : " + e.getMessage());
         }
     }
-    public static void resetStats() throws StatsResetException {
+    public static void resetStats(){
         String csvFilePath = "src/main/resources/stats/gamestats.csv";
         // Create a File object to check if the file exists
         File file = new File(csvFilePath);
@@ -74,7 +74,7 @@ public class Csv {
         try (CSVWriter writer = new CSVWriter(new FileWriter(csvFilePath))) {
             writer.writeNext(data);
         } catch (IOException e) {
-            throw new StatsResetException("Error resetting statistics : " + e.getMessage());
+            //throw new StatsResetException("Error resetting statistics : " + e.getMessage());
         }
     }
 
