@@ -110,7 +110,7 @@ novices et expérimentés :
 ## Pourquoi Einstein bat-il Richard ?
 
 *Einstein joue pour lui-même :* La principale différence vient du fait qu'Einstein joue pour lui-même et pour maximiser
-ses propres chances. Il va essayer de récupérer le plus d'argent possible et de construire ses bâtiment le plus vite
+ses propres chances. Il va essayer de récupérer le plus d'argent possible et de construire ses bâtiments le plus vite
 possible. `A l'instar `de Richard qui lui essaie de déstabiliser ses adversaires et de les faire perdre. Dans une partie
 avec quatre joueurs, celui se priorisant sur les autres est voué à être plus performant sur le long terme en général.
 
@@ -128,6 +128,13 @@ telles que `Player` et `GameCharacter` pour fournir des modèles extensibles pou
 les personnages `King`, `Assassin`, entre autres. Cette décision a été guidée par la volonté de faciliter l'ajout de
 nouveaux types de joueurs et de personnages sans perturber la logique existante. De plus, l'emploi de fichiers JSON pour
 la gestion des données de jeu offre une flexibilité dans la manipulation et la persistance des états de jeu.
+
+Toutefois, on peut noter que les parties de l'architecture du projet sont plus ou moins bien réalisées. Par exemple, la
+gestion des actions des joueurs est bien réalisée avec la classe `ActionManager` pour gérer les actions des joueurs.
+Cependant, la gestion des personnages est moins bien réalisée. En effet, la classe RichardAlgo suit une algorithme
+mais aurait pu mieux être implémenter de manière à uniformiser les stratégies des bots. On peut noter qu'on aurait pu
+utiliser des design patterns pour améliorer l'architecture du projet(singleton pour le game, factory pour les
+personnages, factory pour les cartes, observer pour les actions des joueurs, etc).
 
 ## Desing Patterns
 
