@@ -136,6 +136,8 @@ avec quatre joueurs, celui se priorisant sur les autres est voué à être plus 
 
 # Architecture du projet
 
+![img.png](doc/img.png)
+
 L'architecture de notre projet a été conçue avec une approche modulaire et orientée objet, ce qui nous a permis de
 maintenir une séparation claire des responsabilités tout en facilitant l'extensibilité. Au cœur de notre application, la
 classe `Game` orchestre la logique de jeu, s'appuyant sur des composants spécialisés tels que `ActionManager` pour gérer
