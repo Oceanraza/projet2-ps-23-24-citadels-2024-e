@@ -8,7 +8,6 @@ import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 import fr.cotedazur.univ.polytech.startingpoint.utils.Utils;
 
 import java.util.List;
-import java.util.Optional;
 
 import static fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole.ARCHITECT;
 import static fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole.ASSASSIN;
@@ -21,13 +20,6 @@ public class EinsteinAlgo extends SmartAlgo {
     public EinsteinAlgo(){
         super();
         algoName = "Einstein";
-    }
-
-    @Override
-    public boolean collectGoldBeforeBuildChoice() {
-        // The bot will collect gold before building if it doesn't have enough gold to build its lowest district
-        Optional<District> lowestDistrict = bot.getLowestDistrictInHand();
-        return lowestDistrict.isPresent() && (bot.getGold() < lowestDistrict.get().getPrice());
     }
 
     public boolean chooseAssassinAlgorithm(Game game, List<GameCharacter> availableChars) {

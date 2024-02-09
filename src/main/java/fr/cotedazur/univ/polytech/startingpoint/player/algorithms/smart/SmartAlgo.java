@@ -82,6 +82,13 @@ public abstract class SmartAlgo extends BaseAlgo {
     }
 
     @Override
+    public boolean collectGoldBeforeBuildChoice() {
+        // The bot will collect gold before building if it doesn't have enough gold to build its lowest district
+        Optional<District> lowestDistrict = bot.getLowestDistrictInHand();
+        return lowestDistrict.isPresent() && (bot.getGold() < lowestDistrict.get().getPrice());
+    }
+
+    @Override
     public void assassinAlgorithm(Game game) {
         List<GameCharacter> killableCharacters;
         int indexKilledCharacter;

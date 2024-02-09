@@ -9,7 +9,6 @@ import fr.cotedazur.univ.polytech.startingpoint.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import static fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole.*;
 
@@ -28,17 +27,9 @@ public class RichardAlgo extends SmartAlgo {
     private boolean shouldKillBishop = false;
     private boolean shouldKillExceptWarlord = false;
     private boolean shouldKillMagician = false;
-    private Random random = new Random();
     BotStyle getRandomBotStyle() { // Randomly choose a bot style
         BotStyle[] styles = BotStyle.values();
-        return styles[this.random.nextInt(styles.length)];
-    }
-
-    @Override
-    public boolean collectGoldBeforeBuildChoice() {
-        // Since Richard didn't specify any logic for this, he will always choose to collect gold after
-        // building to get the money from the districts he built (if he has a money character)
-        return false;
+        return styles[Utils.generateRandomNumber(styles.length)];
     }
 
     @Override
@@ -56,9 +47,8 @@ public class RichardAlgo extends SmartAlgo {
         }
 
         //Algo durant la partie
-        else if (shouldPickAssassin(game) > 0) {
-            bot.chooseChar(game, ASSASSIN);
-        } else if (shouldPickArchitect(game) > 0) {
+
+        if (shouldPickArchitect(game) > 0) {
             bot.chooseChar(game, ARCHITECT);
         } else if (shouldPickKing(game) > 0) {
             bot.chooseChar(game, KING);
@@ -70,6 +60,8 @@ public class RichardAlgo extends SmartAlgo {
             bot.chooseChar(game, BISHOP);
         } else if (game.containsAvailableRole(THIEF)) {
             bot.chooseChar(game, THIEF);
+        } else if (shouldPickAssassin(game) > 0) {
+            bot.chooseChar(game, ASSASSIN);
         } else {
             bot.chooseChar(game, MERCHANT);
         }

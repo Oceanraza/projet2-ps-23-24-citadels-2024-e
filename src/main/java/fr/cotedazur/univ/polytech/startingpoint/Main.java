@@ -146,16 +146,15 @@ public class Main {
         int numberOfGames = jCommander(args);
 
         int nbOfEinstein;
-        int nbOfRandom;
+        int nbOfRandom = 0;
         int nbOfRichard;
         for (int numberOfRepetitions = 0; numberOfRepetitions < (currentMode.equals(Args.ArgsEnum.TWOTHOUSANDS) ? 2 : 1); numberOfRepetitions++) {
             if (numberOfRepetitions == 0){
                 if (currentMode.equals(Args.ArgsEnum.TWOTHOUSANDS)){
                     LOGGER.log(CSV_OR_THOUSAND,  COLOR_BLUE + "\n[ Algo le plus intelligent contre le second (2vs2) ]\n" + COLOR_RESET);
                 }
-                nbOfEinstein = 1;
-                nbOfRichard = 1;
-                nbOfRandom = 2;
+                nbOfEinstein = 2;
+                nbOfRichard = 2;
             }
             else{
                 for (Map.Entry<String,Integer> entry : algoWinrate.entrySet()) {
@@ -168,7 +167,6 @@ public class Main {
                 }
                 nbOfEinstein = 4;
                 nbOfRichard = 0;
-                nbOfRandom = 0;
             }
             Utils.resetScoresAndPlacements(totalPlacements,totalScores);
             ArrayList<BaseAlgo> algorithmsInGame = new ArrayList<>();
