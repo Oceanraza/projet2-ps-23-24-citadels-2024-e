@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Optional;
 
 import static fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole.*;
-import static fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger.LOGGER;
 /**
  * This class represents the algorithm of the bot Einstein
  * It contains the logic of the bot's actions
@@ -29,17 +28,6 @@ public class EinsteinAlgo extends SmartAlgo {
         return lowestDistrict.isPresent() && (bot.getGold() < lowestDistrict.get().getPrice());
     }
 
-
-    public void botChoosesCard(Game game, List<District> threeCards) {
-        District chosenCard = chooseCard(threeCards);
-        threeCards.remove(chosenCard); // Remove the chosen card from the list of three cards
-        for (District card : threeCards) {
-            this.bot.removeFromHandAndPutInDeck(game.getDeck(), card);
-        }
-        String drawMessage = bot.getName() + " pioche le " + chosenCard;
-        LOGGER.info(drawMessage);
-        bot.addDistrictInHand(chosenCard);
-    }
 
     public boolean chooseAssassinAlgorithm(Game game, List<GameCharacter> availableChars) {
         if ((bot.getCity().getDistrictsBuilt().size() >= 7) && (bot.canBuildDistrictThisTurn()) && (bot.isCharInList(availableChars, ASSASSIN))) {

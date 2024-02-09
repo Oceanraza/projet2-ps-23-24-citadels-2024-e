@@ -133,11 +133,11 @@ public class Main {
         Map<String, Integer> totalScores = new HashMap<>();
         Map<String, List<Integer>> totalPlacements = new HashMap<>(); //List of 4 placements
         Map<String, Integer> algoWinrate = new HashMap<>();
-        String name1 = "Donald";
-        String name2 = "Picsou";
-        String name3 = "Riri";
-        String name4 = "Fifi";
-        String[] names = {name1, name2, name3, name4};
+        String donald = "Donald";
+        String picsou = "Picsou";
+        String riri = "Riri";
+        String fifi = "Fifi";
+        String[] names = {donald, picsou, riri, fifi};
         List<Integer> initialPlacement = Arrays.asList(0, 0, 0, 0);
 
         // Add the initial list to each key in the map
@@ -179,10 +179,10 @@ public class Main {
                 resetAll(newGame, gameState);
                 // Adding players to the game
                 newGame.setPlayers(
-                        new Bot(name1, algorithmsInGame.get(0)),
-                        new Bot(name2, algorithmsInGame.get(1)),
-                        new Bot(name3, algorithmsInGame.get(2)),
-                        new Bot(name4, algorithmsInGame.get(3))
+                        new Bot(donald, algorithmsInGame.get(0)),
+                        new Bot(picsou, algorithmsInGame.get(1)),
+                        new Bot(riri, algorithmsInGame.get(2)),
+                        new Bot(fifi, algorithmsInGame.get(3))
                 );
 
                 List<Player> players = newGame.getPlayers();

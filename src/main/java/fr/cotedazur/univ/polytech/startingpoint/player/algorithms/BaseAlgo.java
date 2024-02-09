@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger.LOGGER;
+
 public abstract class BaseAlgo {
     protected boolean oneChanceOutOfTwo = Utils.generateRandomNumber(2) == 0;
 
@@ -49,6 +51,17 @@ public abstract class BaseAlgo {
             default:
                 break;
         }
+    }
+
+    public void botChoosesCard(Game game, List<District> threeCards) {
+        District chosenCard = chooseCard(threeCards);
+        threeCards.remove(chosenCard); // Remove the chosen card from the list of three cards
+        for (District card : threeCards) {
+            this.bot.removeFromHandAndPutInDeck(game.getDeck(), card);
+        }
+        String drawMessage = bot.getName() + " pioche le " + chosenCard;
+        LOGGER.info(drawMessage);
+        bot.addDistrictInHand(chosenCard);
     }
 
     public void thiefAlgorithm(Game game) {
