@@ -1,21 +1,15 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import fr.cotedazur.univ.polytech.startingpoint.board.Deck;
 import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacter;
 import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole;
 import fr.cotedazur.univ.polytech.startingpoint.character.card.*;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
-import fr.cotedazur.univ.polytech.startingpoint.exception.JsonFileReadException;
 import fr.cotedazur.univ.polytech.startingpoint.player.Bot;
 import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 import fr.cotedazur.univ.polytech.startingpoint.utils.Utils;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 import static fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger.*;
 
@@ -26,21 +20,21 @@ import static fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger.*;
 public class Game {
     public static final int CITY_SIZE_TO_WIN = 8;
     private static final int START_CARDS_NUMBER = 4;
-    private Deck deck;
+    private Deck deck = new Deck();
     private Crown crown;
     private List<Player> players;
-    private List<GameCharacter> allCharacters;
-    private List<GameCharacter> charactersInGame;
-    private List<GameCharacter> availableChars;
+    protected List<GameCharacter> allCharacters;
+    protected List<GameCharacter> charactersInGame;
+    protected List<GameCharacter> availableChars;
 
-    Assassin assassin;
-    Thief thief;
-    King king;
-    Bishop bishop;
-    Merchant merchant;
-    Warlord warlord;
-    Magician magician;
-    Architect architect;
+    protected Assassin assassin;
+    protected Thief thief;
+    protected King king;
+    protected Bishop bishop;
+    protected Merchant merchant;
+    protected Warlord warlord;
+    protected Magician magician;
+    protected Architect architect;
 
     public Game() {
         init();
@@ -70,6 +64,13 @@ public class Game {
         return availableChars.stream()
                 .anyMatch(gameCharacter -> gameCharacter.getRole().equals(role));
     }
+
+    public boolean containsAvailableRoles(GameCharacterRole... roles) { // Check if the available characters contain at least one of the roles
+        List<GameCharacterRole> rolesList = Arrays.asList(roles);
+        return availableChars.stream()
+                .anyMatch(gameCharacter -> rolesList.contains(gameCharacter.getRole()));
+    }
+
 
     public List<GameCharacter> getCharactersInGame() {
         return charactersInGame;
@@ -112,18 +113,9 @@ public class Game {
 
     // Init starts off the game by creating the deck, the crown, the players and the characters
     public void init() {
-        deck = new Deck();
+        deck.resetDeck();
         allCharacters = new ArrayList<>();
         availableChars = new ArrayList<>();
-
-        // Specify the path to your JSON file
-        try {
-            JsonNode tempNode = Utils.parseJsonFromFile
-                    ("src/main/resources/init_database.json");
-            deck = Utils.convertJsonNodeToDistrictList(tempNode.path("Game").path("Districts"));
-        } catch (IOException e) {
-            throw new JsonFileReadException("Error reading JSON file", e);
-        }
 
         // Create a crown
         crown = new Crown();
@@ -178,7 +170,7 @@ public class Game {
     private void giveStartingCards() {
         for (Player player : players) {
             for (int i = 0; i < START_CARDS_NUMBER; i++) {
-                player.getDistrictsInHand().add(deck.drawCard());
+                player.addDistrictInHand(deck.drawCard());
             }
         }
     }
@@ -192,15 +184,23 @@ public class Game {
         }
     }
 
-    public void charSelectionFiller(){
-        for (Player p: players){
-            if (p.getGameCharacter() == null){
-                Bot p2 = (Bot) p;
-                String playerInfo = p2.toString();
+    public void charSelectionFiller(int startingPos) {
+        int i = startingPos + 1;
+        while (i != (startingPos)) {
+            if (i == players.size()) {
+                i = 0;
+                if (startingPos == 0) {
+                    return;
+                }
+            }
+            Bot p = (Bot) players.get(i);
+            if (p.getGameCharacter() == null) {
+                String playerInfo = p.toString();
                 LOGGER.info(playerInfo);
-                //We create a new variable p2 to cast p to Bot each time
-                //Good to note that you can't just cast the whole List
-                p2.getBotAlgo().chooseCharacterAlgorithm(this);}
+                p.getBotAlgo().chooseCharacterAlgorithm(this);
+            }
+            i++;
+
         }
     }
 
@@ -215,13 +215,19 @@ public class Game {
         return crownOwner;
     }
 
-    public void characterSelection(Bot crownOwner) {
-        if(crownOwner !=null) {
+    public void characterSelection(Bot crownOwner, int cOpos) { //cO = crownOwner
+        if (crownOwner != null) {
             String crownOwnerInfos = crownOwner.toString();
             LOGGER.info(crownOwnerInfos);
             crownOwner.getBotAlgo().chooseCharacterAlgorithm(this);
+        } else {
+            cOpos = 0; //There's no crownOwner, therefore the first player starts
+            Bot p1 = (Bot) players.get(0);
+            LOGGER.info(p1.toString());
+            p1.getBotAlgo().chooseCharacterAlgorithm(this);
+            //The first player is treated here to keep charSelectionFiller logic
         }
-        charSelectionFiller();
+        charSelectionFiller(cOpos);
     }
 
     public void playerKilled(GameCharacter characterKilled, Player playerKilled) {
@@ -309,13 +315,6 @@ public class Game {
         return charactersThatCanBeStolen;
     }
 
-    public District drawCard(Player player) {
-        District drawnDistrict = deck.drawCard();
-        String drawCardMessage = player.getName() + " pioche la carte " + drawnDistrict + ".";
-        LOGGER.info(drawCardMessage);
-        player.getDistrictsInHand().add(drawnDistrict);
-        return drawnDistrict;
-    }
 
     public Deck getDeck() {
         return deck;
@@ -324,6 +323,14 @@ public class Game {
     @Override
     public String toString() {
         return deck.toString();
+    }
+
+    public void resetGame() {
+        init();
+    }
+
+    public int getCitySizeToWin() {
+        return CITY_SIZE_TO_WIN;
     }
 
     public Player getPlayerWithMostDistricts() {
@@ -347,5 +354,36 @@ public class Game {
                 .filter(player -> player.getCity().size() == 6)
                 .findFirst()
                 .orElse(null);
+    }
+
+    public Player getPlayerWithMostCardInHand() {
+        return players.stream()
+                .max((p1, p2) -> Integer.compare(p1.getDistrictsInHand().size(), p2.getDistrictsInHand().size()))
+                .orElse(null);
+    }
+
+    public Player getPlayerWithLowestDistrictPrice() {
+        Player playerWithLowestDistrictPrice = null;
+        int lowestPrice = Integer.MAX_VALUE;
+
+        for (Player player : players) {
+            for (District district : player.getDistrictsInHand()) {
+                if (district.getPrice() < lowestPrice) {
+                    lowestPrice = district.getPrice();
+                    playerWithLowestDistrictPrice = player;
+                }
+            }
+        }
+
+        return playerWithLowestDistrictPrice;
+    }
+
+    public static Optional<Player> playerHasSpecialDistrict(List<Player> players, String districtName) {
+        for (Player player : players) {
+            if (player.getCity().containsDistrict(districtName)) {
+                return Optional.of(player);
+            }
+        }
+        return Optional.empty();
     }
 }

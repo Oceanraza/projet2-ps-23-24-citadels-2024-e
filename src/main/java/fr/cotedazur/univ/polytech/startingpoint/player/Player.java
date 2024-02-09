@@ -72,7 +72,9 @@ public abstract class Player {
 
     // Functions to add or remove
     public void addDistrictInHand(District district) {
-        this.districtsInHand.add(district);
+        if (district != null) {
+            this.districtsInHand.add(district);
+        }
     }
     public void addDistrictBuilt(District district, GameState gameState) {
         numberOfDistrictsByColor.replace(
@@ -135,13 +137,22 @@ public abstract class Player {
         this.setScore(this.calculateScore());
     }
 
-    public Optional<District> getLowestDistrict(){
-        List<District> sortedDistrictByScore = getCity().getDistrictsBuilt();
-        if (sortedDistrictByScore.isEmpty()){return Optional.empty();}
-        District minPriceDistrict = sortedDistrictByScore.stream()
+    public Optional<District> getLowestDistrict(List<District> districtList) {
+        if (districtList.isEmpty()) {
+            return Optional.empty();
+        }
+        District minPriceDistrict = districtList.stream()
                 .min(Comparator.comparingDouble(District::getPrice))
                 .orElse(null);
         return Optional.of(minPriceDistrict);
+    }
+
+    public Optional<District> getLowestDistrictBuilt() {
+        return getLowestDistrict(getCity().getDistrictsBuilt());
+    }
+
+    public Optional<District> getLowestDistrictInHand() {
+        return getLowestDistrict(getDistrictsInHand());
     }
 
     public void removeFromHandAndPutInDeck(Deck deck, District cardToDiscard) {

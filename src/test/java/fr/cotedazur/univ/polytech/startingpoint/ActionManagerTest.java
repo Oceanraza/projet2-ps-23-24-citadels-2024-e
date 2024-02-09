@@ -14,7 +14,6 @@ import java.util.logging.Level;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-
 class ActionManagerTest {
     King king;
     Bishop bishop;
@@ -27,7 +26,7 @@ class ActionManagerTest {
 
     @BeforeEach
     void setUp(){
-        CitadelsLogger.setup();
+        CitadelsLogger.setupDemo();
         CitadelsLogger.setGlobalLogLevel(Level.OFF);
 
         game = new Game();
@@ -59,31 +58,33 @@ class ActionManagerTest {
         bot.buildDistrict(district3, gameState);
         assertEquals(2, ActionManager.collectGold(bot));
     }
+
     @Test
     void startOfTurnTest() {
+        District testDistrict = new District("Test District", 2, DistrictColor.NOBLE);
+        game.getDeck().addDistrict(testDistrict);
+
         Bot bot = new Bot("Bot", new EinsteinAlgo());
-        bot.setGold(10);
+        bot.setGold(2);
         bot.setGameCharacter(new King());
+
+        // The bot has no district in hand, so he draws 1 cards
         ActionManager.startOfTurn(game, bot);
         assertEquals(1, bot.getDistrictsInHand().size());
-        District districtPicked = bot.getDistrictsInHand().get(0);
 
-        bot.buildDistrict(districtPicked, gameState);
-        bot.setGold(0);
+        bot.buildDistrict(testDistrict, gameState);
         assertEquals(0, bot.getDistrictsInHand().size());
 
-        bot.addDistrictInHand(districtPicked);
+        // The bot has the same district in hand and in his city, so he draws another card
+        bot.addDistrictInHand(testDistrict);
         ActionManager.startOfTurn(game, bot);
         assertEquals(2, bot.getDistrictsInHand().size());
-        District newDistrictPicked = bot.getDistrictsInHand().get(bot.getDistrictsInHand().size() - 1);
 
+        // If the bot is an architect, he takes 2 gold coins
         ActionManager.startOfTurn(game, bot);
-        while (newDistrictPicked.equals(districtPicked)) {
-            ActionManager.startOfTurn(game, bot);
-            newDistrictPicked = bot.getDistrictsInHand().get(bot.getDistrictsInHand().size() - 1);
-        }
         assertEquals(2, bot.getGold());
     }
+
     @Test
     void getCrownTest() {
         bot.setGameCharacter(king);

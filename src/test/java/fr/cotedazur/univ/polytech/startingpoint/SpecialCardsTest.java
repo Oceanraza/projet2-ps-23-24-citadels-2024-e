@@ -27,7 +27,7 @@ class SpecialCardsTest {
 
     @BeforeEach
     void setUp() {
-        CitadelsLogger.setup();
+        CitadelsLogger.setupDemo();
         CitadelsLogger.setGlobalLogLevel(Level.OFF);
 
         game = new Game();

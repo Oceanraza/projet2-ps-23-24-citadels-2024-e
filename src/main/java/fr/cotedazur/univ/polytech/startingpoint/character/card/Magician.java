@@ -9,6 +9,7 @@ import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 import java.util.ArrayList;
 import java.util.List;
 
+import static fr.cotedazur.univ.polytech.startingpoint.ActionManager.drawCard;
 import static fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger.*;
 
 public class Magician extends GameCharacter {
@@ -47,7 +48,7 @@ public class Magician extends GameCharacter {
             int i = 0;
             while (i < nb && !player.getDistrictsInHand().isEmpty()) {
                 player.removeFromHandAndPutInDeck(game.getDeck(), player.getDistrictsInHand().get(0));
-                game.drawCard(player);
+                drawCard(player, game);
                 i++;
             }
             String swapHandsMessage = COLOR_RED + player.getName() + " a echange sa main avec le deck" + COLOR_RESET;

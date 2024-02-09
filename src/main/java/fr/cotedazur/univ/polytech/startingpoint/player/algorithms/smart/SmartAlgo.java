@@ -1,15 +1,18 @@
 package fr.cotedazur.univ.polytech.startingpoint.player.algorithms.smart;
 
+import fr.cotedazur.univ.polytech.startingpoint.Game;
 import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacter;
 import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.city.DistrictColor;
 import fr.cotedazur.univ.polytech.startingpoint.player.algorithms.BaseAlgo;
+import fr.cotedazur.univ.polytech.startingpoint.utils.Utils;
 
 import java.util.*;
 
 import static fr.cotedazur.univ.polytech.startingpoint.Game.CITY_SIZE_TO_WIN;
-import static fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole.ARCHITECT;
+import static fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole.*;
+import static fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger.LOGGER;
 
 public abstract class SmartAlgo extends BaseAlgo {
     protected boolean lowestDistrictFound = false;
@@ -78,19 +81,53 @@ public abstract class SmartAlgo extends BaseAlgo {
         }
     }
 
-    public District chooseCard(List<District> cards) {
-        District chosenCard = null;
-        int minCost = Integer.MAX_VALUE;
-        for (District card : cards) {
-            if (card.getPrice() <= bot.getGold() && card.getPrice() < minCost) {
-                chosenCard = card;
-                minCost = card.getPrice();
-            }
-        }
-        return chosenCard;
+    @Override
+    public boolean collectGoldBeforeBuildChoice() {
+        // The bot will collect gold before building if it doesn't have enough gold to build its lowest district
+        Optional<District> lowestDistrict = bot.getLowestDistrictInHand();
+        return lowestDistrict.isPresent() && (bot.getGold() < lowestDistrict.get().getPrice());
     }
 
-    public boolean graveyardChoice() {
-        return true;
+    @Override
+    public void assassinAlgorithm(Game game) {
+        List<GameCharacter> killableCharacters;
+        int indexKilledCharacter;
+        GameCharacterRole targetedCharacter;
+
+        int indexWarlord;
+        int indexKing;
+
+        killableCharacters = game.getKillableCharacters();
+        indexWarlord = isKillable(killableCharacters, WARLORD);
+        indexKing = isKillable(killableCharacters, KING);
+
+        // Kill the warlord if possible
+        if (indexWarlord != -1) {
+            indexKilledCharacter = indexWarlord;
+        }
+        // Kill the king if the warlord can't be killed
+        else if (indexKing != -1) {
+            indexKilledCharacter = indexKing;
+        }
+        // Kill a random character if neither the warlord nor the king can be killed
+        else {
+            int numberOfTargets = game.getKillableCharacters().size();
+            indexKilledCharacter = Utils.generateRandomNumber(numberOfTargets);
+        }
+
+        targetedCharacter = game.getKillableCharacters().get(indexKilledCharacter).getRole();
+        bot.getGameCharacter().specialEffect(bot, game, targetedCharacter);
+    }
+
+    @Override
+    public void botChoosesCard(Game game, List<District> threeCards) {
+        District chosenCard = chooseCard(threeCards);
+        threeCards.remove(chosenCard); // Remove the chosen card from the list of three cards
+        for (District card : threeCards) {
+            this.bot.removeFromHandAndPutInDeck(game.getDeck(), card);
+        }
+        String drawMessage = bot.getName() + " pioche le " + chosenCard;
+        LOGGER.info(drawMessage);
+        bot.addDistrictInHand(chosenCard);
     }
 }

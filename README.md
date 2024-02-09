@@ -19,7 +19,8 @@ Ce projet a été développé dans le cadre d'un projet collaboratif en programm
   - [Compiler et Exécuter](#compiler-et-exécuter)
   - [Exécution des Tests](#exécution-des-tests)
 
----
+<div style="page-break-before: always;"></div>
+
 
 ## Sujet
 
@@ -37,8 +38,8 @@ Ce projet vise à créer une version informatisée du jeu "Citadelles", en se ba
   - Implémentation d'une simulation de partie entre 4 robots, avec calcul des points et établissement d'un classement à la fin.
 - **Visualisation textuelle simplifiée :**
   - Affichage textuel de l'état actuel du jeu.
+<div style="page-break-before: always;"></div>
 
----
 
 ## Membres de l'équipe
 
@@ -94,5 +95,56 @@ mvn clean package
 ```
 
 Assurez-vous que tous les tests passent sans erreurs, confirmant ainsi la solidité du programme.
+<div style="page-break-before: always;"></div>
+
+# Point d'avancement
+
+## Fonctionalités réalisées
+  `Toutes` les fonctionalités `basiques` du plateau de jeu ont étés réalisées.
+  Les seules règles n'ayant pas étés traitées sont celles des limitations techniques d'un jeu de société (nombre de pièces dans la banque).
+
+## Système de logs
+  Les logs ont étés réalisés à l'aide de la librairie de logging interne a java (java.util.logging). 
+  - `Problème :` Nous avons besoin de régler les logs en deux parties différentes puisque nous ne devons pas avoir les logs d'une partie normale (description de chaque joueur, leurs choix...etc) lors de l'éxécution des 2x1000 parties.
+  - `Solution :` Pour pallier à ce problème, nous avons crée un second logger avec un niveau différent du premier, ce qui nous permet donc d'activer ou de désactiver le logger non voulu à notre guise. 
+
+## Archive des statistiques sous forme de CSV
+  Lorsque nous mettons comme argument --csv, nous sauvegardons alors les parties jouées. 20 parties sont jouées et nous obtenons un CSV de la forme suivante :
+  ![Alt text](doc/csv_example.PNG)
+  Il est bon de noter que lorsque nous réexcutons la même commande avec --csv, les données sont agrégées et les scores moyens sont recalculés (scoreInitial + nouveauScore)/2
+  **Explication rapide :**
+  - *Main.java :* C'est ici que les nouvelles données sont stockées et calculées avant de les envoyer au programme les rajoutant dans le CSV. Elles sont stockées sous la forme de deux HashMap, les deux ayant pour clé le nom du joueur mais avec une différence dans leur valeur :
+      `totalScores` associe son score à un joueur.
+      `totalPlacements` associe un array de quatre entiers représentant la 1ère place, 2e place... à un joueur, donnant donc le nombre de fois où il a obtenu cette place.
+  - *Csv.java :* C'est ici que les données sont injectées dans le Csv. Son principe est simple et se divise en deux parties : 
+      `Vérification de l'existence du fichier` , s'il n'existe pas, en créer un avec les en-têtes de colonnes (resetStats).
+      `Rajout de données ` si le fichier existe, lire les données déjà existantes et les additionner (ou dans le cas des scores, faire une moyenne) avec celles que nous voulons rajouter. Cela est géré en regardant la colonne n°1 qui est le nom du joueur et en ajoutant ses valeurs a la liste envoyée par Main correspondante.
+      `Si le joueur n'est pas déjà dans la base de données ` mais que nous avons d'autres joueurs déjà présents, il sera alors rajouté à la fin.
+      `Enfin` le fichier est reinitialisé, nous rajoutons les en-têtes et les nouvelles données.
+
+## Bot Richard
+//Océan-Mathis
+
+## Pourquoi Einstein bat-il Richard ?
+   *Einstein joue pour lui même :* La principale différence vient du fait qu'Einstein joue pour lui-même et pour maximiser ses propres chances. Il va essayer de récupérer le plus d'argent possible et de construire ses bâtiment le plus vite possible. `A l'instar `de Richard qui lui essaie de déstabiliser ses adversaires et de les faire perdre. Dans une partie avec quatre joueurs, celui se priorisant sur les autres est voué à être plus performant sur le long terme en général.
+# Architecture du projet
+//Océan
+
+# Processus
+  Le projet est divisé en plusieurs catégories toutes différentes les unes des autres :
+  - `Personnages :` Quentin et Darina.
+  - `Merveilles :` Mathis et Océan.
+  - `Planification et gestion de l'architecture du projet :` Océan.
+  - `Stratégie Richard :` Mathis et Océan.
+  - `Stratégie Einstein :` Quentin et Darina.
+  - `Implémentation Jcommander :` Darina.
+  - `2x1000 et csv :` Quentin.
+  - `Logger :` Mathis.
+  - `Calcul des scores :` Mathis.
+  - `Tests unitaires et Mocks :` Tout le monde mais surtout Darina.
+
+  *Process de l'équipe :*
+  //Mathis
+
 
 Nous espérons que vous apprécierez l'utilisation de notre programme ! N'hésitez pas à lancer plusieurs parties pour découvrir les différentes possibilités.

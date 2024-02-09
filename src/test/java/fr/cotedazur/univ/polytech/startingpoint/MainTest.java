@@ -13,12 +13,13 @@ import fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 
 import static fr.cotedazur.univ.polytech.startingpoint.Game.CITY_SIZE_TO_WIN;
-import static fr.cotedazur.univ.polytech.startingpoint.Main.calculateScores;
+import static fr.cotedazur.univ.polytech.startingpoint.Main.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class MainTest {
@@ -29,7 +30,7 @@ class MainTest {
 
     @BeforeEach
     void setUp() {
-        CitadelsLogger.setup();
+        CitadelsLogger.setupDemo();
         CitadelsLogger.setGlobalLogLevel(Level.OFF);
 
         player = new Bot("Test");
@@ -112,7 +113,7 @@ class MainTest {
         Player secondPlayer = new Bot("Player 2");
         List<Player> players = Arrays.asList(firstBuilder, secondPlayer);
 
-        for (int i = 0; i < CITY_SIZE_TO_WIN; i++) {
+        for (int i = 0; i < 8; i++) {
             String name = "District" + i;
             firstBuilder.getCity().addDistrict(new District(name, i, DistrictColor.TRADE), gameState);
         }
@@ -151,7 +152,7 @@ class MainTest {
             secondPlayer.getCity().addDistrict(new District(name, i, DistrictColor.TRADE), gameState); // 32 points
         }
 
-        Main.announceWinner(players, firstBuilder, new GameState());
+        announceWinner(players, firstBuilder, new GameState());
         assertEquals(34, firstBuilder.getScore());
         assertEquals(32, secondPlayer.getScore());
     }
@@ -184,5 +185,36 @@ class MainTest {
         assertEquals(32, thirdPlayer.getScore());
         assertEquals(32, fourthPlayer.getScore());
     }
+    @Test
+    public void testGetPlacement() {
+        List<Player> players = new ArrayList<>();
+        players.add(new Bot("Alice"));
+        Player p2 = new Bot("Bob");
+        players.add(p2);
+        players.add(new Bot("Charlie"));
+        players.add(new Bot("David"));
 
+        int placement = Main.getPlacement(players, p2);
+
+        // Verify if the correct placement is returned
+        assertEquals(2, placement);
+
+        // Test with a player not in the list
+        Player notInList = new Bot("Eve");
+        int nonExistentPlacement = Main.getPlacement(players, notInList);
+
+        // Verify if -1 is returned for a player not in the list
+        assertEquals(-1, nonExistentPlacement);
+    }
+
+    @Test
+    void jCommanderTest() {
+        String[] args2x1000games;
+        String[] args1game;
+
+        args2x1000games = new String[]{"--2thousands"};
+        assertEquals(1000, jCommander(args2x1000games));
+        args1game = new String[]{"--demo"};
+        assertEquals(1, jCommander(args1game));
+    }
 }

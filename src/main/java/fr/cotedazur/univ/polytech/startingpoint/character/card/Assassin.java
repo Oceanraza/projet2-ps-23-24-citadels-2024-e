@@ -21,7 +21,7 @@ public class Assassin extends GameCharacter {
             throw new CannotAttackException("L'assassin ne peut pas se tuer lui-meme");
         }
 
-        String killMessage = COLOR_RED + "L'assassin: a tue " + targetedCharacter.toStringLeOrLLowerCase() + " !" + COLOR_RESET;
+        String killMessage = COLOR_RED + "L'assassin a tue " + targetedCharacter.toStringLeOrLLowerCase() + " !" + COLOR_RESET;
         LOGGER.info(killMessage);
 
         GameCharacter targetCharacter;

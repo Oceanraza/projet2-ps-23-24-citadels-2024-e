@@ -36,4 +36,8 @@ public class GameState {
     public boolean isFinished(Player player) {
         return (player.getCity().getDistrictsBuilt().size() >= CITY_SIZE_TO_WIN);
     }
+
+    public void resetGameState() {
+        turn = 0;
+    }
 }

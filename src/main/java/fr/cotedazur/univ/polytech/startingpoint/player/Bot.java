@@ -5,11 +5,11 @@ import fr.cotedazur.univ.polytech.startingpoint.Game;
 import fr.cotedazur.univ.polytech.startingpoint.GameState;
 import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacter;
 import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole;
-import fr.cotedazur.univ.polytech.startingpoint.character.card.King;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.player.algorithms.BaseAlgo;
 
 import java.util.List;
+import java.util.Optional;
 
 import static fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger.*;
 
@@ -24,7 +24,7 @@ public class Bot extends Player {
     public Bot(String name, BaseAlgo algo) {
         super(name);
         this.botAlgo = algo;
-        botAlgo.setPlayer(this);
+        botAlgo.setBot(this);
     }
     public Bot(String name){ //for tests
         super(name);
@@ -48,32 +48,43 @@ public class Bot extends Player {
         return false;
     }
 
-    public GameCharacter getCharInList(List<GameCharacter> cha, GameCharacterRole askedChar) {
-        for (GameCharacter temp : cha) {
-            if (temp.getRole().equals(askedChar)) {
-                return temp;
+    public Optional<GameCharacter> getCharInList(List<GameCharacter> cha, GameCharacterRole askedChar) {
+        for (GameCharacter gameCharacter : cha) {
+            if (gameCharacter.getRole().equals(askedChar)) {
+                return Optional.of(gameCharacter);
             }
         }
-        return new King(); // Cette ligne ne peut pas être atteinte puisque getCharInList doit être appelée
-        // après isCharInList **A CHANGER ABSOLUMENT AVANT RENDU FINAL, VERSION
-        // TEMPORAIRE POUR RESPECT DES DATES DE RENDU**
+        return Optional.empty();
     }
 
     public void chooseChar(Game game, GameCharacterRole askedChar) {
-        GameCharacter chosenCharacter = getCharInList(game.getAvailableChars(), askedChar);
+        Optional<GameCharacter> chosenCharacter = getCharInList(game.getAvailableChars(), askedChar);
+        if (chosenCharacter.isEmpty()) {
+            return;
+        }
+
         game.printAvailableCharacters();
-        setGameCharacter(chosenCharacter);
-        game.removeAvailableChar(chosenCharacter);
-        String chosenCharMessage = COLOR_BLUE + this.getName() + " a choisi " + chosenCharacter.getRole().toStringLeOrLLowerCase() + COLOR_RESET;
+        setGameCharacter(chosenCharacter.get());
+        game.removeAvailableChar(chosenCharacter.get());
+        String chosenCharMessage = COLOR_BLUE + this.getName() + " a choisi " + chosenCharacter.get().getRole().toStringLeOrLLowerCase() + COLOR_RESET;
         LOGGER.info(chosenCharMessage);
     }
     @Override
     public void play(Game game, GameState gameState) {
+        boolean collectGoldBeforeBuild = botAlgo.collectGoldBeforeBuildChoice();
         ActionManager.startOfTurn(game, this);
-        addGold(ActionManager.collectGold(this));
+
+        if (collectGoldBeforeBuild) {
+            ActionManager.collectGold(this);
+        }
+
         ActionManager.applySpecialCardsEffect(game, this);
         botAlgo.charAlgorithmsManager(game);
         botAlgo.buildOrNot(gameState);
+
+        if (!collectGoldBeforeBuild) {
+            ActionManager.collectGold(this);
+        }
     }
 
     @Override

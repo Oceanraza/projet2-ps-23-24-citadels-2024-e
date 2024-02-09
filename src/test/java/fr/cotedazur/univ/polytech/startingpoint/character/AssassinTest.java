@@ -1,12 +1,12 @@
 package fr.cotedazur.univ.polytech.startingpoint.character;
 
-import fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger;
 import fr.cotedazur.univ.polytech.startingpoint.Game;
 import fr.cotedazur.univ.polytech.startingpoint.character.card.Assassin;
 import fr.cotedazur.univ.polytech.startingpoint.character.card.Warlord;
 import fr.cotedazur.univ.polytech.startingpoint.exception.CannotAttackException;
 import fr.cotedazur.univ.polytech.startingpoint.player.Bot;
 import fr.cotedazur.univ.polytech.startingpoint.player.Player;
+import fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -24,7 +24,7 @@ class AssassinTest {
 
     @BeforeEach
     void setUp() {
-        CitadelsLogger.setup();
+        CitadelsLogger.setupDemo();
         CitadelsLogger.setGlobalLogLevel(Level.OFF);
 
         game = new Game();
@@ -34,6 +34,12 @@ class AssassinTest {
         // Create players
         assassinPlayer = new Bot("assassinPlayer");
         targetPlayer = new Bot("targetPlayer");
+    }
+
+    @Test
+    void assassinInformationsTest() {
+        assertEquals(1, assassin.getRunningOrder());
+        assertNull(assassin.getColor());
     }
 
     // Kill a character

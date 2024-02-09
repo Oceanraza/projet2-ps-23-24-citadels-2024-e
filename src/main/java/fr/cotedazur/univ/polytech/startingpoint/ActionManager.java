@@ -56,14 +56,22 @@ public class ActionManager {
         } else if (bot.getCity().containsDistrict("Observatoire")) {
             applyObservatoryEffect(game, bot); //draws 3 cards and keeps one
         } else {
-            game.drawCard(bot); //draws one card
+            drawCard(bot, game); //draws one card
         }
+    }
+
+    public static District drawCard(Player player, Game game) {
+        District drawnDistrict = game.getDeck().drawCard();
+        String drawCardMessage = player.getName() + " pioche la carte " + drawnDistrict + ".";
+        LOGGER.info(drawCardMessage);
+        player.getDistrictsInHand().add(drawnDistrict);
+        return drawnDistrict;
     }
 
     public static void applyArchitectOrLibraryEffect(Game game, Player player) {
         Bot bot = (Bot) player;
         for (int i = 0; i < 2; i++) {
-            game.drawCard(bot);
+            drawCard(bot, game);
         }
     }
 
@@ -71,29 +79,11 @@ public class ActionManager {
         Bot bot = (Bot) player;
         List<District> threeCards = new ArrayList<>();
         for (int i = 0; i < 3; i++) {
-            threeCards.add(game.drawCard(bot));
+            threeCards.add(drawCard(bot, game));
         }
-        selectCardForBot(game, threeCards, bot);
+        bot.getBotAlgo().botChoosesCard(game, threeCards);
     }
 
-    public static void selectCardForBot(Game game, List<District> threeCards, Bot bot) {
-        if (threeCards == null || threeCards.isEmpty()) {
-            throw new IllegalArgumentException("List of cards cannot be null or empty");
-        }
-        District chosenCard = bot.getBotAlgo().chooseCard(threeCards);
-        if (chosenCard == null) {
-            throw new IllegalStateException("Chosen card cannot be null");
-        }
-        threeCards.remove(chosenCard); // Remove the chosen card from the list of three cards
-
-        for (District card : threeCards) {
-            bot.removeFromHandAndPutInDeck(game.getDeck(), card);
-        }
-
-        String drawMessage = bot.getName() + " pioche le " + chosenCard;
-        LOGGER.info(drawMessage);
-        bot.getDistrictsInHand().add(chosenCard);
-    }
 
     public static int collectGold(Player player) {
         GameCharacterRole role = player.getGameCharacter().getRole();
@@ -104,14 +94,6 @@ public class ActionManager {
         return 0;
     }
 
-    public static Optional<Player> playerHasSpecialDistrict(List<Player> players, String districtName) {
-        for (Player player : players) {
-            if (player.getCity().containsDistrict(districtName)) {
-                return Optional.of(player);
-            }
-        }
-        return Optional.empty();
-    }
 
     public static void applyCharacterSpecialEffect(Player player, Game game) {
         player.getGameCharacter().specialEffect(player, game);
@@ -156,7 +138,7 @@ public class ActionManager {
         LOGGER.info(manufactureMessage);
         bot.removeGold(3);
         for (int i = 0; i < 3; i++) {
-            game.drawCard(bot);
+            drawCard(bot, game);
         }
     }
 }

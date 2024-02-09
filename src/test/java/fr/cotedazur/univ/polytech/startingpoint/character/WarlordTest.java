@@ -19,33 +19,42 @@ import java.util.Optional;
 import java.util.logging.Level;
 
 import static fr.cotedazur.univ.polytech.startingpoint.Game.CITY_SIZE_TO_WIN;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 class WarlordTest {
-    King king;
-    Bishop bishop;
-    Warlord warlord;
-    Bot bot;
     Game game;
     GameState gameState;
+    Warlord warlord;
+    Bot warlordPlayer;
+    Bot targetPlayer;
+    Bot bot;
+    District district3cost;
+    District district1cost;
+    Bishop bishop;
+    King king;
 
     @BeforeEach
     void setUp() {
-        CitadelsLogger.setup();
+        CitadelsLogger.setupDemo();
         CitadelsLogger.setGlobalLogLevel(Level.OFF);
 
-        game = new Game();
-        game.init();
-        gameState = new GameState();
-
-        king = new King();
         bishop = new Bishop();
+        king = new King();
+
+        game = new Game();
+        gameState = new GameState();
         warlord = new Warlord();
 
-        bot = new Bot("Bot") {
-        };
+        // Create players
+        warlordPlayer = new Bot("warlordPlayer");
+        targetPlayer = new Bot("targetPlayer");
+        bot = new Bot("Bot");
+
+        // Create districts
+        district3cost = new District("Quartier qui coute 3", 3, DistrictColor.NOBLE);
+        district1cost = new District("Quartier qui coute 1", 1, DistrictColor.NOBLE);
     }
+
     @Test
     void getLowestDistrictTest() {
         District district1 = new District("Quartier 1", 3, DistrictColor.NOBLE);
@@ -54,13 +63,40 @@ class WarlordTest {
         bot.buildDistrict(district1, gameState);
         bot.buildDistrict(district2, gameState);
         bot.buildDistrict(district3, gameState);
-        assertTrue(bot.getLowestDistrict().isPresent());
-        assertEquals(district2, bot.getLowestDistrict().get());
+        assertTrue(bot.getLowestDistrictBuilt().isPresent());
+        assertEquals(district2, bot.getLowestDistrictBuilt().get());
     }
+
+    @Test
+    void warlordInformationsTest() {
+        assertEquals(8, warlord.getRunningOrder());
+        assertEquals(DistrictColor.MILITARY, warlord.getColor());
+    }
+
+    @Test
+    void destroyDistrictTest() {
+        // Add players to the game
+        game.setPlayers(warlordPlayer, targetPlayer);
+        // Set characters to players
+        warlordPlayer.setGameCharacter(warlord);
+        // Add districts
+        targetPlayer.addDistrictBuilt(district1cost, gameState);
+        targetPlayer.addDistrictBuilt(district3cost, gameState);
+        // Set gold
+        warlordPlayer.setGold(5);
+
+        warlord.specialEffect(warlordPlayer, game, targetPlayer, district3cost);
+
+        assertEquals(3, warlordPlayer.getGold());
+        assertFalse(targetPlayer.getCity().containsDistrict(district3cost.getName()));
+        assertEquals(1, targetPlayer.getCity().getDistrictsBuilt().size());
+    }
+
     @Test
     void getWrongDistrictTest() {
-        assertEquals(Optional.empty(), bot.getLowestDistrict());
+        assertEquals(Optional.empty(), bot.getLowestDistrictBuilt());
     }
+
     @Test
     void getSortedPlayersByScoreTest() {
         Player firstBuilder = new Bot("Player 1");
@@ -87,6 +123,26 @@ class WarlordTest {
         //third player is missing because he is the bishop, therefore he can't be an option
         assertEquals(expectedOutput, game.getSortedPlayersByScoreForWarlord());
     }
+
+    @Test
+    void destroyDistrictTestForFree() {
+        // Add players to the game
+        game.setPlayers(warlordPlayer, targetPlayer);
+        // Set characters to players
+        warlordPlayer.setGameCharacter(warlord);
+        // Add districts
+        targetPlayer.addDistrictBuilt(district1cost, gameState);
+        targetPlayer.addDistrictBuilt(district3cost, gameState);
+        // Set gold
+        warlordPlayer.setGold(5);
+
+        warlord.specialEffect(warlordPlayer, game, targetPlayer, district1cost);
+
+        assertEquals(5, warlordPlayer.getGold());
+        assertFalse(targetPlayer.getCity().containsDistrict(district1cost.getName()));
+        assertEquals(1, targetPlayer.getCity().getDistrictsBuilt().size());
+    }
+
     @Test
     void WarlordGameCanDestroyFirstTest() {
         Player firstBuilder = new Bot("Player 1");
