@@ -157,7 +157,7 @@ projet.
 ### État de la Base de Code
 
 //Mathis
-
+(Rajouter image de la couverture de code et de sonarqube ?)
 
 ---
 
