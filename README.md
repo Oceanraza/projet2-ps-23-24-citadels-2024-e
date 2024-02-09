@@ -97,7 +97,7 @@ mvn clean package
 Assurez-vous que tous les tests passent sans erreurs, confirmant ainsi la solidité du programme.
 <div style="page-break-before: always;"></div>
 
-### Point d'avancement
+# Point d'avancement
 
 ## Fonctionalités réalisées
   `Toutes` les fonctionalités `basiques` du plateau de jeu ont étés réalisées.
