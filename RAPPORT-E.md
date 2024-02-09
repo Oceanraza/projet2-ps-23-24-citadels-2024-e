@@ -32,9 +32,10 @@ que l'architecture du système développé.
 
 ## Fonctionalités réalisées
 
-`Toutes` les fonctionalités `basiques` du plateau de jeu ont étés réalisées.
-Les seules règles n'ayant pas étés traitées sont celles des limitations techniques d'un jeu de société (nombre de pièces
-dans la banque).
+Les fonctionalités principales du plateau de jeu ont toutes étés réalisées.
+Les seules règles n'ayant pas étés traitées sont le nombre maximal de nombre d'or dans le jeu ou alors d'autres règles
+très spécifiques. Nous pouvons citer le traitement des égalités de score de fin de partie ou encore que lorsque l'Évêque
+est assassiné, il n'est pas immunisé contre le Condiottière.
 
 ### Liste les fonctionalités réalisées
 
@@ -150,6 +151,24 @@ documentation, comme `Game.html`, `ActionManager.html`, ou encore ceux situés d
 contient des informations détaillées sur les responsabilités et les comportements des classes et méthodes. Cette
 documentation est un outil précieux pour les développeurs actuels et futurs afin de se familiariser rapidement avec le
 projet.
+
+### Tests du projet
+
+Le projet a été principalement testé avec des tests unitaires afin d'isoler le comportement de chacune des fonctions et
+assurer la qualité de ces dernières, mais aussi avec des tests d'intégration pour assurer la cohérence entre les
+différentes briques du système. Nous pouvons par exemple citer les packages `character` ainsi que `city` contenant les
+classes pour les quartiers, qui sont couverts à plus de 90%.
+
+Des mocks ont été nécessaires afin de correctement isoler et simplifier certains tests unitaires impliquant des "gros"
+objets et de l'aléatoire. Notamment, dans le `RandomAlgoTest` où nous avons pu tester la
+fonction `drawStartOfTurnChoiceTest()` en mockant `getRandomBoolean()` qui renvoie vrai ou faux de manière aléatoire, de
+sorte à pouvoir user des deux cas sans dépendre de l'aléatoire.
+
+Cependant, certaines classes implémentées durant la semaine à temps complet n'ont pas été intégrées convenablement. En
+effet, c'est par exemple le cas des fonctions de `Csv` ou encore du package `bot`. De plus, nous n'avons testé que
+partiellement le `RandomAlgo`. Nous avons rencontré des difficultés lorsqu'il fallait mock des listes telles
+que `availableChars` ou `charactersInGame`, définies et instanciées dans la classe `Game` au travers d'une fonction.
+
 
 ### État de la Base de Code
 
