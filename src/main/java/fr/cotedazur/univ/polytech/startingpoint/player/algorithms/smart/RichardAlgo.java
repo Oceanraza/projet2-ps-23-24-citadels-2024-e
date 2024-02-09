@@ -4,6 +4,7 @@ import fr.cotedazur.univ.polytech.startingpoint.Game;
 import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacter;
 import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
+import fr.cotedazur.univ.polytech.startingpoint.city.DistrictColor;
 import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 import fr.cotedazur.univ.polytech.startingpoint.utils.Utils;
 
@@ -216,6 +217,9 @@ public class RichardAlgo extends SmartAlgo {
                 case 4:
                     bot.getGameCharacter().specialEffect(bot, game, GameCharacterRole.ARCHITECT);
                     break;
+                case 5:
+                    bot.getGameCharacter().specialEffect(bot, game, MAGICIAN);
+                    break;
                 default:
                     super.assassinAlgorithm(game);
             }
@@ -260,7 +264,6 @@ public class RichardAlgo extends SmartAlgo {
         if (kingIsTaken && game.getPlayers().get(0) != bot && game.getPlayerWith6Districts() != null) {
             return 1;// Kill the king
         }
-
         if (isRich(richestPlayer) && thiefIsTaken || couldWinThisTurn(game.getPlayerWithMostDistricts()) && assassinIsTaken && isCurrentPlayerAfterPlayerWithMostDistricts) { // If the player with the most districts has at least 6 districts, the assassin should be picked
             return 2;// Kill the thief
         }
@@ -289,18 +292,15 @@ public class RichardAlgo extends SmartAlgo {
     }
 
     private void chooseBuilderChar(Game game) {
-        if (game.containsAvailableRole(ARCHITECT)) {
-            bot.chooseChar(game, ARCHITECT);
-        } else if (game.containsAvailableRole(KING)) {
+        int nobleDistrictsBuilt = bot.getNumberOfDistrictsByColor().get(DistrictColor.NOBLE);
+        int tradeDistrictsBuilt = bot.getNumberOfDistrictsByColor().get(DistrictColor.TRADE);
+
+        if(game.containsAvailableRole(KING) && game.getCrownOwner() != bot && nobleDistrictsBuilt >= tradeDistrictsBuilt) {
             bot.chooseChar(game, KING);
-        } else if (game.containsAvailableRole(MAGICIAN)) {
-            bot.chooseChar(game, MAGICIAN);
-        } else if (game.containsAvailableRole(WARLORD)) {
-            bot.chooseChar(game, WARLORD);
-        } else if (game.containsAvailableRole(BISHOP)) {
-            bot.chooseChar(game, BISHOP);
-        } else if (game.containsAvailableRole(THIEF)) {
-            bot.chooseChar(game, THIEF);
+        } else if(game.containsAvailableRole(ARCHITECT) && bot.getGold() > 5) {
+            bot.chooseChar(game, ARCHITECT);
+        } else if(game.containsAvailableRole(MERCHANT)) {
+            bot.chooseChar(game, MERCHANT);
         } else {
             bot.chooseChar(game, game.getAvailableChars().get(0).getRole()); // If none of the characters are available, the bot will choose the first character
         }
