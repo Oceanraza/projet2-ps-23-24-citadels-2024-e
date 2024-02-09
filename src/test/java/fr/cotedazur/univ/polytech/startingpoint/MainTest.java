@@ -186,7 +186,7 @@ class MainTest {
         assertEquals(32, fourthPlayer.getScore());
     }
     @Test
-    public void testGetPlacement() {
+    void testGetPlacement() {
         List<Player> players = new ArrayList<>();
         players.add(new Bot("Alice"));
         Player p2 = new Bot("Bob");

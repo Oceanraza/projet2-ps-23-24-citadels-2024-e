@@ -116,6 +116,7 @@ public abstract class BaseAlgo {
     public abstract boolean graveyardChoice();
 
     public abstract Optional<District> laboratoryChoice();
+
     public abstract District chooseCard(List<District> threeCards);
 
     public abstract boolean collectGoldBeforeBuildChoice();

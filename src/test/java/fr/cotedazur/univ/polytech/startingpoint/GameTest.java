@@ -34,7 +34,7 @@ class GameTest {
         game.shuffleCharacters();
 
         assertEquals(6, game.getCharactersInGame().size());
-        assertEquals(6, game.getAvailableChars().size());
+        assertEquals(5, game.getAvailableChars().size());
     }
 
     @Test
@@ -44,11 +44,13 @@ class GameTest {
         // Shuffle characters
         game.availableChars.clear();
         game.charactersInGame = new ArrayList<>(game.allCharacters);
-        // Remove warlord
+        // Remove warlord faceup
         game.charactersInGame.remove(7);
-        // Remove architect
+        // Remove architect faceup
         game.charactersInGame.remove(6);
         game.availableChars = new ArrayList<>(game.charactersInGame);
+        // Remove merchant facedown
+        game.availableChars.remove(5);
 
         assertEquals(5, game.getKillableCharacters().size());
         assertEquals(4, game.getCharactersThatCanBeStolen().size());
