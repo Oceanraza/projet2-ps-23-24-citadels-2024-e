@@ -3,9 +3,6 @@ package fr.cotedazur.univ.polytech.startingpoint.utils;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
 import com.opencsv.exceptions.CsvValidationException;
-import fr.cotedazur.univ.polytech.startingpoint.exception.CSVFileProcessingException;
-import fr.cotedazur.univ.polytech.startingpoint.exception.CSVWriteException;
-import fr.cotedazur.univ.polytech.startingpoint.exception.StatsResetException;
 import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 
 import java.io.File;
@@ -23,7 +20,7 @@ public class Csv {
     }
 
 
-    public static void writeStats(List<String[]> args)  {
+    public static void writeStats(List<String[]> args) {
         // Define the data for the CSV file
         // Specify the file path
         String csvFilePath = "src/main/resources/stats/gamestats.csv";
@@ -48,7 +45,7 @@ public class Csv {
                     }
 
                 }
-            } catch (IOException | CsvValidationException e){
+            } catch (IOException | CsvValidationException e) {
                 //throw new CSVFileProcessingException("An error occurred while processing the file: " + e.getMessage());
             }
         }
@@ -63,7 +60,8 @@ public class Csv {
             //throw new CSVWriteException("Error while writing csv file : " + e.getMessage());
         }
     }
-    public static void resetStats(){
+
+    public static void resetStats() {
         String csvFilePath = "src/main/resources/stats/gamestats.csv";
         // Create a File object to check if the file exists
         File file = new File(csvFilePath);

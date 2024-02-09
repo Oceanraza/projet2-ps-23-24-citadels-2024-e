@@ -12,7 +12,7 @@ public class Merchant extends GameCharacter {
     }
 
     @Override
-    public void specialEffect(Player player,Game game,Object... optionalArgs) {
+    public void specialEffect(Player player, Game game, Object... optionalArgs) {
         // The merchant has no special effect
     }
 }

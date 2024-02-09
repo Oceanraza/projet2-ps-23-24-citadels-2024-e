@@ -140,7 +140,7 @@ public class RandomAlgo extends BaseAlgo {
         bot.addDistrictInHand(chosenCard);
     }
 
-    public District chooseCard(List<District> cards){
+    public District chooseCard(List<District> cards) {
         return cards.get(Utils.generateRandomNumber(cards.size()));
     }
 }

@@ -27,8 +27,10 @@ public class GameState {
 
     // If a player has 8 districts built, he wins
     public boolean isGameFinished(List<Player> players) {
-        for (Player p: players){
-            if (isFinished(p)){return true;}
+        for (Player p : players) {
+            if (isFinished(p)) {
+                return true;
+            }
         }
         return false;
     }

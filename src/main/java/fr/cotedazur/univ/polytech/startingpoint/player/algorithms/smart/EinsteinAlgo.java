@@ -11,13 +11,14 @@ import java.util.List;
 
 import static fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole.ARCHITECT;
 import static fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole.ASSASSIN;
+
 /**
  * This class represents the algorithm of the bot Einstein
  * It contains the logic of the bot's actions
  */
 
 public class EinsteinAlgo extends SmartAlgo {
-    public EinsteinAlgo(){
+    public EinsteinAlgo() {
         super();
         algoName = "Einstein";
     }
@@ -94,14 +95,15 @@ public class EinsteinAlgo extends SmartAlgo {
             }
         }
     }
+
     // Note that this algorithm doesn't use the second part of the magician, finding it useless compared to other cards
     @Override
-    public void magicianAlgorithm (Game game){
+    public void magicianAlgorithm(Game game) {
         List<Player> playerList = game.getSortedPlayersByScore();
         playerList.remove(bot);
         Player chosenPlayer = bot;
-        for (Player p : playerList){
-            if (p.getDistrictsInHand().size() > chosenPlayer.getDistrictsInHand().size()){
+        for (Player p : playerList) {
+            if (p.getDistrictsInHand().size() > chosenPlayer.getDistrictsInHand().size()) {
                 chosenPlayer = p; // It takes the player's hand with the most cards
             }
         }
