@@ -33,27 +33,48 @@ que l'architecture du système développé.
 
 ## Fonctionalités réalisées
 
-Les fonctionalités principales du plateau de jeu ont toutes étés réalisées.
-Les seules règles n'ayant pas étés traitées sont le nombre maximal de nombre d'or dans le jeu ou alors d'autres règles
-très spécifiques. Nous pouvons citer le traitement des égalités de score de fin de partie ou encore que lorsque l'Évêque
-est assassiné, il n'est pas immunisé contre le Condiottière.
+`Toutes` les fonctionalités du plateau de jeu ont étés réalisées. N'ont seulement pas été traitées des règles très
+spécifiques.
+
+## Fonctionnalités non réalisées
+
+Spécifiquement, les règles que nous n'avons pas traitées sont les suivantes
+
+- Limitation du nombre de pièces dans la banque à 30 comme dans le jeu de société.
+- Si égalité entre deux joueurs et que l'un est assassiné au dernier tour, il ne gagne pas.
+- Le condottiere ne peut pas casser un district d'un joueur en ayant 8 ou plus.
+- Un joueur qui a choisi l'évêque, mais qui s'est fait tuer, n'est plus protegé contre le condottiere.
+
+Avec architecture mise en place, ces fonctionnalités sont implémentables relatively facilement. Étant donné qu'elles
+sont très spécifiques, l'effort à produire serait principalement au niveau des tests. Concernant la limitation du nombre
+de pièces dans la banque, les parties jouées avec des bots intelligents ne devraient pas poser de problème si les pièces
+sont limitées. Cependant, si des parties étaient jouées avec des bots aléatoires, il est possible que la banque se
+retrouve à court de pièces. D'où la nécessité de faire piocher les bots dans ce cas-là, en attendant que les pièces
+retournent à la banque.
 
 ### Liste les fonctionalités réalisées
 
 ## Système de logs
 
-Les logs ont étés réalisés à l'aide de la librairie de logging interne a java (java.util.logging).
+Les logs ont étés réalisés à l'aide de la librairie de logging interne à java (java.util.logging).
 
-- `Problème :` Nous avons besoin de régler les logs en deux parties différentes puisque nous ne devons pas avoir les
-  logs d'une partie normale (description de chaque joueur, leurs choix...etc) lors de l'éxécution des 2x1000 parties.
-- `Solution :` Pour pallier à ce problème, nous avons crée un second logger avec un niveau différent du premier, ce qui
-  nous permet donc d'activer ou de désactiver le logger non voulu à notre guise.
+- `Problème :` Nous avons eu besoin de régler les logs en deux parties différentes puisque nous ne devons pas avoir
+  les logs d'une partie normale (description de chaque joueur, leurs choix, etc.) lors de l'exécution des 2x1000 parties
+  ou lors de la génération du csv.
+- `Solution :` Pour pallier ce problème, nous avons créé notre propre logger à deux niveaux différents.
+  Cela nous permet, en appelant une méthode de notre classe CitadelsLogger, de choisir le niveau de logs à afficher
+  selon,
+  si la commande de démonstration est utilisée, ou si on utilise les commandes jouant plusieurs parties.
+
+Pour que l'affichage des logs corresponde à nos attentes, nous avons reformaté nos deux niveaux de logs. Ceci pour
+enlever notamment les informations de date et d'heure, et garder l'essentiel. Nous avons également ajouté des
+couleurs pour faciliter la lecture des parties, ce qui nous a fait gagner du temps lors des phases de debug.
 
 ## Archive des statistiques sous forme de CSV
 
 Lorsque nous mettons comme argument --csv, nous sauvegardons alors les parties jouées. 20 parties sont jouées et nous
 obtenons un CSV de la forme suivante :
-![Alt text](doc/csv_example.PNG)
+![Alt text](csv_example.PNG)
 Il est bon de noter que lorsque nous réexcutons la même commande avec --csv, les données sont agrégées et les scores
 moyens sont recalculés (scoreInitial + nouveauScore)/2
 **Explication rapide :**
@@ -120,7 +141,7 @@ avec quatre joueurs, celui se priorisant sur les autres est voué à être plus 
 
 # Architecture du projet
 
-![img.png](doc/img.png)
+![img.png](img.png)
 
 L'architecture de notre projet a été conçue avec une approche modulaire et orientée objet, ce qui nous a permis de
 maintenir une séparation claire des responsabilités tout en facilitant l'extensibilité. Au cœur de notre application, la
@@ -146,7 +167,7 @@ personnages, factory pour les cartes, observer pour les actions des joueurs, etc
 - `State :` Utilisé pour les états du jeu avec la classe ``GameState``.
 ### Localisation des Informations
 
-La documentation [JavaDoc](doc/javadoc/index.html), générée et structurée de manière exhaustive, sert de référence
+La documentation [JavaDoc](javadoc/index.html), générée et structurée de manière exhaustive, sert de référence
 principale pour la compréhension des points clés et des classes importantes du projet. Chaque fichier HTML de
 documentation, comme `Game.html`, `ActionManager.html`, ou encore ceux situés dans les dossiers `character` et `city`,
 contient des informations détaillées sur les responsabilités et les comportements des classes et méthodes. Cette
@@ -170,11 +191,32 @@ effet, c'est par exemple le cas des fonctions de `Csv` ou encore du package `bot
 partiellement le `RandomAlgo`. Nous avons rencontré des difficultés lorsqu'il fallait mock des listes telles
 que `availableChars` ou `charactersInGame`, définies et instanciées dans la classe `Game` au travers d'une fonction.
 
+## Analyse de la Base de Code
 
-### État de la Base de Code
+À partir du moment où SonarQube nous a été introduit, nous avons mis en place des analyses régulières de notre code.
+Cela nous a permis de détecter des problèmes de qualité de code, des bugs potentiels et de suivre les évolutions de
+notre couverture de test. Nous avons fait l'effort d'analyser régulièrement notre code pour améliorer sa qualité et
+éviter un maximum de code smells. Nous arrivons ainsi à un nombre inférieur 20 code smells, 0 bugs, 0 vulnérabilités
+et 0% de duplication de code.
 
-//Mathis
-(Rajouter image de la couverture de code et de sonarqube ?)
+Concernant la couverture de nos tests, nous avons atteint un taux de 60% de couverture de code. Nous n'avons donc pas
+atteint les 80% recommandés. Ce choix se justifie par la focalisation sur les tests des parties les plus complexes,
+c'est-à-dire du jeu en lui-même et des algorithmes de nos bots. La création et gestion du fichier csv ainsi que des
+commandes de lancement de parties n'ont pas été testées. Ce serait une amélioration à apporter pour une prochaine
+version. Ainsi, même si les tests pourraient être plus nombreux, nous avons confiance en la qualité de notre code et
+du déroulement correct des parties.
+
+De plus, nous avons utilisé la visualisation sous forme de ville de notre code proposée par SonarQube pour avoir une
+vue globale de notre code et son architecture.
+![Alt text](doc/citadels_sonar_city.png)
+Chaque quartier représente un package, et chaque bâtiment représente une classe. Les couleurs des bâtiments indiquent
+la complexité cyclomatique de la classe. La classe en rouge représente la classe la plus complexe, c'est-à-dire
+l'algorithme de Richard qui contient un grand nombre de conditions que nous avons essayé de relier le plus au métier
+pour
+qu'elles soient compréhensibles. Les deux autres classes complexes sont Game qui contient toute la logique du jeu et
+Main qui contient les commandes de lancement de parties. La hauteur représente les lignes de code qui sont importantes
+pour ces mêmes classes. En excluant ces trois classes qui seraient à retravailler, nous pouvons en déduire que notre
+architecture est répartie grâce aux packages et équilibrée.
 
 ---
 
@@ -194,7 +236,26 @@ Le projet est divisé en plusieurs catégories toutes différentes les unes des 
 - `Tests unitaires et Mocks :` Tout le monde mais surtout Darina.
 
 *Process de l'équipe :*
-//Mathis
+
+Notre équipe suit un processus de développement méthodique qui comprend les étapes suivantes :
+
+- La création d'issues détaillées et verticales pour chaque tâche. Comprenant leurs descriptions et l'attribution
+  à un membre de l'équipe. Chaque issue apporte de la valeur ajoutée au projet et est associée à un milestone qui
+  représente un objectif cohérent à court terme (une semaine généralement).
+- Pour chaque contribution au projet, nous utilisons des commits respectant la convention de commit conventionnel
+  (conventional commit), assurant ainsi une traçabilité claire des modifications apportées.
+- Chaque branche puis pull request est liée à une issue spécifique et est soumise à une revue approfondie par
+  au moins un membre de l'équipe.
+- Nous maintenons une norme de codage rigoureuse pour garantir la qualité du code, en accord avec les pratiques
+  de l'industrie.
+- Notre stratégie de branching Git Flow comprend les branches Master, Develop et les branches de fonctionnalités.
+  Les fonctionnalités sont développées sur des branches distinctes, liées à des issues spécifiques,
+  et fusionnées dans Develop une fois terminées. La branche Develop est stable, à chaque fois qu'un milestone est
+  terminé, nous créons une Pull Request pour que le code stable soit livré en production sur la branche Master.
+- En complément de cette stratégie de branche, à chaque fois qu'un push est effectué ou qu'une pull request
+  est créée, des vérifications et tests sont effectués. Si la pull request affecte les branches Master et Develop,
+  les tests et le build sont exécutés.
+
 
 Nous espérons que vous apprécierez l'utilisation de notre programme ! N'hésitez pas à lancer plusieurs parties pour
 découvrir les différentes possibilités.
