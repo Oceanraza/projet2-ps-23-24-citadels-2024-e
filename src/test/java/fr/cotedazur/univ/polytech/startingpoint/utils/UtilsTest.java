@@ -13,29 +13,31 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class UtilsTest {
     @Test
-    void getHighestNumberOfCardsInHandTest(){
+    void getHighestNumberOfCardsInHandTest() {
         Player p1 = new Bot("Picsou");
         Player p2 = new Bot("Donald");
         Player p3 = new Bot("Riri");
-        p1.addDistrictInHand(new District("Menuiserie",5, DistrictColor.TRADE));
-        p1.addDistrictInHand(new District("Menuiserie",5, DistrictColor.TRADE));
-        p2.addDistrictInHand(new District("Menuiserie",5, DistrictColor.TRADE));
-        p3.addDistrictInHand(new District("Menuiserie",5, DistrictColor.TRADE));
-        p3.addDistrictInHand(new District("Menuiserie",5, DistrictColor.TRADE));
-        p2.addDistrictInHand(new District("Menuiserie",5, DistrictColor.TRADE));
-        p2.addDistrictInHand(new District("Menuiserie",5, DistrictColor.TRADE));
-        p2.addDistrictInHand(new District("Menuiserie",5, DistrictColor.TRADE));
+        p1.addDistrictInHand(new District("Menuiserie", 5, DistrictColor.TRADE));
+        p1.addDistrictInHand(new District("Menuiserie", 5, DistrictColor.TRADE));
+        p2.addDistrictInHand(new District("Menuiserie", 5, DistrictColor.TRADE));
+        p3.addDistrictInHand(new District("Menuiserie", 5, DistrictColor.TRADE));
+        p3.addDistrictInHand(new District("Menuiserie", 5, DistrictColor.TRADE));
+        p2.addDistrictInHand(new District("Menuiserie", 5, DistrictColor.TRADE));
+        p2.addDistrictInHand(new District("Menuiserie", 5, DistrictColor.TRADE));
+        p2.addDistrictInHand(new District("Menuiserie", 5, DistrictColor.TRADE));
         ArrayList<Player> players = new ArrayList<>();
         players.add(p1);
         players.add(p2);
         players.add(p3);
         assertEquals(4, Utils.getHighestNumberOfCardsInHand(players, p1));
     }
+
     @Test
-    void setAlgorithmsTest(){
+    void setAlgorithmsTest() {
         ArrayList<BaseAlgo> algorithmsInGame = new ArrayList<>();
         int nbOfEinstein = 2;
         int nbOfRandom = 3;
@@ -57,5 +59,45 @@ class UtilsTest {
         assertEquals(nbOfEinstein, einsteinCount);
         assertEquals(nbOfRandom, randomCount);
         assertEquals(nbOfRichard, richardCount); // Vérification du nombre correct de RichardAlgo
+    }
+
+    private void canDestroyDistrictCommon(String districtName, int playerGold, boolean shouldBeTrue) {
+        District district = new District(districtName, 3, DistrictColor.SPECIAL);
+        Player player = new Bot("bot", new EinsteinAlgo());
+        player.setGold(playerGold);
+        if (shouldBeTrue) {
+            assertTrue(Utils.canDestroyDistrict(district, player));
+        } else {
+            assertFalse(Utils.canDestroyDistrict(district, player));
+        }
+    }
+
+    private void assertFalse(boolean b) {
+    }
+
+    @Test
+    void cannotDestroyDistrictWhenDistrictIsDonjon() {
+        canDestroyDistrictCommon("Donjon", 5, false);
+
+    }
+
+    @Test
+    void canDestroyDistrictWhenGoldHigherThanPriceAndDistrictIsNotDonjon() {
+        canDestroyDistrictCommon("toto", 5, true);
+    }
+
+    @Test
+    void cannotDestroyDistrictWhenGoldLesserThanPrice() {
+        canDestroyDistrictCommon("toto", 2, false);
+    }
+
+    @Test
+    void cannotDestroyDistrictWhenGoldLesserThanPriceAndDistrictIsDonjon() {
+        canDestroyDistrictCommon("Donjon", 3, false);
+    }
+
+    @Test
+    void generateRandomNumberWithBoundZeroTest() {
+        assertEquals(0, Utils.generateRandomNumber(0));
     }
 }

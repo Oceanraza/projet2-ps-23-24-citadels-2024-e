@@ -186,7 +186,7 @@ class MainTest {
         assertEquals(32, fourthPlayer.getScore());
     }
     @Test
-    public void testGetPlacement() {
+    void testGetPlacement() {
         List<Player> players = new ArrayList<>();
         players.add(new Bot("Alice"));
         Player p2 = new Bot("Bob");
@@ -211,10 +211,13 @@ class MainTest {
     void jCommanderTest() {
         String[] args2x1000games;
         String[] args1game;
+        String[] argsCsv;
 
         args2x1000games = new String[]{"--2thousands"};
         assertEquals(1000, jCommander(args2x1000games));
         args1game = new String[]{"--demo"};
         assertEquals(1, jCommander(args1game));
+        argsCsv = new String[]{"--csv"};
+        assertEquals(20, jCommander(argsCsv));
     }
 }

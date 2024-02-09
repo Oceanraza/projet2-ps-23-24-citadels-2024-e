@@ -18,8 +18,19 @@ Ce projet a été développé dans le cadre d'un projet collaboratif en programm
 - [Utilisation](#utilisation)
   - [Compiler et Exécuter](#compiler-et-exécuter)
   - [Exécution des Tests](#exécution-des-tests)
+- [Point d'avancement](#point-davancement)
+  - [Fonctionalités réalisées](#fonctionalités-réalisées)
+  - [Système de logs](#système-de-logs)
+  - [Archive des statistiques sous forme de CSV](#archive-des-statistiques-sous-forme-de-csv)
+- [Bot Richard](#bot-richard)
+- [Pourquoi Einstein bat-il Richard ?](#pourquoi-einstein-bat-il-richard-)
+- [Architecture du projet](#architecture-du-projet)
+  - [Localisation des Informations](#localisation-des-informations)
+  - [État de la Base de Code](#état-de-la-base-de-code)
+- [Processus](#processus)
 
----
+<div style="page-break-before: always;"></div>
+
 
 ## Sujet
 
@@ -37,8 +48,8 @@ Ce projet vise à créer une version informatisée du jeu "Citadelles", en se ba
   - Implémentation d'une simulation de partie entre 4 robots, avec calcul des points et établissement d'un classement à la fin.
 - **Visualisation textuelle simplifiée :**
   - Affichage textuel de l'état actuel du jeu.
+<div style="page-break-before: always;"></div>
 
----
 
 ## Membres de l'équipe
 
@@ -94,5 +105,6 @@ mvn clean package
 ```
 
 Assurez-vous que tous les tests passent sans erreurs, confirmant ainsi la solidité du programme.
+<div style="page-break-before: always;"></div>
 
-Nous espérons que vous apprécierez l'utilisation de notre programme ! N'hésitez pas à lancer plusieurs parties pour découvrir les différentes possibilités.
+

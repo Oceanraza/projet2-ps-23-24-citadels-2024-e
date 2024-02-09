@@ -3,7 +3,9 @@ package fr.cotedazur.univ.polytech.startingpoint.player.algorithms.smart;
 import fr.cotedazur.univ.polytech.startingpoint.Game;
 import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacter;
 import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole;
+import fr.cotedazur.univ.polytech.startingpoint.character.card.Assassin;
 import fr.cotedazur.univ.polytech.startingpoint.character.card.King;
+import fr.cotedazur.univ.polytech.startingpoint.city.City;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.city.DistrictColor;
 import fr.cotedazur.univ.polytech.startingpoint.player.Bot;
@@ -11,15 +13,13 @@ import fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.logging.Level;
 
+import static fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole.ASSASSIN;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 
 class EinsteinAlgoTest {
     private Game game;
@@ -99,7 +99,7 @@ class EinsteinAlgoTest {
         when(bot.districtsInHandAreBuilt()).thenReturn(false);
         GameCharacter gameCharacter = mock(GameCharacter.class); // Create a mock GameCharacter
         when(bot.getGameCharacter()).thenReturn(gameCharacter); // Set the GameCharacter of the bot
-        when(gameCharacter.getRole()).thenReturn(GameCharacterRole.ASSASSIN); // Set the role of the GameCharacter
+        when(gameCharacter.getRole()).thenReturn(ASSASSIN); // Set the role of the GameCharacter
         int choice = einsteinAlgo.startOfTurnChoice();
 
         assertEquals(1, choice);
@@ -122,5 +122,91 @@ class EinsteinAlgoTest {
 
         bot.setGold(10);
         assertFalse(bot.getBotAlgo().collectGoldBeforeBuildChoice());
+    }
+
+    @Test
+    void shouldChooseAssassinAlgorithmWhenMoreThanSevenDistrictsBuiltAndCanBuildDistrictThisTurnAndAssassinIsAvailable() {
+        List<District> districts = new ArrayList<>();
+        districts.add(district1);
+        districts.add(district2);
+        districts.add(district3);
+        districts.add(district1);
+        districts.add(district2);
+        districts.add(district3);
+        districts.add(district1);
+
+        City city = mock(City.class);
+        when(bot.getCity()).thenReturn(city);
+        when(city.getDistrictsBuilt()).thenReturn(districts);
+        when(bot.canBuildDistrictThisTurn()).thenReturn(true);
+        when(bot.isCharInList(any(), any(GameCharacterRole.class))).thenReturn(true);
+        when(bot.getCharInList(game.getAvailableChars(), ASSASSIN)).thenReturn(Optional.of(new Assassin()));
+        doNothing().when(bot).chooseChar(any(Game.class), any(GameCharacterRole.class));
+
+        assertTrue(einsteinAlgo.chooseAssassinAlgorithm(game, new ArrayList<>()));
+    }
+
+    @Test
+    void shouldNotChooseAssassinAlgorithmWhenLessThanSevenDistrictsBuilt() {
+        List<District> districts = new ArrayList<>();
+        districts.add(district1);
+        districts.add(district2);
+        districts.add(district3);
+        districts.add(district1);
+
+        City city = mock(City.class);
+        when(bot.getCity()).thenReturn(city);
+        when(city.getDistrictsBuilt()).thenReturn(districts);
+        when(bot.canBuildDistrictThisTurn()).thenReturn(true);
+        when(bot.isCharInList(any(), any(GameCharacterRole.class))).thenReturn(true);
+        when(bot.getCharInList(game.getAvailableChars(), ASSASSIN)).thenReturn(Optional.of(new Assassin()));
+        doNothing().when(bot).chooseChar(any(Game.class), any(GameCharacterRole.class));
+
+        assertFalse(einsteinAlgo.chooseAssassinAlgorithm(game, new ArrayList<>()));
+    }
+
+    @Test
+    void shouldNotChooseAssassinAlgorithmWhenCantBuildDistrictThisTurn() {
+        List<District> districts = new ArrayList<>();
+        districts.add(district1);
+        districts.add(district2);
+        districts.add(district3);
+        districts.add(district1);
+        districts.add(district2);
+        districts.add(district3);
+        districts.add(district1);
+
+        City city = mock(City.class);
+        when(bot.getCity()).thenReturn(city);
+        when(city.getDistrictsBuilt()).thenReturn(districts);
+        when(bot.canBuildDistrictThisTurn()).thenReturn(false);
+        when(bot.isCharInList(any(), any(GameCharacterRole.class))).thenReturn(true);
+        when(bot.getCharInList(game.getAvailableChars(), ASSASSIN)).thenReturn(Optional.of(new Assassin()));
+        doNothing().when(bot).chooseChar(any(Game.class), any(GameCharacterRole.class));
+
+        assertFalse(einsteinAlgo.chooseAssassinAlgorithm(game, new ArrayList<>()));
+    }
+
+
+    @Test
+    void shouldNotChooseAssassinAlgorithmWhenAssassinIsNotAvailable() {
+        List<District> districts = new ArrayList<>();
+        districts.add(district1);
+        districts.add(district2);
+        districts.add(district3);
+        districts.add(district1);
+        districts.add(district2);
+        districts.add(district3);
+        districts.add(district1);
+
+        City city = mock(City.class);
+        when(bot.getCity()).thenReturn(city);
+        when(city.getDistrictsBuilt()).thenReturn(districts);
+        when(bot.canBuildDistrictThisTurn()).thenReturn(true);
+        when(bot.isCharInList(any(), any(GameCharacterRole.class))).thenReturn(false);
+        when(bot.getCharInList(game.getAvailableChars(), ASSASSIN)).thenReturn(Optional.of(new Assassin()));
+        doNothing().when(bot).chooseChar(any(Game.class), any(GameCharacterRole.class));
+
+        assertFalse(einsteinAlgo.chooseAssassinAlgorithm(game, new ArrayList<>()));
     }
 }

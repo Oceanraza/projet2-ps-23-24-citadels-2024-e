@@ -12,19 +12,30 @@ import java.util.*;
 
 import static fr.cotedazur.univ.polytech.startingpoint.Game.CITY_SIZE_TO_WIN;
 import static fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole.*;
-import static fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger.LOGGER;
 
+/**
+ * Classe abstraite représentant un algorithme intelligent pour un bot.
+ * Cette classe est une extension de la classe BaseAlgo.
+ */
 public abstract class SmartAlgo extends BaseAlgo {
     protected boolean lowestDistrictFound = false;
 
+    /**
+     * Constructeur de la classe SmartAlgo.
+     */
     protected SmartAlgo() {
         super();
     }
 
-    // To know if the assassin can kill this character
+    /**
+     * Méthode pour vérifier si un personnage peut être tué.
+     *
+     * @param killableCharacters Liste des personnages qui peuvent être tués.
+     * @param charEnum           Le rôle du personnage à vérifier.
+     * @return L'index du personnage dans la liste s'il peut être tué, -1 sinon.
+     */
     int isKillable(List<GameCharacter> killableCharacters, GameCharacterRole charEnum) {
         for (int i = 0; i < killableCharacters.size(); i++) {
-            // If the character can be killed, this functions returns the index of this character
             if (killableCharacters.get(i).getRole() == charEnum) {
                 return i;
             }
@@ -32,25 +43,41 @@ public abstract class SmartAlgo extends BaseAlgo {
         return -1;
     }
 
+    /**
+     * Méthode pour indiquer que le quartier le plus bas a été trouvé.
+     */
     public void lowestDistrictHasBeenFound() {
         lowestDistrictFound = true;
     }
 
-    public int startOfTurnChoice() { // Always draws if needed
+    /**
+     * Méthode pour choisir entre prendre de l'or ou piocher une carte en début de tour.
+     *
+     * @return 2 pour piocher une carte, 1 pour prendre de l'or.
+     */
+    public int startOfTurnChoice() {
         if (bot.getDistrictsInHand().isEmpty() || bot.districtsInHandAreBuilt() || bot.getGameCharacter().getRole().equals(ARCHITECT)) {
-            return 2; // Draw a card
+            return 2;
         } else {
-            return 1; // Take 2 gold coins
+            return 1;
         }
     }
 
-    public boolean manufactureChoice() { // Use manufacture effect if the player has less than 7 built + buildable districts
+    /**
+     * Méthode pour décider si le bot doit utiliser l'effet de la manufacture.
+     *
+     * @return true si le bot doit utiliser l'effet de la manufacture, false sinon.
+     */
+    public boolean manufactureChoice() {
         Set<District> builtAndBuildableDistricts = new HashSet<>(bot.getCity().getDistrictsBuilt());
         builtAndBuildableDistricts.addAll(bot.getDistrictsInHand());
-        return builtAndBuildableDistricts.size() < CITY_SIZE_TO_WIN - 1; // If player has 7+ built + buildable districts he doesn't need to use manufacture effect and can just draw normally
+        return builtAndBuildableDistricts.size() < CITY_SIZE_TO_WIN - 1;
     }
 
-
+    /**
+     * Méthode pour choisir une carte à défausser avec l'effet du laboratoire.
+     * @return Un Optional contenant la carte à défausser, ou un Optional vide si aucune carte ne doit être défaussée.
+     */
     public Optional<District> laboratoryChoice() {
         List<District> districtsBuilt = bot.getCity().getDistrictsBuilt();
         List<District> districtsInHand = bot.getDistrictsInHand();
@@ -65,6 +92,10 @@ public abstract class SmartAlgo extends BaseAlgo {
         return Optional.empty();
     }
 
+    /**
+     * Méthode pour choisir le quartier à viser avec l'effet du quartier chassé.
+     * @param huntedQuarter Le quartier viser.
+     */
     public void huntedQuarterAlgorithm(District huntedQuarter) {
         Set<DistrictColor> colorList = new HashSet<>();
         List<District> districtsBuilt = bot.getCity().getDistrictsBuilt();
@@ -81,13 +112,20 @@ public abstract class SmartAlgo extends BaseAlgo {
         }
     }
 
+    /**
+     * Méthode pour décider si le bot doit collecter de l'or avant de construire.
+     * @return true si le bot doit collecter de l'or avant de construire, false sinon.
+     */
     @Override
     public boolean collectGoldBeforeBuildChoice() {
-        // The bot will collect gold before building if it doesn't have enough gold to build its lowest district
         Optional<District> lowestDistrict = bot.getLowestDistrictInHand();
         return lowestDistrict.isPresent() && (bot.getGold() < lowestDistrict.get().getPrice());
     }
 
+    /**
+     * Méthode pour choisir un personnage à tuer avec l'effet de l'assassin.
+     * @param game L'état actuel du jeu.
+     */
     @Override
     public void assassinAlgorithm(Game game) {
         List<GameCharacter> killableCharacters;
@@ -119,15 +157,20 @@ public abstract class SmartAlgo extends BaseAlgo {
         bot.getGameCharacter().specialEffect(bot, game, targetedCharacter);
     }
 
-    @Override
-    public void botChoosesCard(Game game, List<District> threeCards) {
-        District chosenCard = chooseCard(threeCards);
-        threeCards.remove(chosenCard); // Remove the chosen card from the list of three cards
-        for (District card : threeCards) {
-            this.bot.removeFromHandAndPutInDeck(game.getDeck(), card);
+    /**
+     * Méthode pour choisir une carte parmi une liste de cartes.
+     * @param cards La liste de cartes parmi lesquelles choisir.
+     * @return La carte choisie.
+     */
+    public District chooseCard(List<District> cards) {
+        District chosenCard = null;
+        int minCost = Integer.MAX_VALUE;
+        for (District card : cards) {
+            if (card.getPrice() <= bot.getGold() && card.getPrice() < minCost) {
+                chosenCard = card;
+                minCost = card.getPrice();
+            }
         }
-        String drawMessage = bot.getName() + " pioche le " + chosenCard;
-        LOGGER.info(drawMessage);
-        bot.addDistrictInHand(chosenCard);
+        return chosenCard;
     }
 }

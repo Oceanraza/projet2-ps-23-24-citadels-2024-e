@@ -1,5 +1,8 @@
 package fr.cotedazur.univ.polytech.startingpoint.character;
 
+/**
+ * Enumération représentant les rôles des personnages du jeu.
+ */
 public enum GameCharacterRole {
     ASSASSIN("Assassin"),
     THIEF("Voleur"),
@@ -12,19 +15,31 @@ public enum GameCharacterRole {
 
     private final String roleName;
 
+    /**
+     * Constructeur de l'énumération GameCharacterRole.
+     *
+     * @param roleName le nom du rôle du personnage.
+     */
     GameCharacterRole(String roleName) {
         this.roleName = roleName;
     }
 
+    /**
+     * Retourne le nom du rôle du personnage.
+     *
+     * @return le nom du rôle du personnage.
+     */
     public String getRoleName() {
         return roleName;
     }
 
-    /*
-    To print the role name of the character when we have to write :
-    Du ... or
-    De l' ...
-    */
+    /**
+     * Pour imprimer le nom du rôle du personnage lorsque nous devons écrire :
+     * Du ... ou
+     * De l' ...
+     *
+     * @return une chaîne de caractères formatée.
+     */
     public String toStringDuOrDeL() {
         if (this.equals(GameCharacterRole.BISHOP) || this.equals(GameCharacterRole.ASSASSIN) || (this.equals(GameCharacterRole.ARCHITECT))) {
             return "de l'" + this;
@@ -32,10 +47,12 @@ public enum GameCharacterRole {
         return "du " + this;
     }
 
-    /*
-    To print the role name of the character when we have to write :
-    Le... or
-    L' ...
+    /**
+     * Pour imprimer le nom du rôle du personnage lorsque nous devons écrire :
+     * Le... ou
+     * L' ...
+     *
+     * @return une chaîne de caractères formatée.
      */
     public String toStringLeOrLUpperCase() {
         if (this.equals(GameCharacterRole.BISHOP) || this.equals(GameCharacterRole.ASSASSIN) || (this.equals(GameCharacterRole.ARCHITECT))) {
@@ -44,6 +61,13 @@ public enum GameCharacterRole {
         return "Le " + this;
     }
 
+    /**
+     * Pour imprimer le nom du rôle du personnage lorsque nous devons écrire :
+     * le... ou
+     * l' ...
+     *
+     * @return une chaîne de caractères formatée.
+     */
     public String toStringLeOrLLowerCase() {
         if (this.equals(GameCharacterRole.BISHOP) || this.equals(GameCharacterRole.ASSASSIN) || (this.equals(GameCharacterRole.ARCHITECT))) {
             return "l'" + this;
@@ -51,6 +75,11 @@ public enum GameCharacterRole {
         return "le " + this;
     }
 
+    /**
+     * Retourne une représentation sous forme de chaîne de caractères du rôle du personnage.
+     *
+     * @return une représentation sous forme de chaîne de caractères du rôle du personnage.
+     */
     @Override
     public String toString() {
         return roleName;

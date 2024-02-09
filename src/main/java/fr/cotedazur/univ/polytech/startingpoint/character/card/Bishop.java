@@ -12,7 +12,7 @@ public class Bishop extends GameCharacter {
     }
 
     @Override
-    public void specialEffect(Player player, Game game,Object... optionalArgs) {
+    public void specialEffect(Player player, Game game, Object... optionalArgs) {
         // The bishop has no special effect
     }
 }

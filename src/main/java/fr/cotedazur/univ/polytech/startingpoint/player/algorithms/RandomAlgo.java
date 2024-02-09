@@ -16,29 +16,44 @@ import java.util.Optional;
 import static fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger.*;
 
 /**
- * This class represents the random algorithm
- * It contains the random algorithm for the bot
+ * Cette classe représente l'algorithme aléatoire
+ * Elle contient l'algorithme aléatoire pour le bot
  */
-
 public class RandomAlgo extends BaseAlgo {
+    /**
+     * Constructeur de la classe RandomAlgo.
+     */
     public RandomAlgo() {
         super();
         algoName = "Random";
     }
 
+    /**
+     * Méthode pour choisir entre prendre de l'or ou piocher une carte en début de tour.
+     *
+     * @return 2 pour piocher une carte, 1 pour prendre de l'or.
+     */
     @Override
     public int startOfTurnChoice() {
         if (getRandomBoolean()) {
-            return 1; // Take 2 gold coins
+            return 1; // Prendre 2 pièces d'or
         }
-        return 2; // Draw a card
+        return 2; // Piocher une carte
     }
 
+    /**
+     * Méthode pour décider si le bot doit collecter de l'or avant de construire.
+     * @return true si le bot doit collecter de l'or avant de construire, false sinon.
+     */
     @Override
     public boolean collectGoldBeforeBuildChoice() {
         return getRandomBoolean();
     }
 
+    /**
+     * Méthode pour choisir un personnage de manière aléatoire.
+     * @param game L'état actuel du jeu.
+     */
     @Override
     public void chooseCharacterAlgorithm(Game game) {
         List<GameCharacter> availableChars = game.getAvailableChars();
@@ -46,9 +61,13 @@ public class RandomAlgo extends BaseAlgo {
         bot.chooseChar(game, chosenChar.getRole());
     }
 
+    /**
+     * Méthode pour choisir de détruire un bâtiment d'un joueur aléatoire ou non.
+     * @param game L'état actuel du jeu.
+     */
     @Override
     public void warlordAlgorithm(Game game) {
-        if (getRandomBoolean()) { // Have 50% chance to decide to destroy a building of a random player or not
+        if (getRandomBoolean()) { // Avoir 50% de chance de décider de détruire un bâtiment d'un joueur aléatoire ou non
             List<Player> playerList = game.getSortedPlayersByScoreForWarlord();
             playerList.remove(bot);
             Collections.shuffle(playerList);
@@ -67,14 +86,18 @@ public class RandomAlgo extends BaseAlgo {
         }
     }
 
+    /**
+     * Méthode pour choisir d'assassiner un personnage ou non.
+     * @param game L'état actuel du jeu.
+     */
     @Override
     public void assassinAlgorithm(Game game) {
-        if (getRandomBoolean()) { // have 50% chance to decide to assassinate a character
+        if (getRandomBoolean()) { // a 50% de chance de décider d'assassiner un personnage
             int numberOfTargets;
             int indexPlayerKilled;
             GameCharacterRole targetedCharacter;
 
-            // Choose a random character and kill him
+            // Choisi un personnage aléatoire et le tue
             numberOfTargets = game.getKillableCharacters().size();
             indexPlayerKilled = Utils.generateRandomNumber(numberOfTargets);
             targetedCharacter = game.getKillableCharacters().get(indexPlayerKilled).getRole();
@@ -85,9 +108,13 @@ public class RandomAlgo extends BaseAlgo {
         }
     }
 
+    /**
+     * Méthode pour choisir d'utiliser l'effet du magicien ou non.
+     * @param game L'état actuel du jeu.
+     */
     @Override
     public void magicianAlgorithm(Game game) {
-        if (oneChanceOutOfTwo) { // have 50% chance to decide to destroy a building of a random player or not
+        if (oneChanceOutOfTwo) { // avoir 50% de chance de décider de détruire un bâtiment d'un joueur aléatoire ou non
             List<Player> playerList = game.getSortedPlayersByScore();
             playerList.remove(bot);
             bot.getGameCharacter().specialEffect(bot, game, true, playerList.get(Utils.generateRandomNumber(playerList.size())));
@@ -96,8 +123,12 @@ public class RandomAlgo extends BaseAlgo {
         }
     }
 
+    /**
+     * Méthode pour décider si le bot doit construire ou non.
+     * @param gameState L'état actuel du jeu.
+     */
     @Override
-    public void buildOrNot(GameState gameState) { //builds if he can
+    public void buildOrNot(GameState gameState) { //construit s'il le peut
         int builtThisTurn = 0;
 
         for (District district : bot.getDistrictsInHand()) {
@@ -110,16 +141,28 @@ public class RandomAlgo extends BaseAlgo {
         }
     }
 
+    /**
+     * Méthode pour choisir la couleur du quartier chassé.
+     * @param huntedQuarter Le quartier chassé.
+     */
     @Override
     public void huntedQuarterAlgorithm(District huntedQuarter) {
         huntedQuarter.setColor(DistrictColor.values()[Utils.generateRandomNumber(DistrictColor.values().length)]);
     }
 
+    /**
+     * Méthode pour décider si le bot doit utiliser l'effet de la manufacture.
+     * @return true si le bot doit utiliser l'effet de la manufacture, false sinon.
+     */
     @Override
     public boolean manufactureChoice() {
         return oneChanceOutOfTwo;
     }
 
+    /**
+     * Méthode pour choisir une carte à défausser avec l'effet du laboratoire.
+     * @return Un Optional contenant la carte à défausser, ou un Optional vide si aucune carte ne doit être défaussée.
+     */
     @Override
     public Optional<District> laboratoryChoice() {
         if (oneChanceOutOfTwo) {
@@ -129,18 +172,32 @@ public class RandomAlgo extends BaseAlgo {
         return Optional.empty();
     }
 
+    /**
+     * Méthode pour décider si le bot doit utiliser l'effet du cimetière.
+     * @return true si le bot doit utiliser l'effet du cimetière, false sinon.
+     */
     @Override
     public boolean graveyardChoice() {
         return oneChanceOutOfTwo;
     }
 
+    /**
+     * Méthode pour que le bot choisisse une carte parmi trois.
+     * @param game L'état actuel du jeu.
+     * @param threeCards Les trois cartes parmi lesquelles choisir.
+     */
     @Override
     public void botChoosesCard(Game game, List<District> threeCards) {
         District chosenCard = chooseCard(threeCards);
         bot.addDistrictInHand(chosenCard);
     }
 
-    public District chooseCard(List<District> cards){
+    /**
+     * Méthode pour choisir une carte parmi une liste de cartes.
+     * @param cards La liste de cartes parmi lesquelles choisir.
+     * @return La carte choisie.
+     */
+    public District chooseCard(List<District> cards) {
         return cards.get(Utils.generateRandomNumber(cards.size()));
     }
 }

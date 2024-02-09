@@ -27,8 +27,10 @@ public class GameState {
 
     // If a player has 8 districts built, he wins
     public boolean isGameFinished(List<Player> players) {
-        for (Player p: players){
-            if (isFinished(p)){return true;}
+        for (Player p : players) {
+            if (isFinished(p)) {
+                return true;
+            }
         }
         return false;
     }
@@ -36,5 +38,8 @@ public class GameState {
     public boolean isFinished(Player player) {
         return (player.getCity().getDistrictsBuilt().size() >= CITY_SIZE_TO_WIN);
     }
-    public void resetGameState(){turn = 0;}
+
+    public void resetGameState() {
+        turn = 0;
+    }
 }

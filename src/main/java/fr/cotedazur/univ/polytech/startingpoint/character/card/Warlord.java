@@ -16,16 +16,21 @@ public class Warlord extends GameCharacter {
     public Warlord() {
         super(GameCharacterRole.WARLORD, 8, DistrictColor.MILITARY);
     }
+
     @Override
-    public void specialEffect(Player player,Game game, Object... optionalArgs) {
+    public void specialEffect(Player player, Game game, Object... optionalArgs) {
         Player targetedPlayer = (Player) optionalArgs[0];
+        if(targetedPlayer == null) {
+            LOGGER.info(COLOR_RED + "Le Condottiere n'a pas de quartier a detruire." + COLOR_RESET);
+            return;
+        }
         District destroyedDistrict = (District) optionalArgs[1];
         targetedPlayer.getCity().destroyDistrict(destroyedDistrict);
         player.removeGold(destroyedDistrict.getPrice() - 1);
         String destroyDistrictMessage = COLOR_RED + "Le Condottiere a detruit le quartier " + destroyedDistrict.getName() + " qui appartient au joueur " + targetedPlayer.getName() + " au prix de " + (destroyedDistrict.getPrice() - 1) + " or." + COLOR_RESET;
         LOGGER.info(destroyDistrictMessage);
 
-        Optional<Player> playerWithGraveyard = ActionManager.playerHasSpecialDistrict(game.getPlayers(), "Cimetiere");
+        Optional<Player> playerWithGraveyard = Game.playerHasSpecialDistrict(game.getPlayers(), "Cimetiere");
         if (playerWithGraveyard.isPresent()) {
             ActionManager.applyGraveyardEffect(game.getDeck(), playerWithGraveyard.get(), destroyedDistrict);
         } else {
