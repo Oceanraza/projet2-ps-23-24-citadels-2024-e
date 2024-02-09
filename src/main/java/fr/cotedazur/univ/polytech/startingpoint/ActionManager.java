@@ -105,14 +105,6 @@ public class ActionManager {
         return 0;
     }
 
-    public static Optional<Player> playerHasSpecialDistrict(List<Player> players, String districtName) {
-        for (Player player : players) {
-            if (player.getCity().containsDistrict(districtName)) {
-                return Optional.of(player);
-            }
-        }
-        return Optional.empty();
-    }
 
     public static void applyCharacterSpecialEffect(Player player, Game game) {
         player.getGameCharacter().specialEffect(player, game);

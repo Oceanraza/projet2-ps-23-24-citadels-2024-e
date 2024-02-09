@@ -9,10 +9,7 @@ import fr.cotedazur.univ.polytech.startingpoint.player.Bot;
 import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 import fr.cotedazur.univ.polytech.startingpoint.utils.Utils;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 import static fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger.*;
 
@@ -386,5 +383,14 @@ public class Game {
         }
 
         return playerWithLowestDistrictPrice;
+    }
+
+    public static Optional<Player> playerHasSpecialDistrict(List<Player> players, String districtName) {
+        for (Player player : players) {
+            if (player.getCity().containsDistrict(districtName)) {
+                return Optional.of(player);
+            }
+        }
+        return Optional.empty();
     }
 }
