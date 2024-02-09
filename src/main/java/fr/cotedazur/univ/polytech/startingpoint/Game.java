@@ -144,23 +144,39 @@ public class Game {
     }
 
     /**
-     * Supprime les personnages en jeu
+     * Met face cachée 1 personnage du jeu
      */
-    private void removeCharactersInGame() {
+    private void putCharacterFacedown() {
+        int indexCharacter;
+        GameCharacter cha;
+
+        indexCharacter = Utils.generateRandomNumber(availableChars.size());
+        cha = availableChars.get(indexCharacter);
+
+        String wontBePlayedMessage = cha.getRole().toStringLeOrLUpperCase() + " est ecarte face cachee";
+        LOGGER.info(wontBePlayedMessage);
+
+        availableChars.remove(indexCharacter);
+    }
+
+    /**
+     * Met face ouverte 2 personnages du jeu (sauf le roi)
+     */
+    private void putCharactersFaceup() {
         for (int i = 0; i < 2; i++) {
             int indexCharacter;
             GameCharacter cha;
 
-            indexCharacter = Utils.generateRandomNumber(charactersInGame.size() - 1);
+            indexCharacter = Utils.generateRandomNumber(charactersInGame.size());
             cha = charactersInGame.get(indexCharacter);
 
             // Le roi doit être disponible pour les joueurs
             while (cha.getRole().equals(GameCharacterRole.KING)) {
-                indexCharacter = Utils.generateRandomNumber(charactersInGame.size() - 1);
+                indexCharacter = Utils.generateRandomNumber(charactersInGame.size());
                 cha = charactersInGame.get(indexCharacter);
             }
             charactersInGame.remove(cha);
-            String wontBePlayedMessage = cha.getRole().toStringLeOrLUpperCase() + " ne sera pas joue ce tour";
+            String wontBePlayedMessage = cha.getRole().toStringLeOrLUpperCase() + " est ecarte face ouverte";
             LOGGER.info(wontBePlayedMessage);
         }
     }
@@ -224,9 +240,12 @@ public class Game {
         charactersInGame = new ArrayList<>(allCharacters);
 
         // Supprime 2 personnages de la liste des personnages en jeu
-        removeCharactersInGame();
+        putCharactersFaceup();
 
         availableChars = new ArrayList<>(charactersInGame);
+
+        // Supprime 1 personnage de la liste des personnages disponible
+        putCharacterFacedown();
     }
 
     /**
@@ -422,8 +441,8 @@ public class Game {
                 charactersThatCanBeStolen.remove(cha);
             }
             // Thief ne peut pas voler un personnage mort
-            else if (!cha.getIsAlive()) {
-                String deadCharacterMessage = cha.getRole().toStringLeOrLUpperCase() + " est mort. Il ne peut pas etre vole";
+            if (!cha.getIsAlive()) {
+                String deadCharacterMessage = COLOR_RED + cha.getRole().toStringLeOrLUpperCase() + " est mort. Il ne peut pas etre vole" + COLOR_RESET;
                 LOGGER.info(deadCharacterMessage);
                 charactersThatCanBeStolen.remove(cha);
             }
@@ -518,15 +537,15 @@ public class Game {
      *
      * @return le joueur ayant le quartier le moins cher en main.
      */
-    public Player getPlayerWithLowestDistrictPrice() {
-        Player playerWithLowestDistrictPrice = null;
+    public Optional<Player> getPlayerWithLowestDistrictPrice() {
+        Optional<Player> playerWithLowestDistrictPrice = Optional.empty();
         int lowestPrice = Integer.MAX_VALUE;
 
         for (Player player : players) {
             for (District district : player.getDistrictsInHand()) {
                 if (district.getPrice() < lowestPrice) {
                     lowestPrice = district.getPrice();
-                    playerWithLowestDistrictPrice = player;
+                    playerWithLowestDistrictPrice = Optional.of(player);
                 }
             }
         }
