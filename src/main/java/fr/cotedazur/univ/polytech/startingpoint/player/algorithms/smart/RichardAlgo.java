@@ -147,15 +147,15 @@ public class RichardAlgo extends SmartAlgo {
                 }
             }
             if (playerWith6Districts != null) {
-                playerWith6Districts.getLowestDistrict().ifPresent(district -> bot.getGameCharacter().specialEffect(bot, game, playerWith6Districts, district));
+                playerWith6Districts.getLowestDistrictBuilt().ifPresent(district -> bot.getGameCharacter().specialEffect(bot, game, playerWith6Districts, district));
                 return;
             }
             if (game.getPlayerWithMostDistricts().getCity().getDistrictsBuilt().size() < 7) {
                 Player playerWithMostDistricts = game.getPlayerWithMostDistricts();
-                playerWithMostDistricts.getLowestDistrict().ifPresent(district -> bot.getGameCharacter().specialEffect(bot, game, playerWithMostDistricts, district));
+                playerWithMostDistricts.getLowestDistrictBuilt().ifPresent(district -> bot.getGameCharacter().specialEffect(bot, game, playerWithMostDistricts, district));
             }
             playerWithLowestDistrictPrice
-                    .getLowestDistrict()
+                    .getLowestDistrictBuilt()
                     .ifPresent(district -> bot.getGameCharacter().specialEffect(bot, game, playerWithLowestDistrictPrice, district));
         }
     }

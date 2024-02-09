@@ -14,15 +14,6 @@ import fr.cotedazur.univ.polytech.startingpoint.utils.Csv;
 import fr.cotedazur.univ.polytech.startingpoint.utils.Utils;
 
 import java.util.*;
-import fr.cotedazur.univ.polytech.startingpoint.player.algorithms.RandomAlgo;
-import fr.cotedazur.univ.polytech.startingpoint.player.algorithms.smart.EinsteinAlgo;
-import fr.cotedazur.univ.polytech.startingpoint.player.algorithms.smart.RichardAlgo;
-import fr.cotedazur.univ.polytech.startingpoint.utils.Args;
-import fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger;
-
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
 import java.util.logging.Level;
 
 import static fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger.*;
@@ -156,13 +147,15 @@ public class Main {
 
         int nbOfEinstein;
         int nbOfRandom;
+        int nbOfRichard;
         for (int numberOfRepetitions = 0; numberOfRepetitions < (currentMode.equals(Args.ArgsEnum.TWOTHOUSANDS) ? 2 : 1); numberOfRepetitions++) {
             if (numberOfRepetitions == 0){
                 if (currentMode.equals(Args.ArgsEnum.TWOTHOUSANDS)){
                     LOGGER.log(CSV_OR_THOUSAND,  COLOR_BLUE + "\n[ Algo le plus intelligent contre le second (2vs2) ]\n" + COLOR_RESET);
                 }
                 nbOfEinstein = 2;
-                nbOfRandom = 2;
+                nbOfRichard = 2;
+                nbOfRandom = 0;
             }
             else{
                 for (Map.Entry<String,Integer> entry : algoWinrate.entrySet()) {
@@ -174,11 +167,12 @@ public class Main {
                     LOGGER.log(CSV_OR_THOUSAND, COLOR_BLUE + "\n[ Algo le plus intelligent contre lui meme (1vs1vs1vs1) ]\n" + COLOR_RESET);
                 }
                 nbOfEinstein = 4;
+                nbOfRichard = 0;
                 nbOfRandom = 0;
             }
             Utils.resetScoresAndPlacements(totalPlacements,totalScores);
             ArrayList<BaseAlgo> algorithmsInGame = new ArrayList<>();
-            Utils.setAlgorithms(algorithmsInGame, nbOfEinstein, nbOfRandom);
+            Utils.setAlgorithms(algorithmsInGame, nbOfEinstein, nbOfRichard, nbOfRandom);
             for (int games = 0; games < numberOfGames; games++) {
                 resetAll(newGame, gameState);
                 // Adding players to the game
@@ -215,7 +209,7 @@ public class Main {
 
                     // Character reveal phase
                     LOGGER.info("\n" + COLOR_BLUE + "[ Phase 2 ] Tour des joueurs" + COLOR_RESET);
-                    List<Player> runningOrder = newGame.setRunningOrder();
+                    List<Player> runningOrder = newGame.getRunningOrder();
 
                     for (Player player : runningOrder) {
                         GameCharacter cha = player.getGameCharacter();

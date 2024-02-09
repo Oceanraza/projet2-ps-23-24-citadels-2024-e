@@ -19,8 +19,7 @@ import java.util.List;
 import java.util.logging.Level;
 
 import static fr.cotedazur.univ.polytech.startingpoint.Game.CITY_SIZE_TO_WIN;
-import static fr.cotedazur.univ.polytech.startingpoint.Main.calculateScores;
-import static fr.cotedazur.univ.polytech.startingpoint.Main.jCommander;
+import static fr.cotedazur.univ.polytech.startingpoint.Main.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class MainTest {

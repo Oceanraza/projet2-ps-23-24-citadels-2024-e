@@ -8,7 +8,8 @@ import org.mockito.Mockito;
 
 import java.util.logging.Level;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.mockito.Mockito.mock;
 
 class RandomAlgoTest {
@@ -42,17 +43,17 @@ class RandomAlgoTest {
 
     @Test
     void manufactureChoiceTest() {
-        Mockito.when(randomAlgo.getRandomBoolean()).thenReturn(true);
+        Mockito.when(randomAlgo.getRandomBoolean()).thenReturn(false);
         Mockito.when(randomAlgo.manufactureChoice()).thenCallRealMethod();
         boolean randomBoolean = randomAlgo.manufactureChoice();
-        assertTrue(randomBoolean);
+        assertFalse(randomBoolean);
     }
 
     @Test
     void graveyardChoiceTest() {
         Mockito.when(randomAlgo.getRandomBoolean()).thenReturn(false);
-        Mockito.when(randomAlgo.manufactureChoice()).thenCallRealMethod();
-        boolean randomBoolean = randomAlgo.manufactureChoice();
+        Mockito.when(randomAlgo.graveyardChoice()).thenCallRealMethod();
+        boolean randomBoolean = randomAlgo.graveyardChoice();
         assertFalse(randomBoolean);
     }
 

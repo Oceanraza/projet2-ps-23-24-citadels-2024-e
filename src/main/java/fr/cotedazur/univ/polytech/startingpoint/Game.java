@@ -116,7 +116,7 @@ public class Game {
 
     // Init starts off the game by creating the deck, the crown, the players and the characters
     public void init() {
-        deck = new Deck();
+        deck.resetDeck();
         allCharacters = new ArrayList<>();
         availableChars = new ArrayList<>();
 

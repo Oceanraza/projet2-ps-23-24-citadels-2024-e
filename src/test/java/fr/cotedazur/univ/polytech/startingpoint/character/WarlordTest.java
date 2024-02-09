@@ -2,6 +2,8 @@ package fr.cotedazur.univ.polytech.startingpoint.character;
 
 import fr.cotedazur.univ.polytech.startingpoint.Game;
 import fr.cotedazur.univ.polytech.startingpoint.GameState;
+import fr.cotedazur.univ.polytech.startingpoint.character.card.Bishop;
+import fr.cotedazur.univ.polytech.startingpoint.character.card.King;
 import fr.cotedazur.univ.polytech.startingpoint.character.card.Warlord;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.city.DistrictColor;
@@ -11,6 +13,9 @@ import fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import java.util.logging.Level;
 
 import static fr.cotedazur.univ.polytech.startingpoint.Game.CITY_SIZE_TO_WIN;
@@ -25,11 +30,16 @@ class WarlordTest {
     Bot bot;
     District district3cost;
     District district1cost;
+    Bishop bishop;
+    King king;
 
     @BeforeEach
     void setUp() {
         CitadelsLogger.setupDemo();
         CitadelsLogger.setGlobalLogLevel(Level.OFF);
+
+        bishop = new Bishop();
+        king = new King();
 
         game = new Game();
         gameState = new GameState();
@@ -53,8 +63,8 @@ class WarlordTest {
         bot.buildDistrict(district1, gameState);
         bot.buildDistrict(district2, gameState);
         bot.buildDistrict(district3, gameState);
-        assertTrue(bot.getLowestDistrict().isPresent());
-        assertEquals(district2, bot.getLowestDistrict().get());
+        assertTrue(bot.getLowestDistrictBuilt().isPresent());
+        assertEquals(district2, bot.getLowestDistrictBuilt().get());
     }
 
     @Test
@@ -84,7 +94,7 @@ class WarlordTest {
 
     @Test
     void getWrongDistrictTest() {
-        assertEquals(Optional.empty(), bot.getLowestDistrict());
+        assertEquals(Optional.empty(), bot.getLowestDistrictBuilt());
     }
     @Test
     void getSortedPlayersByScoreTest() {
@@ -99,7 +109,7 @@ class WarlordTest {
         secondPlayer.setGameCharacter(king);
         fourthPlayer.setGameCharacter(king);
 
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < CITY_SIZE_TO_WIN; i++) {
             firstBuilder.getCity().getDistrictsBuilt().add(new District("test", 4, DistrictColor.TRADE));
             secondPlayer.getCity().getDistrictsBuilt().add(new District("test", 5, DistrictColor.TRADE));
             thirdPlayer.getCity().getDistrictsBuilt().add(new District("test", 2, DistrictColor.TRADE));

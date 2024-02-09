@@ -3,6 +3,7 @@ package fr.cotedazur.univ.polytech.startingpoint.player.algorithms.smart;
 import fr.cotedazur.univ.polytech.startingpoint.Game;
 import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacter;
 import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole;
+import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 import fr.cotedazur.univ.polytech.startingpoint.utils.Utils;
 
@@ -22,14 +23,13 @@ public class EinsteinAlgo extends SmartAlgo {
         algoName = "Einstein";
     }
 
-    @Override
     public boolean collectGoldBeforeBuildChoice() {
         // The bot will collect gold before building if it doesn't have enough gold to build its lowest district
         Optional<District> lowestDistrict = bot.getLowestDistrictInHand();
         return lowestDistrict.isPresent() && (bot.getGold() < lowestDistrict.get().getPrice());
     }
 
-    @Override
+
     public void botChoosesCard(Game game, List<District> threeCards) {
         District chosenCard = chooseCard(threeCards);
         threeCards.remove(chosenCard); // Remove the chosen card from the list of three cards
@@ -93,7 +93,7 @@ public class EinsteinAlgo extends SmartAlgo {
     /**
      * This algorithm is used to destroy the lowest district of the player with the most points
      *
-     * @param game
+     * @param game The current game
      */
     @Override
     public void warlordAlgorithm(Game game) {
