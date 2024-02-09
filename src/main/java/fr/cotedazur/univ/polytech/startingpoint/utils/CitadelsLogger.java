@@ -3,6 +3,10 @@ package fr.cotedazur.univ.polytech.startingpoint.utils;
 import java.util.logging.*;
 
 public class CitadelsLogger {
+    /**
+     * Logger utilisé pour enregistrer les informations de débogage et les erreurs.
+     * Il est initialisé avec le nom "Citadels Logger".
+     */
     public static final Logger LOGGER = Logger.getLogger("Citadels Logger");
     public static final Level CSV_OR_THOUSAND = new CsvOrThousandLogLevel("MY_CUSTOM_LEVEL", Level.WARNING.intValue() + 1);
 

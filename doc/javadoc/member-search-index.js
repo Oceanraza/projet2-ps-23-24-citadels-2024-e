@@ -23,6 +23,10 @@ memberSearchIndex = [{
     "c": "Player",
     "l": "addGold(int)"
 }, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player.algorithms.smart",
+    "c": "RichardAlgo.BotStyle",
+    "l": "AGGRESSIVE"
+}, {
     "p": "fr.cotedazur.univ.polytech.startingpoint.player.algorithms",
     "c": "BaseAlgo",
     "l": "algoName"
@@ -162,15 +166,14 @@ memberSearchIndex = [{
     "l": "botChoosesCard(Game, List<District>)",
     "u": "botChoosesCard(fr.cotedazur.univ.polytech.startingpoint.Game,java.util.List)"
 }, {
-    "p": "fr.cotedazur.univ.polytech.startingpoint.player.algorithms.smart",
-    "c": "SmartAlgo",
-    "l": "botChoosesCard(Game, List<District>)",
-    "u": "botChoosesCard(fr.cotedazur.univ.polytech.startingpoint.Game,java.util.List)"
-}, {
     "p": "fr.cotedazur.univ.polytech.startingpoint.player",
     "c": "Player",
     "l": "buildDistrict(District, GameState)",
     "u": "buildDistrict(fr.cotedazur.univ.polytech.startingpoint.city.District,fr.cotedazur.univ.polytech.startingpoint.GameState)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player.algorithms.smart",
+    "c": "RichardAlgo.BotStyle",
+    "l": "BUILDER"
 }, {
     "p": "fr.cotedazur.univ.polytech.startingpoint.player.algorithms",
     "c": "BaseAlgo",
@@ -243,12 +246,7 @@ memberSearchIndex = [{
     "u": "chooseCard(java.util.List)"
 }, {
     "p": "fr.cotedazur.univ.polytech.startingpoint.player.algorithms.smart",
-    "c": "EinsteinAlgo",
-    "l": "chooseCard(List<District>)",
-    "u": "chooseCard(java.util.List)"
-}, {
-    "p": "fr.cotedazur.univ.polytech.startingpoint.player.algorithms.smart",
-    "c": "RichardAlgo",
+    "c": "SmartAlgo",
     "l": "chooseCard(List<District>)",
     "u": "chooseCard(java.util.List)"
 }, {
@@ -501,6 +499,10 @@ memberSearchIndex = [{
     "c": "Bot",
     "l": "getBotAlgo()"
 }, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player.algorithms.smart",
+    "c": "RichardAlgo",
+    "l": "getBotStyle()"
+}, {
     "p": "fr.cotedazur.univ.polytech.startingpoint.board",
     "c": "Deck",
     "l": "getCards()"
@@ -654,6 +656,10 @@ memberSearchIndex = [{
     "p": "fr.cotedazur.univ.polytech.startingpoint.player.algorithms",
     "c": "BaseAlgo",
     "l": "getRandomBoolean()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player.algorithms.smart",
+    "c": "RichardAlgo",
+    "l": "getRandomBotStyle()"
 }, {
     "p": "fr.cotedazur.univ.polytech.startingpoint",
     "c": "Game",
@@ -901,6 +907,10 @@ memberSearchIndex = [{
     "p": "fr.cotedazur.univ.polytech.startingpoint.player.algorithms",
     "c": "BaseAlgo",
     "l": "oneChanceOutOfTwo"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player.algorithms.smart",
+    "c": "RichardAlgo.BotStyle",
+    "l": "OPPORTUNIST"
 }, {
     "p": "fr.cotedazur.univ.polytech.startingpoint.utils",
     "c": "Utils",
@@ -1205,10 +1215,6 @@ memberSearchIndex = [{
     "l": "StatsResetException(String)",
     "u": "%3Cinit%3E(java.lang.String)"
 }, {
-    "p": "fr.cotedazur.univ.polytech.startingpoint.player.algorithms.smart",
-    "c": "RichardAlgo.BotStyle",
-    "l": "SUSPICIOUS"
-}, {
     "p": "fr.cotedazur.univ.polytech.startingpoint",
     "c": "Game",
     "l": "thief"
@@ -1352,10 +1358,6 @@ memberSearchIndex = [{
     "c": "RichardAlgo",
     "l": "warlordAlgorithm(Game)",
     "u": "warlordAlgorithm(fr.cotedazur.univ.polytech.startingpoint.Game)"
-}, {
-    "p": "fr.cotedazur.univ.polytech.startingpoint.player.algorithms.smart",
-    "c": "RichardAlgo.BotStyle",
-    "l": "WISE"
 }, {
     "p": "fr.cotedazur.univ.polytech.startingpoint.utils",
     "c": "Csv",
