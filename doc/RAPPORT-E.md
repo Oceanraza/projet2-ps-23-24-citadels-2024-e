@@ -208,7 +208,7 @@ du déroulement correct des parties.
 
 De plus, nous avons utilisé la visualisation sous forme de ville de notre code proposée par SonarQube pour avoir une
 vue globale de notre code et son architecture.
-![Alt text](doc/citadels_sonar_city.png)
+![Alt text](citadels_sonar_city.png)
 Chaque quartier représente un package, et chaque bâtiment représente une classe. Les couleurs des bâtiments indiquent
 la complexité cyclomatique de la classe. La classe en rouge représente la classe la plus complexe, c'est-à-dire
 l'algorithme de Richard qui contient un grand nombre de conditions que nous avons essayé de relier le plus au métier
