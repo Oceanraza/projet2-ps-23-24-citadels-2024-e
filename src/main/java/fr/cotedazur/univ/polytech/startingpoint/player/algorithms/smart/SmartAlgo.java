@@ -6,11 +6,12 @@ import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.city.DistrictColor;
 import fr.cotedazur.univ.polytech.startingpoint.player.algorithms.BaseAlgo;
+import fr.cotedazur.univ.polytech.startingpoint.utils.Utils;
 
 import java.util.*;
 
 import static fr.cotedazur.univ.polytech.startingpoint.Game.CITY_SIZE_TO_WIN;
-import static fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole.ARCHITECT;
+import static fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole.*;
 import static fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger.LOGGER;
 
 public abstract class SmartAlgo extends BaseAlgo {
@@ -78,6 +79,37 @@ public abstract class SmartAlgo extends BaseAlgo {
                 }
             }
         }
+    }
+
+    @Override
+    public void assassinAlgorithm(Game game) {
+        List<GameCharacter> killableCharacters;
+        int indexKilledCharacter;
+        GameCharacterRole targetedCharacter;
+
+        int indexWarlord;
+        int indexKing;
+
+        killableCharacters = game.getKillableCharacters();
+        indexWarlord = isKillable(killableCharacters, WARLORD);
+        indexKing = isKillable(killableCharacters, KING);
+
+        // Kill the warlord if possible
+        if (indexWarlord != -1) {
+            indexKilledCharacter = indexWarlord;
+        }
+        // Kill the king if the warlord can't be killed
+        else if (indexKing != -1) {
+            indexKilledCharacter = indexKing;
+        }
+        // Kill a random character if neither the warlord nor the king can be killed
+        else {
+            int numberOfTargets = game.getKillableCharacters().size();
+            indexKilledCharacter = Utils.generateRandomNumber(numberOfTargets);
+        }
+
+        targetedCharacter = game.getKillableCharacters().get(indexKilledCharacter).getRole();
+        bot.getGameCharacter().specialEffect(bot, game, targetedCharacter);
     }
 
     @Override

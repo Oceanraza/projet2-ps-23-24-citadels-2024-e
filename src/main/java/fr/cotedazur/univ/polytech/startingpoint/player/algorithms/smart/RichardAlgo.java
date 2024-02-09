@@ -1,11 +1,13 @@
 package fr.cotedazur.univ.polytech.startingpoint.player.algorithms.smart;
 
 import fr.cotedazur.univ.polytech.startingpoint.Game;
+import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacter;
 import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 import fr.cotedazur.univ.polytech.startingpoint.utils.Utils;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -176,7 +178,7 @@ public class RichardAlgo extends SmartAlgo {
     @Override
     public void assassinAlgorithm(Game game) {
         if (shouldKillBishop) {
-            bot.getGameCharacter().specialEffect(bot, game, BISHOP);
+            bot.getGameCharacter().specialEffect(bot, game, GameCharacterRole.WARLORD);
             shouldKillBishop = false;
         } else if (shouldKillExceptWarlord) {
             bot.getGameCharacter().specialEffect(bot, game, selectRandomKillableCharacterExcept(GameCharacterRole.WARLORD, game));
@@ -187,7 +189,7 @@ public class RichardAlgo extends SmartAlgo {
         } else {
             switch (shouldPickAssassin(game)) {
                 case 1:
-                    bot.getGameCharacter().specialEffect(bot, game, KING);
+                    bot.getGameCharacter().specialEffect(bot, game, GameCharacterRole.KING);
                     break;
                 case 2:
                     bot.getGameCharacter().specialEffect(bot, game, GameCharacterRole.THIEF);
@@ -196,7 +198,7 @@ public class RichardAlgo extends SmartAlgo {
                     bot.getGameCharacter().specialEffect(bot, game, GameCharacterRole.WARLORD);
                     break;
                 case 4:
-                    bot.getGameCharacter().specialEffect(bot, game, ARCHITECT);
+                    bot.getGameCharacter().specialEffect(bot, game, GameCharacterRole.ARCHITECT);
                     break;
                 default:
                     super.assassinAlgorithm(game);
@@ -298,5 +300,17 @@ public class RichardAlgo extends SmartAlgo {
             }
         }
         return chosenCard;
+    }
+
+    public GameCharacter selectRandomKillableCharacterExcept(GameCharacterRole gameCharacterRole, Game game) {
+        List<GameCharacter> killableCharacters = new ArrayList<>(game.getKillableCharacters());
+        killableCharacters.removeIf(character -> character.getRole().equals(gameCharacterRole));
+
+        if (killableCharacters.isEmpty()) {
+            return null;
+        }
+
+        int randomIndex = Utils.generateRandomNumber(killableCharacters.size());
+        return killableCharacters.get(randomIndex);
     }
 }

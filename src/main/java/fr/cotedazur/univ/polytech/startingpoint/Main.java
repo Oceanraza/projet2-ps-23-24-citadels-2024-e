@@ -153,9 +153,9 @@ public class Main {
                 if (currentMode.equals(Args.ArgsEnum.TWOTHOUSANDS)){
                     LOGGER.log(CSV_OR_THOUSAND,  COLOR_BLUE + "\n[ Algo le plus intelligent contre le second (2vs2) ]\n" + COLOR_RESET);
                 }
-                nbOfEinstein = 2;
-                nbOfRichard = 2;
-                nbOfRandom = 0;
+                nbOfEinstein = 1;
+                nbOfRichard = 1;
+                nbOfRandom = 2;
             }
             else{
                 for (Map.Entry<String,Integer> entry : algoWinrate.entrySet()) {

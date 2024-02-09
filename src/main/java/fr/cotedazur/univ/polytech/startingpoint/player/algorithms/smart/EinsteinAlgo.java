@@ -10,7 +10,8 @@ import fr.cotedazur.univ.polytech.startingpoint.utils.Utils;
 import java.util.List;
 import java.util.Optional;
 
-import static fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole.*;
+import static fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole.ARCHITECT;
+import static fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole.ASSASSIN;
 /**
  * This class represents the algorithm of the bot Einstein
  * It contains the logic of the bot's actions
@@ -114,37 +115,6 @@ public class EinsteinAlgo extends SmartAlgo {
         }
         boolean switching = true;
         bot.getGameCharacter().specialEffect(bot, game, switching, chosenPlayer);
-    }
-
-    @Override
-    public void assassinAlgorithm(Game game) {
-        List<GameCharacter> killableCharacters;
-        int indexKilledCharacter;
-        GameCharacterRole targetedCharacter;
-
-        int indexWarlord;
-        int indexKing;
-
-        killableCharacters = game.getKillableCharacters();
-        indexWarlord = isKillable(killableCharacters, WARLORD);
-        indexKing = isKillable(killableCharacters, KING);
-
-        // Kill the warlord if possible
-        if (indexWarlord != -1) {
-            indexKilledCharacter = indexWarlord;
-        }
-        // Kill the king if the warlord can't be killed
-        else if (indexKing != -1) {
-            indexKilledCharacter = indexKing;
-        }
-        // Kill a random character if neither the warlord nor the king can be killed
-        else {
-            int numberOfTargets = game.getKillableCharacters().size();
-            indexKilledCharacter = Utils.generateRandomNumber(numberOfTargets);
-        }
-
-        targetedCharacter = game.getKillableCharacters().get(indexKilledCharacter).getRole();
-        bot.getGameCharacter().specialEffect(bot, game, targetedCharacter);
     }
 
     @Override
