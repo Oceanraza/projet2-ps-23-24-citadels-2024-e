@@ -12,7 +12,6 @@ import java.util.*;
 
 import static fr.cotedazur.univ.polytech.startingpoint.Game.CITY_SIZE_TO_WIN;
 import static fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole.*;
-import static fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger.LOGGER;
 
 public abstract class SmartAlgo extends BaseAlgo {
     protected boolean lowestDistrictFound = false;
@@ -119,15 +118,15 @@ public abstract class SmartAlgo extends BaseAlgo {
         bot.getGameCharacter().specialEffect(bot, game, targetedCharacter);
     }
 
-    @Override
-    public void botChoosesCard(Game game, List<District> threeCards) {
-        District chosenCard = chooseCard(threeCards);
-        threeCards.remove(chosenCard); // Remove the chosen card from the list of three cards
-        for (District card : threeCards) {
-            this.bot.removeFromHandAndPutInDeck(game.getDeck(), card);
+    public District chooseCard(List<District> cards) {
+        District chosenCard = null;
+        int minCost = Integer.MAX_VALUE;
+        for (District card : cards) {
+            if (card.getPrice() <= bot.getGold() && card.getPrice() < minCost) {
+                chosenCard = card;
+                minCost = card.getPrice();
+            }
         }
-        String drawMessage = bot.getName() + " pioche le " + chosenCard;
-        LOGGER.info(drawMessage);
-        bot.addDistrictInHand(chosenCard);
+        return chosenCard;
     }
 }

@@ -441,8 +441,8 @@ public class Game {
                 charactersThatCanBeStolen.remove(cha);
             }
             // Thief ne peut pas voler un personnage mort
-            else if (!cha.getIsAlive()) {
-                String deadCharacterMessage = cha.getRole().toStringLeOrLUpperCase() + " est mort. Il ne peut pas etre vole";
+            if (!cha.getIsAlive()) {
+                String deadCharacterMessage = COLOR_RED + cha.getRole().toStringLeOrLUpperCase() + " est mort. Il ne peut pas etre vole" + COLOR_RESET;
                 LOGGER.info(deadCharacterMessage);
                 charactersThatCanBeStolen.remove(cha);
             }
@@ -537,15 +537,15 @@ public class Game {
      *
      * @return le joueur ayant le quartier le moins cher en main.
      */
-    public Player getPlayerWithLowestDistrictPrice() {
-        Player playerWithLowestDistrictPrice = null;
+    public Optional<Player> getPlayerWithLowestDistrictPrice() {
+        Optional<Player> playerWithLowestDistrictPrice = Optional.empty();
         int lowestPrice = Integer.MAX_VALUE;
 
         for (Player player : players) {
             for (District district : player.getDistrictsInHand()) {
                 if (district.getPrice() < lowestPrice) {
                     lowestPrice = district.getPrice();
-                    playerWithLowestDistrictPrice = player;
+                    playerWithLowestDistrictPrice = Optional.of(player);
                 }
             }
         }

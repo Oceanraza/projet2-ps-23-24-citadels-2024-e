@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.logging.Level;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -71,7 +72,7 @@ class RichardAlgoTest {
         Game game = mock(Game.class);
         Bot player = mock(Bot.class);  // Create a mock Player
         when(game.getPlayerWith6Districts()).thenReturn(player);  // Return the mock Player
-        when(game.getPlayerWithLowestDistrictPrice()).thenReturn(player);  // Return the mock Player
+        when(game.getPlayerWithLowestDistrictPrice()).thenReturn(Optional.ofNullable(player));  // Return the mock Player
         richardAlgo.setBot(player);  // Set the mock Player
 
         // Act
@@ -90,7 +91,7 @@ class RichardAlgoTest {
         Bot bot = mock(Bot.class);  // Create a mock Bot
         richardAlgo.setBot(bot);  // Set the mock Bot
         when(game.getPlayerWith6Districts()).thenReturn(bot);  // Return the mock Player
-        when(game.getPlayerWithLowestDistrictPrice()).thenReturn(bot);  // Return the mock Player
+        when(game.getPlayerWithLowestDistrictPrice()).thenReturn(Optional.ofNullable(bot));  // Return the mock Player
 
         // Act
         richardAlgo.warlordAlgorithm(game);
@@ -123,6 +124,8 @@ class RichardAlgoTest {
         // Arrange
         RichardAlgo richardAlgo = new RichardAlgo();
         Game game = mock(Game.class);
+        Bot bot = mock(Bot.class);
+        richardAlgo.setBot(bot);  // Set the mock Bot
         when(game.containsAvailableRole(GameCharacterRole.ARCHITECT)).thenReturn(false);
 
         // Act
