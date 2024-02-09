@@ -3,6 +3,7 @@ package fr.cotedazur.univ.polytech.startingpoint.player.algorithms;
 import fr.cotedazur.univ.polytech.startingpoint.Game;
 import fr.cotedazur.univ.polytech.startingpoint.GameState;
 import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacter;
+import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.city.DistrictColor;
 import fr.cotedazur.univ.polytech.startingpoint.player.Player;
@@ -68,7 +69,20 @@ public class RandomAlgo extends BaseAlgo {
 
     @Override
     public void assassinAlgorithm(Game game) {
-        bot.getGameCharacter().specialEffect(bot, game, selectRandomKillableCharacter(game));
+        if (getRandomBoolean()) { // have 50% chance to decide to assassinate a character
+            int numberOfTargets;
+            int indexPlayerKilled;
+            GameCharacterRole targetedCharacter;
+
+            // Choose a random character and kill him
+            numberOfTargets = game.getKillableCharacters().size();
+            indexPlayerKilled = Utils.generateRandomNumber(numberOfTargets);
+            targetedCharacter = game.getKillableCharacters().get(indexPlayerKilled).getRole();
+
+            bot.getGameCharacter().specialEffect(bot, game, targetedCharacter);
+        } else {
+            LOGGER.info(COLOR_RED + "Il n'assassine personne" + COLOR_RESET);
+        }
     }
 
     @Override
@@ -118,6 +132,12 @@ public class RandomAlgo extends BaseAlgo {
     @Override
     public boolean graveyardChoice() {
         return oneChanceOutOfTwo;
+    }
+
+    @Override
+    public void botChoosesCard(Game game, List<District> threeCards) {
+        District chosenCard = chooseCard(threeCards);
+        bot.addDistrictInHand(chosenCard);
     }
 
     public District chooseCard(List<District> cards){

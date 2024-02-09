@@ -1,13 +1,14 @@
 package fr.cotedazur.univ.polytech.startingpoint.player.algorithms.smart;
 
 import fr.cotedazur.univ.polytech.startingpoint.Game;
+import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacter;
 import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 import fr.cotedazur.univ.polytech.startingpoint.utils.Utils;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import static fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole.*;
 
@@ -26,38 +27,26 @@ public class RichardAlgo extends SmartAlgo {
     private boolean shouldKillBishop = false;
     private boolean shouldKillExceptWarlord = false;
     private boolean shouldKillMagician = false;
-    private Random random = new Random();
     BotStyle getRandomBotStyle() { // Randomly choose a bot style
         BotStyle[] styles = BotStyle.values();
-        return styles[this.random.nextInt(styles.length)];
-    }
-
-    @Override
-    public boolean collectGoldBeforeBuildChoice() {
-        // Since Richard didn't specify any logic for this, he will always choose to collect gold after
-        // building to get the money from the districts he built (if he has a money character)
-        return false;
+        return styles[Utils.generateRandomNumber(styles.length)];
     }
 
     @Override
     public void chooseCharacterAlgorithm(Game game) {
         if (couldWinThisTurn(game.getPlayerWithMostDistricts()) && game.getPlayers().indexOf(game.getPlayerWithMostDistricts()) > 2 && game.getPlayers().indexOf(bot) < 2) {
             finalTurn(game);
-            return;
-        }
-
-        if (shouldPickAssassinNextTurn && game.containsAvailableRole(ASSASSIN)) {
+        } else if (shouldPickAssassinNextTurn && game.containsAvailableRole(ASSASSIN)) {
             bot.chooseChar(game, ASSASSIN);
         }
         //Déclenché en fin de partie
-        if (game.getPlayerWith6Districts() != null) { // I
+        else if (game.getPlayerWith6Districts() != null) { // I
             finishOrCounter(game);
         }
 
         //Algo durant la partie
-        if (shouldPickAssassin(game) > 0) {
-            bot.chooseChar(game, ASSASSIN);
-        } else if (shouldPickArchitect(game) > 0) {
+
+        if (shouldPickArchitect(game) > 0) {
             bot.chooseChar(game, ARCHITECT);
         } else if (shouldPickKing(game) > 0) {
             bot.chooseChar(game, KING);
@@ -69,8 +58,13 @@ public class RichardAlgo extends SmartAlgo {
             bot.chooseChar(game, BISHOP);
         } else if (game.containsAvailableRole(THIEF)) {
             bot.chooseChar(game, THIEF);
+        } else if (shouldPickAssassin(game) > 0) {
+            bot.chooseChar(game, ASSASSIN);
         } else {
             bot.chooseChar(game, MERCHANT);
+        }
+        if (bot.getGameCharacter() == null) { //FailProof method
+            bot.chooseChar(game, game.getAvailableChars().get(Utils.generateRandomNumber(game.getAvailableChars().size())).getRole());
         }
     }
 
@@ -176,7 +170,7 @@ public class RichardAlgo extends SmartAlgo {
     @Override
     public void assassinAlgorithm(Game game) {
         if (shouldKillBishop) {
-            bot.getGameCharacter().specialEffect(bot, game, BISHOP);
+            bot.getGameCharacter().specialEffect(bot, game, GameCharacterRole.WARLORD);
             shouldKillBishop = false;
         } else if (shouldKillExceptWarlord) {
             bot.getGameCharacter().specialEffect(bot, game, selectRandomKillableCharacterExcept(GameCharacterRole.WARLORD, game));
@@ -187,7 +181,7 @@ public class RichardAlgo extends SmartAlgo {
         } else {
             switch (shouldPickAssassin(game)) {
                 case 1:
-                    bot.getGameCharacter().specialEffect(bot, game, KING);
+                    bot.getGameCharacter().specialEffect(bot, game, GameCharacterRole.KING);
                     break;
                 case 2:
                     bot.getGameCharacter().specialEffect(bot, game, GameCharacterRole.THIEF);
@@ -196,12 +190,19 @@ public class RichardAlgo extends SmartAlgo {
                     bot.getGameCharacter().specialEffect(bot, game, GameCharacterRole.WARLORD);
                     break;
                 case 4:
-                    bot.getGameCharacter().specialEffect(bot, game, ARCHITECT);
+                    bot.getGameCharacter().specialEffect(bot, game, GameCharacterRole.ARCHITECT);
                     break;
                 default:
                     super.assassinAlgorithm(game);
             }
         }
+    }
+
+    private int shouldPickKing(Game game) {
+        if (!game.containsAvailableRole(KING) || game.getCrownOwner() == bot) {
+            return 0;
+        }
+        return 1;
     }
 
 
@@ -215,13 +216,6 @@ public class RichardAlgo extends SmartAlgo {
         }
 
         return 0;
-    }
-
-    private int shouldPickKing(Game game) {
-        if (!game.containsAvailableRole(KING) || game.getCrownOwner() == bot) {
-            return 0;
-        }
-        return 1;
     }
 
     public int shouldPickAssassin(Game game) {
@@ -255,6 +249,12 @@ public class RichardAlgo extends SmartAlgo {
         return 0;
     }
 
+    @Override
+    public boolean graveyardChoice() {
+        return true;
+    }
+
+
     private boolean isAhead(Game game, Player bot) {
         return bot.getCity().size() > game.averageCitySize();
     }
@@ -280,5 +280,29 @@ public class RichardAlgo extends SmartAlgo {
 
     private static boolean isRich(Player player) {
         return player != null && player.getGold() > 6;
+    }
+
+    public District chooseCard(List<District> cards) {
+        District chosenCard = null;
+        int minCost = Integer.MAX_VALUE;
+        for (District card : cards) {
+            if (card.getPrice() <= bot.getGold() && card.getPrice() < minCost) {
+                chosenCard = card;
+                minCost = card.getPrice();
+            }
+        }
+        return chosenCard;
+    }
+
+    public GameCharacterRole selectRandomKillableCharacterExcept(GameCharacterRole gameCharacterRole, Game game) {
+        List<GameCharacter> killableCharacters = new ArrayList<>(game.getKillableCharacters());
+        killableCharacters.removeIf(character -> character.getRole().equals(gameCharacterRole));
+
+        if (killableCharacters.isEmpty()) {
+            return null;
+        }
+
+        int randomIndex = Utils.generateRandomNumber(killableCharacters.size());
+        return killableCharacters.get(randomIndex).getRole();
     }
 }

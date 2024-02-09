@@ -160,7 +160,7 @@ class RichardAlgoTest {
         int result = richardAlgo.shouldPickAssassin(game);
 
         // Assert
-        assertTrue(result == 0);
+        assertEquals(0, result);
     }
 
     @Test

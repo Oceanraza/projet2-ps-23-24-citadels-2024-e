@@ -2,7 +2,6 @@ package fr.cotedazur.univ.polytech.startingpoint.player.algorithms;
 
 import fr.cotedazur.univ.polytech.startingpoint.Game;
 import fr.cotedazur.univ.polytech.startingpoint.GameState;
-import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacter;
 import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.player.Bot;
@@ -100,36 +99,6 @@ public abstract class BaseAlgo {
         return Utils.generateRandomNumber(2) == 0;
     }
 
-    public int selectRandomKillableCharacter(Game game) {
-        int numberOfTargets = game.getKillableCharacters().size();
-        return Utils.generateRandomNumber(numberOfTargets);
-    }
-
-    public GameCharacter selectRandomKillableCharacterExcept(GameCharacterRole gameCharacterRole, Game game) {
-        List<GameCharacter> killableCharacters = new ArrayList<>(game.getKillableCharacters());
-        killableCharacters.removeIf(character -> character.getRole().equals(gameCharacterRole));
-
-        if (killableCharacters.isEmpty()) {
-            return null; // or throw an exception, depending on your use case
-        }
-
-        int randomIndex = Utils.generateRandomNumber(killableCharacters.size());
-        return killableCharacters.get(randomIndex);
-    }
-
-    public void assassinAlgorithm(Game game) {
-        int numberOfTargets;
-        int indexPlayerKilled;
-        GameCharacterRole targetedCharacter;
-
-        // Choose a random character and kill him
-        numberOfTargets = game.getKillableCharacters().size();
-        indexPlayerKilled = Utils.generateRandomNumber(numberOfTargets);
-        targetedCharacter = game.getKillableCharacters().get(indexPlayerKilled).getRole();
-
-        bot.getGameCharacter().specialEffect(bot, game, targetedCharacter);
-    }
-
     public abstract int startOfTurnChoice();
 
     public abstract void chooseCharacterAlgorithm(Game game);
@@ -137,6 +106,8 @@ public abstract class BaseAlgo {
     public abstract void warlordAlgorithm(Game game);
 
     public abstract void magicianAlgorithm(Game game);
+
+    public abstract void assassinAlgorithm(Game game);
 
     public abstract void huntedQuarterAlgorithm(District huntedQuarter);
 

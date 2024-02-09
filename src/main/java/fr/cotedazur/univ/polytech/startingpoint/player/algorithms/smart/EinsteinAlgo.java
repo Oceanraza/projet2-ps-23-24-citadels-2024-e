@@ -8,9 +8,9 @@ import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 import fr.cotedazur.univ.polytech.startingpoint.utils.Utils;
 
 import java.util.List;
-import java.util.Optional;
 
-import static fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole.*;
+import static fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole.ARCHITECT;
+import static fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole.ASSASSIN;
 /**
  * This class represents the algorithm of the bot Einstein
  * It contains the logic of the bot's actions
@@ -22,13 +22,6 @@ public class EinsteinAlgo extends SmartAlgo {
         algoName = "Einstein";
     }
 
-    public boolean collectGoldBeforeBuildChoice() {
-        // The bot will collect gold before building if it doesn't have enough gold to build its lowest district
-        Optional<District> lowestDistrict = bot.getLowestDistrictInHand();
-        return lowestDistrict.isPresent() && (bot.getGold() < lowestDistrict.get().getPrice());
-    }
-
-
     public boolean chooseAssassinAlgorithm(Game game, List<GameCharacter> availableChars) {
         if ((bot.getCity().getDistrictsBuilt().size() >= 7) && (bot.canBuildDistrictThisTurn()) && (bot.isCharInList(availableChars, ASSASSIN))) {
             bot.chooseChar(game, ASSASSIN);
@@ -38,7 +31,7 @@ public class EinsteinAlgo extends SmartAlgo {
     }
 
     public void chooseMoneyCharacterAlgorithm(Game game, List<GameCharacter> availableChars) {
-        GameCharacter chosenChar = availableChars.get(1);
+        GameCharacterRole chosenChar = availableChars.get(0).getRole();
         int numberOfDistrictByColor;
         int goldCollectedWithDistrictColor = 0;
 
@@ -48,11 +41,11 @@ public class EinsteinAlgo extends SmartAlgo {
                 numberOfDistrictByColor = bot.getNumberOfDistrictsByColor().get(cha.getColor());
                 if (numberOfDistrictByColor > goldCollectedWithDistrictColor) {
                     goldCollectedWithDistrictColor = numberOfDistrictByColor;
-                    chosenChar = cha;
+                    chosenChar = cha.getRole();
                 }
             }
         }
-        bot.chooseChar(game, chosenChar.getRole());
+        bot.chooseChar(game, chosenChar);
     }
 
     @Override
@@ -117,33 +110,20 @@ public class EinsteinAlgo extends SmartAlgo {
     }
 
     @Override
-    public void assassinAlgorithm(Game game) {
-        List<GameCharacter> killableCharacters;
-        int indexKilledCharacter;
-        GameCharacterRole targetedCharacter;
+    public boolean graveyardChoice() {
+        return true;
+    }
 
-        int indexWarlord;
-        int indexKing;
-
-        killableCharacters = game.getKillableCharacters();
-        indexWarlord = isKillable(killableCharacters, WARLORD);
-        indexKing = isKillable(killableCharacters, KING);
-
-        // Kill the warlord if possible
-        if (indexWarlord != -1) {
-            indexKilledCharacter = indexWarlord;
+    public District chooseCard(List<District> cards) {
+        District chosenCard = null;
+        int minCost = Integer.MAX_VALUE;
+        for (District card : cards) {
+            if (card.getPrice() <= bot.getGold() && card.getPrice() < minCost) {
+                chosenCard = card;
+                minCost = card.getPrice();
+            }
         }
-        // Kill the king if the warlord can't be killed
-        else if (indexKing != -1) {
-            indexKilledCharacter = indexKing;
-        }
-        // Kill a random character if neither the warlord nor the king can be killed
-        else {
-            indexKilledCharacter = selectRandomKillableCharacter(game);
-        }
-
-        targetedCharacter = game.getKillableCharacters().get(indexKilledCharacter).getRole();
-        bot.getGameCharacter().specialEffect(bot, game, targetedCharacter);
+        return chosenCard;
     }
 }
 

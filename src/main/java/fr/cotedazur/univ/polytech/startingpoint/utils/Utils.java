@@ -73,14 +73,17 @@ public class Utils {
     }
 
     public static void setAlgorithms(List<BaseAlgo> algorithmsInGame, int nbOfEinstein, int nbOfRichard, int nbOfRandom) {
-        addAlgorithms(algorithmsInGame, new EinsteinAlgo(), nbOfEinstein);
-        addAlgorithms(algorithmsInGame, new RichardAlgo(), nbOfRichard);
-        addAlgorithms(algorithmsInGame, new RandomAlgo(), nbOfRandom);
-    }
-
-    private static void addAlgorithms(List<BaseAlgo> algorithmsInGame, BaseAlgo algo, int count) {
-        for (int i = 0; i < count; i++) {
-            algorithmsInGame.add(algo);
+        while (nbOfEinstein > 0) {
+            algorithmsInGame.add(new EinsteinAlgo());
+            nbOfEinstein--;
+        }
+        while (nbOfRichard > 0) {
+            algorithmsInGame.add(new RichardAlgo());
+            nbOfRichard--;
+        }
+        while (nbOfRandom > 0) {
+            algorithmsInGame.add(new RandomAlgo());
+            nbOfRandom--;
         }
     }
     public static void resetScoresAndPlacements(Map<String, List<Integer>> totalPlacements, Map<String, Integer> totalScores) {
