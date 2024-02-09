@@ -20,6 +20,10 @@ public class Warlord extends GameCharacter {
     @Override
     public void specialEffect(Player player, Game game, Object... optionalArgs) {
         Player targetedPlayer = (Player) optionalArgs[0];
+        if(targetedPlayer == null) {
+            LOGGER.info(COLOR_RED + "Le Condottiere n'a pas de quartier a detruire." + COLOR_RESET);
+            return;
+        }
         District destroyedDistrict = (District) optionalArgs[1];
         targetedPlayer.getCity().destroyDistrict(destroyedDistrict);
         player.removeGold(destroyedDistrict.getPrice() - 1);

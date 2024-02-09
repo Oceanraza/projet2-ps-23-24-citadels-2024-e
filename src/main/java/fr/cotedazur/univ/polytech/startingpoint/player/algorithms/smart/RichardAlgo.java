@@ -49,6 +49,7 @@ public class RichardAlgo extends SmartAlgo {
         } else if (shouldPickAssassinNextTurn && game.containsAvailableRole(ASSASSIN)) {
             bot.chooseChar(game, ASSASSIN);
         }
+
         //Déclenché en fin de partie
         else if (game.getPlayerWith6Districts() != null) { // I
             finishOrCounter(game);
@@ -58,16 +59,6 @@ public class RichardAlgo extends SmartAlgo {
                 bot.chooseChar(game, ARCHITECT);
             } else if (shouldPickKing(game) > 0) {
                 bot.chooseChar(game, KING);
-            } else if (game.containsAvailableRole(MAGICIAN)) {
-                bot.chooseChar(game, MAGICIAN);
-            } else if (game.containsAvailableRole(WARLORD)) {
-                bot.chooseChar(game, WARLORD);
-            } else if (game.containsAvailableRole(BISHOP)) {
-                bot.chooseChar(game, BISHOP);
-            } else if (game.containsAvailableRole(THIEF)) {
-                bot.chooseChar(game, THIEF);
-            } else if (shouldPickAssassin(game) > 0) {
-                bot.chooseChar(game, ASSASSIN);
             } else {
                 // If none of the best strategy is chosen, use the strategy related to the bot style
                 switch (getBotStyle()) {
@@ -85,7 +76,7 @@ public class RichardAlgo extends SmartAlgo {
                 }
             }
         }
-        // FailProof method
+        // If no character has been chosen, the bot will choose a random character in the available characters
         if (bot.getGameCharacter() == null) {
             bot.chooseChar(game, game.getAvailableChars().get(Utils.generateRandomNumber(game.getAvailableChars().size())).getRole());
         }
@@ -147,7 +138,10 @@ public class RichardAlgo extends SmartAlgo {
     @Override
     public void warlordAlgorithm(Game game) {
         Player playerWith6Districts = game.getPlayerWith6Districts();
-        Player playerWithLowestDistrictPrice = game.getPlayerWithLowestDistrictPrice();
+        Optional<Player> playerWithLowestDistrictPrice = game.getPlayerWithLowestDistrictPrice();
+        if (playerWithLowestDistrictPrice.isEmpty()) {
+            return;
+        }
         if (oneChanceOutOfTwo) { // Have 50% chance to decide to destroy a building of a random player or not
             if (playerWith6Districts == bot) { // If the bot has 6 districts, he will destroy a building of a random player
                 List<Player> playerList = game.getSortedPlayersByScoreForWarlord();
@@ -170,9 +164,9 @@ public class RichardAlgo extends SmartAlgo {
                 Player playerWithMostDistricts = game.getPlayerWithMostDistricts();
                 playerWithMostDistricts.getLowestDistrictBuilt().ifPresent(district -> bot.getGameCharacter().specialEffect(bot, game, playerWithMostDistricts, district));
             }
-            playerWithLowestDistrictPrice
+            playerWithLowestDistrictPrice.get()
                     .getLowestDistrictBuilt()
-                    .ifPresent(district -> bot.getGameCharacter().specialEffect(bot, game, playerWithLowestDistrictPrice, district));
+                    .ifPresent(district -> bot.getGameCharacter().specialEffect(bot, game, playerWithLowestDistrictPrice.get(), district));
         }
     }
 
@@ -237,7 +231,7 @@ public class RichardAlgo extends SmartAlgo {
         if (!game.containsAvailableRole(ARCHITECT)) {
             return 0;
         }
-        if (architectIsOverpoweredFor(bot) || goldCount > 6) {
+        if (architectIsOverpoweredFor(bot) || goldCount > 8) {
             return 1;
         }
         return 0;
@@ -356,18 +350,6 @@ public class RichardAlgo extends SmartAlgo {
             }
         }
         return Optional.empty();
-    }
-
-    public District chooseCard(List<District> cards) {
-        District chosenCard = null;
-        int minCost = Integer.MAX_VALUE;
-        for (District card : cards) {
-            if (card.getPrice() <= bot.getGold() && card.getPrice() < minCost) {
-                chosenCard = card;
-                minCost = card.getPrice();
-            }
-        }
-        return chosenCard;
     }
 
     public GameCharacterRole selectRandomKillableCharacterExcept(GameCharacterRole gameCharacterRole, Game game) {
