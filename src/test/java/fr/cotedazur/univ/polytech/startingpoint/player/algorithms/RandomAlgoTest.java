@@ -1,11 +1,15 @@
 package fr.cotedazur.univ.polytech.startingpoint.player.algorithms;
 
 import fr.cotedazur.univ.polytech.startingpoint.Game;
+import fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.logging.Level;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.mockito.Mockito.mock;
 
 class RandomAlgoTest {
@@ -14,13 +18,16 @@ class RandomAlgoTest {
 
     @BeforeEach
     void setUp() {
+        CitadelsLogger.setupDemo();
+        CitadelsLogger.setGlobalLogLevel(Level.OFF);
+
         randomAlgo = mock(RandomAlgo.class);
         game = mock(Game.class);
     }
 
     @Test
     void drawStartOfTurnChoiceTest() {
-        Mockito.when(randomAlgo.flipCoin()).thenReturn(false);
+        Mockito.when(randomAlgo.getRandomBoolean()).thenReturn(false);
         Mockito.when(randomAlgo.startOfTurnChoice()).thenCallRealMethod();
         int randomInt = randomAlgo.startOfTurnChoice();
         assertEquals(2, randomInt);
@@ -28,7 +35,7 @@ class RandomAlgoTest {
 
     @Test
     void takeGoldStartOfTurnChoiceTest() {
-        Mockito.when(randomAlgo.flipCoin()).thenReturn(true);
+        Mockito.when(randomAlgo.getRandomBoolean()).thenReturn(true);
         Mockito.when(randomAlgo.startOfTurnChoice()).thenCallRealMethod();
         int randomInt = randomAlgo.startOfTurnChoice();
         assertEquals(1, randomInt);
@@ -36,17 +43,17 @@ class RandomAlgoTest {
 
     @Test
     void manufactureChoiceTest() {
-        Mockito.when(randomAlgo.flipCoin()).thenReturn(true);
+        Mockito.when(randomAlgo.getRandomBoolean()).thenReturn(false);
         Mockito.when(randomAlgo.manufactureChoice()).thenCallRealMethod();
         boolean randomBoolean = randomAlgo.manufactureChoice();
-        assertTrue(randomBoolean);
+        assertFalse(randomBoolean);
     }
 
     @Test
     void graveyardChoiceTest() {
-        Mockito.when(randomAlgo.flipCoin()).thenReturn(false);
-        Mockito.when(randomAlgo.manufactureChoice()).thenCallRealMethod();
-        boolean randomBoolean = randomAlgo.manufactureChoice();
+        Mockito.when(randomAlgo.getRandomBoolean()).thenReturn(false);
+        Mockito.when(randomAlgo.graveyardChoice()).thenCallRealMethod();
+        boolean randomBoolean = randomAlgo.graveyardChoice();
         assertFalse(randomBoolean);
     }
 

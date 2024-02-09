@@ -32,6 +32,14 @@ public class RichardAlgo extends SmartAlgo {
         return styles[this.random.nextInt(styles.length)];
     }
 
+    @Override
+    public boolean collectGoldBeforeBuildChoice() {
+        // Since Richard didn't specify any logic for this, he will always choose to collect gold after
+        // building to get the money from the districts he built (if he has a money character)
+        return false;
+    }
+
+    @Override
     public void chooseCharacterAlgorithm(Game game) {
         if (couldWinThisTurn(game.getPlayerWithMostDistricts()) && game.getPlayers().indexOf(game.getPlayerWithMostDistricts()) > 2 && game.getPlayers().indexOf(bot) < 2) {
             finalTurn(game);
@@ -124,7 +132,7 @@ public class RichardAlgo extends SmartAlgo {
     public void warlordAlgorithm(Game game) {
         Player playerWith6Districts = game.getPlayerWith6Districts();
         Player playerWithLowestDistrictPrice = game.getPlayerWithLowestDistrictPrice();
-        if (flipCoin()) { // Have 50% chance to decide to destroy a building of a random player or not
+        if (oneChanceOutOfTwo) { // Have 50% chance to decide to destroy a building of a random player or not
             if (playerWith6Districts == bot) { // If the bot has 6 districts, he will destroy a building of a random player
                 List<Player> playerList = game.getSortedPlayersByScoreForWarlord();
                 playerList.remove(bot);
@@ -139,15 +147,15 @@ public class RichardAlgo extends SmartAlgo {
                 }
             }
             if (playerWith6Districts != null) {
-                playerWith6Districts.getLowestDistrict().ifPresent(district -> bot.getGameCharacter().specialEffect(bot, game, playerWith6Districts, district));
+                playerWith6Districts.getLowestDistrictBuilt().ifPresent(district -> bot.getGameCharacter().specialEffect(bot, game, playerWith6Districts, district));
                 return;
             }
             if (game.getPlayerWithMostDistricts().getCity().getDistrictsBuilt().size() < 7) {
                 Player playerWithMostDistricts = game.getPlayerWithMostDistricts();
-                playerWithMostDistricts.getLowestDistrict().ifPresent(district -> bot.getGameCharacter().specialEffect(bot, game, playerWithMostDistricts, district));
+                playerWithMostDistricts.getLowestDistrictBuilt().ifPresent(district -> bot.getGameCharacter().specialEffect(bot, game, playerWithMostDistricts, district));
             }
             playerWithLowestDistrictPrice
-                    .getLowestDistrict()
+                    .getLowestDistrictBuilt()
                     .ifPresent(district -> bot.getGameCharacter().specialEffect(bot, game, playerWithLowestDistrictPrice, district));
         }
     }
@@ -195,6 +203,7 @@ public class RichardAlgo extends SmartAlgo {
             }
         }
     }
+
 
     public int shouldPickArchitect(Game game) {
 

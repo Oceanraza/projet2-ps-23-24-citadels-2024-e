@@ -7,12 +7,13 @@ import fr.cotedazur.univ.polytech.startingpoint.character.card.King;
 import fr.cotedazur.univ.polytech.startingpoint.character.card.Warlord;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.city.DistrictColor;
-import fr.cotedazur.univ.polytech.startingpoint.utils.InGameLogger;
+import fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.logging.Level;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -27,8 +28,8 @@ class BotTest {
 
     @BeforeEach
     void setUp() {
-        InGameLogger.setup();
-        InGameLogger.setGlobalLogLevel(Level.OFF);
+        CitadelsLogger.setupDemo();
+        CitadelsLogger.setGlobalLogLevel(Level.OFF);
 
         game = new Game();
         bot = new Bot("Bot");
@@ -63,9 +64,12 @@ class BotTest {
         listOfCharacters.add(king);
 
         assertTrue(bot.isCharInList(listOfCharacters, GameCharacterRole.KING));
-        assertEquals(king, bot.getCharInList(listOfCharacters, GameCharacterRole.KING));
+        assertTrue(bot.getCharInList(listOfCharacters, GameCharacterRole.KING).isPresent());
+        assertEquals(king, bot.getCharInList(listOfCharacters, GameCharacterRole.KING).get());
 
         assertFalse(bot.isCharInList(listOfCharacters, GameCharacterRole.WARLORD));
+
+        assertEquals(Optional.empty(), bot.getCharInList(listOfCharacters, GameCharacterRole.WARLORD));
     }
 
     @Test

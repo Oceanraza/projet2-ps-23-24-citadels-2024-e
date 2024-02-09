@@ -72,7 +72,7 @@ public class Utils {
         return districtList;
     }
 
-    public static void setAlgorithms(ArrayList<BaseAlgo> algorithmsInGame, int nbOfEinstein, int nbOfRichard, int nbOfRandom) {
+    public static void setAlgorithms(List<BaseAlgo> algorithmsInGame, int nbOfEinstein, int nbOfRichard, int nbOfRandom) {
         addAlgorithms(algorithmsInGame, new EinsteinAlgo(), nbOfEinstein);
         addAlgorithms(algorithmsInGame, new RichardAlgo(), nbOfRichard);
         addAlgorithms(algorithmsInGame, new RandomAlgo(), nbOfRandom);
@@ -83,7 +83,6 @@ public class Utils {
             algorithmsInGame.add(algo);
         }
     }
-
     public static void resetScoresAndPlacements(Map<String, List<Integer>> totalPlacements, Map<String, Integer> totalScores) {
         List<Integer> initialPlacement = Arrays.asList(0, 0, 0, 0);
         for (String key : totalPlacements.keySet()) {

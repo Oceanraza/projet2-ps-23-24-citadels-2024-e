@@ -10,7 +10,7 @@ import fr.cotedazur.univ.polytech.startingpoint.city.DistrictColor;
 
 import java.util.*;
 
-import static fr.cotedazur.univ.polytech.startingpoint.utils.InGameLogger.*;
+import static fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger.*;
 
 public abstract class Player {
     private final List<District> districtsInHand;
@@ -137,13 +137,22 @@ public abstract class Player {
         this.setScore(this.calculateScore());
     }
 
-    public Optional<District> getLowestDistrict(){
-        List<District> sortedDistrictByScore = getCity().getDistrictsBuilt();
-        if (sortedDistrictByScore.isEmpty()){return Optional.empty();}
-        District minPriceDistrict = sortedDistrictByScore.stream()
+    public Optional<District> getLowestDistrict(List<District> districtList) {
+        if (districtList.isEmpty()) {
+            return Optional.empty();
+        }
+        District minPriceDistrict = districtList.stream()
                 .min(Comparator.comparingDouble(District::getPrice))
                 .orElse(null);
         return Optional.of(minPriceDistrict);
+    }
+
+    public Optional<District> getLowestDistrictBuilt() {
+        return getLowestDistrict(getCity().getDistrictsBuilt());
+    }
+
+    public Optional<District> getLowestDistrictInHand() {
+        return getLowestDistrict(getDistrictsInHand());
     }
 
     public void removeFromHandAndPutInDeck(Deck deck, District cardToDiscard) {

@@ -1,6 +1,7 @@
 package fr.cotedazur.univ.polytech.startingpoint.player.algorithms;
 
 import fr.cotedazur.univ.polytech.startingpoint.Game;
+import fr.cotedazur.univ.polytech.startingpoint.GameState;
 import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacter;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.city.DistrictColor;
@@ -11,7 +12,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import static fr.cotedazur.univ.polytech.startingpoint.utils.InGameLogger.*;
+import static fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger.*;
 
 /**
  * This class represents the random algorithm
@@ -24,21 +25,29 @@ public class RandomAlgo extends BaseAlgo {
         algoName = "Random";
     }
 
+    @Override
     public int startOfTurnChoice() {
-        if (flipCoin()) {
+        if (getRandomBoolean()) {
             return 1; // Take 2 gold coins
         }
         return 2; // Draw a card
     }
 
+    @Override
+    public boolean collectGoldBeforeBuildChoice() {
+        return getRandomBoolean();
+    }
+
+    @Override
     public void chooseCharacterAlgorithm(Game game) {
         List<GameCharacter> availableChars = game.getAvailableChars();
         GameCharacter chosenChar = game.getAvailableChars().get(Utils.generateRandomNumber(availableChars.size()));
         bot.chooseChar(game, chosenChar.getRole());
     }
 
+    @Override
     public void warlordAlgorithm(Game game) {
-        if (flipCoin()) { // Have 50% chance to decide to destroy a building of a random player or not
+        if (getRandomBoolean()) { // Have 50% chance to decide to destroy a building of a random player or not
             List<Player> playerList = game.getSortedPlayersByScoreForWarlord();
             playerList.remove(bot);
             Collections.shuffle(playerList);
@@ -57,48 +66,58 @@ public class RandomAlgo extends BaseAlgo {
         }
     }
 
+    @Override
+    public void assassinAlgorithm(Game game) {
+        bot.getGameCharacter().specialEffect(bot, game, selectRandomKillableCharacter(game));
+    }
 
+    @Override
     public void magicianAlgorithm(Game game) {
-        if (flipCoin()) {
-            // have 25% chance to decide to change his hand with another player
-            if (flipCoin()) {
-                List<Player> playerList = game.getSortedPlayersByScore();
-                playerList.remove(bot);
-                bot.getGameCharacter().specialEffect(bot, game, true, playerList.get(Utils.generateRandomNumber(playerList.size())));
-            }
-            // have 25% chance to decide to change his hand with the deck
-            else {
-                bot.getGameCharacter().specialEffect(bot, game, false);
-            }
+        if (oneChanceOutOfTwo) { // have 50% chance to decide to destroy a building of a random player or not
+            List<Player> playerList = game.getSortedPlayersByScore();
+            playerList.remove(bot);
+            bot.getGameCharacter().specialEffect(bot, game, true, playerList.get(Utils.generateRandomNumber(playerList.size())));
         } else {
-            LOGGER.info(COLOR_RED + "Il n'échange ses cartes avec personne" + COLOR_RESET);
+            bot.getGameCharacter().specialEffect(bot, game, false);
         }
     }
 
+    @Override
+    public void buildOrNot(GameState gameState) { //builds if he can
+        int builtThisTurn = 0;
+
+        for (District district : bot.getDistrictsInHand()) {
+            if (bot.buildDistrict(district, gameState)) {
+                builtThisTurn++;
+                if ((!bot.getCharacterName().equals("Architect")) || (builtThisTurn == 3)) {
+                    break;
+                }
+            }
+        }
+    }
+
+    @Override
     public void huntedQuarterAlgorithm(District huntedQuarter) {
         huntedQuarter.setColor(DistrictColor.values()[Utils.generateRandomNumber(DistrictColor.values().length)]);
     }
 
+    @Override
     public boolean manufactureChoice() {
-        return flipCoin();
+        return oneChanceOutOfTwo;
     }
 
+    @Override
     public Optional<District> laboratoryChoice() {
-        if (flipCoin()) {
+        if (oneChanceOutOfTwo) {
             List<District> districtsInHand = bot.getDistrictsInHand();
             return !districtsInHand.isEmpty() ? Optional.ofNullable(districtsInHand.get(Utils.generateRandomNumber(districtsInHand.size()))) : Optional.empty();
         }
         return Optional.empty();
     }
 
-    public boolean graveyardChoice() {
-        return flipCoin();
-    }
-
     @Override
-    public void botChoosesCard(Game game, List<District> threeCards) {
-        District chosenCard = chooseCard(threeCards);
-        bot.addDistrictInHand(chosenCard);
+    public boolean graveyardChoice() {
+        return oneChanceOutOfTwo;
     }
 
     public District chooseCard(List<District> cards){

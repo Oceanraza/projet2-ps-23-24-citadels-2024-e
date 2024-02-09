@@ -12,9 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static fr.cotedazur.univ.polytech.startingpoint.utils.InGameLogger.*;
-
 public abstract class BaseAlgo {
+    protected boolean oneChanceOutOfTwo = Utils.generateRandomNumber(2) == 0;
 
     protected Bot bot;
     protected String algoName;
@@ -29,41 +28,6 @@ public abstract class BaseAlgo {
     public String getAlgoName() {
         return algoName;
     }
-
-    public abstract int startOfTurnChoice();
-
-    public abstract void chooseCharacterAlgorithm(Game game);
-
-    public abstract void warlordAlgorithm(Game game);
-
-    public abstract void magicianAlgorithm(Game game);
-
-    public void assassinAlgorithm(Game game) {
-        if (flipCoin()) { // have 50% chance to decide to assassinate a character
-            int numberOfTargets;
-            int indexPlayerKilled;
-            GameCharacterRole targetedCharacter;
-
-            // Choose a random character and kill him
-            numberOfTargets = game.getKillableCharacters().size();
-            indexPlayerKilled = Utils.generateRandomNumber(numberOfTargets);
-            targetedCharacter = game.getKillableCharacters().get(indexPlayerKilled).getRole();
-
-            bot.getGameCharacter().specialEffect(bot, game, targetedCharacter);
-        } else {
-            LOGGER.info(COLOR_RED + "Il n'assassine personne" + COLOR_RESET);
-        }
-    }
-
-    public abstract void huntedQuarterAlgorithm(District huntedQuarter);
-
-    public abstract boolean manufactureChoice();
-
-    public abstract boolean graveyardChoice();
-
-    public abstract Optional<District> laboratoryChoice();
-
-    public abstract void botChoosesCard(Game game, List<District> threeCards);
 
     public void charAlgorithmsManager(Game game) {
         switch (bot.getCharacterName()) {
@@ -119,7 +83,7 @@ public abstract class BaseAlgo {
         }
     }
 
-    protected boolean flipCoin() {
+    protected boolean getRandomBoolean() {
         return Utils.generateRandomNumber(2) == 0;
     }
 
@@ -133,12 +97,42 @@ public abstract class BaseAlgo {
         killableCharacters.removeIf(character -> character.getRole().equals(gameCharacterRole));
 
         if (killableCharacters.isEmpty()) {
-            return null;
+            return null; // or throw an exception, depending on your use case
         }
 
         int randomIndex = Utils.generateRandomNumber(killableCharacters.size());
         return killableCharacters.get(randomIndex);
     }
 
+    public void assassinAlgorithm(Game game) {
+        int numberOfTargets;
+        int indexPlayerKilled;
+        GameCharacterRole targetedCharacter;
+
+        // Choose a random character and kill him
+        numberOfTargets = game.getKillableCharacters().size();
+        indexPlayerKilled = Utils.generateRandomNumber(numberOfTargets);
+        targetedCharacter = game.getKillableCharacters().get(indexPlayerKilled).getRole();
+
+        bot.getGameCharacter().specialEffect(bot, game, targetedCharacter);
+    }
+
+    public abstract int startOfTurnChoice();
+
+    public abstract void chooseCharacterAlgorithm(Game game);
+
+    public abstract void warlordAlgorithm(Game game);
+
+    public abstract void magicianAlgorithm(Game game);
+
+    public abstract void huntedQuarterAlgorithm(District huntedQuarter);
+
+    public abstract boolean manufactureChoice();
+
+    public abstract boolean graveyardChoice();
+
+    public abstract Optional<District> laboratoryChoice();
     public abstract District chooseCard(List<District> threeCards);
+
+    public abstract boolean collectGoldBeforeBuildChoice();
 }

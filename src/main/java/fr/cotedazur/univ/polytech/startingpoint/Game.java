@@ -14,7 +14,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
-import static fr.cotedazur.univ.polytech.startingpoint.utils.InGameLogger.*;
+import static fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger.*;
 
 /**
  * The Game class is the main class of the game. It contains the deck, the crown, the players and the characters.
@@ -23,7 +23,6 @@ import static fr.cotedazur.univ.polytech.startingpoint.utils.InGameLogger.*;
 public class Game {
     public static final int CITY_SIZE_TO_WIN = 8;
     private static final int START_CARDS_NUMBER = 4;
-
     private Deck deck = new Deck();
     private Crown crown;
     private List<Player> players;
@@ -53,6 +52,16 @@ public class Game {
     }
     public List<GameCharacter> getAvailableChars() {
         return availableChars;
+    }
+
+    public int getCurrentPlayerIndexInRunningOrder(Player currentPlayer) {
+        List<Player> runningOrder = getRunningOrder();
+        for (int i = 0; i < runningOrder.size(); i++) {
+            if (runningOrder.get(i).equals(currentPlayer)) {
+                return i;
+            }
+        }
+        return -1;
     }
     public boolean containsAvailableRole(GameCharacterRole role) {
         return availableChars.stream()
@@ -313,7 +322,7 @@ public class Game {
         District drawnDistrict = deck.drawCard();
         String drawCardMessage = player.getName() + " pioche la carte " + drawnDistrict + ".";
         LOGGER.info(drawCardMessage);
-        player.addDistrictInHand(drawnDistrict);
+        player.getDistrictsInHand().add(drawnDistrict);
         return drawnDistrict;
     }
 
@@ -328,6 +337,10 @@ public class Game {
 
     public void resetGame() {
         init();
+    }
+
+    public int getCitySizeToWin() {
+        return CITY_SIZE_TO_WIN;
     }
 
     public Player getPlayerWithMostDistricts() {

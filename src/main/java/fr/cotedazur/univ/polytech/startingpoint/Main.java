@@ -3,15 +3,20 @@ package fr.cotedazur.univ.polytech.startingpoint;
 import com.beust.jcommander.JCommander;
 import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacter;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
+import fr.cotedazur.univ.polytech.startingpoint.exception.CSVFileProcessingException;
+import fr.cotedazur.univ.polytech.startingpoint.exception.CSVWriteException;
 import fr.cotedazur.univ.polytech.startingpoint.player.Bot;
 import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 import fr.cotedazur.univ.polytech.startingpoint.player.algorithms.BaseAlgo;
-import fr.cotedazur.univ.polytech.startingpoint.utils.*;
+import fr.cotedazur.univ.polytech.startingpoint.utils.Args;
+import fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger;
+import fr.cotedazur.univ.polytech.startingpoint.utils.Csv;
+import fr.cotedazur.univ.polytech.startingpoint.utils.Utils;
 
 import java.util.*;
 import java.util.logging.Level;
 
-import static fr.cotedazur.univ.polytech.startingpoint.utils.InGameLogger.*;
+import static fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger.*;
 
 public class Main {
     private static boolean enableCsv = false;
@@ -49,8 +54,6 @@ public class Main {
         return players;
     }
 
-
-
     public static void finalChoice(List<Player> players, GameState gameState) {
         for (Player player : players) {
             for (District district : player.getCity().getDistrictsBuilt()) {
@@ -69,6 +72,18 @@ public class Main {
 
     }
 
+    public static void announceWinner(List<Player> players, Player firstBuilder, GameState gameState) {
+        List<Player> playersScores = calculateScores(players, firstBuilder, gameState);
+        String playerScoreMessage;
+        for (Player player : playersScores) {
+            playerScoreMessage = player.getName() + " : " + player.getScore() + " points";
+            LOGGER.info(playerScoreMessage);
+        }
+        Player winner = playersScores.get(0);
+        String winnerMessage = "\n" + winner.getName() + " gagne la partie avec " + winner.getScore() + " points !";
+        LOGGER.info(winnerMessage);
+    }
+
     public static int jCommander(String... args) {
         Args commandLineArgs = new Args();
         JCommander.newBuilder()
@@ -79,19 +94,23 @@ public class Main {
         // Determining the value of numberOfTurns according to the options
         int numberOfGames = 1;
         currentMode = commandLineArgs.getCurrentMode();
+
         // 2 x 1000 games
         if (currentMode.equals(Args.ArgsEnum.TWOTHOUSANDS)) {
+            CitadelsLogger.setupCsvOr2Thousand();
             numberOfGames = 1000;
-            InGameLogger.setGlobalLogLevel(Level.OFF);
-
+            CitadelsLogger.setGlobalLogLevel(CSV_OR_THOUSAND);
         }
         // One game
         else if (currentMode.equals(Args.ArgsEnum.DEMO)) {
-            InGameLogger.setup();
-            InGameLogger.setGlobalLogLevel(Level.ALL);
-        } else if (currentMode.equals(Args.ArgsEnum.CSV)) {
+            CitadelsLogger.setupDemo();
+            CitadelsLogger.setGlobalLogLevel(Level.INFO);
+        }
+        // CSV
+        else if (currentMode.equals(Args.ArgsEnum.CSV)) {
+            CitadelsLogger.setupCsvOr2Thousand();
             numberOfGames = 20;
-            InGameLogger.setGlobalLogLevel(Level.OFF);
+            CitadelsLogger.setGlobalLogLevel(CSV_OR_THOUSAND);
             enableCsv = true;
         }
         return numberOfGames;
@@ -109,7 +128,8 @@ public class Main {
         }
         return res;
     }
-    public static void main(String... args) {
+
+    public static void main(String... args) throws CSVWriteException, CSVFileProcessingException {
         Map<String, Integer> totalScores = new HashMap<>();
         Map<String, List<Integer>> totalPlacements = new HashMap<>(); //List of 4 placements
         Map<String, Integer> algoWinrate = new HashMap<>();
@@ -134,17 +154,19 @@ public class Main {
         for (int numberOfRepetitions = 0; numberOfRepetitions < (currentMode.equals(Args.ArgsEnum.TWOTHOUSANDS) ? 2 : 1); numberOfRepetitions++) {
             if (numberOfRepetitions == 0) {
                 if (currentMode.equals(Args.ArgsEnum.TWOTHOUSANDS)) {
-                    LOGGER.warning("\nAlgo le plus intelligent contre le second (2vs2)\n");
+                    LOGGER.log(CSV_OR_THOUSAND, COLOR_BLUE + "\n[ Algo le plus intelligent contre le second (2vs2) ]\n" + COLOR_RESET);
                 }
                 nbOfEinstein = 2;
                 nbOfRichard = 2;
                 nbOfRandom = 0;
             } else {
                 for (Map.Entry<String, Integer> entry : algoWinrate.entrySet()) {
-                    LOGGER.warning('\n' + entry.getKey() + " gagne " + ((double) entry.getValue()) / 10 + "% de fois.");
+                    String key = entry.getKey();
+                    String winPercentage = COLOR_PURPLE + key + " gagne " + ((double) algoWinrate.get(key)) / 10 + "% de fois." + COLOR_RESET;
+                    LOGGER.log(CSV_OR_THOUSAND, winPercentage);
                 }
                 if (currentMode.equals(Args.ArgsEnum.TWOTHOUSANDS)) {
-                    LOGGER.warning("\nAlgo le plus intelligent contre lui même (1vs1vs1vs1)\n");
+                    LOGGER.log(CSV_OR_THOUSAND, COLOR_BLUE + "\n[ Algo le plus intelligent contre lui meme (1vs1vs1vs1) ]\n" + COLOR_RESET);
                 }
                 nbOfEinstein = 4;
                 nbOfRichard = 0;
@@ -175,7 +197,7 @@ public class Main {
                     String turnNumberMessage = COLOR_BLUE + "\n\n----- Tour " + gameState.getTurn() + " -----" + COLOR_RESET;
                     LOGGER.info(turnNumberMessage);
 
-            Bot crownOwner = newGame.printCrownOwner();
+                    Bot crownOwner = newGame.getCrownOwner();
 
                     // Reset characters, their states and shuffle cards
                     newGame.resetChars();
@@ -187,9 +209,9 @@ public class Main {
 
                     newGame.characterSelection(crownOwner, getPlacement(players, crownOwner) - 1);
 
-            // Character reveal phase
-            LOGGER.info("\n" + COLOR_BLUE + "[ Phase 2 ] Tour des joueurs" + COLOR_RESET);
-            List<Player> runningOrder = newGame.getRunningOrder();
+                    // Character reveal phase
+                    LOGGER.info("\n" + COLOR_BLUE + "[ Phase 2 ] Tour des joueurs" + COLOR_RESET);
+                    List<Player> runningOrder = newGame.getRunningOrder();
 
                     for (Player player : runningOrder) {
                         GameCharacter cha = player.getGameCharacter();
@@ -210,11 +232,10 @@ public class Main {
                 }
                 finalChoice(players, gameState);
                 LOGGER.info("\n" + COLOR_BLUE + "[ Decompte des points ]" + COLOR_RESET);
-                ConsoleLogFunctions.announceWinner(players, firstBuilder, gameState);
+                announceWinner(players, firstBuilder, gameState);
                 for (Player p : players) {
-                    int placementScore = getPlacement(players, p) == 1 ? 1 : 0;
                     totalScores.compute(p.getName(), (k, v) -> (v == null) ? p.getScore() : v + p.getScore());
-                    algoWinrate.compute(((Bot) p).getBotAlgo().getAlgoName(), (k, v) -> (v == null) ? 0 : v + placementScore);
+                    algoWinrate.compute(((Bot) p).getBotAlgo().getAlgoName(), (k, v) -> (v == null) ? 0 : v + ((getPlacement(players, p) == 1) ? 1 : 0));
                     totalPlacements.get(p.getName()).set(getPlacement(players, p) - 1, totalPlacements.get(p.getName()).get(getPlacement(players, p) - 1) + 1); //Adds one to the pos
                 }
             }
@@ -224,12 +245,13 @@ public class Main {
                     List<String> specificPlayerPlacement = getPlayerInfo(totalPlacements, p);
                     finalArgs.add(new String[]{p.getName(), ((Bot) p).getBotAlgo().getAlgoName(), ((Integer) (totalScores.get(p.getName()) / numberOfGames)).toString(), ((Integer) numberOfGames).toString(), specificPlayerPlacement.get(0), specificPlayerPlacement.get(1), specificPlayerPlacement.get(2), specificPlayerPlacement.get(3)});
                 } else if (currentMode.equals(Args.ArgsEnum.TWOTHOUSANDS)) {
-                    ConsoleLogFunctions.printPlayerInfo(totalScores, totalPlacements, p, numberOfGames);
+                    Csv.printPlayerInfo(totalScores, totalPlacements, p, numberOfGames);
                 }
             }
             if (enableCsv) {
                 Csv.writeStats(finalArgs);
             }
         }
+        LOGGER.log(CSV_OR_THOUSAND, "\n");
     }
 }

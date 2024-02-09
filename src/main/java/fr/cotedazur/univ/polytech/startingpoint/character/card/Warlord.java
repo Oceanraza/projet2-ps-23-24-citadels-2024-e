@@ -10,7 +10,7 @@ import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 
 import java.util.Optional;
 
-import static fr.cotedazur.univ.polytech.startingpoint.utils.InGameLogger.*;
+import static fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger.*;
 
 public class Warlord extends GameCharacter {
     public Warlord() {

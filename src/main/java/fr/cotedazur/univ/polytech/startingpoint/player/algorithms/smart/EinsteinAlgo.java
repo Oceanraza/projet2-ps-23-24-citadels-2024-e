@@ -3,12 +3,15 @@ package fr.cotedazur.univ.polytech.startingpoint.player.algorithms.smart;
 import fr.cotedazur.univ.polytech.startingpoint.Game;
 import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacter;
 import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole;
+import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 import fr.cotedazur.univ.polytech.startingpoint.utils.Utils;
 
 import java.util.List;
+import java.util.Optional;
 
 import static fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole.*;
+import static fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger.LOGGER;
 /**
  * This class represents the algorithm of the bot Einstein
  * It contains the logic of the bot's actions
@@ -20,7 +23,23 @@ public class EinsteinAlgo extends SmartAlgo {
         algoName = "Einstein";
     }
 
+    public boolean collectGoldBeforeBuildChoice() {
+        // The bot will collect gold before building if it doesn't have enough gold to build its lowest district
+        Optional<District> lowestDistrict = bot.getLowestDistrictInHand();
+        return lowestDistrict.isPresent() && (bot.getGold() < lowestDistrict.get().getPrice());
+    }
 
+
+    public void botChoosesCard(Game game, List<District> threeCards) {
+        District chosenCard = chooseCard(threeCards);
+        threeCards.remove(chosenCard); // Remove the chosen card from the list of three cards
+        for (District card : threeCards) {
+            this.bot.removeFromHandAndPutInDeck(game.getDeck(), card);
+        }
+        String drawMessage = bot.getName() + " pioche le " + chosenCard;
+        LOGGER.info(drawMessage);
+        bot.addDistrictInHand(chosenCard);
+    }
 
     public boolean chooseAssassinAlgorithm(Game game, List<GameCharacter> availableChars) {
         if ((bot.getCity().getDistrictsBuilt().size() >= 7) && (bot.canBuildDistrictThisTurn()) && (bot.isCharInList(availableChars, ASSASSIN))) {
@@ -74,7 +93,7 @@ public class EinsteinAlgo extends SmartAlgo {
     /**
      * This algorithm is used to destroy the lowest district of the player with the most points
      *
-     * @param game
+     * @param game The current game
      */
     @Override
     public void warlordAlgorithm(Game game) {
@@ -82,7 +101,7 @@ public class EinsteinAlgo extends SmartAlgo {
         playerList.remove(bot);
         for (Player targetedPlayer : playerList) {
             if (!targetedPlayer.getGameCharacter().getRole().equals(GameCharacterRole.BISHOP)) { // doesn't target the bishop because he's immune to the warlord
-                targetedPlayer.getLowestDistrict().ifPresent(district -> {
+                targetedPlayer.getLowestDistrictBuilt().ifPresent(district -> {
                     if (Utils.canDestroyDistrict(district, bot)) {
                         bot.getGameCharacter().specialEffect(bot, game, targetedPlayer, district);
                         lowestDistrictHasBeenFound();
