@@ -62,9 +62,10 @@ public class RichardAlgo extends SmartAlgo {
             } else {
                 bot.chooseChar(game, MERCHANT);
             }
-            if (bot.getGameCharacter() == null) { //FailProof method
-                bot.chooseChar(game, game.getAvailableChars().get(Utils.generateRandomNumber(game.getAvailableChars().size())).getRole());
-            }
+        }
+        // FailProof method
+        if (bot.getGameCharacter() == null) {
+            bot.chooseChar(game, game.getAvailableChars().get(Utils.generateRandomNumber(game.getAvailableChars().size())).getRole());
         }
     }
 
