@@ -73,26 +73,7 @@ public class ActionManager {
         for (int i = 0; i < 3; i++) {
             threeCards.add(game.drawCard(bot));
         }
-        selectCardForBot(game, threeCards, bot);
-    }
-
-    public static void selectCardForBot(Game game, List<District> threeCards, Bot bot) {
-        if (threeCards == null || threeCards.isEmpty()) {
-            throw new IllegalArgumentException("List of cards cannot be null or empty");
-        }
-        District chosenCard = bot.getBotAlgo().chooseCard(threeCards);
-        if (chosenCard == null) {
-            throw new IllegalStateException("Chosen card cannot be null");
-        }
-        threeCards.remove(chosenCard); // Remove the chosen card from the list of three cards
-
-        for (District card : threeCards) {
-            bot.removeFromHandAndPutInDeck(game.getDeck(), card);
-        }
-
-        String drawMessage = bot.getName() + " pioche le " + chosenCard;
-        LOGGER.info(drawMessage);
-        bot.getDistrictsInHand().add(chosenCard);
+        bot.getBotAlgo().botChoosesCard(game, threeCards);
     }
 
 

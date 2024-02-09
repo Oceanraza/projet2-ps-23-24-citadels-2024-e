@@ -204,6 +204,13 @@ public class RichardAlgo extends SmartAlgo {
         }
     }
 
+    private int shouldPickKing(Game game) {
+        if (!game.containsAvailableRole(KING) || game.getCrownOwner() == bot) {
+            return 0;
+        }
+        return 1;
+    }
+
 
     public int shouldPickArchitect(Game game) {
 
@@ -215,13 +222,6 @@ public class RichardAlgo extends SmartAlgo {
         }
 
         return 0;
-    }
-
-    private int shouldPickKing(Game game) {
-        if (!game.containsAvailableRole(KING) || game.getCrownOwner() == bot) {
-            return 0;
-        }
-        return 1;
     }
 
     public int shouldPickAssassin(Game game) {
@@ -255,6 +255,12 @@ public class RichardAlgo extends SmartAlgo {
         return 0;
     }
 
+    @Override
+    public boolean graveyardChoice() {
+        return true;
+    }
+
+
     private boolean isAhead(Game game, Player bot) {
         return bot.getCity().size() > game.averageCitySize();
     }
@@ -280,5 +286,17 @@ public class RichardAlgo extends SmartAlgo {
 
     private static boolean isRich(Player player) {
         return player != null && player.getGold() > 6;
+    }
+
+    public District chooseCard(List<District> cards) {
+        District chosenCard = null;
+        int minCost = Integer.MAX_VALUE;
+        for (District card : cards) {
+            if (card.getPrice() <= bot.getGold() && card.getPrice() < minCost) {
+                chosenCard = card;
+                minCost = card.getPrice();
+            }
+        }
+        return chosenCard;
     }
 }
