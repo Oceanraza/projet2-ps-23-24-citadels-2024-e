@@ -18,7 +18,7 @@ public class Args {
         else if (is2Thousands){
             return ArgsEnum.TWOTHOUSANDS;}
         else{
-            return ArgsEnum.DEMO;
+            return ArgsEnum.TWOTHOUSANDS;
         }
     }
     public enum ArgsEnum {

@@ -45,19 +45,18 @@ public class RichardAlgo extends SmartAlgo {
     public void chooseCharacterAlgorithm(Game game) {
         if (couldWinThisTurn(game.getPlayerWithMostDistricts()) && game.getPlayers().indexOf(game.getPlayerWithMostDistricts()) > 2 && game.getPlayers().indexOf(bot) < 2) {
             finalTurn(game);
-            return;
         }
 
-        if (shouldPickAssassinNextTurn && game.containsAvailableRole(ASSASSIN)) {
+        else if (shouldPickAssassinNextTurn && game.containsAvailableRole(ASSASSIN)) {
             bot.chooseChar(game, ASSASSIN);
         }
         //Déclenché en fin de partie
-        if (game.getPlayerWith6Districts() != null) { // I
+        else if (game.getPlayerWith6Districts() != null) { // I
             finishOrCounter(game);
         }
 
         //Algo durant la partie
-        if (shouldPickAssassin(game) > 0) {
+        else if (shouldPickAssassin(game) > 0) {
             bot.chooseChar(game, ASSASSIN);
         } else if (shouldPickArchitect(game) > 0) {
             bot.chooseChar(game, ARCHITECT);
@@ -73,6 +72,9 @@ public class RichardAlgo extends SmartAlgo {
             bot.chooseChar(game, THIEF);
         } else {
             bot.chooseChar(game, MERCHANT);
+        }
+        if (bot.getGameCharacter() == null){ //FailProof method
+            bot.chooseChar(game,game.getAvailableChars().get(Utils.generateRandomNumber(game.getAvailableChars().size())).getRole());
         }
     }
 
@@ -302,7 +304,7 @@ public class RichardAlgo extends SmartAlgo {
         return chosenCard;
     }
 
-    public GameCharacter selectRandomKillableCharacterExcept(GameCharacterRole gameCharacterRole, Game game) {
+    public GameCharacterRole selectRandomKillableCharacterExcept(GameCharacterRole gameCharacterRole, Game game) {
         List<GameCharacter> killableCharacters = new ArrayList<>(game.getKillableCharacters());
         killableCharacters.removeIf(character -> character.getRole().equals(gameCharacterRole));
 
@@ -311,6 +313,6 @@ public class RichardAlgo extends SmartAlgo {
         }
 
         int randomIndex = Utils.generateRandomNumber(killableCharacters.size());
-        return killableCharacters.get(randomIndex);
+        return killableCharacters.get(randomIndex).getRole();
     }
 }
