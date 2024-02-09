@@ -315,13 +315,6 @@ public class Game {
         return charactersThatCanBeStolen;
     }
 
-    public District drawCard(Player player) {
-        District drawnDistrict = deck.drawCard();
-        String drawCardMessage = player.getName() + " pioche la carte " + drawnDistrict + ".";
-        LOGGER.info(drawCardMessage);
-        player.getDistrictsInHand().add(drawnDistrict);
-        return drawnDistrict;
-    }
 
     public Deck getDeck() {
         return deck;
