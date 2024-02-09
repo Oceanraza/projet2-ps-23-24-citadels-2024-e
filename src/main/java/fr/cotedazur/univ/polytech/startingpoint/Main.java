@@ -21,9 +21,10 @@ import static fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger.*;
 public class Main {
     private static boolean enableCsv = false;
     private static Args.ArgsEnum currentMode;
-    public static int getPlacement(List<Player> players, Player wantedPlayer){
-        for (int i = 0; i < players.size(); i++){
-            if (players.get(i).equals(wantedPlayer)){
+
+    public static int getPlacement(List<Player> players, Player wantedPlayer) {
+        for (int i = 0; i < players.size(); i++) {
+            if (players.get(i).equals(wantedPlayer)) {
                 return i + 1;
             }
         }
@@ -106,7 +107,7 @@ public class Main {
             CitadelsLogger.setGlobalLogLevel(Level.INFO);
         }
         // CSV
-        else if (currentMode.equals(Args.ArgsEnum.CSV)){
+        else if (currentMode.equals(Args.ArgsEnum.CSV)) {
             CitadelsLogger.setupCsvOr2Thousand();
             numberOfGames = 20;
             CitadelsLogger.setGlobalLogLevel(CSV_OR_THOUSAND);
@@ -114,27 +115,29 @@ public class Main {
         }
         return numberOfGames;
     }
-    public static void resetAll(Game game, GameState gameState){
-         game.resetGame();
-         gameState.resetGameState();
+
+    public static void resetAll(Game game, GameState gameState) {
+        game.resetGame();
+        gameState.resetGameState();
     }
 
-    public static List<String> getPlayerInfo(Map<String, List<Integer>> totalPlacements, Player wantedPlayer){
+    public static List<String> getPlayerInfo(Map<String, List<Integer>> totalPlacements, Player wantedPlayer) {
         List<String> res = new ArrayList<>();
-        for (Integer temp : totalPlacements.get(wantedPlayer.getName())){
+        for (Integer temp : totalPlacements.get(wantedPlayer.getName())) {
             res.add(temp.toString());
         }
         return res;
     }
+
     public static void main(String... args) throws CSVWriteException, CSVFileProcessingException {
         Map<String, Integer> totalScores = new HashMap<>();
         Map<String, List<Integer>> totalPlacements = new HashMap<>(); //List of 4 placements
         Map<String, Integer> algoWinrate = new HashMap<>();
-        String name1 = "Donald";
-        String name2 = "Picsou";
-        String name3 = "Riri";
-        String name4 = "Fifi";
-        String[] names = {name1, name2, name3, name4};
+        String donald = "Donald";
+        String picsou = "Picsou";
+        String riri = "Riri";
+        String fifi = "Fifi";
+        String[] names = {donald, picsou, riri, fifi};
         List<Integer> initialPlacement = Arrays.asList(0, 0, 0, 0);
 
         // Add the initial list to each key in the map
@@ -146,39 +149,40 @@ public class Main {
         int numberOfGames = jCommander(args);
 
         int nbOfEinstein;
-        int nbOfRandom = 0;
+        int nbOfRandom;
         int nbOfRichard;
         for (int numberOfRepetitions = 0; numberOfRepetitions < (currentMode.equals(Args.ArgsEnum.TWOTHOUSANDS) ? 2 : 1); numberOfRepetitions++) {
-            if (numberOfRepetitions == 0){
-                if (currentMode.equals(Args.ArgsEnum.TWOTHOUSANDS)){
-                    LOGGER.log(CSV_OR_THOUSAND,  COLOR_BLUE + "\n[ Algo le plus intelligent contre le second (2vs2) ]\n" + COLOR_RESET);
+            if (numberOfRepetitions == 0) {
+                if (currentMode.equals(Args.ArgsEnum.TWOTHOUSANDS)) {
+                    LOGGER.log(CSV_OR_THOUSAND, COLOR_BLUE + "\n[ Algo le plus intelligent contre le second (2vs2) ]\n" + COLOR_RESET);
                 }
                 nbOfEinstein = 2;
                 nbOfRichard = 2;
-            }
-            else{
-                for (Map.Entry<String,Integer> entry : algoWinrate.entrySet()) {
+                nbOfRandom = 0;
+            } else {
+                for (Map.Entry<String, Integer> entry : algoWinrate.entrySet()) {
                     String key = entry.getKey();
-                    String winPercentage = COLOR_PURPLE + key + " gagne " + ((double)algoWinrate.get(key))/10 + "% de fois." + COLOR_RESET;
+                    String winPercentage = COLOR_PURPLE + key + " gagne " + ((double) algoWinrate.get(key)) / 10 + "% de fois." + COLOR_RESET;
                     LOGGER.log(CSV_OR_THOUSAND, winPercentage);
                 }
-                if (currentMode.equals(Args.ArgsEnum.TWOTHOUSANDS)){
+                if (currentMode.equals(Args.ArgsEnum.TWOTHOUSANDS)) {
                     LOGGER.log(CSV_OR_THOUSAND, COLOR_BLUE + "\n[ Algo le plus intelligent contre lui meme (1vs1vs1vs1) ]\n" + COLOR_RESET);
                 }
                 nbOfEinstein = 4;
                 nbOfRichard = 0;
+                nbOfRandom = 0;
             }
-            Utils.resetScoresAndPlacements(totalPlacements,totalScores);
+            Utils.resetScoresAndPlacements(totalPlacements, totalScores);
             ArrayList<BaseAlgo> algorithmsInGame = new ArrayList<>();
             Utils.setAlgorithms(algorithmsInGame, nbOfEinstein, nbOfRichard, nbOfRandom);
             for (int games = 0; games < numberOfGames; games++) {
                 resetAll(newGame, gameState);
                 // Adding players to the game
                 newGame.setPlayers(
-                        new Bot(name1, algorithmsInGame.get(0)),
-                        new Bot(name2, algorithmsInGame.get(1)),
-                        new Bot(name3, algorithmsInGame.get(2)),
-                        new Bot(name4, algorithmsInGame.get(3))
+                        new Bot(donald, algorithmsInGame.get(0)),
+                        new Bot(picsou, algorithmsInGame.get(1)),
+                        new Bot(riri, algorithmsInGame.get(2)),
+                        new Bot(fifi, algorithmsInGame.get(3))
                 );
 
                 List<Player> players = newGame.getPlayers();
@@ -203,7 +207,7 @@ public class Main {
                     // Character selection phase
                     LOGGER.info("\n" + COLOR_BLUE + "[ Phase 1 ] Choix des personnages" + COLOR_RESET);
 
-                    newGame.characterSelection(crownOwner,getPlacement(players,crownOwner) - 1);
+                    newGame.characterSelection(crownOwner, getPlacement(players, crownOwner) - 1);
 
                     // Character reveal phase
                     LOGGER.info("\n" + COLOR_BLUE + "[ Phase 2 ] Tour des joueurs" + COLOR_RESET);
@@ -231,7 +235,7 @@ public class Main {
                 announceWinner(players, firstBuilder, gameState);
                 for (Player p : players) {
                     totalScores.compute(p.getName(), (k, v) -> (v == null) ? p.getScore() : v + p.getScore());
-                    algoWinrate.compute(((Bot)p).getBotAlgo().getAlgoName(), (k, v) -> (v == null) ? 0 : v + ((getPlacement(players,p)==1)?1:0));
+                    algoWinrate.compute(((Bot) p).getBotAlgo().getAlgoName(), (k, v) -> (v == null) ? 0 : v + ((getPlacement(players, p) == 1) ? 1 : 0));
                     totalPlacements.get(p.getName()).set(getPlacement(players, p) - 1, totalPlacements.get(p.getName()).get(getPlacement(players, p) - 1) + 1); //Adds one to the pos
                 }
             }

@@ -13,7 +13,7 @@ import java.util.List;
 import static fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole.*;
 
 public class RichardAlgo extends SmartAlgo {
-    public RichardAlgo(){
+    public RichardAlgo() {
         super();
         algoName = "Richard";
     }
@@ -36,9 +36,7 @@ public class RichardAlgo extends SmartAlgo {
     public void chooseCharacterAlgorithm(Game game) {
         if (couldWinThisTurn(game.getPlayerWithMostDistricts()) && game.getPlayers().indexOf(game.getPlayerWithMostDistricts()) > 2 && game.getPlayers().indexOf(bot) < 2) {
             finalTurn(game);
-        }
-
-        else if (shouldPickAssassinNextTurn && game.containsAvailableRole(ASSASSIN)) {
+        } else if (shouldPickAssassinNextTurn && game.containsAvailableRole(ASSASSIN)) {
             bot.chooseChar(game, ASSASSIN);
         }
         //Déclenché en fin de partie
@@ -65,8 +63,8 @@ public class RichardAlgo extends SmartAlgo {
         } else {
             bot.chooseChar(game, MERCHANT);
         }
-        if (bot.getGameCharacter() == null){ //FailProof method
-            bot.chooseChar(game,game.getAvailableChars().get(Utils.generateRandomNumber(game.getAvailableChars().size())).getRole());
+        if (bot.getGameCharacter() == null) { //FailProof method
+            bot.chooseChar(game, game.getAvailableChars().get(Utils.generateRandomNumber(game.getAvailableChars().size())).getRole());
         }
     }
 

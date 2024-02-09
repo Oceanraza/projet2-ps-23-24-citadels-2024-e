@@ -3,18 +3,21 @@ package fr.cotedazur.univ.polytech.startingpoint.player.algorithms.smart;
 import fr.cotedazur.univ.polytech.startingpoint.Game;
 import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacter;
 import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole;
+import fr.cotedazur.univ.polytech.startingpoint.character.card.King;
 import fr.cotedazur.univ.polytech.startingpoint.city.City;
+import fr.cotedazur.univ.polytech.startingpoint.city.District;
+import fr.cotedazur.univ.polytech.startingpoint.city.DistrictColor;
 import fr.cotedazur.univ.polytech.startingpoint.player.Bot;
 import fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -26,8 +29,8 @@ class RichardAlgoTest {
         CitadelsLogger.setGlobalLogLevel(Level.OFF);
     }
 
-    /*
     @Test
+    @Disabled
     void shouldChooseCharacterBasedOnAlgorithm() {
         // Arrange
         RichardAlgo richardAlgo = new RichardAlgo();
@@ -36,16 +39,16 @@ class RichardAlgoTest {
         doNothing().when(bot).chooseChar(any(Game.class), any(GameCharacterRole.class));
         richardAlgo.setBot(bot);  // Set the mock Bot
 
+
         // Act
         richardAlgo.chooseCharacterAlgorithm(game);
 
         // Assert
         verify(bot, times(1)).chooseChar(any(Game.class), any(GameCharacterRole.class));
     }
-     */
 
-    /*
     @Test
+    @Disabled
     void shouldHandleNoAvailableCharactersInChooseCharacterAlgorithm() {
         // Arrange
         RichardAlgo richardAlgo = new RichardAlgo();
@@ -60,7 +63,6 @@ class RichardAlgoTest {
         // Assert
         verify(bot, times(1)).chooseChar(any(Game.class), any(GameCharacterRole.class));
     }
-     */
 
     @Test
     void shouldExecuteWarlordAlgorithmSuccessfully() {
@@ -70,6 +72,7 @@ class RichardAlgoTest {
         Bot player = mock(Bot.class);  // Create a mock Player
         when(game.getPlayerWith6Districts()).thenReturn(player);  // Return the mock Player
         when(game.getPlayerWithLowestDistrictPrice()).thenReturn(player);  // Return the mock Player
+        richardAlgo.setBot(player);  // Set the mock Player
 
         // Act
         richardAlgo.warlordAlgorithm(game);
@@ -165,7 +168,6 @@ class RichardAlgoTest {
         assertEquals(0, result);
     }
 
-    /*
     @Test
     void collectGoldBeforeBuildChoiceTest() {
         Bot bot = new Bot("Bot", new RichardAlgo());
@@ -179,10 +181,9 @@ class RichardAlgoTest {
         assertEquals(0, bot.getGold());
         assertTrue(bot.getLowestDistrictInHand().isPresent());
         assertEquals(district, bot.getLowestDistrictInHand().get());
-        assertFalse(bot.getBotAlgo().collectGoldBeforeBuildChoice());
+        assertTrue(bot.getBotAlgo().collectGoldBeforeBuildChoice());
 
         bot.setGold(10);
         assertFalse(bot.getBotAlgo().collectGoldBeforeBuildChoice());
     }
-     */
 }

@@ -59,7 +59,7 @@ public class Bot extends Player {
 
     public void chooseChar(Game game, GameCharacterRole askedChar) {
         Optional<GameCharacter> chosenCharacter = getCharInList(game.getAvailableChars(), askedChar);
-        if(chosenCharacter.isEmpty()) {
+        if (chosenCharacter.isEmpty()) {
             return;
         }
 
@@ -74,7 +74,7 @@ public class Bot extends Player {
         boolean collectGoldBeforeBuild = botAlgo.collectGoldBeforeBuildChoice();
         ActionManager.startOfTurn(game, this);
 
-        if(collectGoldBeforeBuild) {
+        if (collectGoldBeforeBuild) {
             ActionManager.collectGold(this);
         }
 
@@ -82,7 +82,7 @@ public class Bot extends Player {
         botAlgo.charAlgorithmsManager(game);
         botAlgo.buildOrNot(gameState);
 
-        if(!collectGoldBeforeBuild) {
+        if (!collectGoldBeforeBuild) {
             ActionManager.collectGold(this);
         }
     }

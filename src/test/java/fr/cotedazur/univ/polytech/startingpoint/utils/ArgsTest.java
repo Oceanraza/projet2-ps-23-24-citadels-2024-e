@@ -4,7 +4,7 @@ import com.beust.jcommander.JCommander;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ArgsTest {
     Args commandLineArgs;
@@ -17,7 +17,7 @@ class ArgsTest {
         commandLineArgs = new Args();
         args2x1000games = new String[] {"--2thousands"};
         args1game = new String[] {"--demo"};
-        argsCsvGame = new String [] {"--csv"};
+        argsCsvGame = new String[]{"--csv"};
     }
 
     // Launch 2 x 1000 tests with -Dexec.args="--2thousands"
@@ -41,6 +41,7 @@ class ArgsTest {
 
         assertEquals(Args.ArgsEnum.DEMO, commandLineArgs.getCurrentMode());
     }
+
     @Test
     void launchCsvGameTest() {
         JCommander.newBuilder()

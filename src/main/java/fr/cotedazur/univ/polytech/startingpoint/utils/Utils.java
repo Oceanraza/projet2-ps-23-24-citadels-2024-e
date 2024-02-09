@@ -73,15 +73,15 @@ public class Utils {
     }
 
     public static void setAlgorithms(List<BaseAlgo> algorithmsInGame, int nbOfEinstein, int nbOfRichard, int nbOfRandom) {
-        while (nbOfEinstein > 0){
+        while (nbOfEinstein > 0) {
             algorithmsInGame.add(new EinsteinAlgo());
             nbOfEinstein--;
         }
-        while (nbOfRichard > 0){
+        while (nbOfRichard > 0) {
             algorithmsInGame.add(new RichardAlgo());
             nbOfRichard--;
         }
-        while (nbOfRandom > 0){
+        while (nbOfRandom > 0) {
             algorithmsInGame.add(new RandomAlgo());
             nbOfRandom--;
         }

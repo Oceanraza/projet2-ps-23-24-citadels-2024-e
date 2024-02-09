@@ -96,6 +96,7 @@ class WarlordTest {
     void getWrongDistrictTest() {
         assertEquals(Optional.empty(), bot.getLowestDistrictBuilt());
     }
+
     @Test
     void getSortedPlayersByScoreTest() {
         Player firstBuilder = new Bot("Player 1");

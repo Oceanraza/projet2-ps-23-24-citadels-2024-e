@@ -11,12 +11,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger.LOGGER;
+
 public abstract class BaseAlgo {
     protected boolean oneChanceOutOfTwo = Utils.generateRandomNumber(2) == 0;
 
     protected Bot bot;
     protected String algoName;
-    protected BaseAlgo(){}
+
+    protected BaseAlgo() {
+    }
 
     public void setBot(Bot player) {
         this.bot = player;
@@ -46,6 +50,17 @@ public abstract class BaseAlgo {
             default:
                 break;
         }
+    }
+
+    public void botChoosesCard(Game game, List<District> threeCards) {
+        District chosenCard = chooseCard(threeCards);
+        threeCards.remove(chosenCard); // Remove the chosen card from the list of three cards
+        for (District card : threeCards) {
+            this.bot.removeFromHandAndPutInDeck(game.getDeck(), card);
+        }
+        String drawMessage = bot.getName() + " pioche le " + chosenCard;
+        LOGGER.info(drawMessage);
+        bot.addDistrictInHand(chosenCard);
     }
 
     public void thiefAlgorithm(Game game) {
@@ -85,15 +100,23 @@ public abstract class BaseAlgo {
     }
 
     public abstract int startOfTurnChoice();
+
     public abstract void chooseCharacterAlgorithm(Game game);
+
     public abstract void warlordAlgorithm(Game game);
+
     public abstract void magicianAlgorithm(Game game);
+
     public abstract void assassinAlgorithm(Game game);
+
     public abstract void huntedQuarterAlgorithm(District huntedQuarter);
+
     public abstract boolean manufactureChoice();
+
     public abstract boolean graveyardChoice();
+
     public abstract Optional<District> laboratoryChoice();
     public abstract District chooseCard(List<District> threeCards);
-    public abstract void botChoosesCard(Game game, List<District> threeCards);
+
     public abstract boolean collectGoldBeforeBuildChoice();
 }

@@ -72,7 +72,9 @@ public abstract class Player {
 
     // Functions to add or remove
     public void addDistrictInHand(District district) {
-        if (district != null){this.districtsInHand.add(district);}
+        if (district != null) {
+            this.districtsInHand.add(district);
+        }
     }
     public void addDistrictBuilt(District district, GameState gameState) {
         numberOfDistrictsByColor.replace(

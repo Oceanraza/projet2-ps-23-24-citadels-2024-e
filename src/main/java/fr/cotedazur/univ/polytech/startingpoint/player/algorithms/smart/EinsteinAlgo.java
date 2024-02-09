@@ -66,8 +66,8 @@ public class EinsteinAlgo extends SmartAlgo {
                 chooseMoneyCharacterAlgorithm(game, availableChars);
             }
         }
-        if (bot.getGameCharacter() == null){ //FailProof method
-            bot.chooseChar(game,availableChars.get(Utils.generateRandomNumber(availableChars.size())).getRole());
+        if (bot.getGameCharacter() == null) { //FailProof method
+            bot.chooseChar(game, availableChars.get(Utils.generateRandomNumber(availableChars.size())).getRole());
         }
     }
 
