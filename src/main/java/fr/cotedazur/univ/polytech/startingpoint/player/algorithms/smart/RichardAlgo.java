@@ -35,7 +35,7 @@ public class RichardAlgo extends SmartAlgo {
 
     @Override
     public void chooseCharacterAlgorithm(Game game) {
-        if (couldWinThisTurn(game.getPlayerWithMostDistricts()) && game.getPlayers().indexOf(game.getPlayerWithMostDistricts()) > 2 && game.getPlayers().indexOf(bot) < 2) {
+        if (couldWinThisTurn(game.getPlayerWithMostDistricts()) && game.getCurrentPlayerIndexInRunningOrder(game.getPlayerWithMostDistricts()) > 2 && game.getCurrentPlayerIndexInRunningOrder(bot) < 2) {
             finalTurn(game);
         } else if (shouldPickAssassinNextTurn && game.containsAvailableRole(ASSASSIN)) {
             bot.chooseChar(game, ASSASSIN);
