@@ -1,0 +1,122 @@
+typeSearchIndex = [{
+    "p": "fr.cotedazur.univ.polytech.startingpoint",
+    "l": "ActionManager"
+}, {
+    "l": "All Classes and Interfaces",
+    "u": "allclasses-index.html"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.character.card",
+    "l": "Architect"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.utils",
+    "l": "Args"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.utils",
+    "l": "Args.ArgsEnum"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.character.card",
+    "l": "Assassin"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player.algorithms",
+    "l": "BaseAlgo"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.character.card",
+    "l": "Bishop"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player",
+    "l": "Bot"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player.algorithms.smart",
+    "l": "RichardAlgo.BotStyle"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.exception",
+    "l": "CannotAttackException"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.utils",
+    "l": "CitadelsLogger"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.city",
+    "l": "City"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint",
+    "l": "Crown"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.utils",
+    "l": "Csv"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.exception",
+    "l": "CSVFileProcessingException"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.utils",
+    "l": "CsvOrThousandLogLevel"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.exception",
+    "l": "CSVWriteException"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.board",
+    "l": "Deck"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.city",
+    "l": "District"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.exception",
+    "l": "DistrictAlreadyBuiltException"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.city",
+    "l": "DistrictColor"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player.algorithms.smart",
+    "l": "EinsteinAlgo"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.exception",
+    "l": "EmptyDeckException"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint",
+    "l": "Game"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.character",
+    "l": "GameCharacter"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.character",
+    "l": "GameCharacterRole"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint",
+    "l": "GameState"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.exception",
+    "l": "JsonFileReadException"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.character.card",
+    "l": "King"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.character.card",
+    "l": "Magician"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint",
+    "l": "Main"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.character.card",
+    "l": "Merchant"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player",
+    "l": "Player"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player.algorithms",
+    "l": "RandomAlgo"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player.algorithms.smart",
+    "l": "RichardAlgo"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player.algorithms.smart",
+    "l": "SmartAlgo"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.exception",
+    "l": "StatsResetException"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.character.card",
+    "l": "Thief"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.utils",
+    "l": "Utils"
+}, {"p": "fr.cotedazur.univ.polytech.startingpoint.character.card", "l": "Warlord"}];
+updateSearchResults();

@@ -533,16 +533,16 @@ public class Game {
     }
 
     /**
-     * Retourne le joueur ayant le quartier le moins cher en main.
+     * Retourne le joueur ayant le quartier le moins cher dans sa ville.
      *
-     * @return le joueur ayant le quartier le moins cher en main.
+     * @return le joueur ayant le quartier le moins cher dans sa ville.
      */
     public Optional<Player> getPlayerWithLowestDistrictPrice() {
         Optional<Player> playerWithLowestDistrictPrice = Optional.empty();
         int lowestPrice = Integer.MAX_VALUE;
 
         for (Player player : players) {
-            for (District district : player.getDistrictsInHand()) {
+            for (District district : player.getCity().getDistrictsBuilt()) {
                 if (district.getPrice() < lowestPrice) {
                     lowestPrice = district.getPrice();
                     playerWithLowestDistrictPrice = Optional.of(player);

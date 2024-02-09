@@ -14,12 +14,22 @@ import java.util.Optional;
 
 import static fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole.*;
 
+/**
+ * Cette classe représente l'algorithme du bot Richard.
+ * Elle contient la logique des actions du bot.
+ */
 public class RichardAlgo extends SmartAlgo {
+    /**
+     * Constructeur de la classe RichardAlgo.
+     */
     public RichardAlgo() {
         super();
         algoName = "Richard";
     }
 
+    /**
+     * Enumération représentant le style du bot.
+     */
     public enum BotStyle {
         AGGRESSIVE,
         BUILDER,
@@ -33,15 +43,28 @@ public class RichardAlgo extends SmartAlgo {
 
     private static final BotStyle BOT_STYLE = getRandomBotStyle();
 
-    public static BotStyle getRandomBotStyle() { // Randomly choose a bot style
+    /**
+     * Méthode pour obtenir un style de bot aléatoire.
+     *
+     * @return Un style de bot aléatoire.
+     */
+    public static BotStyle getRandomBotStyle() {
         BotStyle[] styles = BotStyle.values();
         return styles[Utils.generateRandomNumber(styles.length)];
     }
 
+    /**
+     * Méthode pour obtenir le style du bot.
+     * @return Le style du bot.
+     */
     public BotStyle getBotStyle() {
         return BOT_STYLE;
     }
 
+    /**
+     * Méthode pour choisir un personnage en fonction de l'algorithme.
+     * @param game L'état actuel du jeu.
+     */
     @Override
     public void chooseCharacterAlgorithm(Game game) {
         if (couldWinThisTurn(game.getPlayerWithMostDistricts()) && game.getPlayers().indexOf(game.getPlayerWithMostDistricts()) > 2 && game.getPlayers().indexOf(bot) < 2) {
@@ -135,6 +158,10 @@ public class RichardAlgo extends SmartAlgo {
         }
     }
 
+    /**
+     * Méthode pour choisir un personnage en fonction de l'algorithme du condottière.
+     * @param game L'état actuel du jeu.
+     */
     @Override
     public void warlordAlgorithm(Game game) {
         Player playerWith6Districts = game.getPlayerWith6Districts();
@@ -170,6 +197,10 @@ public class RichardAlgo extends SmartAlgo {
         }
     }
 
+    /**
+     * Méthode pour choisir un personnage en fonction de l'algorithme du magicien.
+     * @param game L'état actuel du jeu.
+     */
     @Override
     public void magicianAlgorithm(Game game) {
         if (bot.getDistrictsInHand().size() < 4) {
@@ -183,6 +214,10 @@ public class RichardAlgo extends SmartAlgo {
         bot.getGameCharacter().specialEffect(bot, game, false);// If the bot has less than 4 cards in hand, he will swap his hand with the deck
     }
 
+    /**
+     * Méthode pour choisir un personnage en fonction de l'algorithme de l'assassin.
+     * @param game L'état actuel du jeu.
+     */
     @Override
     public void assassinAlgorithm(Game game) {
         if (shouldKillBishop) {
@@ -217,6 +252,11 @@ public class RichardAlgo extends SmartAlgo {
         }
     }
 
+    /**
+     * Méthode pour déterminer si le bot doit choisir le roi.
+     * @param game L'état actuel du jeu.
+     * @return 1 si le bot doit choisir le roi, 0 sinon.
+     */
     private int shouldPickKing(Game game) {
         if (!game.containsAvailableRole(KING) || game.getCrownOwner() == bot) {
             return 0;
@@ -224,7 +264,11 @@ public class RichardAlgo extends SmartAlgo {
         return 1;
     }
 
-
+    /**
+     * Méthode pour déterminer si le bot doit choisir l'architecte.
+     * @param game L'état actuel du jeu.
+     * @return 1 si le bot doit choisir l'architecte, 0 sinon.
+     */
     public int shouldPickArchitect(Game game) {
         int goldCount = bot.getGold();
 
@@ -237,6 +281,11 @@ public class RichardAlgo extends SmartAlgo {
         return 0;
     }
 
+    /**
+     * Méthode pour déterminer si le bot doit choisir l'assassin.
+     * @param game L'état actuel du jeu.
+     * @return 1, 2, 3, 4 ou 5 si le bot doit choisir l'assassin, 0 sinon.
+     */
     public int shouldPickAssassin(Game game) {
         if (!game.containsAvailableRole(GameCharacterRole.ASSASSIN)) {
             return 0;
@@ -270,11 +319,19 @@ public class RichardAlgo extends SmartAlgo {
         return 0;
     }
 
+    /**
+     * Méthode pour déterminer si le bot doit choisir le cimetière.
+     * @return Toujours vrai dans cette implémentation.
+     */
     @Override
     public boolean graveyardChoice() {
         return true;
     }
 
+    /**
+     * Méthode pour choisir un personnage pour le bot de type constructeur.
+     * @param game L'état actuel du jeu.
+     */
     private void chooseBuilderChar(Game game) {
         int nobleDistrictsBuilt = bot.getNumberOfDistrictsByColor().get(DistrictColor.NOBLE);
         int tradeDistrictsBuilt = bot.getNumberOfDistrictsByColor().get(DistrictColor.TRADE);
@@ -290,6 +347,11 @@ public class RichardAlgo extends SmartAlgo {
         }
     }
 
+    /**
+     * Méthode pour choisir un personnage en fonction de l'ordre donné.
+     * @param game L'état actuel du jeu.
+     * @param gameCharacterRoles L'ordre des personnages à choisir.
+     */
     private void chooseCharacterIfExistsInOrder(Game game, List<GameCharacterRole> gameCharacterRoles) {
         for(GameCharacterRole gameCharacterRole : gameCharacterRoles) {
             if (game.containsAvailableRole(gameCharacterRole)) {
@@ -300,24 +362,48 @@ public class RichardAlgo extends SmartAlgo {
         bot.chooseChar(game, game.getAvailableChars().get(0).getRole()); // If none of the characters are available, the bot will choose the first character
     }
 
+    /**
+     * Méthode pour choisir un personnage pour le bot de type agressif.
+     * @param game L'état actuel du jeu.
+     */
     private void chooseAggressiveChar(Game game) {
         List<GameCharacterRole> choosingOrder = new ArrayList<>(List.of(ASSASSIN, WARLORD, MAGICIAN, THIEF));
         chooseCharacterIfExistsInOrder(game, choosingOrder);
     }
 
+    /**
+     * Méthode pour choisir un personnage pour le bot de type opportuniste.
+     * @param game L'état actuel du jeu.
+     */
     private void chooseOpportunistChar(Game game) {
         List<GameCharacterRole> choosingOrder = new ArrayList<>(List.of(BISHOP, WARLORD, THIEF));
         chooseCharacterIfExistsInOrder(game, choosingOrder);
     }
 
+    /**
+     * Méthode pour déterminer si le bot est en avance dans le jeu.
+     * @param game L'état actuel du jeu.
+     * @param bot Le bot à vérifier.
+     * @return true si le bot est en avance, false sinon.
+     */
     private boolean isAhead(Game game, Player bot) {
         return bot.getCity().size() > game.averageCitySize();
     }
 
+    /**
+     * Méthode pour déterminer si l'architecte est surpuissant pour un joueur donné.
+     * @param player Le joueur à vérifier.
+     * @return true si l'architecte est surpuissant pour le joueur, false sinon.
+     */
     private static boolean architectIsOverpoweredFor(Player player) { // If the richest player has at least 4 gold, at least one district in hand and at least 5 districts in his city, the architect should be picked
         return player.getGold() >= 4 && !player.getDistrictsInHand().isEmpty() && player.getCity().size() >= 5;
     }
 
+    /**
+     * Méthode pour déterminer si l'architecte est surpuissant pour une liste de joueurs.
+     * @param players La liste de joueurs à vérifier.
+     * @return true si l'architecte est surpuissant pour au moins un joueur, false sinon.
+     */
     private boolean architectIsOverpoweredIn(List<Player> players) {
         for (Player player : players) {
             if (player.getGold() >= 4 && !player.getDistrictsInHand().isEmpty() && player.getCity().size() >= 5) {
@@ -327,16 +413,31 @@ public class RichardAlgo extends SmartAlgo {
         return false;
     }
 
+    /**
+     * Méthode pour déterminer si un joueur pourrait gagner ce tour.
+     * @param player Le joueur à vérifier.
+     * @return true si le joueur pourrait gagner ce tour, false sinon.
+     */
     private static boolean couldWinThisTurn(Player player) {
         return player != null
                 && player.getCity().size() == 7;
 
     }
 
+    /**
+     * Méthode pour déterminer si un joueur est riche.
+     * @param player Le joueur à vérifier.
+     * @return true si le joueur est riche, false sinon.
+     */
     private static boolean isRich(Player player) {
         return player != null && player.getGold() > 6;
     }
 
+    /**
+     * Méthode pour trouver un joueur qui n'a pas de quartier en main.
+     * @param players La liste de joueurs à vérifier.
+     * @return Un Optional contenant le joueur trouvé, ou un Optional vide si aucun joueur n'a été trouvé.
+     */
     private static Optional<Player> onePlayerHasNoDistrictInHand(List<Player> players) {
         for(Player player: players) {
             if (player.getDistrictsInHand().isEmpty()) {
@@ -346,6 +447,12 @@ public class RichardAlgo extends SmartAlgo {
         return Optional.empty();
     }
 
+    /**
+     * Méthode pour sélectionner un personnage tuable aléatoire, sauf un personnage spécifique.
+     * @param gameCharacterRole Le rôle du personnage à exclure.
+     * @param game L'état actuel du jeu.
+     * @return Le rôle du personnage tuable sélectionné, ou null si aucun personnage tuable n'a été trouvé.
+     */
     public GameCharacterRole selectRandomKillableCharacterExcept(GameCharacterRole gameCharacterRole, Game game) {
         List<GameCharacter> killableCharacters = new ArrayList<>(game.getKillableCharacters());
         killableCharacters.removeIf(character -> character.getRole().equals(gameCharacterRole));
