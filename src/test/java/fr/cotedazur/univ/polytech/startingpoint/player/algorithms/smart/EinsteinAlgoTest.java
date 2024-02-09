@@ -38,7 +38,7 @@ class EinsteinAlgoTest {
         game = new Game();
         einsteinAlgo = new EinsteinAlgo();
         bot = mock(Bot.class); // Create a mock Bot instead of a real instance
-        einsteinAlgo.setPlayer(bot); // Set the bot instance variable of the EinsteinAlgo object
+        einsteinAlgo.setBot(bot); // Set the bot instance variable of the EinsteinAlgo object
 
         district1 = new District("District 1", 5, DistrictColor.NOBLE);
         district2 = new District("District 2", 3, DistrictColor.TRADE);

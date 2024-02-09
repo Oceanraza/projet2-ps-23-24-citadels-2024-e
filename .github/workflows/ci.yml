@@ -30,4 +30,6 @@ jobs:
     - name: Build with Maven
       run: mvn -B package --file pom.xml
     - name: Run with Maven
-      run: mvn exec:java
+      run: mvn exec:java -Dexec.args="--demo"
+    - name: Run 2 x 1000 parties
+      run: mvn exec:java -Dexec.args="--2thousands"

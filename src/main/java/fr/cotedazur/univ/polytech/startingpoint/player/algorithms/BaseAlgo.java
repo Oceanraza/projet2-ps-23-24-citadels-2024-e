@@ -12,25 +12,19 @@ import java.util.List;
 import java.util.Optional;
 
 public abstract class BaseAlgo {
+    protected boolean oneChanceOutOfTwo = Utils.generateRandomNumber(2) == 0;
 
     protected Bot bot;
     protected String algoName;
     protected BaseAlgo(){}
-    public void setPlayer(Bot player){
+
+    public void setBot(Bot player) {
         this.bot = player;
     }
-    public String getAlgoName(){return algoName;}
-    public abstract int startOfTurnChoice();
-    public abstract boolean collectGoldBeforeBuildChoice();
-    public abstract void chooseCharacterAlgorithm(Game game);
-    public abstract void warlordAlgorithm(Game game);
-    public abstract void magicianAlgorithm(Game game);
-    public abstract void assassinAlgorithm(Game game);
-    public abstract void huntedQuarterAlgorithm(District huntedQuarter);
-    public abstract boolean manufactureChoice();
-    public abstract boolean graveyardChoice();
-    public abstract Optional<District> laboratoryChoice();
-    public abstract void botChoosesCard(Game game, List<District> threeCards);
+
+    public String getAlgoName() {
+        return algoName;
+    }
 
     public void charAlgorithmsManager(Game game) {
         switch (bot.getCharacterName()) {
@@ -90,4 +84,16 @@ public abstract class BaseAlgo {
         return Utils.generateRandomNumber(2) == 0;
     }
 
+    public abstract int startOfTurnChoice();
+    public abstract void chooseCharacterAlgorithm(Game game);
+    public abstract void warlordAlgorithm(Game game);
+    public abstract void magicianAlgorithm(Game game);
+    public abstract void assassinAlgorithm(Game game);
+    public abstract void huntedQuarterAlgorithm(District huntedQuarter);
+    public abstract boolean manufactureChoice();
+    public abstract boolean graveyardChoice();
+    public abstract Optional<District> laboratoryChoice();
+    public abstract District chooseCard(List<District> threeCards);
+    public abstract void botChoosesCard(Game game, List<District> threeCards);
+    public abstract boolean collectGoldBeforeBuildChoice();
 }

@@ -87,19 +87,12 @@ public class RandomAlgo extends BaseAlgo {
 
     @Override
     public void magicianAlgorithm(Game game) {
-        if (getRandomBoolean()) {
-            // have 25% chance to decide to change his hand with another player
-            if (getRandomBoolean()) {
-                List<Player> playerList = game.getSortedPlayersByScore();
-                playerList.remove(bot);
-                bot.getGameCharacter().specialEffect(bot, game, true, playerList.get(Utils.generateRandomNumber(playerList.size())));
-            }
-            // have 25% chance to decide to change his hand with the deck
-            else {
-                bot.getGameCharacter().specialEffect(bot, game, false);
-            }
+        if (oneChanceOutOfTwo) { // have 50% chance to decide to destroy a building of a random player or not
+            List<Player> playerList = game.getSortedPlayersByScore();
+            playerList.remove(bot);
+            bot.getGameCharacter().specialEffect(bot, game, true, playerList.get(Utils.generateRandomNumber(playerList.size())));
         } else {
-            LOGGER.info(COLOR_RED + "Il n'echange ses cartes avec personne" + COLOR_RESET);
+            bot.getGameCharacter().specialEffect(bot, game, false);
         }
     }
 
@@ -118,23 +111,18 @@ public class RandomAlgo extends BaseAlgo {
     }
 
     @Override
-    public void kingAlgorithm(Game game) {
-        bot.getGameCharacter().specialEffect(bot, game);
-    }
-    
-    @Override
     public void huntedQuarterAlgorithm(District huntedQuarter) {
         huntedQuarter.setColor(DistrictColor.values()[Utils.generateRandomNumber(DistrictColor.values().length)]);
     }
 
     @Override
     public boolean manufactureChoice() {
-        return getRandomBoolean();
+        return oneChanceOutOfTwo;
     }
 
     @Override
     public Optional<District> laboratoryChoice() {
-        if (getRandomBoolean()) {
+        if (oneChanceOutOfTwo) {
             List<District> districtsInHand = bot.getDistrictsInHand();
             return !districtsInHand.isEmpty() ? Optional.ofNullable(districtsInHand.get(Utils.generateRandomNumber(districtsInHand.size()))) : Optional.empty();
         }
@@ -143,7 +131,7 @@ public class RandomAlgo extends BaseAlgo {
 
     @Override
     public boolean graveyardChoice() {
-        return getRandomBoolean();
+        return oneChanceOutOfTwo;
     }
 
     @Override

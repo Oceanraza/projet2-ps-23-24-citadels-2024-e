@@ -76,17 +76,6 @@ public class ActionManager {
         bot.getBotAlgo().botChoosesCard(game, threeCards);
     }
 
-    public static void applyGraveyardEffect(Deck deck, Player graveyardOwner, District destroyedDistrict) {
-        if (graveyardOwner.getGold() >= 1 && !graveyardOwner.getCharacterName().equals("Condottiere") && ((Bot) graveyardOwner).getBotAlgo().graveyardChoice()) {
-            String graveyardMessage = COLOR_PURPLE + graveyardOwner.getName() + " utilise le Cimetiere pour reprendre le " + destroyedDistrict + " dans sa main." + COLOR_RESET;
-            LOGGER.info(graveyardMessage);
-            graveyardOwner.addDistrictInHand(destroyedDistrict);
-            graveyardOwner.removeGold(1);
-        } else {
-            deck.putCardAtBottom(destroyedDistrict);
-        }
-    }
-
 
     public static int collectGold(Player player) {
         GameCharacterRole role = player.getGameCharacter().getRole();
@@ -131,6 +120,17 @@ public class ActionManager {
         LOGGER.info(laboratoryMessage);
         bot.removeFromHandAndPutInDeck(game.getDeck(), districtToDiscard);
         bot.addGold(1);
+    }
+
+    public static void applyGraveyardEffect(Deck deck, Player graveyardOwner, District destroyedDistrict) {
+        if (graveyardOwner.getGold() >= 1 && !graveyardOwner.getCharacterName().equals("Condottiere") && ((Bot) graveyardOwner).getBotAlgo().graveyardChoice()) {
+            String graveyardMessage = COLOR_PURPLE + graveyardOwner.getName() + " utilise le Cimetiere pour reprendre le " + destroyedDistrict + " dans sa main." + COLOR_RESET;
+            LOGGER.info(graveyardMessage);
+            graveyardOwner.getDistrictsInHand().add(destroyedDistrict);
+            graveyardOwner.removeGold(1);
+        } else {
+            deck.putCardAtBottom(destroyedDistrict);
+        }
     }
 
     private static void applyManufactureEffect(Game game, Player player, Bot bot) {
