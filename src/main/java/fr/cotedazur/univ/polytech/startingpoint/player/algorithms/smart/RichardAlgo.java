@@ -290,30 +290,24 @@ public class RichardAlgo extends SmartAlgo {
         }
     }
 
-    private void test(Game game, GameCharacterRole gameCharacterRole, GameCharacterRole gameCharacterRole2) {
-        if (game.containsAvailableRole(gameCharacterRole)) {
-            bot.chooseChar(game, gameCharacterRole);
-        } else if (game.containsAvailableRole(gameCharacterRole2)) {
-            bot.chooseChar(game, gameCharacterRole2);
-        } else if (game.containsAvailableRole(THIEF)) {
-            bot.chooseChar(game, THIEF);
-        } else {
-            bot.chooseChar(game, game.getAvailableChars().get(0).getRole()); // If none of the characters are available, the bot will choose the first character
+    private void chooseCharacterIfExistsInOrder(Game game, List<GameCharacterRole> gameCharacterRoles) {
+        for(GameCharacterRole gameCharacterRole : gameCharacterRoles) {
+            if (game.containsAvailableRole(gameCharacterRole)) {
+                bot.chooseChar(game, gameCharacterRole);
+                return;
+            }
         }
+        bot.chooseChar(game, game.getAvailableChars().get(0).getRole()); // If none of the characters are available, the bot will choose the first character
     }
 
     private void chooseAggressiveChar(Game game) {
-        // Strat :assassin, condottiere, magicien, voleur.
-        if (game.containsAvailableRole(ASSASSIN)) {
-            bot.chooseChar(game, ASSASSIN);
-        } else {
-            test(game, WARLORD, MAGICIAN);
-        }
+        List<GameCharacterRole> choosingOrder = new ArrayList<>(List.of(ASSASSIN, WARLORD, MAGICIAN, THIEF));
+        chooseCharacterIfExistsInOrder(game, choosingOrder);
     }
 
     private void chooseOpportunistChar(Game game) {
-        // Srat : évêque, condottiere, voleur
-        test(game, BISHOP, WARLORD);
+        List<GameCharacterRole> choosingOrder = new ArrayList<>(List.of(BISHOP, WARLORD, THIEF));
+        chooseCharacterIfExistsInOrder(game, choosingOrder);
     }
 
     private boolean isAhead(Game game, Player bot) {
