@@ -131,9 +131,9 @@ la gestion des données de jeu offre une flexibilité dans la manipulation et la
 
 Toutefois, on peut noter que les parties de l'architecture du projet sont plus ou moins bien réalisées. Par exemple, la
 gestion des actions des joueurs est bien réalisée avec la classe `ActionManager` pour gérer les actions des joueurs.
-Cependant, la gestion des personnages est moins bien réalisée. En effet, la classe RichardAlgo suit une algorithme
-mais aurait pu mieux être implémenter de manière à uniformiser les stratégies des bots. On peut noter qu'on aurait pu
-utiliser des design patterns pour améliorer l'architecture du projet(singleton pour le game, factory pour les
+Cependant, la gestion des personnages est moins bien réalisée. En effet, la classe RichardAlgo suit un algorithme,
+mais aurait pu mieux être implémenté de manière à uniformiser les stratégies des bots. On peut noter qu'on aurait pu
+utiliser des design patterns pour améliorer l'architecture du projet (singleton pour le game, factory pour les
 personnages, factory pour les cartes, observer pour les actions des joueurs, etc).
 
 ## Desing Patterns
