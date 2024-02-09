@@ -71,22 +71,6 @@ public class Game {
     }
 
     /**
-     * Renvoie l'index du joueur courant dans l'ordre de jeu
-     *
-     * @param currentPlayer le joueur courant
-     * @return l'index du joueur courant dans l'ordre de jeu
-     */
-    public int getCurrentPlayerIndexInRunningOrder(Player currentPlayer) {
-        List<Player> runningOrder = getRunningOrder();
-        for (int i = 0; i < runningOrder.size(); i++) {
-            if (runningOrder.get(i).equals(currentPlayer)) {
-                return i;
-            }
-        }
-        return -1;
-    }
-
-    /**
      * Vérifie si le rôle est disponible
      *
      * @param role le rôle à vérifier
@@ -251,7 +235,7 @@ public class Game {
     /**
      * Donne les cartes de départ
      */
-    private void giveStartingCards() {
+    protected void giveStartingCards() {
         for (Player player : players) {
             for (int i = 0; i < START_CARDS_NUMBER; i++) {
                 player.addDistrictInHand(deck.drawCard());
