@@ -17,6 +17,7 @@
 - [Analyse : Pourquoi Einstein bat-il Richard ?](#analyse-pourquoi-einstein-bat-il-richard-)
 - [Architecture du Projet](#architecture-du-projet)
     - [Localisation des Informations](#localisation-des-informations)
+    - [Tests du projet](#tests-du-projet)
     - [État de la Base de Code](#état-de-la-base-de-code)
 - [Processus de Développement](#processus-de-développement)
 - [Conclusion](#conclusion)
