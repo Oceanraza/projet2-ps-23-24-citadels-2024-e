@@ -1,6 +1,8 @@
-package fr.cotedazur.univ.polytech.startingpoint.character;
+package fr.cotedazur.univ.polytech.startingpoint.character.card;
 
 import fr.cotedazur.univ.polytech.startingpoint.Game;
+import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacter;
+import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 
@@ -44,14 +46,15 @@ public class Magician extends GameCharacter {
             int nb = player.getDistrictsInHand().size();
             int i = 0;
             while (i < nb && !player.getDistrictsInHand().isEmpty()) {
-                player.getDistrictsInHand().remove(0);
+                player.removeFromHandAndPutInDeck(game.getDeck(), player.getDistrictsInHand().get(0));
                 game.drawCard(player);
                 i++;
             }
             String swapHandsMessage = COLOR_RED + player.getName() + " a echange sa main avec le deck" + COLOR_RESET;
             LOGGER.info(swapHandsMessage);
         }
-        String newHandMessage = COLOR_RED + "Sa nouvelle main est : " + player.getDistrictsInHand() + COLOR_RESET;
+        List<District> districtsInHand = player.getDistrictsInHand();
+        String newHandMessage = COLOR_RED + (!districtsInHand.isEmpty() ? "Sa nouvelle main est: " + districtsInHand : "Sa nouvelle main est vide.") + COLOR_RESET;
         LOGGER.info(newHandMessage);
     }
 }

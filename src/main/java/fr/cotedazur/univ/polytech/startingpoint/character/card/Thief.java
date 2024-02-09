@@ -1,6 +1,9 @@
-package fr.cotedazur.univ.polytech.startingpoint.character;
+package fr.cotedazur.univ.polytech.startingpoint.character.card;
 
 import fr.cotedazur.univ.polytech.startingpoint.Game;
+import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacter;
+import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole;
+import fr.cotedazur.univ.polytech.startingpoint.exception.CannotAttackException;
 import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 
 import static fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger.*;

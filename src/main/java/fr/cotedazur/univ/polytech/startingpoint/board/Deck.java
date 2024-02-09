@@ -1,7 +1,12 @@
 package fr.cotedazur.univ.polytech.startingpoint.board;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import fr.cotedazur.univ.polytech.startingpoint.exception.JsonFileReadException;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
+import fr.cotedazur.univ.polytech.startingpoint.exception.EmptyDeckException;
+import fr.cotedazur.univ.polytech.startingpoint.utils.Utils;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -12,15 +17,23 @@ import java.util.List;
 
 public class Deck {
     private List<District> cards;
-    private ArrayList<District> discardPile;
 
     public Deck() {
-        this.discardPile = new ArrayList<>();
         this.cards = new ArrayList<>();
     }
+    public void resetDeck(){
+        // Specify the path to your JSON file
+        try {
+            JsonNode tempNode = Utils.parseJsonFromFile
+                    ("src/main/resources/init_database.json");
+            cards.addAll(Utils.convertJsonNodeToDistrictList(tempNode.path("Game").path("Districts")));
+        } catch (IOException e) {
+            throw new JsonFileReadException("Error reading JSON file", e);
+        }
+    }
 
-    public void setDeck(List<District> cards) {
-        this.cards = cards;
+    public List<District> getCards() {
+        return cards;
     }
 
     @Override
@@ -82,15 +95,7 @@ public class Deck {
         return this.cards.size();
     }
 
-    /**
-     * Discards a district.
-     *
-     * @param district the district to be discarded
-     */
-
-    public void discard(District district) {
-        this.cards.remove(district);
-        this.discardPile.add(district);
+    public void putCardAtBottom(District card) {
+        this.cards.add(0, card);
     }
-
 }

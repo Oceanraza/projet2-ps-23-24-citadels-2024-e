@@ -7,31 +7,24 @@ import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.player.Bot;
 import fr.cotedazur.univ.polytech.startingpoint.utils.Utils;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public abstract class BaseAlgo {
+    protected boolean oneChanceOutOfTwo = Utils.generateRandomNumber(2) == 0;
+
     protected Bot bot;
+    protected String algoName;
     protected BaseAlgo(){}
-    public void setPlayer(Bot player){
+
+    public void setBot(Bot player) {
         this.bot = player;
     }
-    public abstract int startOfTurnChoice();
-    public abstract void chooseCharacterAlgorithm(Game game);
-    public abstract void warlordAlgorithm(Game game);
-    public abstract void kingAlgorithm (Game game);
-    public abstract void magicianAlgorithm(Game game);
 
-    public abstract void assassinAlgorithm(Game game);
-
-    public abstract void buildOrNot(GameState gameState);
-    public abstract void huntedQuarterAlgorithm(District huntedQuarter);
-
-    public abstract boolean manufactureChoice();
-
-    public abstract Optional<District> laboratoryChoice();
-
-    public abstract void botChoosesCard(Game game, List<District> threeCards);
+    public String getAlgoName() {
+        return algoName;
+    }
 
     public void charAlgorithmsManager(Game game) {
         switch (bot.getCharacterName()) {
@@ -67,4 +60,40 @@ public abstract class BaseAlgo {
 
         bot.getGameCharacter().specialEffect(bot, game, targetedCharacter);
     }
+
+
+    public void kingAlgorithm(Game game) {
+        bot.getGameCharacter().specialEffect(bot, game);
+    }
+
+    public void buildOrNot(GameState gameState) { //Builds districts in the bot's hand
+        int builtThisTurn = 0;
+        ArrayList<District> tempHand = new ArrayList<>(bot.getDistrictsInHand()); //Need to create a deep copy to avoid concurrent modification
+        for (District district : tempHand) {
+
+            if (bot.buildDistrict(district, gameState)) {
+                builtThisTurn++;
+                if ((!bot.getCharacterName().equals("Architecte")) || (builtThisTurn == 3)) {
+                    break;
+                }
+            }
+        }
+    }
+
+    protected boolean getRandomBoolean() {
+        return Utils.generateRandomNumber(2) == 0;
+    }
+
+    public abstract int startOfTurnChoice();
+    public abstract void chooseCharacterAlgorithm(Game game);
+    public abstract void warlordAlgorithm(Game game);
+    public abstract void magicianAlgorithm(Game game);
+    public abstract void assassinAlgorithm(Game game);
+    public abstract void huntedQuarterAlgorithm(District huntedQuarter);
+    public abstract boolean manufactureChoice();
+    public abstract boolean graveyardChoice();
+    public abstract Optional<District> laboratoryChoice();
+    public abstract District chooseCard(List<District> threeCards);
+    public abstract void botChoosesCard(Game game, List<District> threeCards);
+    public abstract boolean collectGoldBeforeBuildChoice();
 }

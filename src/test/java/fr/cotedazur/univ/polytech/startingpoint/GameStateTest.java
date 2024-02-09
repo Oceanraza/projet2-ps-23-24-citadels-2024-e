@@ -8,30 +8,42 @@ import fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 
+import static fr.cotedazur.univ.polytech.startingpoint.Game.CITY_SIZE_TO_WIN;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class GameStateTest {
-    Player player;
+    Player player1;
+    Player player2;
     GameState gameState;
+    List<Player> players;
 
     @BeforeEach
     void setUp() {
-        CitadelsLogger.setup();
+        CitadelsLogger.setupDemo();
         CitadelsLogger.setGlobalLogLevel(Level.OFF);
 
         gameState = new GameState();
-        player = new Bot("Test");
+        player1 = new Bot("Bot 1");
+        player2 = new Bot("Bot 2");
+        players = new ArrayList<>();
     }
     @Test
-    void testIsFinished() {
-        assertFalse(gameState.isFinished(player));
-        for (int i = 0; i < 8; i++) {
+    void finishedGameTest() {
+        players.add(player1);
+        players.add(player2);
+
+        assertFalse(gameState.isGameFinished(players));
+
+        for (int i = 0; i < CITY_SIZE_TO_WIN; i++) {
             String name = "District" + i;
-            player.getCity().addDistrict(new District(name, 0, DistrictColor.TRADE), gameState);
+            player1.getCity().addDistrict(new District(name, 0, DistrictColor.TRADE), gameState);
         }
-        assertTrue(gameState.isFinished(player));
+        assertTrue(gameState.isFinished(player1));
+        assertTrue(gameState.isGameFinished(players));
     }
 }
