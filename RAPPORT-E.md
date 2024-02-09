@@ -1,5 +1,11 @@
 # Rapport de Projet : Citadelles - Équipe E
 
+## Auteurs
+
+- [Darina Chan](https://github.com/DarinaChan)
+- [Océan Razafiarison](https://github.com/Oceanraza)
+- [Mathis Jullien](https://github.com/Mathis-Jullien)
+- [Quentin Elleon](https://github.com/QuentinELLEON)
 ## Sommaire
 
 - [Introduction](#introduction)
@@ -123,6 +129,12 @@ les personnages `King`, `Assassin`, entre autres. Cette décision a été guidé
 nouveaux types de joueurs et de personnages sans perturber la logique existante. De plus, l'emploi de fichiers JSON pour
 la gestion des données de jeu offre une flexibilité dans la manipulation et la persistance des états de jeu.
 
+## Desing Patterns
+
+- `Singleton :` Utilisé pour le logger avec la classe ``CitadelsLogger``.
+- `Command :` Utilisé pour les actions des joueurs avec la classe ``ActionManager``.
+- `Strategy :` Utilisé pour les stratégies des bots avec les classes ``RichardAlgo`` et ``EinsteinAlgo``.
+- `State :` Utilisé pour les états du jeu avec la classe ``GameState``.
 ### Localisation des Informations
 
 La documentation [JavaDoc](doc/javadoc/index.html), générée et structurée de manière exhaustive, sert de référence
