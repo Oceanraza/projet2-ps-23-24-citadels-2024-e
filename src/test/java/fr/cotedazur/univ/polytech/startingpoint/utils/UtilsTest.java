@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class UtilsTest {
     @Test
@@ -58,5 +59,45 @@ class UtilsTest {
         assertEquals(nbOfEinstein, einsteinCount);
         assertEquals(nbOfRandom, randomCount);
         assertEquals(nbOfRichard, richardCount); // Vérification du nombre correct de RichardAlgo
+    }
+
+    private void canDestroyDistrictCommon(String districtName, int playerGold, boolean shouldBeTrue) {
+        District district = new District(districtName, 3, DistrictColor.SPECIAL);
+        Player player = new Bot("bot", new EinsteinAlgo());
+        player.setGold(playerGold);
+        if (shouldBeTrue) {
+            assertTrue(Utils.canDestroyDistrict(district, player));
+        } else {
+            assertFalse(Utils.canDestroyDistrict(district, player));
+        }
+    }
+
+    private void assertFalse(boolean b) {
+    }
+
+    @Test
+    void cannotDestroyDistrictWhenDistrictIsDonjon() {
+        canDestroyDistrictCommon("Donjon", 5, false);
+
+    }
+
+    @Test
+    void canDestroyDistrictWhenGoldHigherThanPriceAndDistrictIsNotDonjon() {
+        canDestroyDistrictCommon("toto", 5, true);
+    }
+
+    @Test
+    void cannotDestroyDistrictWhenGoldLesserThanPrice() {
+        canDestroyDistrictCommon("toto", 2, false);
+    }
+
+    @Test
+    void cannotDestroyDistrictWhenGoldLesserThanPriceAndDistrictIsDonjon() {
+        canDestroyDistrictCommon("Donjon", 3, false);
+    }
+
+    @Test
+    void generateRandomNumberWithBoundZeroTest() {
+        assertEquals(0, Utils.generateRandomNumber(0));
     }
 }

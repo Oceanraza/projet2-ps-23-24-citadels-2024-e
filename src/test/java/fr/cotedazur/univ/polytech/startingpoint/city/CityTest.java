@@ -62,4 +62,17 @@ class CityTest {
         city.addDistrict(district, gameState);
         assertFalse(city.isNotBuilt(district));
     }
+
+    @Test
+    void toStringTest() {
+        String districtName = district.getName(), d1Name = "Temple", d2Name = "Eglise";
+
+        city.addDistrict(district, gameState);
+        District d1 = new District(d1Name, 1, DistrictColor.RELIGIOUS);
+        District d2 = new District(d2Name, 2, DistrictColor.RELIGIOUS);
+        city.addDistrict(d1, gameState);
+        city.addDistrict(d2, gameState);
+
+        assertEquals(districtName + ", " + d1Name + ", " + d2Name + ".", city.toString());
+    }
 }
