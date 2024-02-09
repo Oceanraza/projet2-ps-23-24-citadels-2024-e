@@ -1,74 +1,72 @@
-package fr.cotedazur.univ.polytech.startingpoint.player.algorithms.smart;
+package fr.cotedazur.univ.polytech.startingpoint.character.algorithms;
 
 import fr.cotedazur.univ.polytech.startingpoint.Game;
+import fr.cotedazur.univ.polytech.startingpoint.board.Deck;
 import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacter;
 import fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole;
-import fr.cotedazur.univ.polytech.startingpoint.character.card.King;
+import fr.cotedazur.univ.polytech.startingpoint.city.City;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.city.DistrictColor;
 import fr.cotedazur.univ.polytech.startingpoint.player.Bot;
-import fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger;
+import fr.cotedazur.univ.polytech.startingpoint.player.algorithms.smart.EinsteinAlgo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.logging.Level;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 class EinsteinAlgoTest {
-    private Game game;
     private EinsteinAlgo einsteinAlgo;
+    private Game game;
     private Bot bot;
-    private District district1;
-    private District district2;
-    private District district3;
-    private List<District> threeCards;
+    private City city;
+    private Deck deck;
 
     @BeforeEach
     void setUp() {
-        CitadelsLogger.setupDemo();
-        CitadelsLogger.setGlobalLogLevel(Level.OFF);
 
-        game = new Game();
         einsteinAlgo = new EinsteinAlgo();
+        game = mock(Game.class);
         bot = mock(Bot.class); // Create a mock Bot instead of a real instance
         einsteinAlgo.setBot(bot); // Set the bot instance variable of the EinsteinAlgo object
-
-        district1 = new District("District 1", 5, DistrictColor.NOBLE);
-        district2 = new District("District 2", 3, DistrictColor.TRADE);
-        district3 = new District("District 3", 4, DistrictColor.SPECIAL);
+        city = mock(City.class);
+        deck = mock(Deck.class);
     }
 
     @Test
     void shouldChooseCardWithLowestPrice() {
-        threeCards = new ArrayList<>();
-        threeCards.add(district1);
-        threeCards.add(district2);
-        threeCards.add(district3);
+        List<District> threeCards = Arrays.asList(
+                new District("District 1", 5, DistrictColor.NOBLE),
+                new District("District 2", 3, DistrictColor.TRADE),
+                new District("District 3", 4, DistrictColor.SPECIAL)
+        );
 
         when(bot.getGold()).thenReturn(4);
 
-        einsteinAlgo.botChoosesCard(game, threeCards);
-        assertFalse(threeCards.contains(district2));
+        District chosenCard = einsteinAlgo.chooseCard(threeCards);
+
+        assertEquals("District 2", chosenCard.getName());
     }
 
     @Test
     void shouldNotChooseCardIfNotAffordable() {
-        threeCards = new ArrayList<>();
-        threeCards.add(district1);
-        threeCards.add(district2);
-        threeCards.add(district3);
+        List<District> threeCards = Arrays.asList(
+                new District("District 1", 5, DistrictColor.NOBLE),
+                new District("District 2", 6, DistrictColor.TRADE),
+                new District("District 3", 7, DistrictColor.SPECIAL)
+        );
 
-        when(bot.getGold()).thenReturn(2);
+        when(bot.getGold()).thenReturn(4);
 
-        einsteinAlgo.botChoosesCard(game, threeCards);
-        assertEquals(3, threeCards.size());
+        District chosenCard = einsteinAlgo.chooseCard(threeCards);
+
+        assertNull(chosenCard);
     }
 
     @Test
@@ -103,24 +101,5 @@ class EinsteinAlgoTest {
         int choice = einsteinAlgo.startOfTurnChoice();
 
         assertEquals(1, choice);
-    }
-
-    @Test
-    void collectGoldBeforeBuildChoiceTest() {
-        Bot bot = new Bot("Bot", new EinsteinAlgo());
-        bot.setGold(0);
-        bot.setGameCharacter(new King());
-        District district = new District("District 1", 1, DistrictColor.NOBLE);
-
-        bot.addDistrictInHand(district);
-        assertEquals(1, bot.getDistrictsInHand().size());
-        assertEquals(district, bot.getDistrictsInHand().get(0));
-        assertEquals(0, bot.getGold());
-        assertTrue(bot.getLowestDistrictInHand().isPresent());
-        assertEquals(district, bot.getLowestDistrictInHand().get());
-        assertTrue(bot.getBotAlgo().collectGoldBeforeBuildChoice());
-
-        bot.setGold(10);
-        assertFalse(bot.getBotAlgo().collectGoldBeforeBuildChoice());
     }
 }

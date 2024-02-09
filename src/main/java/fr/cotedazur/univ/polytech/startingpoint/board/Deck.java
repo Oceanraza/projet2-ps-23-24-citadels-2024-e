@@ -1,9 +1,9 @@
 package fr.cotedazur.univ.polytech.startingpoint.board;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import fr.cotedazur.univ.polytech.startingpoint.exception.JsonFileReadException;
 import fr.cotedazur.univ.polytech.startingpoint.city.District;
 import fr.cotedazur.univ.polytech.startingpoint.exception.EmptyDeckException;
+import fr.cotedazur.univ.polytech.startingpoint.exception.JsonFileReadException;
 import fr.cotedazur.univ.polytech.startingpoint.utils.Utils;
 
 import java.io.IOException;
@@ -21,7 +21,8 @@ public class Deck {
     public Deck() {
         this.cards = new ArrayList<>();
     }
-    public void resetDeck(){
+
+    public void resetDeck() {
         // Specify the path to your JSON file
         try {
             JsonNode tempNode = Utils.parseJsonFromFile

@@ -36,6 +36,7 @@ class GameTest {
         assertEquals(6, game.getCharactersInGame().size());
         assertEquals(6, game.getAvailableChars().size());
     }
+
     @Test
     void testGameList() {
         game.init();

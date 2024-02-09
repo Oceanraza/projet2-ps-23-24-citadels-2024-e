@@ -8,6 +8,7 @@ import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 import fr.cotedazur.univ.polytech.startingpoint.player.algorithms.BaseAlgo;
 import fr.cotedazur.univ.polytech.startingpoint.player.algorithms.RandomAlgo;
 import fr.cotedazur.univ.polytech.startingpoint.player.algorithms.smart.EinsteinAlgo;
+import fr.cotedazur.univ.polytech.startingpoint.player.algorithms.smart.RichardAlgo;
 
 import java.io.File;
 import java.io.IOException;
@@ -70,23 +71,29 @@ public class Utils {
         }
         return districtList;
     }
-    public static void setAlgorithms(ArrayList<BaseAlgo> algorithmsInGame, int nbOfEinstein, int nbOfRandom) {
-        while (nbOfEinstein > 0){
+
+    public static void setAlgorithms(List<BaseAlgo> algorithmsInGame, int nbOfEinstein, int nbOfRichard, int nbOfRandom) {
+        while (nbOfEinstein > 0) {
             algorithmsInGame.add(new EinsteinAlgo());
             nbOfEinstein--;
         }
-        while (nbOfRandom > 0){
+        while (nbOfRichard > 0) {
+            algorithmsInGame.add(new RichardAlgo());
+            nbOfRichard--;
+        }
+        while (nbOfRandom > 0) {
             algorithmsInGame.add(new RandomAlgo());
             nbOfRandom--;
         }
     }
-    public static void resetScoresAndPlacements(Map<String, List<Integer>> totalPlacements, Map<String, Integer> totalScores){
+
+    public static void resetScoresAndPlacements(Map<String, List<Integer>> totalPlacements, Map<String, Integer> totalScores) {
         List<Integer> initialPlacement = Arrays.asList(0, 0, 0, 0);
-        for (String key : totalPlacements.keySet()){
+        for (String key : totalPlacements.keySet()) {
             totalPlacements.put(key, new ArrayList<>(initialPlacement));
         }
-        for (String key : totalScores.keySet()){
-            totalScores.put(key,0);
+        for (String key : totalScores.keySet()) {
+            totalScores.put(key, 0);
         }
     }
 }

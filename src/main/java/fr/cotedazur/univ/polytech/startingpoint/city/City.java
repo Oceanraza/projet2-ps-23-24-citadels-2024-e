@@ -67,4 +67,8 @@ public class City {
         city.append(".");
         return city.toString();
     }
+
+    public int size() {
+        return districtsBuilt.size();
+    }
 }

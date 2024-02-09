@@ -18,6 +18,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 
+import static fr.cotedazur.univ.polytech.startingpoint.Game.CITY_SIZE_TO_WIN;
 import static fr.cotedazur.univ.polytech.startingpoint.Main.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -58,7 +59,7 @@ class MainTest {
         fourthPlayer.setGameCharacter(warlord);
 
         // Set running order
-        List<Player> runningOrder = newGame.setRunningOrder();
+        List<Player> runningOrder = newGame.getRunningOrder();
         assertEquals(firstPlayer.getName(), runningOrder.get(1).getName());
         assertEquals(secondPlayer.getName(), runningOrder.get(0).getName());
         assertEquals(thirdPlayer.getName(), runningOrder.get(2).getName());
@@ -86,7 +87,7 @@ class MainTest {
         fourthPlayer.setGameCharacter(warlord);
 
         // Set running order
-        List<Player> runningOrder = newGame.setRunningOrder();
+        List<Player> runningOrder = newGame.getRunningOrder();
         assertEquals(secondPlayer.getName(), runningOrder.get(0).getName()); //has crown
         assertEquals(firstPlayer.getName(), runningOrder.get(1).getName());
         assertEquals(thirdPlayer.getName(), runningOrder.get(2).getName());
@@ -99,7 +100,7 @@ class MainTest {
         thirdPlayer.setGameCharacter(merchant);
         fourthPlayer.setGameCharacter(warlord);
         // Set running order
-        runningOrder = newGame.setRunningOrder();
+        runningOrder = newGame.getRunningOrder();
         assertEquals(firstPlayer.getName(), runningOrder.get(0).getName()); // has crown
         assertEquals(secondPlayer.getName(), runningOrder.get(1).getName());
         assertEquals(thirdPlayer.getName(), runningOrder.get(2).getName());
@@ -145,7 +146,7 @@ class MainTest {
         Player secondPlayer = new Bot("Player 2");
         List<Player> players = Arrays.asList(firstBuilder, secondPlayer);
 
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < CITY_SIZE_TO_WIN; i++) {
             String name = "District" + i;
             firstBuilder.getCity().addDistrict(new District(name, i, DistrictColor.TRADE), gameState); // 34 points
             secondPlayer.getCity().addDistrict(new District(name, i, DistrictColor.TRADE), gameState); // 32 points
@@ -164,7 +165,7 @@ class MainTest {
         Player fourthPlayer = new Bot("Player 4");
         List<Player> players = Arrays.asList(firstBuilder,thirdPlayer,fourthPlayer,secondPlayer);
 
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < CITY_SIZE_TO_WIN; i++) {
             String name = "District" + i;
             firstBuilder.getCity().addDistrict(new District(name, i, DistrictColor.TRADE), gameState); // 34 points
             secondPlayer.getCity().addDistrict(new District(name, i, DistrictColor.TRADE), gameState); // 32 points

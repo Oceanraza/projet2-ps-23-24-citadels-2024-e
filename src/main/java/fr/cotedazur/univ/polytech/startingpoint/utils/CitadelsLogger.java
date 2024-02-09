@@ -16,6 +16,7 @@ public class CitadelsLogger {
     private CitadelsLogger() {
         throw new IllegalStateException("This logger is a utility class");
     }
+
     public static void setupCsvOr2Thousand() {
         LOGGER.setLevel(CSV_OR_THOUSAND);
 

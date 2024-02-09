@@ -9,10 +9,7 @@ import fr.cotedazur.univ.polytech.startingpoint.player.Bot;
 import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 import fr.cotedazur.univ.polytech.startingpoint.utils.Utils;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 import static fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger.*;
 
@@ -21,6 +18,7 @@ import static fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger.*;
  * It also contains the methods to start the game, to shuffle the characters and to give the cards to the players.
  */
 public class Game {
+    public static final int CITY_SIZE_TO_WIN = 8;
     private static final int START_CARDS_NUMBER = 4;
     private Deck deck = new Deck();
     private Crown crown;
@@ -53,6 +51,28 @@ public class Game {
         return availableChars;
     }
 
+    public int getCurrentPlayerIndexInRunningOrder(Player currentPlayer) {
+        List<Player> runningOrder = getRunningOrder();
+        for (int i = 0; i < runningOrder.size(); i++) {
+            if (runningOrder.get(i).equals(currentPlayer)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public boolean containsAvailableRole(GameCharacterRole role) {
+        return availableChars.stream()
+                .anyMatch(gameCharacter -> gameCharacter.getRole().equals(role));
+    }
+
+    public boolean containsAvailableRoles(GameCharacterRole... roles) { // Check if the available characters contain at least one of the roles
+        List<GameCharacterRole> rolesList = Arrays.asList(roles);
+        return availableChars.stream()
+                .anyMatch(gameCharacter -> rolesList.contains(gameCharacter.getRole()));
+    }
+
+
     public List<GameCharacter> getCharactersInGame() {
         return charactersInGame;
     }
@@ -61,7 +81,8 @@ public class Game {
     public void setPlayers(Player... bots) { // Add players to the list of players
         players.addAll(Arrays.asList(bots));
     }
-    public List<Player> setRunningOrder() { // Set running order depending on the running order of the characters
+
+    public List<Player> getRunningOrder() { // Set running order depending on the running order of the characters
         return this.getPlayers().stream()
                 .sorted(Comparator.comparingInt(player -> player.getGameCharacter().getRunningOrder()))
                 .toList();
@@ -169,11 +190,11 @@ public class Game {
         while (i != (startingPos)) {
             if (i == players.size()) {
                 i = 0;
-                if (startingPos == 0 ){
+                if (startingPos == 0) {
                     return;
                 }
             }
-            Bot p = (Bot)players.get(i);
+            Bot p = (Bot) players.get(i);
             if (p.getGameCharacter() == null) {
                 String playerInfo = p.toString();
                 LOGGER.info(playerInfo);
@@ -185,19 +206,22 @@ public class Game {
     }
 
     public Bot getCrownOwner() {
-        Bot crownOwner = (Bot) this.getCrown().getOwner();
+        return (Bot) this.getCrown().getOwner();
+    }
+
+    public Bot printCrownOwner() {
+        Bot crownOwner = getCrownOwner();
         String crownOwnerMessage = "La couronne appartient a " + (crownOwner != null ? crownOwner.getName() : "personne");
         LOGGER.info(crownOwnerMessage);
         return crownOwner;
     }
 
     public void characterSelection(Bot crownOwner, int cOpos) { //cO = crownOwner
-        if(crownOwner != null) {
+        if (crownOwner != null) {
             String crownOwnerInfos = crownOwner.toString();
             LOGGER.info(crownOwnerInfos);
             crownOwner.getBotAlgo().chooseCharacterAlgorithm(this);
-        }
-        else{
+        } else {
             cOpos = 0; //There's no crownOwner, therefore the first player starts
             Bot p1 = (Bot) players.get(0);
             LOGGER.info(p1.toString());
@@ -292,13 +316,6 @@ public class Game {
         return charactersThatCanBeStolen;
     }
 
-    public District drawCard(Player player) {
-        District drawnDistrict = deck.drawCard();
-        String drawCardMessage = player.getName() + " pioche la carte " + drawnDistrict + ".";
-        LOGGER.info(drawCardMessage);
-        player.addDistrictInHand(drawnDistrict);
-        return drawnDistrict;
-    }
 
     public Deck getDeck() {
         return deck;
@@ -311,5 +328,63 @@ public class Game {
 
     public void resetGame() {
         init();
+    }
+
+    public int getCitySizeToWin() {
+        return CITY_SIZE_TO_WIN;
+    }
+
+    public Player getPlayerWithMostDistricts() {
+        return players.stream()
+                .max((p1, p2) -> Integer.compare(p1.getCity().size(), p2.getCity().size()))
+                .orElse(null);
+    }
+
+    public Player getRichestPlayer() {
+        return players.stream().
+                max((p1, p2) -> Integer.compare(p1.getGold(), p2.getGold()))
+                .orElse(null);
+    }
+
+    public double averageCitySize() {
+        return getPlayers().stream().mapToInt(player -> player.getCity().size()).average().getAsDouble();
+    }
+
+    public Player getPlayerWith6Districts() {
+        return players.stream()
+                .filter(player -> player.getCity().size() == 6)
+                .findFirst()
+                .orElse(null);
+    }
+
+    public Player getPlayerWithMostCardInHand() {
+        return players.stream()
+                .max((p1, p2) -> Integer.compare(p1.getDistrictsInHand().size(), p2.getDistrictsInHand().size()))
+                .orElse(null);
+    }
+
+    public Player getPlayerWithLowestDistrictPrice() {
+        Player playerWithLowestDistrictPrice = null;
+        int lowestPrice = Integer.MAX_VALUE;
+
+        for (Player player : players) {
+            for (District district : player.getDistrictsInHand()) {
+                if (district.getPrice() < lowestPrice) {
+                    lowestPrice = district.getPrice();
+                    playerWithLowestDistrictPrice = player;
+                }
+            }
+        }
+
+        return playerWithLowestDistrictPrice;
+    }
+
+    public static Optional<Player> playerHasSpecialDistrict(List<Player> players, String districtName) {
+        for (Player player : players) {
+            if (player.getCity().containsDistrict(districtName)) {
+                return Optional.of(player);
+            }
+        }
+        return Optional.empty();
     }
 }

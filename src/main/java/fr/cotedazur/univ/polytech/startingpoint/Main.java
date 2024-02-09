@@ -159,7 +159,7 @@ public class Main {
             CitadelsLogger.setGlobalLogLevel(Level.INFO);
         }
         // CSV
-        else if (currentMode.equals(Args.ArgsEnum.CSV)){
+        else if (currentMode.equals(Args.ArgsEnum.CSV)) {
             CitadelsLogger.setupCsvOr2Thousand();
             numberOfGames = 20;
             CitadelsLogger.setGlobalLogLevel(CSV_OR_THOUSAND);
@@ -190,7 +190,7 @@ public class Main {
 
     public static List<String> getPlayerInfo(Map<String, List<Integer>> totalPlacements, Player wantedPlayer) {
         List<String> res = new ArrayList<>();
-        for (Integer temp : totalPlacements.get(wantedPlayer.getName())){
+        for (Integer temp : totalPlacements.get(wantedPlayer.getName())) {
             res.add(temp.toString());
         }
         return res;
@@ -206,11 +206,11 @@ public class Main {
         Map<String, Integer> totalScores = new HashMap<>();
         Map<String, List<Integer>> totalPlacements = new HashMap<>(); //List of 4 placements
         Map<String, Integer> algoWinrate = new HashMap<>();
-        String Donald = "Donald";
-        String Picsou = "Picsou";
-        String Riri = "Riri";
-        String Fifi = "Fifi";
-        String[] names = {Donald, Picsou, Riri, Fifi};
+        String donald = "Donald";
+        String picsou = "Picsou";
+        String riri = "Riri";
+        String fifi = "Fifi";
+        String[] names = {donald, picsou, riri, fifi};
         List<Integer> initialPlacement = Arrays.asList(0, 0, 0, 0);
 
         // Add the initial list to each key in the map
@@ -223,37 +223,39 @@ public class Main {
 
         int nbOfEinstein;
         int nbOfRandom;
+        int nbOfRichard;
         for (int numberOfRepetitions = 0; numberOfRepetitions < (currentMode.equals(Args.ArgsEnum.TWOTHOUSANDS) ? 2 : 1); numberOfRepetitions++) {
-            if (numberOfRepetitions == 0){
-                if (currentMode.equals(Args.ArgsEnum.TWOTHOUSANDS)){
-                    LOGGER.log(CSV_OR_THOUSAND,  COLOR_BLUE + "\n[ Algo le plus intelligent contre le second (2vs2) ]\n" + COLOR_RESET);
+            if (numberOfRepetitions == 0) {
+                if (currentMode.equals(Args.ArgsEnum.TWOTHOUSANDS)) {
+                    LOGGER.log(CSV_OR_THOUSAND, COLOR_BLUE + "\n[ Algo le plus intelligent contre le second (2vs2) ]\n" + COLOR_RESET);
                 }
                 nbOfEinstein = 2;
-                nbOfRandom = 2;
-            }
-            else{
-                for (Map.Entry<String,Integer> entry : algoWinrate.entrySet()) {
+                nbOfRichard = 2;
+                nbOfRandom = 0;
+            } else {
+                for (Map.Entry<String, Integer> entry : algoWinrate.entrySet()) {
                     String key = entry.getKey();
-                    String winPercentage = COLOR_PURPLE + key + " gagne " + ((double)algoWinrate.get(key))/10 + "% de fois." + COLOR_RESET;
+                    String winPercentage = COLOR_PURPLE + key + " gagne " + ((double) algoWinrate.get(key)) / 10 + "% de fois." + COLOR_RESET;
                     LOGGER.log(CSV_OR_THOUSAND, winPercentage);
                 }
-                if (currentMode.equals(Args.ArgsEnum.TWOTHOUSANDS)){
+                if (currentMode.equals(Args.ArgsEnum.TWOTHOUSANDS)) {
                     LOGGER.log(CSV_OR_THOUSAND, COLOR_BLUE + "\n[ Algo le plus intelligent contre lui meme (1vs1vs1vs1) ]\n" + COLOR_RESET);
                 }
                 nbOfEinstein = 4;
+                nbOfRichard = 0;
                 nbOfRandom = 0;
             }
-            Utils.resetScoresAndPlacements(totalPlacements,totalScores);
+            Utils.resetScoresAndPlacements(totalPlacements, totalScores);
             ArrayList<BaseAlgo> algorithmsInGame = new ArrayList<>();
-            Utils.setAlgorithms(algorithmsInGame, nbOfEinstein, nbOfRandom);
+            Utils.setAlgorithms(algorithmsInGame, nbOfEinstein, nbOfRichard, nbOfRandom);
             for (int games = 0; games < numberOfGames; games++) {
                 resetAll(newGame, gameState);
                 // Adding players to the game
                 newGame.setPlayers(
-                        new Bot(Donald, algorithmsInGame.get(0)),
-                        new Bot(Picsou, algorithmsInGame.get(1)),
-                        new Bot(Riri, algorithmsInGame.get(2)),
-                        new Bot(Fifi, algorithmsInGame.get(3))
+                        new Bot(donald, algorithmsInGame.get(0)),
+                        new Bot(picsou, algorithmsInGame.get(1)),
+                        new Bot(riri, algorithmsInGame.get(2)),
+                        new Bot(fifi, algorithmsInGame.get(3))
                 );
 
                 List<Player> players = newGame.getPlayers();
@@ -278,11 +280,11 @@ public class Main {
                     // Character selection phase
                     LOGGER.info("\n" + COLOR_BLUE + "[ Phase 1 ] Choix des personnages" + COLOR_RESET);
 
-                    newGame.characterSelection(crownOwner,getPlacement(players,crownOwner) - 1);
+                    newGame.characterSelection(crownOwner, getPlacement(players, crownOwner) - 1);
 
                     // Character reveal phase
                     LOGGER.info("\n" + COLOR_BLUE + "[ Phase 2 ] Tour des joueurs" + COLOR_RESET);
-                    List<Player> runningOrder = newGame.setRunningOrder();
+                    List<Player> runningOrder = newGame.getRunningOrder();
 
                     for (Player player : runningOrder) {
                         GameCharacter cha = player.getGameCharacter();

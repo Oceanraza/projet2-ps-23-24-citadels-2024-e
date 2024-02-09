@@ -25,7 +25,7 @@ public class Warlord extends GameCharacter {
         String destroyDistrictMessage = COLOR_RED + "Le Condottiere a detruit le quartier " + destroyedDistrict.getName() + " qui appartient au joueur " + targetedPlayer.getName() + " au prix de " + (destroyedDistrict.getPrice() - 1) + " or." + COLOR_RESET;
         LOGGER.info(destroyDistrictMessage);
 
-        Optional<Player> playerWithGraveyard = ActionManager.playerHasSpecialDistrict(game.getPlayers(), "Cimetiere");
+        Optional<Player> playerWithGraveyard = game.playerHasSpecialDistrict(game.getPlayers(), "Cimetiere");
         if (playerWithGraveyard.isPresent()) {
             ActionManager.applyGraveyardEffect(game.getDeck(), playerWithGraveyard.get(), destroyedDistrict);
         } else {
