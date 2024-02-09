@@ -18,14 +18,22 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-// This class is used for basic methods that only have niche purposes and are generally just math
+/**
+ * Cette classe est utilisée pour des méthodes de base qui ont des utilisations spécifiques dans le jeu.
+ */
 public class Utils {
     private static final SecureRandom random = new SecureRandom();
 
     private Utils() {
-        throw new IllegalStateException("Utils is a utility class");
+        throw new IllegalStateException("Utils est une classe utilitaire");
     }
 
+    /**
+     * Génère un nombre aléatoire.
+     *
+     * @param bound la limite supérieure pour le nombre aléatoire.
+     * @return un nombre aléatoire.
+     */
     public static int generateRandomNumber(int bound) {
         if(bound == 0){
             return 0;
@@ -33,6 +41,12 @@ public class Utils {
         return random.nextInt(bound);
     }
 
+    /**
+     * Obtient le nombre le plus élevé de cartes en main parmi les joueurs.
+     * @param players la liste des joueurs.
+     * @param currentPlayer le joueur actuel.
+     * @return le nombre le plus élevé de cartes en main.
+     */
     public static int getHighestNumberOfCardsInHand(List<Player> players, Player currentPlayer) {
         return players.stream()
                 .filter(player -> !player.equals(currentPlayer))
@@ -41,9 +55,22 @@ public class Utils {
                 .orElse(0);
     }
 
+    /**
+     * Vérifie si un quartier peut être détruit.
+     * @param d le quartier à vérifier.
+     * @param p le joueur qui tente de détruire le quartier.
+     * @return vrai si le quartier peut être détruit, faux sinon.
+     */
     public static boolean canDestroyDistrict(District d, Player p){
         return ((d.getPrice() -1 < p.getGold())&&(!d.getName().equals("Donjon")));
     }
+
+    /**
+     * Analyse un fichier JSON en un JsonNode.
+     * @param filePath le chemin du fichier JSON.
+     * @return un JsonNode représentant le fichier JSON.
+     * @throws IOException si une erreur d'entrée/sortie se produit.
+     */
     public static JsonNode parseJsonFromFile(String filePath) throws IOException {
         // Create an ObjectMapper
         ObjectMapper objectMapper = new ObjectMapper();
@@ -52,6 +79,11 @@ public class Utils {
         return objectMapper.readTree(new File(filePath));
     }
 
+    /**
+     * Convertit un JsonNode en une liste de quartiers.
+     * @param districtsNode le JsonNode à convertir.
+     * @return une liste de quartiers.
+     */
     public static List<District> convertJsonNodeToDistrictList(JsonNode districtsNode) {
         ArrayList<District> districtList = new ArrayList<>();
 
@@ -72,6 +104,13 @@ public class Utils {
         return districtList;
     }
 
+    /**
+     * Définit les algorithmes pour le jeu.
+     * @param algorithmsInGame la liste des algorithmes dans le jeu.
+     * @param nbOfEinstein le nombre d'Einstein.
+     * @param nbOfRichard le nombre de Richard.
+     * @param nbOfRandom le nombre de Random.
+     */
     public static void setAlgorithms(List<BaseAlgo> algorithmsInGame, int nbOfEinstein, int nbOfRichard, int nbOfRandom) {
         while (nbOfEinstein > 0) {
             algorithmsInGame.add(new EinsteinAlgo());
@@ -87,6 +126,11 @@ public class Utils {
         }
     }
 
+    /**
+     * Réinitialise les scores et les placements.
+     * @param totalPlacements les placements totaux.
+     * @param totalScores les scores totaux.
+     */
     public static void resetScoresAndPlacements(Map<String, List<Integer>> totalPlacements, Map<String, Integer> totalScores) {
         List<Integer> initialPlacement = Arrays.asList(0, 0, 0, 0);
         for (String key : totalPlacements.keySet()) {

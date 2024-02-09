@@ -31,7 +31,7 @@ class RichardAlgoTest {
 
     @Test
     @Disabled
-    void shouldChooseCharacterBasedOnAlgorithm() {
+    void shouldChooseCharacterBasedOnAlgorithm() { //TODO: Fix this test
         // Arrange
         RichardAlgo richardAlgo = new RichardAlgo();
         Game game = mock(Game.class);
@@ -49,7 +49,7 @@ class RichardAlgoTest {
 
     @Test
     @Disabled
-    void shouldHandleNoAvailableCharactersInChooseCharacterAlgorithm() {
+    void shouldHandleNoAvailableCharactersInChooseCharacterAlgorithm() { //TODO: Fix this test
         // Arrange
         RichardAlgo richardAlgo = new RichardAlgo();
         Game game = mock(Game.class);

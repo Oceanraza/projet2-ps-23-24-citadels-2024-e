@@ -12,31 +12,45 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Deck
+ * Classe représentant le deck de cartes du jeu.
  */
-
 public class Deck {
     private List<District> cards;
 
+    /**
+     * Constructeur par défaut. Initialise une nouvelle liste de cartes.
+     */
     public Deck() {
         this.cards = new ArrayList<>();
     }
 
+    /**
+     * Réinitialise le deck en lisant les cartes à partir d'un fichier JSON.
+     */
     public void resetDeck() {
-        // Specify the path to your JSON file
+        // Spécifiez le chemin vers votre fichier JSON
         try {
             JsonNode tempNode = Utils.parseJsonFromFile
                     ("src/main/resources/init_database.json");
             cards.addAll(Utils.convertJsonNodeToDistrictList(tempNode.path("Game").path("Districts")));
         } catch (IOException e) {
-            throw new JsonFileReadException("Error reading JSON file", e);
+            throw new JsonFileReadException("Erreur lors de la lecture du fichier JSON", e);
         }
     }
 
+    /**
+     * Retourne la liste des cartes dans le deck.
+     *
+     * @return la liste des cartes dans le deck.
+     */
     public List<District> getCards() {
         return cards;
     }
 
+    /**
+     * Retourne une représentation sous forme de chaîne de caractères du deck.
+     * @return une représentation sous forme de chaîne de caractères du deck.
+     */
     @Override
     public String toString() {
         StringBuilder str = new StringBuilder("Les cartes dans le deck sont : \n");
@@ -48,9 +62,8 @@ public class Deck {
     }
 
     /**
-     * Adds a district to the deck.
-     *
-     * @param district the district to be added
+     * Ajoute un quartier au deck.
+     * @param district le quartier à ajouter.
      */
     public void addDistrict(District district) {
         if (district != null) {
@@ -59,43 +72,44 @@ public class Deck {
     }
 
     /**
-     * Shuffles the deck.
+     * Mélange le deck.
      */
     public void shuffle() {
         Collections.shuffle(this.cards);
     }
 
     /**
-     * Draws a card from the deck.
-     *
-     * @return the card drawn
-     * @throws EmptyDeckException if the deck is empty
+     * Pioche une carte du deck.
+     * @return la carte piochée.
+     * @throws EmptyDeckException si le deck est vide.
      */
     public District drawCard() {
         if (this.isEmpty()) {
-            throw new EmptyDeckException("Deck is empty");
+            throw new EmptyDeckException("Le deck est vide");
         }
         return this.cards.remove(this.size() - 1);
     }
 
     /**
-     * Checks if the deck is empty.
-     *
-     * @return true if the deck is empty, false otherwise
+     * Vérifie si le deck est vide.
+     * @return vrai si le deck est vide, faux sinon.
      */
     public boolean isEmpty() {
         return this.cards.isEmpty();
     }
 
     /**
-     * Returns the number of cards in the deck.
-     *
-     * @return the number of cards in the deck
+     * Retourne le nombre de cartes dans le deck.
+     * @return le nombre de cartes dans le deck.
      */
     public int size() {
         return this.cards.size();
     }
 
+    /**
+     * Place une carte au bas du deck.
+     * @param card la carte à placer au bas du deck.
+     */
     public void putCardAtBottom(District card) {
         this.cards.add(0, card);
     }

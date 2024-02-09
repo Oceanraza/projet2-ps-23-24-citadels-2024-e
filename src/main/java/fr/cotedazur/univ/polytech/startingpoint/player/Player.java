@@ -12,6 +12,9 @@ import java.util.*;
 
 import static fr.cotedazur.univ.polytech.startingpoint.utils.CitadelsLogger.*;
 
+/**
+ * Classe abstraite représentant un joueur dans le jeu.
+ */
 public abstract class Player {
     private final List<District> districtsInHand;
     private final City city;
@@ -21,6 +24,11 @@ public abstract class Player {
     private GameCharacter gameCharacter;
     private final Map<DistrictColor, Integer> numberOfDistrictsByColor;
 
+    /**
+     * Constructeur de la classe Player.
+     *
+     * @param name le nom du joueur.
+     */
     protected Player(String name) {
         this.name = name;
         districtsInHand = new ArrayList<>();
@@ -36,7 +44,7 @@ public abstract class Player {
         numberOfDistrictsByColor.put(DistrictColor.TRADE, 0);
     }
 
-    // Getter
+    // Getters
     public List<District> getDistrictsInHand() {
         return districtsInHand;
     }
@@ -59,7 +67,7 @@ public abstract class Player {
         return gameCharacter.getRole().getRoleName();
     }
 
-    // Setter
+    // Setters
     public void setGold(int gold) {
         this.gold = gold;
     }
@@ -70,7 +78,7 @@ public abstract class Player {
         this.gameCharacter = gameCharacter;
     }
 
-    // Functions to add or remove
+    // Fonctions pour ajouter ou supprimer
     public void addDistrictInHand(District district) {
         if (district != null) {
             this.districtsInHand.add(district);
@@ -93,10 +101,16 @@ public abstract class Player {
         this.gold += gold;
     }
 
+    /**
+     * Méthode abstraite pour jouer un tour de jeu.
+     * @param game l'état actuel du jeu.
+     * @param gameState l'état du jeu.
+     */
     public abstract void play(Game game, GameState gameState);
-    // Function to build a district
+
+    // Fonction pour construire un quartier
     public boolean buildDistrict(District district, GameState gameState) {
-        // Checks if the player has enough gold to build the district. If so it is built.
+        // Vérifie si le joueur a assez d'or pour construire le quartier. Si c'est le cas, il est construit.
         if (gold >= district.getPrice() && this.city.isNotBuilt(district)) {
             addDistrictBuilt(district, gameState);
             gold -= district.getPrice();
@@ -126,8 +140,8 @@ public abstract class Player {
             tempScore += district.getBonusPoints();
             districtColors.add(district.getColor());
         }
-        if (districtColors.size() == DistrictColor.values().length) { // If the player has built all the district
-            // colors
+        if (districtColors.size() == DistrictColor.values().length) { // Si le joueur a construit tous les quartiers
+            // de couleurs
             tempScore += 3;
         }
         return tempScore;
@@ -172,7 +186,7 @@ public abstract class Player {
                     (!city.getDistrictsBuilt().isEmpty() ? "Et il a deja pose: " + city : "Il n'a pas pose de quartiers.");
         }
 
-        // If a character is chosen, we specify the character
+        // Si un personnage est choisi, on spécifie le personnage
         return "\nC'est au tour " + gameCharacter.getRole().toStringDuOrDeL() + " : " + name + "\n" + (!districtsInHand.isEmpty() ? "Et sa main est composee de: "
                 + districtsInHand : "Sa main est vide. ") + "\n" + "Il a " + gold + " d'or(s)\n" +
                 (!city.getDistrictsBuilt().isEmpty() ? "Et il a deja pose: " + city : "Il n'a pas pose de quartiers.");
