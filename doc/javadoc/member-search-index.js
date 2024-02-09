@@ -1,0 +1,1365 @@
+memberSearchIndex = [{
+    "p": "fr.cotedazur.univ.polytech.startingpoint.board",
+    "c": "Deck",
+    "l": "addDistrict(District)",
+    "u": "addDistrict(fr.cotedazur.univ.polytech.startingpoint.city.District)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.city",
+    "c": "City",
+    "l": "addDistrict(District, GameState)",
+    "u": "addDistrict(fr.cotedazur.univ.polytech.startingpoint.city.District,fr.cotedazur.univ.polytech.startingpoint.GameState)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player",
+    "c": "Player",
+    "l": "addDistrictBuilt(District, GameState)",
+    "u": "addDistrictBuilt(fr.cotedazur.univ.polytech.startingpoint.city.District,fr.cotedazur.univ.polytech.startingpoint.GameState)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player",
+    "c": "Player",
+    "l": "addDistrictInHand(District)",
+    "u": "addDistrictInHand(fr.cotedazur.univ.polytech.startingpoint.city.District)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player",
+    "c": "Player",
+    "l": "addGold(int)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player.algorithms",
+    "c": "BaseAlgo",
+    "l": "algoName"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint",
+    "c": "Game",
+    "l": "allCharacters"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint",
+    "c": "Main",
+    "l": "announceWinner(List<Player>, Player, GameState)",
+    "u": "announceWinner(java.util.List,fr.cotedazur.univ.polytech.startingpoint.player.Player,fr.cotedazur.univ.polytech.startingpoint.GameState)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint",
+    "c": "ActionManager",
+    "l": "applyArchitectOrLibraryEffect(Game, Player)",
+    "u": "applyArchitectOrLibraryEffect(fr.cotedazur.univ.polytech.startingpoint.Game,fr.cotedazur.univ.polytech.startingpoint.player.Player)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint",
+    "c": "ActionManager",
+    "l": "applyCharacterSpecialEffect(Player, Game)",
+    "u": "applyCharacterSpecialEffect(fr.cotedazur.univ.polytech.startingpoint.player.Player,fr.cotedazur.univ.polytech.startingpoint.Game)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint",
+    "c": "ActionManager",
+    "l": "applyGraveyardEffect(Deck, Player, District)",
+    "u": "applyGraveyardEffect(fr.cotedazur.univ.polytech.startingpoint.board.Deck,fr.cotedazur.univ.polytech.startingpoint.player.Player,fr.cotedazur.univ.polytech.startingpoint.city.District)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint",
+    "c": "ActionManager",
+    "l": "applyObservatoryEffect(Game, Player)",
+    "u": "applyObservatoryEffect(fr.cotedazur.univ.polytech.startingpoint.Game,fr.cotedazur.univ.polytech.startingpoint.player.Player)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint",
+    "c": "ActionManager",
+    "l": "applySpecialCardsEffect(Game, Player)",
+    "u": "applySpecialCardsEffect(fr.cotedazur.univ.polytech.startingpoint.Game,fr.cotedazur.univ.polytech.startingpoint.player.Player)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint",
+    "c": "Game",
+    "l": "architect"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.character",
+    "c": "GameCharacterRole",
+    "l": "ARCHITECT"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.character.card",
+    "c": "Architect",
+    "l": "Architect()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.utils",
+    "c": "Args",
+    "l": "Args()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint",
+    "c": "Game",
+    "l": "assassin"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.character",
+    "c": "GameCharacterRole",
+    "l": "ASSASSIN"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.character.card",
+    "c": "Assassin",
+    "l": "Assassin()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player.algorithms",
+    "c": "BaseAlgo",
+    "l": "assassinAlgorithm(Game)",
+    "u": "assassinAlgorithm(fr.cotedazur.univ.polytech.startingpoint.Game)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player.algorithms",
+    "c": "RandomAlgo",
+    "l": "assassinAlgorithm(Game)",
+    "u": "assassinAlgorithm(fr.cotedazur.univ.polytech.startingpoint.Game)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player.algorithms.smart",
+    "c": "RichardAlgo",
+    "l": "assassinAlgorithm(Game)",
+    "u": "assassinAlgorithm(fr.cotedazur.univ.polytech.startingpoint.Game)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player.algorithms.smart",
+    "c": "SmartAlgo",
+    "l": "assassinAlgorithm(Game)",
+    "u": "assassinAlgorithm(fr.cotedazur.univ.polytech.startingpoint.Game)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint",
+    "c": "Game",
+    "l": "availableChars"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint",
+    "c": "Game",
+    "l": "averageCitySize()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player.algorithms",
+    "c": "BaseAlgo",
+    "l": "BaseAlgo()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint",
+    "c": "Game",
+    "l": "bishop"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.character",
+    "c": "GameCharacterRole",
+    "l": "BISHOP"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.character.card",
+    "c": "Bishop",
+    "l": "Bishop()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player.algorithms",
+    "c": "BaseAlgo",
+    "l": "bot"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player",
+    "c": "Bot",
+    "l": "Bot(String)",
+    "u": "%3Cinit%3E(java.lang.String)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player",
+    "c": "Bot",
+    "l": "Bot(String, BaseAlgo)",
+    "u": "%3Cinit%3E(java.lang.String,fr.cotedazur.univ.polytech.startingpoint.player.algorithms.BaseAlgo)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player.algorithms",
+    "c": "BaseAlgo",
+    "l": "botChoosesCard(Game, List<District>)",
+    "u": "botChoosesCard(fr.cotedazur.univ.polytech.startingpoint.Game,java.util.List)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player.algorithms",
+    "c": "RandomAlgo",
+    "l": "botChoosesCard(Game, List<District>)",
+    "u": "botChoosesCard(fr.cotedazur.univ.polytech.startingpoint.Game,java.util.List)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player.algorithms.smart",
+    "c": "SmartAlgo",
+    "l": "botChoosesCard(Game, List<District>)",
+    "u": "botChoosesCard(fr.cotedazur.univ.polytech.startingpoint.Game,java.util.List)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player",
+    "c": "Player",
+    "l": "buildDistrict(District, GameState)",
+    "u": "buildDistrict(fr.cotedazur.univ.polytech.startingpoint.city.District,fr.cotedazur.univ.polytech.startingpoint.GameState)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player.algorithms",
+    "c": "BaseAlgo",
+    "l": "buildOrNot(GameState)",
+    "u": "buildOrNot(fr.cotedazur.univ.polytech.startingpoint.GameState)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player.algorithms",
+    "c": "RandomAlgo",
+    "l": "buildOrNot(GameState)",
+    "u": "buildOrNot(fr.cotedazur.univ.polytech.startingpoint.GameState)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player",
+    "c": "Player",
+    "l": "calculateAndSetScore()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player",
+    "c": "Player",
+    "l": "calculateScore()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint",
+    "c": "Main",
+    "l": "calculateScores(List<Player>, Player, GameState)",
+    "u": "calculateScores(java.util.List,fr.cotedazur.univ.polytech.startingpoint.player.Player,fr.cotedazur.univ.polytech.startingpoint.GameState)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player",
+    "c": "Bot",
+    "l": "canBuildDistrictThisTurn()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.utils",
+    "c": "Utils",
+    "l": "canDestroyDistrict(District, Player)",
+    "u": "canDestroyDistrict(fr.cotedazur.univ.polytech.startingpoint.city.District,fr.cotedazur.univ.polytech.startingpoint.player.Player)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.exception",
+    "c": "CannotAttackException",
+    "l": "CannotAttackException(String)",
+    "u": "%3Cinit%3E(java.lang.String)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint",
+    "c": "Game",
+    "l": "characterSelection(Bot, int)",
+    "u": "characterSelection(fr.cotedazur.univ.polytech.startingpoint.player.Bot,int)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint",
+    "c": "Game",
+    "l": "charactersInGame"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player.algorithms",
+    "c": "BaseAlgo",
+    "l": "charAlgorithmsManager(Game)",
+    "u": "charAlgorithmsManager(fr.cotedazur.univ.polytech.startingpoint.Game)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint",
+    "c": "Game",
+    "l": "charSelectionFiller(int)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player.algorithms.smart",
+    "c": "EinsteinAlgo",
+    "l": "chooseAssassinAlgorithm(Game, List<GameCharacter>)",
+    "u": "chooseAssassinAlgorithm(fr.cotedazur.univ.polytech.startingpoint.Game,java.util.List)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player.algorithms",
+    "c": "BaseAlgo",
+    "l": "chooseCard(List<District>)",
+    "u": "chooseCard(java.util.List)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player.algorithms",
+    "c": "RandomAlgo",
+    "l": "chooseCard(List<District>)",
+    "u": "chooseCard(java.util.List)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player.algorithms.smart",
+    "c": "EinsteinAlgo",
+    "l": "chooseCard(List<District>)",
+    "u": "chooseCard(java.util.List)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player.algorithms.smart",
+    "c": "RichardAlgo",
+    "l": "chooseCard(List<District>)",
+    "u": "chooseCard(java.util.List)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player",
+    "c": "Bot",
+    "l": "chooseChar(Game, GameCharacterRole)",
+    "u": "chooseChar(fr.cotedazur.univ.polytech.startingpoint.Game,fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player.algorithms",
+    "c": "BaseAlgo",
+    "l": "chooseCharacterAlgorithm(Game)",
+    "u": "chooseCharacterAlgorithm(fr.cotedazur.univ.polytech.startingpoint.Game)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player.algorithms",
+    "c": "RandomAlgo",
+    "l": "chooseCharacterAlgorithm(Game)",
+    "u": "chooseCharacterAlgorithm(fr.cotedazur.univ.polytech.startingpoint.Game)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player.algorithms.smart",
+    "c": "EinsteinAlgo",
+    "l": "chooseCharacterAlgorithm(Game)",
+    "u": "chooseCharacterAlgorithm(fr.cotedazur.univ.polytech.startingpoint.Game)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player.algorithms.smart",
+    "c": "RichardAlgo",
+    "l": "chooseCharacterAlgorithm(Game)",
+    "u": "chooseCharacterAlgorithm(fr.cotedazur.univ.polytech.startingpoint.Game)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player.algorithms.smart",
+    "c": "EinsteinAlgo",
+    "l": "chooseMoneyCharacterAlgorithm(Game, List<GameCharacter>)",
+    "u": "chooseMoneyCharacterAlgorithm(fr.cotedazur.univ.polytech.startingpoint.Game,java.util.List)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint",
+    "c": "Game",
+    "l": "CITY_SIZE_TO_WIN"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.city",
+    "c": "City",
+    "l": "City()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint",
+    "c": "ActionManager",
+    "l": "collectGold(Player)",
+    "u": "collectGold(fr.cotedazur.univ.polytech.startingpoint.player.Player)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player.algorithms",
+    "c": "BaseAlgo",
+    "l": "collectGoldBeforeBuildChoice()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player.algorithms",
+    "c": "RandomAlgo",
+    "l": "collectGoldBeforeBuildChoice()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player.algorithms.smart",
+    "c": "SmartAlgo",
+    "l": "collectGoldBeforeBuildChoice()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.character",
+    "c": "GameCharacter",
+    "l": "color"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.utils",
+    "c": "CitadelsLogger",
+    "l": "COLOR_BLUE"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.utils",
+    "c": "CitadelsLogger",
+    "l": "COLOR_GREEN"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.utils",
+    "c": "CitadelsLogger",
+    "l": "COLOR_PURPLE"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.utils",
+    "c": "CitadelsLogger",
+    "l": "COLOR_RED"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.utils",
+    "c": "CitadelsLogger",
+    "l": "COLOR_RESET"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint",
+    "c": "Game",
+    "l": "containsAvailableRole(GameCharacterRole)",
+    "u": "containsAvailableRole(fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint",
+    "c": "Game",
+    "l": "containsAvailableRoles(GameCharacterRole...)",
+    "u": "containsAvailableRoles(fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole...)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.city",
+    "c": "City",
+    "l": "containsDistrict(String)",
+    "u": "containsDistrict(java.lang.String)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.utils",
+    "c": "Utils",
+    "l": "convertJsonNodeToDistrictList(JsonNode)",
+    "u": "convertJsonNodeToDistrictList(com.fasterxml.jackson.databind.JsonNode)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint",
+    "c": "Crown",
+    "l": "Crown()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.utils",
+    "c": "Args.ArgsEnum",
+    "l": "CSV"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.utils",
+    "c": "CitadelsLogger",
+    "l": "CSV_OR_THOUSAND"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.exception",
+    "c": "CSVFileProcessingException",
+    "l": "CSVFileProcessingException(String)",
+    "u": "%3Cinit%3E(java.lang.String)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.utils",
+    "c": "CsvOrThousandLogLevel",
+    "l": "CsvOrThousandLogLevel(String, int)",
+    "u": "%3Cinit%3E(java.lang.String,int)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.exception",
+    "c": "CSVWriteException",
+    "l": "CSVWriteException(String)",
+    "u": "%3Cinit%3E(java.lang.String)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.board",
+    "c": "Deck",
+    "l": "Deck()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.utils",
+    "c": "Args.ArgsEnum",
+    "l": "DEMO"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.city",
+    "c": "City",
+    "l": "destroyDistrict(District)",
+    "u": "destroyDistrict(fr.cotedazur.univ.polytech.startingpoint.city.District)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.city",
+    "c": "District",
+    "l": "District(String, int, DistrictColor)",
+    "u": "%3Cinit%3E(java.lang.String,int,fr.cotedazur.univ.polytech.startingpoint.city.DistrictColor)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.city",
+    "c": "District",
+    "l": "District(String, int, DistrictColor, int)",
+    "u": "%3Cinit%3E(java.lang.String,int,fr.cotedazur.univ.polytech.startingpoint.city.DistrictColor,int)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.exception",
+    "c": "DistrictAlreadyBuiltException",
+    "l": "DistrictAlreadyBuiltException(String)",
+    "u": "%3Cinit%3E(java.lang.String)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player",
+    "c": "Player",
+    "l": "districtsInHandAreBuilt()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.board",
+    "c": "Deck",
+    "l": "drawCard()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint",
+    "c": "ActionManager",
+    "l": "drawCard(Player, Game)",
+    "u": "drawCard(fr.cotedazur.univ.polytech.startingpoint.player.Player,fr.cotedazur.univ.polytech.startingpoint.Game)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player.algorithms.smart",
+    "c": "EinsteinAlgo",
+    "l": "EinsteinAlgo()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.exception",
+    "c": "EmptyDeckException",
+    "l": "EmptyDeckException(String)",
+    "u": "%3Cinit%3E(java.lang.String)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.city",
+    "c": "District",
+    "l": "equals(Object)",
+    "u": "equals(java.lang.Object)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player",
+    "c": "Bot",
+    "l": "equals(Object)",
+    "u": "equals(java.lang.Object)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player",
+    "c": "Player",
+    "l": "equals(Object)",
+    "u": "equals(java.lang.Object)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint",
+    "c": "ActionManager",
+    "l": "executeSpecificCardDraw(Game, Player)",
+    "u": "executeSpecificCardDraw(fr.cotedazur.univ.polytech.startingpoint.Game,fr.cotedazur.univ.polytech.startingpoint.player.Player)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint",
+    "c": "Main",
+    "l": "finalChoice(List<Player>, GameState)",
+    "u": "finalChoice(java.util.List,fr.cotedazur.univ.polytech.startingpoint.GameState)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint",
+    "c": "Game",
+    "l": "Game()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.character",
+    "c": "GameCharacter",
+    "l": "GameCharacter(GameCharacterRole, int)",
+    "u": "%3Cinit%3E(fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole,int)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.character",
+    "c": "GameCharacter",
+    "l": "GameCharacter(GameCharacterRole, int, DistrictColor)",
+    "u": "%3Cinit%3E(fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole,int,fr.cotedazur.univ.polytech.startingpoint.city.DistrictColor)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint",
+    "c": "GameState",
+    "l": "GameState()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.utils",
+    "c": "Utils",
+    "l": "generateRandomNumber(int)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player.algorithms",
+    "c": "BaseAlgo",
+    "l": "getAlgoName()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.character",
+    "c": "GameCharacter",
+    "l": "getAttacker()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint",
+    "c": "Game",
+    "l": "getAvailableChars()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.city",
+    "c": "District",
+    "l": "getBonusPoints()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player",
+    "c": "Bot",
+    "l": "getBotAlgo()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.board",
+    "c": "Deck",
+    "l": "getCards()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player",
+    "c": "Player",
+    "l": "getCharacterName()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint",
+    "c": "Game",
+    "l": "getCharactersInGame()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint",
+    "c": "Game",
+    "l": "getCharactersThatCanBeStolen()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player",
+    "c": "Bot",
+    "l": "getCharInList(List<GameCharacter>, GameCharacterRole)",
+    "u": "getCharInList(java.util.List,fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player",
+    "c": "Player",
+    "l": "getCity()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint",
+    "c": "Game",
+    "l": "getCitySizeToWin()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.character",
+    "c": "GameCharacter",
+    "l": "getColor()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.city",
+    "c": "District",
+    "l": "getColor()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint",
+    "c": "Game",
+    "l": "getCrown()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint",
+    "c": "Game",
+    "l": "getCrownOwner()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.utils",
+    "c": "Args",
+    "l": "getCurrentMode()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint",
+    "c": "Game",
+    "l": "getCurrentPlayerIndexInRunningOrder(Player)",
+    "u": "getCurrentPlayerIndexInRunningOrder(fr.cotedazur.univ.polytech.startingpoint.player.Player)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint",
+    "c": "Game",
+    "l": "getDeck()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.city",
+    "c": "City",
+    "l": "getDistrictsBuilt()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player",
+    "c": "Player",
+    "l": "getDistrictsInHand()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player",
+    "c": "Player",
+    "l": "getGameCharacter()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player",
+    "c": "Player",
+    "l": "getGold()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.utils",
+    "c": "Utils",
+    "l": "getHighestNumberOfCardsInHand(List<Player>, Player)",
+    "u": "getHighestNumberOfCardsInHand(java.util.List,fr.cotedazur.univ.polytech.startingpoint.player.Player)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.character",
+    "c": "GameCharacter",
+    "l": "getIsAlive()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint",
+    "c": "Game",
+    "l": "getKillableCharacters()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player",
+    "c": "Player",
+    "l": "getLowestDistrict(List<District>)",
+    "u": "getLowestDistrict(java.util.List)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player",
+    "c": "Player",
+    "l": "getLowestDistrictBuilt()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player",
+    "c": "Player",
+    "l": "getLowestDistrictInHand()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.city",
+    "c": "District",
+    "l": "getName()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player",
+    "c": "Player",
+    "l": "getName()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player",
+    "c": "Player",
+    "l": "getNumberOfDistrictsByColor()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint",
+    "c": "Crown",
+    "l": "getOwner()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint",
+    "c": "Main",
+    "l": "getPlacement(List<Player>, Player)",
+    "u": "getPlacement(java.util.List,fr.cotedazur.univ.polytech.startingpoint.player.Player)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint",
+    "c": "Main",
+    "l": "getPlayerInfo(Map<String, List<Integer>>, Player)",
+    "u": "getPlayerInfo(java.util.Map,fr.cotedazur.univ.polytech.startingpoint.player.Player)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint",
+    "c": "Game",
+    "l": "getPlayers()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint",
+    "c": "Game",
+    "l": "getPlayerWith6Districts()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint",
+    "c": "Game",
+    "l": "getPlayerWithLowestDistrictPrice()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint",
+    "c": "Game",
+    "l": "getPlayerWithMostCardInHand()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint",
+    "c": "Game",
+    "l": "getPlayerWithMostDistricts()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.city",
+    "c": "District",
+    "l": "getPrice()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player.algorithms",
+    "c": "BaseAlgo",
+    "l": "getRandomBoolean()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint",
+    "c": "Game",
+    "l": "getRichestPlayer()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.character",
+    "c": "GameCharacter",
+    "l": "getRole()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.character",
+    "c": "GameCharacterRole",
+    "l": "getRoleName()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.character",
+    "c": "GameCharacter",
+    "l": "getRunningOrder()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint",
+    "c": "Game",
+    "l": "getRunningOrder()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player",
+    "c": "Player",
+    "l": "getScore()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint",
+    "c": "Game",
+    "l": "getSortedPlayersByScore()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint",
+    "c": "Game",
+    "l": "getSortedPlayersByScoreForWarlord()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint",
+    "c": "GameState",
+    "l": "getTurn()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.city",
+    "c": "District",
+    "l": "getTurnBuilt()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player.algorithms",
+    "c": "BaseAlgo",
+    "l": "graveyardChoice()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player.algorithms",
+    "c": "RandomAlgo",
+    "l": "graveyardChoice()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player.algorithms.smart",
+    "c": "EinsteinAlgo",
+    "l": "graveyardChoice()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player.algorithms.smart",
+    "c": "RichardAlgo",
+    "l": "graveyardChoice()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.city",
+    "c": "District",
+    "l": "hashCode()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player",
+    "c": "Bot",
+    "l": "hashCode()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player",
+    "c": "Player",
+    "l": "hashCode()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player.algorithms",
+    "c": "BaseAlgo",
+    "l": "huntedQuarterAlgorithm(District)",
+    "u": "huntedQuarterAlgorithm(fr.cotedazur.univ.polytech.startingpoint.city.District)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player.algorithms",
+    "c": "RandomAlgo",
+    "l": "huntedQuarterAlgorithm(District)",
+    "u": "huntedQuarterAlgorithm(fr.cotedazur.univ.polytech.startingpoint.city.District)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player.algorithms.smart",
+    "c": "SmartAlgo",
+    "l": "huntedQuarterAlgorithm(District)",
+    "u": "huntedQuarterAlgorithm(fr.cotedazur.univ.polytech.startingpoint.city.District)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint",
+    "c": "Game",
+    "l": "init()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player",
+    "c": "Bot",
+    "l": "isCharInList(List<GameCharacter>, GameCharacterRole)",
+    "u": "isCharInList(java.util.List,fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.board",
+    "c": "Deck",
+    "l": "isEmpty()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint",
+    "c": "GameState",
+    "l": "isFinished(Player)",
+    "u": "isFinished(fr.cotedazur.univ.polytech.startingpoint.player.Player)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint",
+    "c": "GameState",
+    "l": "isGameFinished(List<Player>)",
+    "u": "isGameFinished(java.util.List)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.city",
+    "c": "City",
+    "l": "isNotBuilt(District)",
+    "u": "isNotBuilt(fr.cotedazur.univ.polytech.startingpoint.city.District)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint",
+    "c": "Main",
+    "l": "jCommander(String...)",
+    "u": "jCommander(java.lang.String...)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.exception",
+    "c": "JsonFileReadException",
+    "l": "JsonFileReadException(String, Throwable)",
+    "u": "%3Cinit%3E(java.lang.String,java.lang.Throwable)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint",
+    "c": "Game",
+    "l": "king"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.character",
+    "c": "GameCharacterRole",
+    "l": "KING"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.character.card",
+    "c": "King",
+    "l": "King()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player.algorithms",
+    "c": "BaseAlgo",
+    "l": "kingAlgorithm(Game)",
+    "u": "kingAlgorithm(fr.cotedazur.univ.polytech.startingpoint.Game)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player.algorithms",
+    "c": "BaseAlgo",
+    "l": "laboratoryChoice()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player.algorithms",
+    "c": "RandomAlgo",
+    "l": "laboratoryChoice()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player.algorithms.smart",
+    "c": "SmartAlgo",
+    "l": "laboratoryChoice()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.utils",
+    "c": "CitadelsLogger",
+    "l": "LOGGER"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player.algorithms.smart",
+    "c": "SmartAlgo",
+    "l": "lowestDistrictFound"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player.algorithms.smart",
+    "c": "SmartAlgo",
+    "l": "lowestDistrictHasBeenFound()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint",
+    "c": "Game",
+    "l": "magician"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.character",
+    "c": "GameCharacterRole",
+    "l": "MAGICIAN"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.character.card",
+    "c": "Magician",
+    "l": "Magician()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player.algorithms",
+    "c": "BaseAlgo",
+    "l": "magicianAlgorithm(Game)",
+    "u": "magicianAlgorithm(fr.cotedazur.univ.polytech.startingpoint.Game)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player.algorithms",
+    "c": "RandomAlgo",
+    "l": "magicianAlgorithm(Game)",
+    "u": "magicianAlgorithm(fr.cotedazur.univ.polytech.startingpoint.Game)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player.algorithms.smart",
+    "c": "EinsteinAlgo",
+    "l": "magicianAlgorithm(Game)",
+    "u": "magicianAlgorithm(fr.cotedazur.univ.polytech.startingpoint.Game)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player.algorithms.smart",
+    "c": "RichardAlgo",
+    "l": "magicianAlgorithm(Game)",
+    "u": "magicianAlgorithm(fr.cotedazur.univ.polytech.startingpoint.Game)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint",
+    "c": "Main",
+    "l": "Main()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint",
+    "c": "Main",
+    "l": "main(String...)",
+    "u": "main(java.lang.String...)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player.algorithms",
+    "c": "BaseAlgo",
+    "l": "manufactureChoice()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player.algorithms",
+    "c": "RandomAlgo",
+    "l": "manufactureChoice()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player.algorithms.smart",
+    "c": "SmartAlgo",
+    "l": "manufactureChoice()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint",
+    "c": "Game",
+    "l": "merchant"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.character",
+    "c": "GameCharacterRole",
+    "l": "MERCHANT"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.character.card",
+    "c": "Merchant",
+    "l": "Merchant()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.city",
+    "c": "DistrictColor",
+    "l": "MILITARY"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint",
+    "c": "GameState",
+    "l": "nextTurn()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.city",
+    "c": "DistrictColor",
+    "l": "NOBLE"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player.algorithms",
+    "c": "BaseAlgo",
+    "l": "oneChanceOutOfTwo"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.utils",
+    "c": "Utils",
+    "l": "parseJsonFromFile(String)",
+    "u": "parseJsonFromFile(java.lang.String)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player",
+    "c": "Bot",
+    "l": "play(Game, GameState)",
+    "u": "play(fr.cotedazur.univ.polytech.startingpoint.Game,fr.cotedazur.univ.polytech.startingpoint.GameState)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player",
+    "c": "Player",
+    "l": "play(Game, GameState)",
+    "u": "play(fr.cotedazur.univ.polytech.startingpoint.Game,fr.cotedazur.univ.polytech.startingpoint.GameState)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player",
+    "c": "Player",
+    "l": "Player(String)",
+    "u": "%3Cinit%3E(java.lang.String)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint",
+    "c": "Game",
+    "l": "playerHasSpecialDistrict(List<Player>, String)",
+    "u": "playerHasSpecialDistrict(java.util.List,java.lang.String)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint",
+    "c": "Game",
+    "l": "playerKilled(GameCharacter, Player)",
+    "u": "playerKilled(fr.cotedazur.univ.polytech.startingpoint.character.GameCharacter,fr.cotedazur.univ.polytech.startingpoint.player.Player)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint",
+    "c": "Game",
+    "l": "printAvailableCharacters()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint",
+    "c": "Game",
+    "l": "printCrownOwner()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint",
+    "c": "ActionManager",
+    "l": "printGold(Player, int)",
+    "u": "printGold(fr.cotedazur.univ.polytech.startingpoint.player.Player,int)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.utils",
+    "c": "Csv",
+    "l": "printPlayerInfo(Map<String, Integer>, Map<String, List<Integer>>, Player, int)",
+    "u": "printPlayerInfo(java.util.Map,java.util.Map,fr.cotedazur.univ.polytech.startingpoint.player.Player,int)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.board",
+    "c": "Deck",
+    "l": "putCardAtBottom(District)",
+    "u": "putCardAtBottom(fr.cotedazur.univ.polytech.startingpoint.city.District)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player.algorithms",
+    "c": "RandomAlgo",
+    "l": "RandomAlgo()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.city",
+    "c": "DistrictColor",
+    "l": "RELIGIOUS"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint",
+    "c": "Game",
+    "l": "removeAvailableChar(GameCharacter)",
+    "u": "removeAvailableChar(fr.cotedazur.univ.polytech.startingpoint.character.GameCharacter)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player",
+    "c": "Player",
+    "l": "removeFromHandAndPutInDeck(Deck, District)",
+    "u": "removeFromHandAndPutInDeck(fr.cotedazur.univ.polytech.startingpoint.board.Deck,fr.cotedazur.univ.polytech.startingpoint.city.District)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player",
+    "c": "Player",
+    "l": "removeGold(int)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint",
+    "c": "Main",
+    "l": "resetAll(Game, GameState)",
+    "u": "resetAll(fr.cotedazur.univ.polytech.startingpoint.Game,fr.cotedazur.univ.polytech.startingpoint.GameState)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint",
+    "c": "Game",
+    "l": "resetChars()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint",
+    "c": "Game",
+    "l": "resetCharsState()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.board",
+    "c": "Deck",
+    "l": "resetDeck()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint",
+    "c": "Game",
+    "l": "resetGame()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint",
+    "c": "GameState",
+    "l": "resetGameState()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.utils",
+    "c": "Utils",
+    "l": "resetScoresAndPlacements(Map<String, List<Integer>>, Map<String, Integer>)",
+    "u": "resetScoresAndPlacements(java.util.Map,java.util.Map)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.utils",
+    "c": "Csv",
+    "l": "resetStats()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player.algorithms.smart",
+    "c": "RichardAlgo",
+    "l": "RichardAlgo()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.character",
+    "c": "GameCharacter",
+    "l": "role"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.character",
+    "c": "GameCharacter",
+    "l": "runningOrder"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player.algorithms.smart",
+    "c": "RichardAlgo",
+    "l": "selectRandomKillableCharacterExcept(GameCharacterRole, Game)",
+    "u": "selectRandomKillableCharacterExcept(fr.cotedazur.univ.polytech.startingpoint.character.GameCharacterRole,fr.cotedazur.univ.polytech.startingpoint.Game)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.utils",
+    "c": "Utils",
+    "l": "setAlgorithms(List<BaseAlgo>, int, int, int)",
+    "u": "setAlgorithms(java.util.List,int,int,int)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.character",
+    "c": "GameCharacter",
+    "l": "setAttacker(Player)",
+    "u": "setAttacker(fr.cotedazur.univ.polytech.startingpoint.player.Player)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player.algorithms",
+    "c": "BaseAlgo",
+    "l": "setBot(Bot)",
+    "u": "setBot(fr.cotedazur.univ.polytech.startingpoint.player.Bot)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.city",
+    "c": "District",
+    "l": "setColor(DistrictColor)",
+    "u": "setColor(fr.cotedazur.univ.polytech.startingpoint.city.DistrictColor)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player",
+    "c": "Player",
+    "l": "setGameCharacter(GameCharacter)",
+    "u": "setGameCharacter(fr.cotedazur.univ.polytech.startingpoint.character.GameCharacter)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.utils",
+    "c": "CitadelsLogger",
+    "l": "setGlobalLogLevel(Level)",
+    "u": "setGlobalLogLevel(java.util.logging.Level)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player",
+    "c": "Player",
+    "l": "setGold(int)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.character",
+    "c": "GameCharacter",
+    "l": "setIsAlive(boolean)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint",
+    "c": "Crown",
+    "l": "setOwner(Player)",
+    "u": "setOwner(fr.cotedazur.univ.polytech.startingpoint.player.Player)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint",
+    "c": "Game",
+    "l": "setPlayers(Player...)",
+    "u": "setPlayers(fr.cotedazur.univ.polytech.startingpoint.player.Player...)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player",
+    "c": "Player",
+    "l": "setScore(int)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.city",
+    "c": "District",
+    "l": "setTurnBuilt(int)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.utils",
+    "c": "CitadelsLogger",
+    "l": "setupCsvOr2Thousand()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.utils",
+    "c": "CitadelsLogger",
+    "l": "setupDemo()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player.algorithms.smart",
+    "c": "RichardAlgo",
+    "l": "shouldPickArchitect(Game)",
+    "u": "shouldPickArchitect(fr.cotedazur.univ.polytech.startingpoint.Game)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player.algorithms.smart",
+    "c": "RichardAlgo",
+    "l": "shouldPickAssassin(Game)",
+    "u": "shouldPickAssassin(fr.cotedazur.univ.polytech.startingpoint.Game)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.board",
+    "c": "Deck",
+    "l": "shuffle()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint",
+    "c": "Game",
+    "l": "shuffleCharacters()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.board",
+    "c": "Deck",
+    "l": "size()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.city",
+    "c": "City",
+    "l": "size()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player.algorithms.smart",
+    "c": "SmartAlgo",
+    "l": "SmartAlgo()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint",
+    "c": "Main",
+    "l": "sortPlayers(List<Player>)",
+    "u": "sortPlayers(java.util.List)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.city",
+    "c": "DistrictColor",
+    "l": "SPECIAL"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.character.card",
+    "c": "Architect",
+    "l": "specialEffect(Player, Game, Object...)",
+    "u": "specialEffect(fr.cotedazur.univ.polytech.startingpoint.player.Player,fr.cotedazur.univ.polytech.startingpoint.Game,java.lang.Object...)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.character.card",
+    "c": "Assassin",
+    "l": "specialEffect(Player, Game, Object...)",
+    "u": "specialEffect(fr.cotedazur.univ.polytech.startingpoint.player.Player,fr.cotedazur.univ.polytech.startingpoint.Game,java.lang.Object...)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.character.card",
+    "c": "Bishop",
+    "l": "specialEffect(Player, Game, Object...)",
+    "u": "specialEffect(fr.cotedazur.univ.polytech.startingpoint.player.Player,fr.cotedazur.univ.polytech.startingpoint.Game,java.lang.Object...)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.character.card",
+    "c": "King",
+    "l": "specialEffect(Player, Game, Object...)",
+    "u": "specialEffect(fr.cotedazur.univ.polytech.startingpoint.player.Player,fr.cotedazur.univ.polytech.startingpoint.Game,java.lang.Object...)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.character.card",
+    "c": "Magician",
+    "l": "specialEffect(Player, Game, Object...)",
+    "u": "specialEffect(fr.cotedazur.univ.polytech.startingpoint.player.Player,fr.cotedazur.univ.polytech.startingpoint.Game,java.lang.Object...)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.character.card",
+    "c": "Merchant",
+    "l": "specialEffect(Player, Game, Object...)",
+    "u": "specialEffect(fr.cotedazur.univ.polytech.startingpoint.player.Player,fr.cotedazur.univ.polytech.startingpoint.Game,java.lang.Object...)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.character.card",
+    "c": "Thief",
+    "l": "specialEffect(Player, Game, Object...)",
+    "u": "specialEffect(fr.cotedazur.univ.polytech.startingpoint.player.Player,fr.cotedazur.univ.polytech.startingpoint.Game,java.lang.Object...)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.character.card",
+    "c": "Warlord",
+    "l": "specialEffect(Player, Game, Object...)",
+    "u": "specialEffect(fr.cotedazur.univ.polytech.startingpoint.player.Player,fr.cotedazur.univ.polytech.startingpoint.Game,java.lang.Object...)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.character",
+    "c": "GameCharacter",
+    "l": "specialEffect(Player, Game, Object...)",
+    "u": "specialEffect(fr.cotedazur.univ.polytech.startingpoint.player.Player,fr.cotedazur.univ.polytech.startingpoint.Game,java.lang.Object...)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint",
+    "c": "Game",
+    "l": "startCardGame()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint",
+    "c": "ActionManager",
+    "l": "startOfTurn(Game, Player)",
+    "u": "startOfTurn(fr.cotedazur.univ.polytech.startingpoint.Game,fr.cotedazur.univ.polytech.startingpoint.player.Player)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player.algorithms",
+    "c": "BaseAlgo",
+    "l": "startOfTurnChoice()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player.algorithms",
+    "c": "RandomAlgo",
+    "l": "startOfTurnChoice()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player.algorithms.smart",
+    "c": "SmartAlgo",
+    "l": "startOfTurnChoice()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.exception",
+    "c": "StatsResetException",
+    "l": "StatsResetException(String)",
+    "u": "%3Cinit%3E(java.lang.String)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player.algorithms.smart",
+    "c": "RichardAlgo.BotStyle",
+    "l": "SUSPICIOUS"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint",
+    "c": "Game",
+    "l": "thief"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.character",
+    "c": "GameCharacterRole",
+    "l": "THIEF"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.character.card",
+    "c": "Thief",
+    "l": "Thief()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player.algorithms",
+    "c": "BaseAlgo",
+    "l": "thiefAlgorithm(Game)",
+    "u": "thiefAlgorithm(fr.cotedazur.univ.polytech.startingpoint.Game)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.board",
+    "c": "Deck",
+    "l": "toString()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.character",
+    "c": "GameCharacter",
+    "l": "toString()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.character",
+    "c": "GameCharacterRole",
+    "l": "toString()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.city",
+    "c": "City",
+    "l": "toString()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.city",
+    "c": "District",
+    "l": "toString()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.city",
+    "c": "DistrictColor",
+    "l": "toString()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint",
+    "c": "Game",
+    "l": "toString()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player",
+    "c": "Player",
+    "l": "toString()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.character",
+    "c": "GameCharacterRole",
+    "l": "toStringDuOrDeL()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.character",
+    "c": "GameCharacterRole",
+    "l": "toStringLeOrLLowerCase()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.character",
+    "c": "GameCharacterRole",
+    "l": "toStringLeOrLUpperCase()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.city",
+    "c": "DistrictColor",
+    "l": "TRADE"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.utils",
+    "c": "Args.ArgsEnum",
+    "l": "TWOTHOUSANDS"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.character",
+    "c": "GameCharacterRole",
+    "l": "valueOf(String)",
+    "u": "valueOf(java.lang.String)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.city",
+    "c": "DistrictColor",
+    "l": "valueOf(String)",
+    "u": "valueOf(java.lang.String)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player.algorithms.smart",
+    "c": "RichardAlgo.BotStyle",
+    "l": "valueOf(String)",
+    "u": "valueOf(java.lang.String)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.utils",
+    "c": "Args.ArgsEnum",
+    "l": "valueOf(String)",
+    "u": "valueOf(java.lang.String)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.city",
+    "c": "DistrictColor",
+    "l": "valueOfByString(String)",
+    "u": "valueOfByString(java.lang.String)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.character",
+    "c": "GameCharacterRole",
+    "l": "values()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.city",
+    "c": "DistrictColor",
+    "l": "values()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player.algorithms.smart",
+    "c": "RichardAlgo.BotStyle",
+    "l": "values()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.utils",
+    "c": "Args.ArgsEnum",
+    "l": "values()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint",
+    "c": "Game",
+    "l": "warlord"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.character",
+    "c": "GameCharacterRole",
+    "l": "WARLORD"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.character.card",
+    "c": "Warlord",
+    "l": "Warlord()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player.algorithms",
+    "c": "BaseAlgo",
+    "l": "warlordAlgorithm(Game)",
+    "u": "warlordAlgorithm(fr.cotedazur.univ.polytech.startingpoint.Game)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player.algorithms",
+    "c": "RandomAlgo",
+    "l": "warlordAlgorithm(Game)",
+    "u": "warlordAlgorithm(fr.cotedazur.univ.polytech.startingpoint.Game)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player.algorithms.smart",
+    "c": "EinsteinAlgo",
+    "l": "warlordAlgorithm(Game)",
+    "u": "warlordAlgorithm(fr.cotedazur.univ.polytech.startingpoint.Game)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player.algorithms.smart",
+    "c": "RichardAlgo",
+    "l": "warlordAlgorithm(Game)",
+    "u": "warlordAlgorithm(fr.cotedazur.univ.polytech.startingpoint.Game)"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.player.algorithms.smart",
+    "c": "RichardAlgo.BotStyle",
+    "l": "WISE"
+}, {
+    "p": "fr.cotedazur.univ.polytech.startingpoint.utils",
+    "c": "Csv",
+    "l": "writeStats(List<String[]>)",
+    "u": "writeStats(java.util.List)"
+}];
+updateSearchResults();

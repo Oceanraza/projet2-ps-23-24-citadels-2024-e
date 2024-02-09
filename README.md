@@ -126,9 +126,40 @@ Assurez-vous que tous les tests passent sans erreurs, confirmant ainsi la solidi
 //Océan-Mathis
 
 ## Pourquoi Einstein bat-il Richard ?
-   *Einstein joue pour lui même :* La principale différence vient du fait qu'Einstein joue pour lui-même et pour maximiser ses propres chances. Il va essayer de récupérer le plus d'argent possible et de construire ses bâtiment le plus vite possible. `A l'instar `de Richard qui lui essaie de déstabiliser ses adversaires et de les faire perdre. Dans une partie avec quatre joueurs, celui se priorisant sur les autres est voué à être plus performant sur le long terme en général.
+
+*Einstein joue pour lui-même :* La principale différence vient du fait qu'Einstein joue pour lui-même et pour maximiser
+ses propres chances. Il va essayer de récupérer le plus d'argent possible et de construire ses bâtiment le plus vite
+possible. `A l'instar `de Richard qui lui essaie de déstabiliser ses adversaires et de les faire perdre. Dans une partie
+avec quatre joueurs, celui se priorisant sur les autres est voué à être plus performant sur le long terme en général.
+
+---
+
 # Architecture du projet
-//Océan
+
+L'architecture de notre projet a été conçue avec une approche modulaire et orientée objet, ce qui nous a permis de
+maintenir une séparation claire des responsabilités tout en facilitant l'extensibilité. Au cœur de notre application, la
+classe `Game` orchestre la logique de jeu, s'appuyant sur des composants spécialisés tels que `ActionManager` pour gérer
+les actions des joueurs et `GameState` pour suivre l'état courant du jeu. Nous avons opté pour des classes abstraites
+telles que `Player` et `GameCharacter` pour fournir des modèles extensibles pour les différentes entités du jeu, comme
+les personnages `King`, `Assassin`, entre autres. Cette décision a été guidée par la volonté de faciliter l'ajout de
+nouveaux types de joueurs et de personnages sans perturber la logique existante. De plus, l'emploi de fichiers JSON pour
+la gestion des données de jeu offre une flexibilité dans la manipulation et la persistance des états de jeu.
+
+### Localisation des Informations
+
+La documentation [JavaDoc](doc/javadoc/index.html), générée et structurée de manière exhaustive, sert de référence
+principale pour la compréhension des points clés et des classes importantes du projet. Chaque fichier HTML de
+documentation, comme `Game.html`, `ActionManager.html`, ou encore ceux situés dans les dossiers `character` et `city`,
+contient des informations détaillées sur les responsabilités et les comportements des classes et méthodes. Cette
+documentation est un outil précieux pour les développeurs actuels et futurs afin de se familiariser rapidement avec le
+projet.
+
+### État de la Base de Code
+
+//Mathis
+
+
+---
 
 # Processus
   Le projet est divisé en plusieurs catégories toutes différentes les unes des autres :
