@@ -144,9 +144,25 @@ public class Game {
     }
 
     /**
-     * Supprime les personnages en jeu
+     * Met face cachée 1 personnage du jeu
      */
-    private void removeCharactersInGame() {
+    private void putCharacterFacedown() {
+        int indexCharacter;
+        GameCharacter cha;
+
+        indexCharacter = Utils.generateRandomNumber(availableChars.size() - 1);
+        cha = availableChars.get(indexCharacter);
+
+        String wontBePlayedMessage = cha.getRole().toStringLeOrLUpperCase() + " est ecarte face cachee";
+        LOGGER.info(wontBePlayedMessage);
+
+        availableChars.remove(indexCharacter);
+    }
+
+    /**
+     * Met face ouverte 2 personnages du jeu (sauf le roi)
+     */
+    private void putCharactersFaceup() {
         for (int i = 0; i < 2; i++) {
             int indexCharacter;
             GameCharacter cha;
@@ -160,7 +176,7 @@ public class Game {
                 cha = charactersInGame.get(indexCharacter);
             }
             charactersInGame.remove(cha);
-            String wontBePlayedMessage = cha.getRole().toStringLeOrLUpperCase() + " ne sera pas joue ce tour";
+            String wontBePlayedMessage = cha.getRole().toStringLeOrLUpperCase() + " est ecarte face ouverte";
             LOGGER.info(wontBePlayedMessage);
         }
     }
@@ -224,9 +240,12 @@ public class Game {
         charactersInGame = new ArrayList<>(allCharacters);
 
         // Supprime 2 personnages de la liste des personnages en jeu
-        removeCharactersInGame();
+        putCharactersFaceup();
 
         availableChars = new ArrayList<>(charactersInGame);
+
+        // Supprime 1 personnage de la liste des personnages disponible
+        putCharacterFacedown();
     }
 
     /**
