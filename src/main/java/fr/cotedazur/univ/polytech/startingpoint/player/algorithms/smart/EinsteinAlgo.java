@@ -39,7 +39,7 @@ public class EinsteinAlgo extends SmartAlgo {
     }
 
     public void chooseMoneyCharacterAlgorithm(Game game, List<GameCharacter> availableChars) {
-        GameCharacter chosenChar = availableChars.get(1);
+        GameCharacterRole chosenChar = availableChars.get(0).getRole();
         int numberOfDistrictByColor;
         int goldCollectedWithDistrictColor = 0;
 
@@ -49,11 +49,11 @@ public class EinsteinAlgo extends SmartAlgo {
                 numberOfDistrictByColor = bot.getNumberOfDistrictsByColor().get(cha.getColor());
                 if (numberOfDistrictByColor > goldCollectedWithDistrictColor) {
                     goldCollectedWithDistrictColor = numberOfDistrictByColor;
-                    chosenChar = cha;
+                    chosenChar = cha.getRole();
                 }
             }
         }
-        bot.chooseChar(game, chosenChar.getRole());
+        bot.chooseChar(game, chosenChar);
     }
 
     @Override
