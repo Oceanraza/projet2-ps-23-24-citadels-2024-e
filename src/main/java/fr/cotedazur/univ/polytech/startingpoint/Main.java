@@ -48,10 +48,7 @@ public class Main {
      */
     public static void sortPlayers(List<Player> players) {
         // Use a custom Comparator to compare Players based on their score and running order
-        Comparator<Player> playerComparator = Comparator
-                .comparingInt(Player::getScore)
-                .thenComparingInt(player -> player.getGameCharacter().getRunningOrder())
-                .reversed();
+        Comparator<Player> playerComparator = Comparator.comparingInt(Player::getScore).thenComparingInt(player -> player.getGameCharacter().getRunningOrder()).reversed();
 
         // Sort the players list using the custom comparator
         players.sort(playerComparator);
@@ -62,9 +59,9 @@ public class Main {
      * Si un joueur a été le premier à construire ses 8 quartiers, il reçoit un bonus de 4 points.
      * Si les autres joueurs ont également terminé la construction de leurs 8 quartiers, ils reçoivent un bonus de 2 points.
      *
-     * @param players La liste des joueurs pour lesquels calculer les scores.
+     * @param players      La liste des joueurs pour lesquels calculer les scores.
      * @param firstBuilder Le joueur qui a été le premier à construire ses 8 quartiers.
-     * @param gameState L'état actuel du jeu.
+     * @param gameState    L'état actuel du jeu.
      * @return La liste des joueurs triée en fonction de leurs scores.
      */
 
@@ -86,7 +83,7 @@ public class Main {
      * Si un joueur a construit le quartier "Cour des miracles" et que le tour actuel est supérieur au tour de construction de ce quartier,
      * le joueur peut utiliser l'algorithme "huntedQuarterAlgorithm" pour choisir un quartier à utiliser comme quartier de couleur différente.
      *
-     * @param players La liste des joueurs qui vont faire leur choix final.
+     * @param players   La liste des joueurs qui vont faire leur choix final.
      * @param gameState L'état actuel du jeu.
      */
 
@@ -111,9 +108,9 @@ public class Main {
     /**
      * Cette méthode annonce le gagnant de la partie et affiche les scores de chaque joueur.
      *
-     * @param players La liste des joueurs.
+     * @param players      La liste des joueurs.
      * @param firstBuilder Le joueur qui a été le premier à construire ses 8 quartiers.
-     * @param gameState L'état actuel du jeu.
+     * @param gameState    L'état actuel du jeu.
      */
 
     public static void announceWinner(List<Player> players, Player firstBuilder, GameState gameState) {
@@ -138,10 +135,7 @@ public class Main {
 
     public static int jCommander(String... args) {
         Args commandLineArgs = new Args();
-        JCommander.newBuilder()
-                .addObject(commandLineArgs)
-                .build()
-                .parse(args);
+        JCommander.newBuilder().addObject(commandLineArgs).build().parse(args);
 
         // Determining the value of numberOfTurns according to the options
         int numberOfGames = 1;
@@ -251,12 +245,7 @@ public class Main {
             for (int games = 0; games < numberOfGames; games++) {
                 resetAll(newGame, gameState);
                 // Adding players to the game
-                newGame.setPlayers(
-                        new Bot(donald, algorithmsInGame.get(0)),
-                        new Bot(picsou, algorithmsInGame.get(1)),
-                        new Bot(riri, algorithmsInGame.get(2)),
-                        new Bot(fifi, algorithmsInGame.get(3))
-                );
+                newGame.setPlayers(new Bot(donald, algorithmsInGame.get(0)), new Bot(picsou, algorithmsInGame.get(1)), new Bot(riri, algorithmsInGame.get(2)), new Bot(fifi, algorithmsInGame.get(3)));
 
                 List<Player> players = newGame.getPlayers();
 

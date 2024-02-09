@@ -26,6 +26,7 @@ public enum GameCharacterRole {
 
     /**
      * Retourne le nom du rôle du personnage.
+     *
      * @return le nom du rôle du personnage.
      */
     public String getRoleName() {
@@ -36,6 +37,7 @@ public enum GameCharacterRole {
      * Pour imprimer le nom du rôle du personnage lorsque nous devons écrire :
      * Du ... ou
      * De l' ...
+     *
      * @return une chaîne de caractères formatée.
      */
     public String toStringDuOrDeL() {
@@ -49,6 +51,7 @@ public enum GameCharacterRole {
      * Pour imprimer le nom du rôle du personnage lorsque nous devons écrire :
      * Le... ou
      * L' ...
+     *
      * @return une chaîne de caractères formatée.
      */
     public String toStringLeOrLUpperCase() {
@@ -62,6 +65,7 @@ public enum GameCharacterRole {
      * Pour imprimer le nom du rôle du personnage lorsque nous devons écrire :
      * le... ou
      * l' ...
+     *
      * @return une chaîne de caractères formatée.
      */
     public String toStringLeOrLLowerCase() {
@@ -73,6 +77,7 @@ public enum GameCharacterRole {
 
     /**
      * Retourne une représentation sous forme de chaîne de caractères du rôle du personnage.
+     *
      * @return une représentation sous forme de chaîne de caractères du rôle du personnage.
      */
     @Override

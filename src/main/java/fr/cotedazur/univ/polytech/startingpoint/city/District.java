@@ -29,9 +29,10 @@ public class District {
 
     /**
      * Constructeur de la classe District avec des points bonus.
-     * @param name le nom du quartier.
-     * @param price le prix du quartier.
-     * @param color la couleur du quartier.
+     *
+     * @param name        le nom du quartier.
+     * @param price       le prix du quartier.
+     * @param color       la couleur du quartier.
      * @param bonusPoints les points bonus du quartier.
      */
     public District(String name, int price, DistrictColor color, int bonusPoints) {
@@ -43,22 +44,25 @@ public class District {
 
     /**
      * Retourne le nom du quartier.
+     *
      * @return le nom du quartier.
      */
-    public String getName(){
+    public String getName() {
         return name;
     }
 
     /**
      * Retourne le prix du quartier.
+     *
      * @return le prix du quartier.
      */
-    public int getPrice(){
+    public int getPrice() {
         return price;
     }
 
     /**
      * Retourne la couleur du quartier.
+     *
      * @return la couleur du quartier.
      */
     public DistrictColor getColor() {
@@ -67,6 +71,7 @@ public class District {
 
     /**
      * Définit la couleur du quartier.
+     *
      * @param districtColor la nouvelle couleur du quartier.
      */
     public void setColor(DistrictColor districtColor) {
@@ -75,6 +80,7 @@ public class District {
 
     /**
      * Retourne les points bonus du quartier.
+     *
      * @return les points bonus du quartier.
      */
     public int getBonusPoints() {
@@ -83,6 +89,7 @@ public class District {
 
     /**
      * Retourne le tour où le quartier a été construit.
+     *
      * @return le tour où le quartier a été construit.
      */
     public Optional<Integer> getTurnBuilt() {
@@ -91,6 +98,7 @@ public class District {
 
     /**
      * Définit le tour où le quartier a été construit.
+     *
      * @param turn le tour où le quartier a été construit.
      */
     public void setTurnBuilt(int turn) {
@@ -99,6 +107,7 @@ public class District {
 
     /**
      * Vérifie si deux quartiers sont égaux en comparant leurs noms.
+     *
      * @param o l'objet à comparer avec le quartier actuel.
      * @return vrai si les deux quartiers sont égaux, faux sinon.
      */
@@ -112,6 +121,7 @@ public class District {
 
     /**
      * Retourne le code de hachage du quartier.
+     *
      * @return le code de hachage du quartier.
      */
     @Override
@@ -121,6 +131,7 @@ public class District {
 
     /**
      * Retourne une représentation sous forme de chaîne de caractères du quartier.
+     *
      * @return une représentation sous forme de chaîne de caractères du quartier.
      */
     @Override

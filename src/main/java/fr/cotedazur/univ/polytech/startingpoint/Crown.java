@@ -19,6 +19,7 @@ public class Crown {
 
     /**
      * Définit le propriétaire de la couronne.
+     *
      * @param owner le nouveau propriétaire de la couronne.
      */
     public void setOwner(Player owner) {

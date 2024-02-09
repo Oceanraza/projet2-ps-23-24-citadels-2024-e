@@ -16,8 +16,9 @@ public class Warlord extends GameCharacter {
     public Warlord() {
         super(GameCharacterRole.WARLORD, 8, DistrictColor.MILITARY);
     }
+
     @Override
-    public void specialEffect(Player player,Game game, Object... optionalArgs) {
+    public void specialEffect(Player player, Game game, Object... optionalArgs) {
         Player targetedPlayer = (Player) optionalArgs[0];
         District destroyedDistrict = (District) optionalArgs[1];
         targetedPlayer.getCity().destroyDistrict(destroyedDistrict);

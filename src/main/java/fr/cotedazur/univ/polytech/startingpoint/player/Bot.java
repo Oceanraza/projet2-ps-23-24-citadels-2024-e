@@ -31,6 +31,7 @@ public class Bot extends Player {
 
     /**
      * Constructeur de la classe Bot.
+     *
      * @param name le nom du bot.
      * @param algo l'algorithme du bot.
      */
@@ -42,14 +43,16 @@ public class Bot extends Player {
 
     /**
      * Constructeur de la classe Bot pour les tests.
+     *
      * @param name le nom du bot.
      */
-    public Bot(String name){ //for tests
+    public Bot(String name) { //for tests
         super(name);
     }
 
     /**
      * Vérifie si le bot peut construire un quartier ce tour.
+     *
      * @return vrai si le bot peut construire un quartier ce tour, faux sinon.
      */
     public boolean canBuildDistrictThisTurn() { // Checks If a district in Hand can be built with +2 gold
@@ -63,7 +66,8 @@ public class Bot extends Player {
 
     /**
      * Vérifie si un personnage est dans une liste.
-     * @param cha la liste de personnages.
+     *
+     * @param cha       la liste de personnages.
      * @param askedChar le personnage demandé.
      * @return vrai si le personnage est dans la liste, faux sinon.
      */
@@ -78,7 +82,8 @@ public class Bot extends Player {
 
     /**
      * Retourne un personnage dans une liste.
-     * @param cha la liste de personnages.
+     *
+     * @param cha       la liste de personnages.
      * @param askedChar le personnage demandé.
      * @return le personnage s'il est dans la liste, sinon vide.
      */
@@ -93,7 +98,8 @@ public class Bot extends Player {
 
     /**
      * Choisis un personnage pour le bot.
-     * @param game l'état actuel du jeu.
+     *
+     * @param game      l'état actuel du jeu.
      * @param askedChar le personnage demandé.
      */
     public void chooseChar(Game game, GameCharacterRole askedChar) {
@@ -111,7 +117,8 @@ public class Bot extends Player {
 
     /**
      * Joue un tour de jeu pour le bot.
-     * @param game l'état actuel du jeu.
+     *
+     * @param game      l'état actuel du jeu.
      * @param gameState l'état du jeu.
      */
     @Override
@@ -134,6 +141,7 @@ public class Bot extends Player {
 
     /**
      * Vérifie si deux bots sont égaux en comparant leurs noms.
+     *
      * @param o l'objet à comparer avec le bot actuel.
      * @return vrai si les deux bots sont égaux, faux sinon.
      */
@@ -144,6 +152,7 @@ public class Bot extends Player {
 
     /**
      * Retourne le code de hachage du bot.
+     *
      * @return le code de hachage du bot.
      */
     @Override

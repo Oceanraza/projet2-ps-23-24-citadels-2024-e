@@ -45,7 +45,7 @@ public class Csv {
                     }
 
                 }
-            } catch (IOException | CsvValidationException e){
+            } catch (IOException | CsvValidationException e) {
                 //throw new CSVFileProcessingException("An error occurred while processing the file: " + e.getMessage());
             }
         }

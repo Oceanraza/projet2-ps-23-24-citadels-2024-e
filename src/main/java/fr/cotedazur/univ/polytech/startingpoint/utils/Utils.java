@@ -35,7 +35,7 @@ public class Utils {
      * @return un nombre aléatoire.
      */
     public static int generateRandomNumber(int bound) {
-        if(bound == 0){
+        if (bound == 0) {
             return 0;
         }
         return random.nextInt(bound);
@@ -43,7 +43,8 @@ public class Utils {
 
     /**
      * Obtient le nombre le plus élevé de cartes en main parmi les joueurs.
-     * @param players la liste des joueurs.
+     *
+     * @param players       la liste des joueurs.
      * @param currentPlayer le joueur actuel.
      * @return le nombre le plus élevé de cartes en main.
      */
@@ -57,16 +58,18 @@ public class Utils {
 
     /**
      * Vérifie si un quartier peut être détruit.
+     *
      * @param d le quartier à vérifier.
      * @param p le joueur qui tente de détruire le quartier.
      * @return vrai si le quartier peut être détruit, faux sinon.
      */
-    public static boolean canDestroyDistrict(District d, Player p){
-        return ((d.getPrice() -1 < p.getGold())&&(!d.getName().equals("Donjon")));
+    public static boolean canDestroyDistrict(District d, Player p) {
+        return ((d.getPrice() - 1 < p.getGold()) && (!d.getName().equals("Donjon")));
     }
 
     /**
      * Analyse un fichier JSON en un JsonNode.
+     *
      * @param filePath le chemin du fichier JSON.
      * @return un JsonNode représentant le fichier JSON.
      * @throws IOException si une erreur d'entrée/sortie se produit.
@@ -81,6 +84,7 @@ public class Utils {
 
     /**
      * Convertit un JsonNode en une liste de quartiers.
+     *
      * @param districtsNode le JsonNode à convertir.
      * @return une liste de quartiers.
      */
@@ -106,10 +110,11 @@ public class Utils {
 
     /**
      * Définit les algorithmes pour le jeu.
+     *
      * @param algorithmsInGame la liste des algorithmes dans le jeu.
-     * @param nbOfEinstein le nombre d'Einstein.
-     * @param nbOfRichard le nombre de Richard.
-     * @param nbOfRandom le nombre de Random.
+     * @param nbOfEinstein     le nombre d'Einstein.
+     * @param nbOfRichard      le nombre de Richard.
+     * @param nbOfRandom       le nombre de Random.
      */
     public static void setAlgorithms(List<BaseAlgo> algorithmsInGame, int nbOfEinstein, int nbOfRichard, int nbOfRandom) {
         while (nbOfEinstein > 0) {
@@ -128,8 +133,9 @@ public class Utils {
 
     /**
      * Réinitialise les scores et les placements.
+     *
      * @param totalPlacements les placements totaux.
-     * @param totalScores les scores totaux.
+     * @param totalScores     les scores totaux.
      */
     public static void resetScoresAndPlacements(Map<String, List<Integer>> totalPlacements, Map<String, Integer> totalScores) {
         List<Integer> initialPlacement = Arrays.asList(0, 0, 0, 0);

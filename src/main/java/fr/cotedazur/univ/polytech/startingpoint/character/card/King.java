@@ -7,7 +7,7 @@ import fr.cotedazur.univ.polytech.startingpoint.city.DistrictColor;
 import fr.cotedazur.univ.polytech.startingpoint.player.Player;
 
 public class King extends GameCharacter {
-    public King () {
+    public King() {
         super(GameCharacterRole.KING, 4, DistrictColor.NOBLE);
     }
 

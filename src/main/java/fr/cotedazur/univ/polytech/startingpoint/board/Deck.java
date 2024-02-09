@@ -49,6 +49,7 @@ public class Deck {
 
     /**
      * Retourne une représentation sous forme de chaîne de caractères du deck.
+     *
      * @return une représentation sous forme de chaîne de caractères du deck.
      */
     @Override
@@ -63,6 +64,7 @@ public class Deck {
 
     /**
      * Ajoute un quartier au deck.
+     *
      * @param district le quartier à ajouter.
      */
     public void addDistrict(District district) {
@@ -80,6 +82,7 @@ public class Deck {
 
     /**
      * Pioche une carte du deck.
+     *
      * @return la carte piochée.
      * @throws EmptyDeckException si le deck est vide.
      */
@@ -92,6 +95,7 @@ public class Deck {
 
     /**
      * Vérifie si le deck est vide.
+     *
      * @return vrai si le deck est vide, faux sinon.
      */
     public boolean isEmpty() {
@@ -100,6 +104,7 @@ public class Deck {
 
     /**
      * Retourne le nombre de cartes dans le deck.
+     *
      * @return le nombre de cartes dans le deck.
      */
     public int size() {
@@ -108,6 +113,7 @@ public class Deck {
 
     /**
      * Place une carte au bas du deck.
+     *
      * @param card la carte à placer au bas du deck.
      */
     public void putCardAtBottom(District card) {

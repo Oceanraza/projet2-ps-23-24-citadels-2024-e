@@ -48,21 +48,27 @@ public abstract class Player {
     public List<District> getDistrictsInHand() {
         return districtsInHand;
     }
+
     public City getCity() {
         return city;
     }
+
     public int getGold() {
         return gold;
     }
+
     public String getName() {
         return name;
     }
+
     public int getScore() {
         return score;
     }
+
     public GameCharacter getGameCharacter() {
         return gameCharacter;
     }
+
     public String getCharacterName() {
         return gameCharacter.getRole().getRoleName();
     }
@@ -71,9 +77,11 @@ public abstract class Player {
     public void setGold(int gold) {
         this.gold = gold;
     }
+
     public void setScore(int score) {
         this.score = score;
     }
+
     public void setGameCharacter(GameCharacter gameCharacter) {
         this.gameCharacter = gameCharacter;
     }
@@ -84,6 +92,7 @@ public abstract class Player {
             this.districtsInHand.add(district);
         }
     }
+
     public void addDistrictBuilt(District district, GameState gameState) {
         numberOfDistrictsByColor.replace(
                 district.getColor(),
@@ -95,7 +104,9 @@ public abstract class Player {
         gold -= g;
     }
 
-    public Map<DistrictColor, Integer> getNumberOfDistrictsByColor() {return numberOfDistrictsByColor;}
+    public Map<DistrictColor, Integer> getNumberOfDistrictsByColor() {
+        return numberOfDistrictsByColor;
+    }
 
     public void addGold(int gold) {
         this.gold += gold;
@@ -103,7 +114,8 @@ public abstract class Player {
 
     /**
      * Méthode abstraite pour jouer un tour de jeu.
-     * @param game l'état actuel du jeu.
+     *
+     * @param game      l'état actuel du jeu.
      * @param gameState l'état du jeu.
      */
     public abstract void play(Game game, GameState gameState);
@@ -131,7 +143,7 @@ public abstract class Player {
         return true;
     }
 
-    public int calculateScore(){
+    public int calculateScore() {
         int tempScore = getGold();
         City playerCity = this.getCity();
         Set<DistrictColor> districtColors = new HashSet<>();

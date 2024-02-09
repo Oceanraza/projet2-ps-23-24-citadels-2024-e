@@ -30,6 +30,7 @@ public class City {
 
     /**
      * Vérifie si un quartier n'est pas déjà construit dans la ville.
+     *
      * @param district le quartier à vérifier.
      * @return vrai si le quartier n'est pas déjà construit, faux sinon.
      */
@@ -47,7 +48,8 @@ public class City {
 
     /**
      * Ajoute un quartier à la ville.
-     * @param district le quartier à ajouter.
+     *
+     * @param district  le quartier à ajouter.
      * @param gameState l'état actuel du jeu.
      * @throws DistrictAlreadyBuiltException si le quartier est déjà construit.
      */
@@ -60,6 +62,7 @@ public class City {
 
     /**
      * Détruit un quartier de la ville.
+     *
      * @param districtToDestroy le quartier à détruire.
      */
     public void destroyDistrict(District districtToDestroy) {
@@ -73,12 +76,13 @@ public class City {
 
     /**
      * Vérifie si un quartier est présent dans la ville.
+     *
      * @param districtName le nom du quartier à vérifier.
      * @return vrai si le quartier est présent, faux sinon.
      */
     public boolean containsDistrict(String districtName) {
-        for(District d: districtsBuilt) {
-            if(d.getName().equals(districtName)) {
+        for (District d : districtsBuilt) {
+            if (d.getName().equals(districtName)) {
                 return true;
             }
         }
@@ -105,6 +109,7 @@ public class City {
 
     /**
      * Retourne la taille de la ville (nombre de quartiers construits).
+     *
      * @return la taille de la ville.
      */
     public int size() {

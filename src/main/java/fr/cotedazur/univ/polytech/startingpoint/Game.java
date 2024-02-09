@@ -54,6 +54,7 @@ public class Game {
 
     /**
      * Getter pour la liste des objets Player.
+     *
      * @return la liste des objets Player.
      */
     public List<Player> getPlayers() {
@@ -62,6 +63,7 @@ public class Game {
 
     /**
      * Getter pour la liste des objets GameCharacter disponibles.
+     *
      * @return la liste des objets GameCharacter disponibles.
      */
     public List<GameCharacter> getAvailableChars() {
@@ -70,6 +72,7 @@ public class Game {
 
     /**
      * Renvoie l'index du joueur courant dans l'ordre de jeu
+     *
      * @param currentPlayer le joueur courant
      * @return l'index du joueur courant dans l'ordre de jeu
      */
@@ -85,12 +88,12 @@ public class Game {
 
     /**
      * Vérifie si le rôle est disponible
+     *
      * @param role le rôle à vérifier
      * @return vrai si le rôle est disponible, faux sinon
      */
     public boolean containsAvailableRole(GameCharacterRole role) {
-        return availableChars.stream()
-                .anyMatch(gameCharacter -> gameCharacter.getRole().equals(role));
+        return availableChars.stream().anyMatch(gameCharacter -> gameCharacter.getRole().equals(role));
     }
 
     /**
@@ -101,12 +104,12 @@ public class Game {
      */
     public boolean containsAvailableRoles(GameCharacterRole... roles) { // Vérifie si les personnages disponibles contiennent au moins un des rôles
         List<GameCharacterRole> rolesList = Arrays.asList(roles);
-        return availableChars.stream()
-                .anyMatch(gameCharacter -> rolesList.contains(gameCharacter.getRole()));
+        return availableChars.stream().anyMatch(gameCharacter -> rolesList.contains(gameCharacter.getRole()));
     }
 
     /**
      * Getter pour la liste des objets GameCharacter en jeu.
+     *
      * @return la liste des objets GameCharacter en jeu.
      */
     public List<GameCharacter> getCharactersInGame() {
@@ -128,13 +131,12 @@ public class Game {
      * @return la liste des joueurs dans l'ordre de jeu
      */
     public List<Player> getRunningOrder() {
-        return this.getPlayers().stream()
-                .sorted(Comparator.comparingInt(player -> player.getGameCharacter().getRunningOrder()))
-                .toList();
+        return this.getPlayers().stream().sorted(Comparator.comparingInt(player -> player.getGameCharacter().getRunningOrder())).toList();
     }
 
     /**
      * Supprime un personnage disponible
+     *
      * @param cha le personnage à supprimer
      */
     public void removeAvailableChar(GameCharacter cha) {
@@ -252,6 +254,7 @@ public class Game {
 
     /**
      * Remplit la sélection de personnages
+     *
      * @param startingPos la position de départ
      */
     public void charSelectionFiller(int startingPos) {
@@ -276,6 +279,7 @@ public class Game {
 
     /**
      * Obtient le propriétaire de la couronne
+     *
      * @return le propriétaire de la couronne
      */
     public Bot getCrownOwner() {
@@ -284,6 +288,7 @@ public class Game {
 
     /**
      * Imprime le propriétaire de la couronne
+     *
      * @return le propriétaire de la couronne
      */
     public Bot printCrownOwner() {
@@ -295,8 +300,9 @@ public class Game {
 
     /**
      * Sélectionne un personnage
+     *
      * @param crownOwner le propriétaire de la couronne
-     * @param cOpos la position du propriétaire de la couronne
+     * @param cOpos      la position du propriétaire de la couronne
      */
     public void characterSelection(Bot crownOwner, int cOpos) { //cO = crownOwner
         if (crownOwner != null) {
@@ -315,8 +321,9 @@ public class Game {
 
     /**
      * Gère le cas où un joueur est tué
+     *
      * @param characterKilled le personnage tué
-     * @param playerKilled le joueur tué
+     * @param playerKilled    le joueur tué
      */
     public void playerKilled(GameCharacter characterKilled, Player playerKilled) {
         String isKilledMessage = "\n" + characterKilled.getRole().toStringLeOrLUpperCase() + " a ete tue par " + characterKilled.getAttacker().getName();
@@ -351,6 +358,7 @@ public class Game {
 
     /**
      * Obtient la liste des joueurs triés par score
+     *
      * @return la liste des joueurs triés par score
      */
     public List<Player> getSortedPlayersByScore() {
@@ -359,15 +367,14 @@ public class Game {
             player.calculateAndSetScore();
             sortedPlayersByScore.add(player);
         }
-        Comparator<Player> playerComparator = Comparator
-                .comparingInt(Player::getScore)
-                .reversed();
+        Comparator<Player> playerComparator = Comparator.comparingInt(Player::getScore).reversed();
         sortedPlayersByScore.sort(playerComparator);
         return sortedPlayersByScore;
     }
 
     /**
      * Obtient la liste des joueurs triés par score pour le Warlord
+     *
      * @return la liste des joueurs triés par score pour le Warlord
      */
     public List<Player> getSortedPlayersByScoreForWarlord() {
@@ -384,6 +391,7 @@ public class Game {
 
     /**
      * Obtient la liste des personnages qui peuvent être tués
+     *
      * @return la liste des personnages qui peuvent être tués
      */
     public List<GameCharacter> getKillableCharacters() {
@@ -400,6 +408,7 @@ public class Game {
 
     /**
      * Obtient la liste des personnages qui peuvent être volés
+     *
      * @return la liste des personnages qui peuvent être volés
      */
     public List<GameCharacter> getCharactersThatCanBeStolen() {
@@ -426,6 +435,7 @@ public class Game {
 
     /**
      * Getter pour le deck
+     *
      * @return le deck
      */
     public Deck getDeck() {
@@ -434,6 +444,7 @@ public class Game {
 
     /**
      * toString pour le deck
+     *
      * @return
      */
     @Override
@@ -450,6 +461,7 @@ public class Game {
 
     /**
      * Retourne la taille de la ville nécessaire pour gagner.
+     *
      * @return la taille de la ville nécessaire pour gagner.
      */
     public int getCitySizeToWin() {
@@ -458,26 +470,25 @@ public class Game {
 
     /**
      * Retourne le joueur ayant le plus de quartiers.
+     *
      * @return le joueur ayant le plus de quartiers.
      */
     public Player getPlayerWithMostDistricts() {
-        return players.stream()
-                .max((p1, p2) -> Integer.compare(p1.getCity().size(), p2.getCity().size()))
-                .orElse(null);
+        return players.stream().max((p1, p2) -> Integer.compare(p1.getCity().size(), p2.getCity().size())).orElse(null);
     }
 
     /**
      * Retourne le joueur le plus riche.
+     *
      * @return le joueur le plus riche.
      */
     public Player getRichestPlayer() {
-        return players.stream().
-                max((p1, p2) -> Integer.compare(p1.getGold(), p2.getGold()))
-                .orElse(null);
+        return players.stream().max((p1, p2) -> Integer.compare(p1.getGold(), p2.getGold())).orElse(null);
     }
 
     /**
      * Calcule et retourne la taille moyenne des villes des joueurs.
+     *
      * @return la taille moyenne des villes des joueurs.
      */
     public double averageCitySize() {
@@ -486,27 +497,25 @@ public class Game {
 
     /**
      * Retourne le premier joueur ayant exactement 6 quartiers.
+     *
      * @return le premier joueur ayant exactement 6 quartiers.
      */
     public Player getPlayerWith6Districts() {
-        return players.stream()
-                .filter(player -> player.getCity().size() == 6)
-                .findFirst()
-                .orElse(null);
+        return players.stream().filter(player -> player.getCity().size() == 6).findFirst().orElse(null);
     }
 
     /**
      * Retourne le joueur ayant le plus de cartes en main.
+     *
      * @return le joueur ayant le plus de cartes en main.
      */
     public Player getPlayerWithMostCardInHand() {
-        return players.stream()
-                .max((p1, p2) -> Integer.compare(p1.getDistrictsInHand().size(), p2.getDistrictsInHand().size()))
-                .orElse(null);
+        return players.stream().max((p1, p2) -> Integer.compare(p1.getDistrictsInHand().size(), p2.getDistrictsInHand().size())).orElse(null);
     }
 
     /**
      * Retourne le joueur ayant le quartier le moins cher en main.
+     *
      * @return le joueur ayant le quartier le moins cher en main.
      */
     public Player getPlayerWithLowestDistrictPrice() {
@@ -527,7 +536,8 @@ public class Game {
 
     /**
      * Vérifie si un joueur possède un quartier spécial.
-     * @param players la liste des joueurs à vérifier.
+     *
+     * @param players      la liste des joueurs à vérifier.
      * @param districtName le nom du quartier spécial.
      * @return le joueur qui possède le quartier spécial, ou vide si aucun joueur ne le possède.
      */
