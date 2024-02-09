@@ -43,29 +43,28 @@ public class RichardAlgo extends SmartAlgo {
         //Déclenché en fin de partie
         else if (game.getPlayerWith6Districts() != null) { // I
             finishOrCounter(game);
-        }
-
-        //Algo durant la partie
-
-        if (shouldPickArchitect(game) > 0) {
-            bot.chooseChar(game, ARCHITECT);
-        } else if (shouldPickKing(game) > 0) {
-            bot.chooseChar(game, KING);
-        } else if (game.containsAvailableRole(MAGICIAN)) {
-            bot.chooseChar(game, MAGICIAN);
-        } else if (game.containsAvailableRole(WARLORD)) {
-            bot.chooseChar(game, WARLORD);
-        } else if (game.containsAvailableRole(BISHOP)) {
-            bot.chooseChar(game, BISHOP);
-        } else if (game.containsAvailableRole(THIEF)) {
-            bot.chooseChar(game, THIEF);
-        } else if (shouldPickAssassin(game) > 0) {
-            bot.chooseChar(game, ASSASSIN);
         } else {
-            bot.chooseChar(game, MERCHANT);
-        }
-        if (bot.getGameCharacter() == null) { //FailProof method
-            bot.chooseChar(game, game.getAvailableChars().get(Utils.generateRandomNumber(game.getAvailableChars().size())).getRole());
+            //Algo durant la partie
+            if (shouldPickArchitect(game) > 0) {
+                bot.chooseChar(game, ARCHITECT);
+            } else if (shouldPickKing(game) > 0) {
+                bot.chooseChar(game, KING);
+            } else if (game.containsAvailableRole(MAGICIAN)) {
+                bot.chooseChar(game, MAGICIAN);
+            } else if (game.containsAvailableRole(WARLORD)) {
+                bot.chooseChar(game, WARLORD);
+            } else if (game.containsAvailableRole(BISHOP)) {
+                bot.chooseChar(game, BISHOP);
+            } else if (game.containsAvailableRole(THIEF)) {
+                bot.chooseChar(game, THIEF);
+            } else if (shouldPickAssassin(game) > 0) {
+                bot.chooseChar(game, ASSASSIN);
+            } else {
+                bot.chooseChar(game, MERCHANT);
+            }
+            if (bot.getGameCharacter() == null) { //FailProof method
+                bot.chooseChar(game, game.getAvailableChars().get(Utils.generateRandomNumber(game.getAvailableChars().size())).getRole());
+            }
         }
     }
 
