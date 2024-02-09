@@ -150,7 +150,7 @@ public class Game {
         int indexCharacter;
         GameCharacter cha;
 
-        indexCharacter = Utils.generateRandomNumber(availableChars.size() - 1);
+        indexCharacter = Utils.generateRandomNumber(availableChars.size());
         cha = availableChars.get(indexCharacter);
 
         String wontBePlayedMessage = cha.getRole().toStringLeOrLUpperCase() + " est ecarte face cachee";
@@ -167,12 +167,12 @@ public class Game {
             int indexCharacter;
             GameCharacter cha;
 
-            indexCharacter = Utils.generateRandomNumber(charactersInGame.size() - 1);
+            indexCharacter = Utils.generateRandomNumber(charactersInGame.size());
             cha = charactersInGame.get(indexCharacter);
 
             // Le roi doit être disponible pour les joueurs
             while (cha.getRole().equals(GameCharacterRole.KING)) {
-                indexCharacter = Utils.generateRandomNumber(charactersInGame.size() - 1);
+                indexCharacter = Utils.generateRandomNumber(charactersInGame.size());
                 cha = charactersInGame.get(indexCharacter);
             }
             charactersInGame.remove(cha);
