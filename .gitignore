@@ -1,8 +1,14 @@
 # Compiled class file
 *.class
 
+# DS Store
+.DS_Store
+
 # Log file
 *.log
+
+# Csv file
+*.csv
 
 # BlueJ files
 *.ctxt
@@ -32,3 +38,4 @@ hs_err_pid*
 **/.classpath
 **/.project
 **/.settings
+
